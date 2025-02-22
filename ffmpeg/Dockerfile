@@ -9,4 +9,4 @@ WORKDIR /app
 COPY app .
 
 # Run the binary
-CMD [".app"]
+CMD ["./app"]
