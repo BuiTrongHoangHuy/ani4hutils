@@ -1,7 +1,16 @@
 package main
 
-import "fmt"
+import (
+	"context"
+	"encoding/json"
+	"fmt"
+	"github.com/aws/aws-lambda-go/lambda"
+)
 
 func main() {
-	fmt.Println("ffmpeg")
+	lambda.Start(handleRequest)
+}
+func handleRequest(ctx context.Context, event json.RawMessage) error {
+	fmt.Println(string(event))
+	return nil
 }
