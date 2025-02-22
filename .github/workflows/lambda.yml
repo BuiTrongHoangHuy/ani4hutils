@@ -22,7 +22,7 @@ jobs:
         run: go mod download
 
       - name: Build
-        run:  CGO_ENABLED=0 GOOS=linux go build -v -a -o app ./ffmpeg
+        run:  CGO_ENABLED=0 GOOS=linux GOARCH=arm64 go build -v -a -o app ./ffmpeg
 
       # Login to ECR
       - name: Configure AWS credentials
