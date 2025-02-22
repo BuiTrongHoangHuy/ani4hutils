@@ -6,7 +6,7 @@ on:
 jobs:
   Build:
     name: Build &  Deploy
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
       # Checkout source code
       - name: Checkout
