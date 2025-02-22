@@ -1,0 +1,2 @@
+CREATE DATABASE ani4h;
+USE ani4h;
