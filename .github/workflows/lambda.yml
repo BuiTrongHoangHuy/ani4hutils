@@ -2,7 +2,7 @@ name: ci
 on:
   push:
     branches:
-      - deploy
+      - deploy/lambda-ffmpeg-mux
 jobs:
   build:
     name: Build &  Deploy
