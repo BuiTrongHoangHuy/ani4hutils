@@ -71,11 +71,10 @@ func handleRequest(ctx context.Context, event events.S3Event) error {
 		}
 
 		args := []string{
-			"-hwaccel", "none",
 			"-i", tmpInputFile,
 			"-crf", "32",
 			"-preset", "ultrafast",
-			"-threads", "1",
+			"-threads", "0",
 			"-tune", "fastdecode",
 			"-tune", "zerolatency",
 			"-x264-params", "scenecut=0",
