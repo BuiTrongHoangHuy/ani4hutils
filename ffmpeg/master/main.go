@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
@@ -41,6 +42,11 @@ func handleRequest(ctx context.Context, event events.S3Event) (string, error) {
 			return "", err
 		}
 
+		d, e := json.Marshal(output)
+		if e != nil {
+			return "", e
+		}
+		fmt.Println(string(d))
 		if resolution, ok := output.Metadata["x-amz-meta-resolution"]; ok {
 			fmt.Println(resolution)
 			return resolution, nil
