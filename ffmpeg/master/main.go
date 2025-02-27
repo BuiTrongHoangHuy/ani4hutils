@@ -41,7 +41,7 @@ func handleRequest(ctx context.Context, event events.S3Event) (string, error) {
 			return "", err
 		}
 
-		fmt.Println(output)
+		fmt.Println(*output)
 
 		if resolution, ok := output.Metadata["resolution"]; ok {
 			return resolution, nil
