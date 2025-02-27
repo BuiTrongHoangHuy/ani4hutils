@@ -9,7 +9,11 @@ import (
 	"github.com/aws/aws-sdk-go-v2/aws"
 	"github.com/aws/aws-sdk-go-v2/config"
 	"github.com/aws/aws-sdk-go-v2/service/s3"
+	"io"
 	"log"
+	"os"
+	"os/exec"
+	"path/filepath"
 )
 
 var (
@@ -34,24 +38,49 @@ func handleRequest(ctx context.Context, event events.S3Event) (string, error) {
 		sourceBucket := record.S3.Bucket.Name
 		objectKey := record.S3.Object.Key
 
-		output, err := s3Client.HeadObject(ctx, &s3.HeadObjectInput{
+		tmpInputFile := fmt.Sprintf("/tmp/%s", filepath.Base(objectKey))
+		// 1. Download file from s3
+		getObjectParam := s3.GetObjectInput{
 			Bucket: aws.String(sourceBucket),
 			Key:    aws.String(objectKey),
-		})
+		}
+
+		output, err := s3Client.GetObject(ctx, &getObjectParam)
+		if err != nil {
+			return "", fmt.Errorf("failed to get object: %w", err)
+		}
+		defer output.Body.Close()
+
+		file, err := os.Create(tmpInputFile)
+		if err != nil {
+			return "", fmt.Errorf("failed to create temp file: %w", err)
+		}
+		defer file.Close()
+
+		_, err = io.Copy(file, output.Body)
+		if err != nil {
+			return "", fmt.Errorf("failed to save file: %w", err)
+		}
+
+		cmd := exec.Command("ffprobe", "-v", "error", "-select_streams", "v:0", "-show_entries", "stream=width,height", "-of", "json", tmpInputFile)
+
+		cmdOutput, err := cmd.Output()
 		if err != nil {
 			return "", err
 		}
 
-		d, e := json.Marshal(output)
-		if e != nil {
-			return "", e
+		var probeData struct {
+			Streams []struct {
+				Width  int `json:"width"`
+				Height int `json:"height"`
+			} `json:"streams"`
 		}
-		fmt.Println(string(d))
-		if resolution, ok := output.Metadata["x-amz-meta-resolution"]; ok {
-			fmt.Println(resolution)
-			return resolution, nil
+		json.Unmarshal(cmdOutput, &probeData)
+		if len(probeData.Streams) == 0 {
+			return "", fmt.Errorf("no video stream found")
 		}
-		return "", nil
+		res := fmt.Sprintf("%dx%d", probeData.Streams[0].Width, probeData.Streams[0].Height)
+		return res, nil
 	}
-	return "empty", nil
+	return "", nil
 }
