@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
 	"github.com/aws/aws-sdk-go-v2/aws"
@@ -39,6 +40,8 @@ func handleRequest(ctx context.Context, event events.S3Event) (string, error) {
 		if err != nil {
 			return "", err
 		}
+
+		fmt.Println(output)
 
 		if resolution, ok := output.Metadata["resolution"]; ok {
 			return resolution, nil
