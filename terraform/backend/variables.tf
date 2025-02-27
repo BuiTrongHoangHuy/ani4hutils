@@ -5,7 +5,7 @@ variable "region" {
 
 variable "project" {
   description = "The project name to use for unique resource naming"
-  default     = "hoang-terraform-123"
+  default     = "ani4h"
   type        = string
 }
 
