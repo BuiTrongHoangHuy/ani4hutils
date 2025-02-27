@@ -2,7 +2,7 @@ name: ci
 on:
   push:
     branches:
-      - deploy/lambda-ffmpeg-mux
+      - deploy/ffmpeg-master-lambda
 jobs:
   build:
     name: Build &  Deploy
@@ -50,7 +50,7 @@ jobs:
           IMAGE_TAG:  ani4h-${{ steps.get-commit-hash.outputs.commit-hash }}
 
         run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f ./ffmpeg/Dockerfile .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f ./ffmpeg/master/Dockerfile .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
   deploy-lambda-image:
     runs-on: ubuntu-latest
