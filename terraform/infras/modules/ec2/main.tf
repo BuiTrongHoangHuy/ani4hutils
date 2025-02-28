@@ -16,6 +16,8 @@ resource "aws_instance" "api" {
     volume_size = 20
   }
 
+  user_data = base64encode(templatefile("${path.module}/run.sh", {}))
+
   associate_public_ip_address = true
   ami = "ami-0198a868663199764"
   instance_type = "t2.micro"
