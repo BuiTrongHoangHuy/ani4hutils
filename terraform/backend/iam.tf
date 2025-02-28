@@ -20,17 +20,7 @@ data "aws_iam_policy_document" "policy_doc" {
     resources = [aws_dynamodb_table.dynamodb_table.arn]
   }
 
-  # New statement for KMS permissions
-  statement {
-    actions = [
-      "kms:Encrypt",
-      "kms:Decrypt",
-      "kms:ReEncrypt*",
-      "kms:GenerateDataKey*",
-      "kms:DescribeKey"
-    ]
-    resources = [aws_kms_key.kms_key.arn]
-  }
+
 }
 
 
