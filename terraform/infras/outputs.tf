@@ -3,6 +3,11 @@ output "db_password" {
   sensitive = true
 }
 
+output "db_dns" {
+  value = module.database.config.hostname
+  sensitive = true
+}
+
 output "s3_static_url" {
   value = module.s3.s3_dns_name
 }
