@@ -4,6 +4,7 @@ package site.ani4h.api.auth;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.ani4h.api.common.ApiResponse;
 
 @RestController
 @RequestMapping("auth")
@@ -23,6 +24,6 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody RegisterRequest register) {
         var res = authService.Register(register);
-        return ResponseEntity.ok(res.getId());
+        return ResponseEntity.ok(ApiResponse.success(res.getId()));
     }
 }
