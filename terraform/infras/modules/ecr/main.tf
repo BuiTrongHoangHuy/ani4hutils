@@ -6,7 +6,6 @@ terraform {
   }
 }
 
-
 module "ecr_repositories" {
   source = "terraform-aws-modules/ecr/aws"
   for_each = toset(var.image_names)

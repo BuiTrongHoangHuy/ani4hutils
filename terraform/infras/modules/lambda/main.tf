@@ -6,12 +6,31 @@ terraform {
   }
 }
 
+data "aws_iam_policy_document" "assume_role" {
+  statement {
+    effect = "Allow"
 
-resource "aws_lambda_function" "ffmpeg_master" {
-  function_name = "${var.project}-ffmpeg-master"
-  role          = ""
-  ephemeral_storage {
-    size = 3008
+    principals {
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+
+    actions = ["sts:AssumeRole"]
   }
-  timeout = 15
+}
+
+resource "aws_iam_role" "iam_for_lambda" {
+  name               = "iam_for_lambda"
+  assume_role_policy = data.aws_iam_policy_document.assume_role.json
+}
+
+resource "aws_lambda_function" "master_function" {
+  function_name = "${var.project}-ffmpeg-master"
+  role          = aws_iam_role.iam_for_lambda.arn
+  image_uri = "${var.project}-lambda-master:latest"
+  ephemeral_storage {
+    size = 3004
+  }
+  package_type = "Image"
+  timeout = 15*60
 }

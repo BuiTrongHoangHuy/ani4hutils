@@ -28,26 +28,32 @@ module "networking" {
   database_subnets = ["10.0.7.0/24", "10.0.8.0/24", "10.0.9.0/24"]
 }
 
-# module "lambdas" {
-#   source = "./modules/lambda"
-# }
 
-
+variable "function_names" {
+  default = ["lambda-master","lambda-worker"]
+  type = list(string)
+}
 
 module "ecr" {
   source = "./modules/ecr"
-  image_names = ["lambda-master","lambda-worker"]
+  image_names =var.function_names
   project = local.project
+}
+
+module "lambdas" {
+  depends_on = [module.ecr]
+  source = "./modules/lambda"
+  project = local.project
+  function_names = var.function_names
+  ecr = module.ecr
 }
 
 module "database" {
   source = "./modules/database"
-
   project = local.project
   vpc     = module.networking.vpc
   sg      = module.networking.sg
 }
-
 
 module "vm" {
   source = "./modules/ec2"
