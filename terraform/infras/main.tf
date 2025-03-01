@@ -28,6 +28,15 @@ module "networking" {
   database_subnets = ["10.0.7.0/24", "10.0.8.0/24", "10.0.9.0/24"]
 }
 
+# module "lambdas" {
+#   source = "./modules/lambda"
+# }
+
+
+
+module "ecr" {
+  source = "./modules/ecr"
+}
 
 module "database" {
   source = "./modules/database"

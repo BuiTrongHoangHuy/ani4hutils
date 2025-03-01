@@ -28,9 +28,14 @@ module "vm_sg" {
   vpc_id = module.vpc.vpc_id
   ingress_rules = [
     {
-      port        = 80
+      port        = 443
       cidr_blocks = ["0.0.0.0/0"]
     },
+    {
+      port        = 443
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+    ,
     {
       port        = 22
       cidr_blocks = ["0.0.0.0/0"]
