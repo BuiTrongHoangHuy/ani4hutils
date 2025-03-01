@@ -41,7 +41,7 @@ jobs:
         id: build-image
         env:
           ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          IMAGE_TAG:  ani4h-master-lambda
+          ECR_REPOSITORY: ani4h-master-lambda
         run: |
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:latest -f ./ffmpeg/master/Dockerfile .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
@@ -58,4 +58,5 @@ jobs:
       - name: Deploy new code
         env:
           ECR_REGISTRY: ${{ needs.build.outputs.registry }}
-        run: aws lambda update-function-code --function-name ani4h-master-lambda --image-uri $ECR_REGISTRY/ani4h-master-lambda:latest
+          ECR_REPOSITORY: ani4h-master-lambda
+        run: aws lambda update-function-code --function-name $ECR_REPOSITORY --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:latest
