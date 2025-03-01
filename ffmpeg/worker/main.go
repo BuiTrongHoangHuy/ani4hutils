@@ -40,7 +40,6 @@ func handleRequest(ctx context.Context, event events.S3Event) error {
 
 		tmpInputFile := fmt.Sprintf("/tmp/%s", filepath.Base(objectKey))
 		tmpOutputDir := "/tmp/hls_output"
-
 		// 1. Download file from s3
 		getObjectParam := s3.GetObjectInput{
 			Bucket: aws.String(sourceBucket),
@@ -118,6 +117,12 @@ func handleRequest(ctx context.Context, event events.S3Event) error {
 		}
 
 		for _, file := range files {
+
+			// ignore to put master.m3u8 file
+			if file.Name() == "master.m3u8" {
+				continue
+			}
+
 			filePath := fmt.Sprintf("%s/%s", tmpOutputDir, file.Name())
 			fileData, err := os.ReadFile(filePath)
 			if err != nil {
@@ -134,5 +139,6 @@ func handleRequest(ctx context.Context, event events.S3Event) error {
 			}
 		}
 	}
+
 	return nil
 }
