@@ -17,7 +17,10 @@ locals {
   project = "ani4h"
 }
 
-data "aws_region" "current" {}
+data "aws_region" "current" {
+}
+
+data "aws_caller_identity" "current" {}
 
 module "networking" {
   source = "./modules/networking"
@@ -44,8 +47,9 @@ module "lambdas" {
   depends_on = [module.ecr]
   source = "./modules/lambda"
   project = local.project
+  region = data.aws_region.current.name
   function_names = var.function_names
-  ecr = module.ecr
+  account_id = data.aws_caller_identity.current.account_id
 }
 
 module "database" {

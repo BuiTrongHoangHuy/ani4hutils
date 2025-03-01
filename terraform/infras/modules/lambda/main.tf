@@ -27,10 +27,13 @@ resource "aws_iam_role" "iam_for_lambda" {
 resource "aws_lambda_function" "master_function" {
   function_name = "${var.project}-ffmpeg-master"
   role          = aws_iam_role.iam_for_lambda.arn
-  image_uri = "${var.project}-lambda-master:latest"
+  image_uri = "${var.account_id}.dkr.ecr.${var.region}.amazonaws.com/${var.project}-lambda-master:latest"
   ephemeral_storage {
     size = 3004
   }
   package_type = "Image"
   timeout = 15*60
 }
+
+
+#686255971544.dkr.ecr.ap-southeast-1./ani4h-lambda-master:latest

@@ -6,6 +6,10 @@ variable "function_names" {
   type    = list(string)
 }
 
-variable "ecr" {
+variable "account_id" {
   type = any
+}
+
+variable "region" {
+  type = string
 }
