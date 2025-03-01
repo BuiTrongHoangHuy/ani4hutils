@@ -1,6 +1,7 @@
 package site.ani4h.api.auth;
 
 
+import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +23,8 @@ public class AuthController {
 
 
     @PostMapping("/register")
-    public Integer register(@RequestBody AuthRegister register) {
-        authService.Register(register);
-        return register.getId();
+    public Integer register(@RequestBody RegisterRequest register) {
+        var res = authService.Register(register);
+        return res.getId();
     }
 }

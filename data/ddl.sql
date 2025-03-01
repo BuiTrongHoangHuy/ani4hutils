@@ -6,15 +6,15 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users`
 (
     `id`            int                            NOT NULL AUTO_INCREMENT,
-    `phone_number`  VARCHAR(255),
-    `address`       VARCHAR(255),
+    `phone_number`  VARCHAR(255) DEFAULT NULL,
+    `address`       VARCHAR(255) DEFAULT NULL ,
     `first_name`    VARCHAR(255),
     `last_name`     VARCHAR(255),
     `display_name`  VARCHAR(255),
     `date_of_birth` date,
     `gender`        enum ('male','female','other') NOT NULL DEFAULT 'other',
-    `role`          ENUM ('admin','viewer','streamer','moderator'),
-    `avatar`        JSON,
+    `role`          ENUM ('admin','user'),
+    `avatar`        JSON DEFAULT NULL,
     `status`        INT                                     DEFAULT 1,
     `created_at`    TIMESTAMP                               DEFAULT CURRENT_TIMESTAMP,
     `updated_at`    TIMESTAMP                               DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -23,7 +23,6 @@ CREATE TABLE `users`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
-
 DROP TABLE IF EXISTS `auths`;
 CREATE TABLE `auths`
 (
@@ -31,7 +30,7 @@ CREATE TABLE `auths`
     `user_id`    int                                NOT NULL,
     `email`      varchar(255) CHARACTER SET utf8mb4 NOT NULL,
     `salt`       varchar(50) CHARACTER SET utf8mb4  DEFAULT NULL,
-    `password`   varchar(100) CHARACTER SET utf8mb4 DEFAULT NULL,
+    `password`   varchar(255) CHARACTER SET utf8mb4 DEFAULT NULL,
     `status`     INT                                DEFAULT 1,
     `created_at` datetime                           DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime                           DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -41,7 +40,6 @@ CREATE TABLE `auths`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
-
 DROP TABLE IF EXISTS `external_auth_providers`;
 CREATE TABLE `external_auth_providers`
 (
