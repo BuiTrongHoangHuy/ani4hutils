@@ -1,10 +1,11 @@
 package site.ani4h.api.auth;
 
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface AuthRepository extends JpaRepository<Auth,Integer> {
+public interface AuthRepository {
+    public void create(AuthRegister authRegister);
 }
