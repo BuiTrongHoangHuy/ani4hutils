@@ -1,10 +1,5 @@
-output "db_password" {
-  value = module.database.config.password
-  sensitive = true
-}
-
-output "db_dns" {
-  value = module.database.config.hostname
+output "db_config" {
+  value = module.database.config
   sensitive = true
 }
 
@@ -14,6 +9,7 @@ output "s3_static_url" {
 
 output "vm_ip" {
   value = module.vm.lb_dns
+  sensitive = true
 }
 
 
