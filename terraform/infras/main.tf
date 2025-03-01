@@ -36,6 +36,8 @@ module "networking" {
 
 module "ecr" {
   source = "./modules/ecr"
+  image_names = ["lambda-master","lambda-worker"]
+  project = local.project
 }
 
 module "database" {

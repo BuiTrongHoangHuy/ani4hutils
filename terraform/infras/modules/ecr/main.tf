@@ -5,15 +5,15 @@ terraform {
     }
   }
 }
-resource "aws_ecr_repository" "lambda_master" {
-  name = "${var.project}-lambda-master"
-  image_tag_mutability = "MUTABLE"
-  force_delete = true
 
-}
 
-resource "aws_ecr_lifecycle_policy" "lambda_master" {
-  policy = <<EOF
+module "ecr_repositories" {
+  source = "terraform-aws-modules/ecr/aws"
+  for_each = toset(var.image_names)
+  repository_name = "${var.project}-${each.value}"
+  repository_image_tag_mutability = "MUTABLE"
+  repository_force_delete = true
+  repository_lifecycle_policy = <<EOF
   {
       "rules": [
           {
@@ -32,5 +32,4 @@ resource "aws_ecr_lifecycle_policy" "lambda_master" {
       ]
   }
   EOF
-  repository = aws_ecr_repository.lambda_master.name
 }
