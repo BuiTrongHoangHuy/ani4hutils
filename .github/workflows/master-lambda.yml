@@ -1,4 +1,4 @@
-name: ci
+name: master-lambda-ci
 on:
   push:
     branches:
