@@ -17,6 +17,7 @@ public class ApiApplication {
 
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
+        System.out.println();
         return args -> {
 
             System.out.println("Let's inspect the beans provided by Spring Boot:");

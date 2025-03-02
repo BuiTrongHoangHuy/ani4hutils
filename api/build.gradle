@@ -33,7 +33,7 @@ dependencies {
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
     runtimeOnly 'com.mysql:mysql-connector-j'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-
+    implementation 'commons-io:commons-io:2.6'
     // lombok
     compileOnly 'org.projectlombok:lombok:1.18.36'
     annotationProcessor 'org.projectlombok:lombok:1.18.36'
