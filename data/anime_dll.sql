@@ -42,7 +42,6 @@ CREATE TABLE `film`
 
     `series_id`                 int,
     PRIMARY KEY (`id`),
-    KEY `series_id` (`series_id`) USING BTREE,
     KEY `state` (`state`) USING BTREE,
     KEY `status` (`status`) USING BTREE,
     KEY `series_id` (`series_id`) USING BTREE
