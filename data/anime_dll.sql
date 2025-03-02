@@ -28,7 +28,7 @@ CREATE TABLE `film`
     `num_list_users`            int DEFAULT 0,
     `num_scoring_users`         int DEFAULT 0,
     `media_type`                varchar(50),
-    `state`                     enum('Upcoming','Now Streaming', 'Released', 'Discontinued'),
+    `state`                     enum('upcoming','now_streaming', 'released', 'discontinued'),
     `max_episodes`              int,
     `num_episodes`              int,
     `completed`                 BOOLEAN NOT NULL DEFAULT FALSE,
@@ -101,7 +101,7 @@ CREATE TABLE `season`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
     `year`                      int,
-    `season`                    enum('Spring', 'Summer', 'Fall', 'Winter'),
+    `season`                    enum('spring', 'summer', 'fall', 'winter'),
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -120,7 +120,7 @@ CREATE TABLE `broadcast`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
     `start_time`                time,
-    `date_of_week`              enum('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
+    `date_of_week`              enum('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'),
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -166,7 +166,7 @@ DROP TABLE IF EXISTS `statistic`;
 CREATE TABLE `statistic`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
-    `state`                     enum('Watching', 'Completed', 'Rating'),
+    `state`                     enum('watching', 'completed', 'rating'),
     `count_value`               int DEFAULT 0,
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
@@ -187,7 +187,7 @@ CREATE TABLE `film_character`
     `id`                        int NOT NULL AUTO_INCREMENT,
     `image`                     JSON,
     `name`                      varchar(50) NOT NULL,
-    `role`                      enum('Main', 'Supporting'),
+    `role`                      enum('main', 'supporting'),
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -242,7 +242,7 @@ CREATE TABLE `episode`
     `video_url`                 TEXT,
     `view_count`                int DEFAULT 0,
     `air_date`                  datetime,
-    `state`                     enum('Released', 'Upcoming'),
+    `state`                     enum('released', 'upcoming'),
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
