@@ -4,6 +4,7 @@ CREATE TABLE `series`
     `id`                        int NOT NULL AUTO_INCREMENT,
     `name`                      varchar(50) NOT NULL,
     `images`                    JSON,
+    `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
@@ -11,8 +12,8 @@ CREATE TABLE `series`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `anime`
-CREATE TABLE `anime`
+DROP TABLE IF EXISTS `film`
+CREATE TABLE `film`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
     `title`                     varchar(255) NOT NULL,
@@ -26,7 +27,7 @@ CREATE TABLE `anime`
     `num_list_users`            int DEFAULT 0,
     `num_scoring_users`         int DEFAULT 0,
     `media_type`                varchar(50),
-    `status`                    varchar(50),
+    `state`                     varchar(50),
     `max_episodes`              int,
     `num_episodes`              int,
     `completed`                 BOOLEAN NOT NULL DEFAULT FALSE,
@@ -34,10 +35,11 @@ CREATE TABLE `anime`
     `source`                    varchar(50),
     `age_rating`                int,
     `images`                    JSON,
+    `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    `series_id`                  int,
+    `series_id`                 int,
     PRIMARY KEY (`id`),
     KEY `series_id` (`series_id`) USING BTREE,
 ) ENGINE = InnoDB
@@ -51,12 +53,13 @@ CREATE TABLE `alternative_titles`
     `synonyms`                  varchar(250),
     `en_name`                   varchar(250),
     `ja_name`                   varchar(250),
+    `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    `anime_id`                  int NOT NULL,
+    `film_id`                   int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `anime_id` (`anime_id`) USING BTREE
+    KEY `film_id` (`film_id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -74,14 +77,14 @@ CREATE TABLE `genre`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `anime_genre`;
-CREATE TABLE `anime_genre`
+DROP TABLE IF EXISTS `film_genre`;
+CREATE TABLE `film_genre`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
-    `anime_id`                  int NOT NULL,
+    `film_id`                   int NOT NULL,
     `genre_id`                  int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `anime_id` (`anime_id`) USING BTREE,
+    KEY `film_id` (`film_id`) USING BTREE,
     KEY `genre_id` (`genre_id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -93,10 +96,13 @@ CREATE TABLE `season`
     `id`                        int NOT NULL AUTO_INCREMENT,
     `year`                      int,
     `season`                    enum('Spring', 'Summer', 'Fall', 'Winter'),
+    `status`                    int DEFAULT 1,
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    `anime_id`                  int NOT NULL,
+    `film_id`                   int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `anime_id` (`anime_id`) USING BTREE
+    KEY `film_id` (`film_id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -107,10 +113,13 @@ CREATE TABLE `broadcast`
     `id`                        int NOT NULL AUTO_INCREMENT,
     `start_time`                time,
     `date_of_week`              enum('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'),
+    `status`                    int DEFAULT 1,
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    `anime_id`                  int NOT NULL,
+    `film_id`                   int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `anime_id` (`anime_id`) USING BTREE
+    KEY `film_id` (`film_id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -120,19 +129,23 @@ CREATE TABLE `studio`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
     `name`                      varchar(50),
+    `image`                     JSON,
+    `status`                    int DEFAULT 1,
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `anime_studio`;
-CREATE TABLE `anime_studio`
+DROP TABLE IF EXISTS `film_studio`;
+CREATE TABLE `film_studio`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
-    `anime_id`                  int NOT NULL ,
+    `film_id`                   int NOT NULL ,
     `studio_id`                 int NOT NULL ,
     PRIMARY KEY (`id`),
-    KEY `anime_id` (`anime_id`) USING BTREE,
+    KEY `film_id` (`film_id`) USING BTREE,
     KEY `studio_id` (`studio_id`) USING BTREE,
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
@@ -144,25 +157,31 @@ CREATE TABLE `statistic`
     `id`                        int NOT NULL AUTO_INCREMENT,
     `status`                    varchar(50),
     `count_value`               int DEFAULT 0,
+    `status`                    int DEFAULT 1,
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    `anime_id`                  int NOT NULL,
+    `film_id`                   int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `anime_id` (`anime_id`) USING BTREE
+    KEY `film_id` (`film_id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `anime_character`;
-CREATE TABLE `anime_character`
+DROP TABLE IF EXISTS `film_character`;
+CREATE TABLE `film_character`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
     `image`                     JSON,
     `name`                      varchar(50) NOT NULL,
     `role`                      varchar(50) NOT NULL,
+    `status`                    int DEFAULT 1,
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
-    `anime_id`                  int NOT NULL,
+    `film_id`                  int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `anime_id` (`anime_id`) USING BTREE
+    KEY `film_id` (`film_id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -174,21 +193,47 @@ CREATE TABLE `voice_actor`
     `image`                     JSON,
     `name`                      varchar(50) NOT NULL ,
     `language`                  varchar(50),
+    `status`                    int DEFAULT 1,
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `anime_character_voice_actor`;
-CREATE TABLE `anime_character_voice_actor`
+DROP TABLE IF EXISTS `film_character_voice_actor`;
+CREATE TABLE `film_character_voice_actor`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
-    `anime_character_id`        int NOT NULL,
+    `film_character_id`         int NOT NULL,
     `voice_actor_id`            int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `anime_character_id` (`anime_character_id`) USING BTREE,
+    KEY `film_character_id` (`film_character_id`) USING BTREE,
     KEY `voice_actor_id` (`voice_actor_id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `episode`;
+CREATE TABLE `episode`
+(
+    `id`                        int NOT NULL AUTO_INCREMENT,
+    `title`                     varchar(50) NOT NULL,
+    `episode_number`            int NOT NULL,
+    `synopsis`                  TEXT,
+    `duration`                  int,
+    `thumbnail`                 JSON,
+    `video_url`                 TEXT,
+    `view_count`                int DEFAULT 0,
+    `air_date`                  datetime,
+    `state`                     varchar(50),
+    `status`                    int DEFAULT 1,
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+
+    `film_id`                   int NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `film_id` (`film_id`) USING BTREE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
