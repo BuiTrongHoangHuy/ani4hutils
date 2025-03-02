@@ -8,11 +8,12 @@ CREATE TABLE `series`
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
+    KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `film`
+DROP TABLE IF EXISTS `film`;
 CREATE TABLE `film`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
@@ -27,7 +28,7 @@ CREATE TABLE `film`
     `num_list_users`            int DEFAULT 0,
     `num_scoring_users`         int DEFAULT 0,
     `media_type`                varchar(50),
-    `state`                     varchar(50),
+    `state`                     enum('Upcoming','Now Streaming', 'Released', 'Discontinued'),
     `max_episodes`              int,
     `num_episodes`              int,
     `completed`                 BOOLEAN NOT NULL DEFAULT FALSE,
@@ -42,6 +43,9 @@ CREATE TABLE `film`
     `series_id`                 int,
     PRIMARY KEY (`id`),
     KEY `series_id` (`series_id`) USING BTREE,
+    KEY `state` (`state`) USING BTREE,
+    KEY `status` (`status`) USING BTREE,
+    KEY `series_id` (`series_id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -59,7 +63,8 @@ CREATE TABLE `alternative_titles`
 
     `film_id`                   int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `film_id` (`film_id`) USING BTREE
+    KEY `film_id` (`film_id`) USING BTREE,
+    KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -72,7 +77,8 @@ CREATE TABLE `genre`
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -102,7 +108,9 @@ CREATE TABLE `season`
 
     `film_id`                   int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `film_id` (`film_id`) USING BTREE
+    KEY `film_id` (`film_id`) USING BTREE,
+    KEY `season` (`season`) USING BTREE,
+    KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -119,7 +127,9 @@ CREATE TABLE `broadcast`
 
     `film_id`                   int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `film_id` (`film_id`) USING BTREE
+    KEY `film_id` (`film_id`) USING BTREE,
+    KEY `date_of_week` (`date_of_week`) USING BTREE,
+    KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -133,7 +143,8 @@ CREATE TABLE `studio`
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -146,7 +157,7 @@ CREATE TABLE `film_studio`
     `studio_id`                 int NOT NULL ,
     PRIMARY KEY (`id`),
     KEY `film_id` (`film_id`) USING BTREE,
-    KEY `studio_id` (`studio_id`) USING BTREE,
+    KEY `studio_id` (`studio_id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -155,7 +166,7 @@ DROP TABLE IF EXISTS `statistic`;
 CREATE TABLE `statistic`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
-    `status`                    varchar(50),
+    `state`                     enum('Watching', 'Completed', 'Rating'),
     `count_value`               int DEFAULT 0,
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
@@ -163,7 +174,9 @@ CREATE TABLE `statistic`
 
     `film_id`                   int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `film_id` (`film_id`) USING BTREE
+    KEY `film_id` (`film_id`) USING BTREE,
+    KEY `state` (`state`) USING BTREE ,
+    KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -174,14 +187,16 @@ CREATE TABLE `film_character`
     `id`                        int NOT NULL AUTO_INCREMENT,
     `image`                     JSON,
     `name`                      varchar(50) NOT NULL,
-    `role`                      varchar(50) NOT NULL,
+    `role`                      enum('Main', 'Supporting'),
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     `film_id`                  int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `film_id` (`film_id`) USING BTREE
+    KEY `film_id` (`film_id`) USING BTREE,
+    KEY `role` (`role`) USING BTREE ,
+    KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -196,7 +211,8 @@ CREATE TABLE `voice_actor`
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
@@ -226,14 +242,16 @@ CREATE TABLE `episode`
     `video_url`                 TEXT,
     `view_count`                int DEFAULT 0,
     `air_date`                  datetime,
-    `state`                     varchar(50),
+    `state`                     enum('Released', 'Upcoming'),
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 
     `film_id`                   int NOT NULL,
     PRIMARY KEY (`id`),
-    KEY `film_id` (`film_id`) USING BTREE
+    KEY `film_id` (`film_id`) USING BTREE,
+    KEY `state` (`state`) USING BTREE,
+    KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
