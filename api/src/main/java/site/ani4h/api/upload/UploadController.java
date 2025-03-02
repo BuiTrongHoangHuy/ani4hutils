@@ -29,4 +29,14 @@ public class UploadController {
             throw new RuntimeException(e);
         }
     }
+
+    @PostMapping("film")
+    public ResponseEntity<?> uploadFilm() {
+        try {
+            String url = this.uploadService.UploadFilm("film","hehe.mp4");
+            return ResponseEntity.ok(ApiResponse.success(url));
+        } catch (Exception e ) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -23,4 +23,11 @@ public class UploadService {
         String dst = folder + File.separator + uuid + "." + ext;
         return this.provider.uploadImage(data, dst);
     }
+
+    public String UploadFilm(String folder, String fileName) {
+        String ext  = FilenameUtils.getExtension(fileName);
+        UUID uuid = UUID.randomUUID();
+        String dst = folder + File.separator + uuid + "." + ext;
+        return this.provider.uploadFileWithPreSignedUrl(dst);
+    }
 }
