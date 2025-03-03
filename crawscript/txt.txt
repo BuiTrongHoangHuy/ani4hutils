@@ -1,0 +1,250 @@
+main_picture: https://cdn.myanimelist.net/images/anime/1448/147351.jpg
+title: Ore dake Level Up na Ken Season 2: Arise from the Shadow
+synopsis: Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.
+
+When Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event. As the calamity looms closer, Jin-Woo must continue leveling up to make sure nothing stops him from reaching his ultimate goal—saving the life of his mother.
+
+[Written by MAL Rewrite]
+mean: 8.87
+rank: #25
+popularity: #647
+num_list_users: 389,017
+num_scoring_users: 97,493 users
+Synonyms: Solo Leveling Second Season
+Japanese: 俺だけレベルアップな件 Season 2 -Arise from the Shadow-
+type: TV
+Episodes: 13
+Status: Currently Airing
+Aired: Jan 5, 2025 to ?
+premiered: Winter 2025
+Broadcast: Sundays at 00:00 (JST)
+Producers: Aniplex, Crunchyroll, Sonilude, Netmarble, Kakao piccoma, D&C Media
+Licensors: None found, add some
+Studios: A-1 Pictures
+source: Web manga
+Genres: ActionAction, AdventureAdventure, FantasyFantasy
+Duration: 23 min. per ep.
+Rating: R - 17+ (violence & profanity)
+
+
+name: Sung, Jin-Woo role: Main image: https://cdn.myanimelist.net/r/42x62/images/characters/2/540692.jpg?s=84ef54c5990bd67985d24060a9ff3e84
+voice_actor: Ban, Taitolanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/74502.jpg?s=8425b98a40dcca2bd35815c9356ec97c
+voice_actor: Emmanuel, Charleslanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/60298.jpg?s=e631e54968a9b8e5a8bc88d43233f89d
+voice_actor: Le, Alekslanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/82721.jpg?s=bba90f878fa299108c6be84c7a3fc4b3
+voice_actor: Flamant, Alexislanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/68228.jpg?s=80ff317b5b0fb7983663a55f18291158
+voice_actor: Campaiola, Federicolanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/45968.jpg?s=75feebb1cffc876a25fa1c09e5cb2da1
+name: Ahn, Sang-Min role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/2/403236.jpg?s=90cdf39e9c21d0f7a4cfd94839ab3c0f
+voice_actor: Kondou, Hironorilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/75762.jpg?s=ee5cc5c4a31a9d0112bd8eb977d61b47
+voice_actor: Yee, Corylanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/70948.jpg?s=73c5f11d58107a9b782cbafa36226863
+voice_actor: Rosa, Ailtonlanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/79873.jpg?s=b979decb37542478f5bfff3062d3cae1
+voice_actor: Weiss, Marclanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/67726.jpg?s=03d41e4e7f63b95530b7ae41e455953d
+name: Ahn, Sang-Mi role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Kuwabara, Akiralanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/56919.jpg?s=e77dec745f2e8a1fb540c0360b175fda
+name: Bae, Yoon-Seok role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Yamamoto, Kanehiralanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/57277.jpg?s=595feccefdb654d2d3aea6c80c67f1af
+voice_actor: Xella, Gustavolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/79671.jpg?s=0748c1014f8530b273f06faacf89062b
+voice_actor: Bryant, Benlanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/47854.jpg?s=bc4fae9be5b6034d635cfc53dade7bad
+voice_actor: Bonnet, Laurentlanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/71266.jpg?s=60fea4e96d9d3ad8bfefae898b07eb56
+name: Baek, Yoon-Ho role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/4/531273.jpg?s=3ce567baf6938a539f6cf49c6a4a4c9b
+voice_actor: Touchi, Hirokilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/71277.jpg?s=0d22a4ab9540aedefc5277d0a980e4a4
+voice_actor: Marques, Glaucolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/76479.jpg?s=32a6bd3cfa55464ce3b8c7096c1f60fd
+voice_actor: Sabat, Christopherlanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/42874.jpg?s=aef91fd9132c86444be351f412b0cfeb
+voice_actor: Schlick, Marvinlanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/79661.jpg?s=1b314869f062e94142e65721a9359fcc
+voice_actor: Scarafoni, Riccardolanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/46484.jpg?s=c4b1b0924837ae89da944b1f3c2df174
+name: Barca role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/11/492048.jpg?s=1d2c9c0a228a112b76c73524abb581d0
+voice_actor: Satou, Ryuujilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/66138.jpg?s=af81a5e5caa09e499bd02069b860ecd0
+voice_actor: Mills, Damanlanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/48658.jpg?s=7d876fc697a870a2470684c5416f0f31
+voice_actor: de Souza, Augustolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/82102.jpg?s=b80a51d6fbe66a1f70ed1de0cbb1bb9a
+voice_actor: Manet, Davidlanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/70911.jpg?s=21ea11a50a8cfc3d454851d5777edea8
+voice_actor: Chevalier, Davidelanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/1577.jpg?s=f3c2a2e9adbc0c7edcbcb6f803e63834
+name: Cha, Hae-In role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/15/531268.jpg?s=f9270c0cd85e619dc44f3e8f11a3bdb9
+voice_actor: Ueda, Reinalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/63535.jpg?s=37e98a391e1ad9f822f6444326a13f21
+voice_actor: Horta, Luísalanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/62706.jpg?s=5eca8452cec1e78c2eba8b41d85a8613
+voice_actor: Rojas, Michellelanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/42257.jpg?s=1187252d1e4b4c0e666b49cb2aa9d72f
+voice_actor: Deworst, Ludivinelanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/69766.jpg?s=8c5f4678857034b2c56d4cf9ee54f89e
+voice_actor: Bologna, Jessicalanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/72944.jpg?s=2ba35dcebd3241fcae314da0f55e5d15
+name: Choi, Jong-In role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/7/531272.jpg?s=309b174b84779d1c3105c7777c1524b2
+voice_actor: Hirakawa, Daisukelanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/80934.jpg?s=f7ccc5de7660563b7232c163492a0bd8
+voice_actor: Grinnan, Felipelanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/67076.jpg?s=c084c71363995383e5553ca6b31dfc54
+voice_actor: Sinclair, Ianlanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/38035.jpg?s=ed5d7c163e5f5c9aa59816028580f4a0
+voice_actor: Van Santfoort, Maximelanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/66320.jpg?s=a8f8caefab7a3eb173608977a925df30
+voice_actor: Marsicola, Claudiolanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+name: Connor, Michael role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Nakano, Taisukelanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/62799.jpg?s=39e8a9cd1172f1628f6e95028fa739dd
+voice_actor: Stern, Sérgiolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/45140.jpg?s=ef797fdaaedcfa354a6567a84355739a
+name: Eun-Seok role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/15/534865.jpg?s=15101654f2a6c79e1abbbe737c7f038a
+voice_actor: Terashima, Takumalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/60688.jpg?s=0264705e38a03b8677892f4bd132bffe
+name: Gina role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/9/574795.jpg?s=f184e9d6ddb1896fa3b1699626bbf6e6
+voice_actor: Aihara, Kotomilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/66689.jpg?s=ac421c402d273e85a488b98de908a5ba
+voice_actor: Bullara, Fernandalanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/61918.jpg?s=215d32379ebdaddb7e414b71180ba519
+voice_actor: Reti, Eleonoralanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/22295.jpg?s=b114be35dd1846829544d9d9ab94cf69
+name: Go, Gun-Hee role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/3/531270.jpg?s=d6b4d3ca914d70105618a5127f0040c9
+voice_actor: Ginga, Banjoulanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/44678.jpg?s=78d79cffe7708cf377fc8df1bd32c3e5
+voice_actor: Campanile, Carloslanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/40745.jpg?s=591ba292d84ec5e9d7d1b5596f3a6668
+voice_actor: Williams, Kentlanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/40726.jpg?s=a4860e1836e7a8485ae21178dfc96389
+voice_actor: Vovk, Jean-Michellanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/66707.jpg?s=0b5357e2aab1170378c46dd53b475546
+voice_actor: Pucci, Fabriziolanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/46008.jpg?s=c7737949fcbc4fc5c4b649df835061dc
+name: Go, Myung-Hwan role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/6/581674.jpg?s=1482fe787528a17b823cba06855d5bec
+voice_actor: Hirose, Takehisalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Bisente, Geofflanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/78141.jpg?s=32d5a434ddf4f180d6b354cd40cebe15
+voice_actor: Ruivo, Gabriellanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/75317.jpg?s=4fdfe43115b782f64cc86f049dda1114
+voice_actor: Crépet, Alexandrelanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/71248.jpg?s=e7e3eb3f011298a0c655dc30f2a4e85a
+name: Goto, Ryuji role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/2/443549.jpg?s=f0de17def2aa8b0ea1be79e74ac038e6
+voice_actor: Mikami, Satoshilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/56194.jpg?s=791841b40af6bb77ac152ebf201783f4
+name: Han, Song-Yi role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/2/572692.jpg?s=3ca83728fe8e073237bd024cf704c44e
+voice_actor: Tomita, Miyulanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/67315.jpg?s=e520f0b4e1f04c7056cb454f0bcffac9
+voice_actor: Lo, Emilanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/58651.jpg?s=4e514d85a642ca001533d087003a3212
+voice_actor: Prado, Lilianlanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/78406.jpg?s=ae95bef00b31cd56b75958a6dfc0102b
+voice_actor: du Bled, Marielanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/64964.jpg?s=53c326bf965a9f165b9c4b5547c474df
+voice_actor: Volpi, Jasminelanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+name: Han, Se-Mi role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/10/579006.jpg?s=9f9328d84cab1b9a818a21b4629b93cd
+voice_actor: Senbongi, Sayakalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/62944.jpg?s=95f4bb96321a77cb1b9475df190cc242
+voice_actor: Brito, Marthalanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/84210.jpg?s=27a4336466260a456ff97302f90c053e
+voice_actor: Liberatori, Perlalanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/809.jpg?s=40360b266965361785c144f6a08eb1b8
+voice_actor: D'Hulstère, Audreylanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/66283.jpg?s=ce0117717f4db8ee63f26b9d26756e7b
+name: Hanekawa role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Mori, Nanakolanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/78046.jpg?s=c7551b88978d3d3ecc9985e262b2c6d1
+name: Hwang, Dong-Soo role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/11/395408.jpg?s=642c9e32ef88487c28340a7ac2a08791
+voice_actor: Suwabe, Junichilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/66059.jpg?s=56de4187bd125aa0eae974783d7b69ae
+voice_actor: Rudd, Matthew Davidlanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/59281.jpg?s=cac3453ca44787992513e7219e0e19e6
+voice_actor: Mazzei, Wilkenlanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/66152.jpg?s=78aec440f9f1c805a76ce9b56fdea526
+voice_actor: Dos Santos, Claudiolanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/67144.jpg?s=cf7d425ffa5648252b7768a937fdd46a
+voice_actor: Budroni, Alessandrolanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/46471.jpg?s=848fca52f00220cf08e68e99d0b4f205
+name: Hyun, Ki-Chul role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/13/543621.jpg?s=4386543a98a3a36e36aa7e63597e2477
+voice_actor: Morinaga, Ayatolanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/67118.jpg?s=64b435d29ce7cce170bea54a1e2c460c
+voice_actor: Bowling, Anthonylanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/28191.jpg?s=748011dfff8b56eab07765d4a8719804
+voice_actor: Aragão, Tadeulanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/78995.jpg?s=da5df70bb376dc4cbc901267f71c3f1a
+voice_actor: Delmotte, Thibautlanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/65089.jpg?s=1519c98661b738cd4c2b7539ba9f63e7
+name: Igris role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/5/390162.jpg?s=2c1b86b89047bb589398794735cdbfcd
+name: Iron role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/13/576169.jpg?s=c26cb77c51ee7f95dae1fd61d54490dc
+voice_actor: Yamamoto, Shoutalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/55930.jpg?s=f945bc82be08b139aa6fe97585e7a4a0
+name: Jung, Yoon-Tae role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Ono, Tomohirolanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/60169.jpg?s=9b3394d09b299fb8cad7b602fddee304
+name: Kargalgan role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/4/581786.jpg?s=1785ee2f12f7f50e5ea8f34ecc845d9c
+voice_actor: Miyake, Kentalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/42617.jpg?s=6ec5215b641da8f16cb327f284d16fd4
+voice_actor: Fumarola, Marcolanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/67252.jpg?s=94f51acfdef2201e5cdab74692a30f96
+voice_actor: Mendes, Vanderlanlanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/63177.jpg?s=c9011887bc42c8637c9b0e250dfca064
+name: Kim, Eun-Soo role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Koumoto, Keisukelanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/40457.jpg?s=1d2c381fed4db0d288f5418d6a24dc28
+voice_actor: Castelo, Rickolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/84212.jpg?s=156a53d64a0f214c13c4f1183b87bb1d
+name: Kim, Chul role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/14/576171.jpg?s=880a15335ab79a9aeec2844abd601ea4
+voice_actor: Kobayashi, Chikahirolanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/77253.jpg?s=34832b9bd40fdee48452e1f9eef8653e
+voice_actor: Sangregório, Brunolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/62364.jpg?s=11cb76fc5f19b6bdd066e2f0f5380e8a
+voice_actor: Seitz, Patricklanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/37829.jpg?s=9a681df1139a4090bec290f8010d76e7
+voice_actor: Matthys, Nicolaslanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/64745.jpg?s=bf8d588382e6d9313ae0622260398f6f
+voice_actor: Ramacciato, Pietrolanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+name: Kim, Sang-Shik role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/15/540696.jpg?s=a0ec57d8f97fad872259021edb39fe68
+voice_actor: Yamamoto, Mantalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/48581.jpg?s=e76054e04061a5a1c63dbab32497dfe8
+voice_actor: Simões, Cléberlanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/77121.jpg?s=ffa02c96f1f984e04631b9b13239a9a7
+voice_actor: Rossion, Jean-Françoislanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/66822.jpg?s=03907d0c988ebf7ac0e1de3058abffcb
+name: Lee, Bo-Ra role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/12/574794.jpg?s=99421d2794b074a1ea8b3b5d5d3acce1
+voice_actor: Itou, Ririalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/83924.jpg?s=b5f2487ad765af2427b611a38d8ef3ac
+voice_actor: Celini, Letícialanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/63879.jpg?s=f6391d8f4b7ae5b1fbdfedf7eac2dbc1
+voice_actor: Russello, Federicalanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Guinand, Élisabethlanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/71122.jpg?s=490ee43a01fddf3e53b30cf68ccbe5c8
+voice_actor: Huynh, Xanthelanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/53534.jpg?s=5b0fd02bb537d61e25e91b6bdf30428a
+name: Lee, Geon-Guk role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Sakuma, Motokilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/72074.jpg?s=289246bee7956ea9958ca7e571435f8f
+voice_actor: Pottes, Andrélanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/84217.jpg?s=3267e666f149da6ee67ba0b1d11a4ed1
+name: Lee, Seong-Gu role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Iwasaki, Hiroshilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/30925.jpg?s=99ef477a0718b5fb20c65d681389a939
+voice_actor: George, Crislanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/40463.jpg?s=ed9bd2d7ed7787b77e5c09ecbef5adb7
+name: Lee, Joo-Hee role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/4/540694.jpg?s=b1d8998cd3b8c1409c0dc98ea7b18177
+voice_actor: Honizumi, Rinalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/53867.jpg?s=8b8d997d343937743e1bd3b2f711760f
+voice_actor: Rodrigues, Pamellalanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/61490.jpg?s=feb5db2b0c745633762ca387339533b8
+voice_actor: Braam, Marielanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/64675.jpg?s=676a718007e46783ac3f926c046e7753
+name: Lee, Min-Sung role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Satou, Genlanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/56677.jpg?s=888b65cbc005a05dbd658ad4e0b85178
+voice_actor: Campos, Fábiolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/77320.jpg?s=9e9bbfe4f055904a5259a8ee0ac9da28
+voice_actor: Fajardo, Riccolanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/83979.jpg?s=a872660de21f6a565f1a07343f624483
+name: Lim, Tae-Gyu role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Toriumi, Kousukelanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/56756.jpg?s=da69abd19900e74ae5817ffc973cb65a
+voice_actor: Bosch, Johnny Yonglanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/68487.jpg?s=969ff401e5da5e12a758f04dcb653b33
+name: Ma, Dong-Wook role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/5/430755.jpg?s=3163baf3708c5d9c3ff831e96031aacb
+voice_actor: Ootsuka, Akiolanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/58117.jpg?s=8168f341db3e6d45e2f06e8dbe4a1477
+name: Min, Byung-Gu role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/8/402469.jpg?s=f7eb9b0949d04efc0c12d82e0a6a755e
+voice_actor: Enoki, Junyalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/62840.jpg?s=617ecb6dfaa6376dd6c0bbb0b8f7415b
+name: Mok, Jin-Soo role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/13/583106.jpg?s=37356a8a859e8e349a209e40b4bb6d00
+voice_actor: Itou, Kentaroulanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/53838.jpg?s=3a19dc66c556687c4e3171ba4a54776d
+voice_actor: Nguyen, Charleslanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/76242.jpg?s=6bf2059ac67276af3d25376876b4750c
+voice_actor: Lemaire, Brieuclanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/71302.jpg?s=2e8a9052f2d05f729754f0ea82345666
+name: Myung-Chul role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Fukunishi, Masayalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/76515.jpg?s=1353bc0ac34d78b8db9790f1cb082027
+voice_actor: Prade, Thiagolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/84160.jpg?s=4871628c7556211b6c8d9561c60ebc31
+name: Narrator role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Campanile, Carloslanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/40745.jpg?s=591ba292d84ec5e9d7d1b5596f3a6668
+voice_actor: Williams, Kentlanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/40726.jpg?s=a4860e1836e7a8485ae21178dfc96389
+voice_actor: Delhausse, Jean-Marclanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/66076.jpg?s=5d5e21646af6601856a1b054580c277a
+voice_actor: Ginga, Banjoulanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/44678.jpg?s=78d79cffe7708cf377fc8df1bd32c3e5
+voice_actor: Pucci, Fabriziolanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/46008.jpg?s=c7737949fcbc4fc5c4b649df835061dc
+name: Park, Hee-Jin role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/13/548187.jpg?s=5e9f93a9b9a306a3d577a8ca5df4d03d
+voice_actor: Aoki, Rurikolanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/74536.jpg?s=8289511602bd89214caec484f2c16c24
+voice_actor: Nishimura, Trinalanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/49124.jpg?s=e991f10a03e1afcb7630a38783f491b2
+voice_actor: Melo, Brunalanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/79369.jpg?s=f86510940e650794d55458b7c629c8cd
+voice_actor: Philippot, Nancylanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/65103.jpg?s=833235b5e9b7ff71d0692b0b5c92f69d
+voice_actor: Saltarelli, Joylanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/22235.jpg?s=3624e89cff3f635b7adaa821e64e1a08
+name: Park, Kyung-Hye role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/8/403240.jpg?s=5419c25c3fb6491f862434a58143c306
+voice_actor: Amano, Yurilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/50859.jpg?s=aa8657ae46ff4d519225012365887d0b
+name: Park, Jong-Soo role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Okitsu, Kazuyukilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/68368.jpg?s=55e83b7c7cdabae10d0b60f0ffd19a03
+name: Radiru, Esil role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/11/395410.jpg?s=d0679ab5e30443b7c2a9d4fb6750c8d3
+voice_actor: Sugiyama, Riholanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/84197.jpg?s=44f50fb370d993db9534c4cce4024b75
+name: Radiru, Borgon role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Ebara, Masashilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/49817.jpg?s=3222485610307163a2a9f1c0a30a7ff9
+name: Seo, Ji-Woo role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/2/579009.jpg?s=a3eb7090fb538741c09e2e2afb912b94
+voice_actor: Kazama, Mayukolanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/62694.jpg?s=94f0476916a627da53cc577ebfaa382c
+voice_actor: Moreira, Maria Vitórialanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/84208.jpg?s=c79d932525840816f7efac1272ac8001
+name: Shimizu, Akari role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Hieda, Nenelanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/64918.jpg?s=6a0b916c4294058e8ec59271e7a292ec
+name: Shin, Seok-Jin role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Ishige, Shouyalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/64266.jpg?s=2d11b1eac0978d2eb532a178e559ac26
+voice_actor: Fonseca, Gustavolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/82305.jpg?s=446e1a253eab83fcb9b722106af950bc
+name: Son, Ki-Hoon role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/12/583103.jpg?s=f3a81e220b1ae207549897a23cf64b98
+voice_actor: Torashima, Takaakilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/58687.jpg?s=d3ddb6a9c852aa203633d977ea9e2044
+voice_actor: Caliano, Mattheuslanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/82392.jpg?s=ba028a32f06bafdbfd376c8055bf82fd
+voice_actor: Bebi, Federicolanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/46029.jpg?s=22405da2eba42882cc378c7fa0f41684
+voice_actor: Hébrant, Sébastienlanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/70017.jpg?s=3b5a8690f1ca8db30008056a871cb780
+name: Song, Chi-Yul role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/8/540693.jpg?s=a2a402d0f504ce1eaf458f2ac33f3062
+voice_actor: Hanawa, Eijilanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/69152.jpg?s=7aca65fdd34fac2764769ae6459532d2
+voice_actor: Ribeiro, Marcolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/75751.jpg?s=e6a8587e82c7b6366c58408d0d8f239e
+name: Sung, Il-Hwan role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/10/443369.jpg?s=e58ab818190e1e5e7aed1670156637ed
+voice_actor: Koyama, Rikiyalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/54010.jpg?s=85d3b80f2a3d7a4ffc61970ac2a2c201
+voice_actor: McCollum, Robertlanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/43298.jpg?s=ca8ba8819be453db013e3b6f095c9133
+voice_actor: Vignolo, Paulolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/44334.jpg?s=394fa6586322150a4b78ce3ad06e709d
+voice_actor: Rossion, Jean-Françoislanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/66822.jpg?s=03907d0c988ebf7ac0e1de3058abffcb
+voice_actor: Chirico, Enricolanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/46636.jpg?s=7f25ce60fef1d55ccc34be45f4336a9f
+name: Sung, Jin-Ah role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/11/531269.jpg?s=9aa65a4e024e043bb00fbf239f0e34d6
+voice_actor: Mikawa, Harunalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/66810.jpg?s=45ca8d319dbe23f988daf1ace0682a9f
+voice_actor: Alencar, Biancalanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/61646.jpg?s=9b3007dadcc945c9e5c870c56b581cfe
+voice_actor: Wang, Rebeccalanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/78080.jpg?s=d89001e76a10348eba552f658c2d65b0
+voice_actor: Abouatmane, Sofialanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/70942.jpg?s=62e77dce1c4ed32a2d3d10cb92b7721b
+voice_actor: Stollo, Serenalanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+name: Tank role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Yamamoto, Shoutalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/55930.jpg?s=f945bc82be08b139aa6fe97585e7a4a0
+name: Teacher role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/12/578813.jpg?s=b6b232c13daa26bffd1fbc7247dacf53
+voice_actor: Loriaux, Fabiennelanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/65430.jpg?s=e79ca6277116d2be64f94e36f35fa83b
+voice_actor: Bock, Fernandalanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/59129.jpg?s=672efaab7bad7aacca1e730123da63db
+name: Tusk role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/10/434369.jpg?s=142a833b19b07da207b1aa04d9b06c50
+voice_actor: Mendes, Vanderlanlanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/63177.jpg?s=c9011887bc42c8637c9b0e250dfca064
+name: Vulcan role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/questionmark_23.gif?s=f7dcbc4a4603d18356d3dfef8abd655c
+voice_actor: Yamamoto, Shoutalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/55930.jpg?s=f945bc82be08b139aa6fe97585e7a4a0
+name: Woo, Jin-Chul role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/16/531274.jpg?s=d1cc0e1ef0e2f88ca994b14a594888af
+voice_actor: Furukawa, Makotolanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/74503.jpg?s=32feef499daea673ae4a3406b09dca18
+voice_actor: Mendonça, Fernandolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/67071.jpg?s=59cba892a502e635e7d157436d1c4678
+voice_actor: Cho, SungWonlanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/57835.jpg?s=9006f3b0b117d14be1e47512f145bd4c
+voice_actor: Prémel, Olivierlanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/71486.jpg?s=85d07c2cc8652ad9ef80195c8bb68b66
+voice_actor: Vender, Gabrielelanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/66302.jpg?s=5192125791625e7895ed046f329bfca9
+name: Yoo, Jin-Ho role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/16/531271.jpg?s=65f9c9adeb8a4cd68225408b6bcbf56a
+voice_actor: Nakamura, Gentalanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/60324.jpg?s=28814b121bea98b9b00449c4a56c2fb6
+voice_actor: Shim, Gyu-hyeoklanguage: Korean image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/77173.jpg?s=b2cbd78bbaa33c44fc94abe68e2c1822
+voice_actor: Granja, João Victorlanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/77185.jpg?s=c38fb91ba5bdcafdf35a05142141a786
+voice_actor: Briner, Justinlanguage: English image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/80498.jpg?s=9a32ee02710cc4c72006b683add1c312
+voice_actor: Donnay, Maximelanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/79742.jpg?s=b0a6dcbac0594603ab8f978458019e4d
+voice_actor: Broccoletti, Stefanolanguage: Italian image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/66100.jpg?s=140cc5aa987badd83b5d3e5dfd012cfd
+name: Yoo, Myung-Han role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/10/543974.jpg?s=27fcc0c587fc41a22e2808c928dbb0d1
+voice_actor: Sakuya, Shunsukelanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/2/43188.jpg?s=8d1aa12be326ee62ca858b6f879b2a1b
+voice_actor: Simões, Márciolanguage: Portuguese (BR) image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/42310.jpg?s=8b1a96deaedebb886f1436cdb1f1977f
+voice_actor: Delhausse, Jean-Marclanguage: French image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/3/66076.jpg?s=5d5e21646af6601856a1b054580c277a
+name: Yoon, Ki-Joong role: Supporting image: https://cdn.myanimelist.net/r/42x62/images/characters/8/576781.jpg?s=4fac32fb40f29160464550a7434f95eb
+voice_actor: Kaneko, Hayatolanguage: Japanese image: https://cdn.myanimelist.net/r/42x62/images/voiceactors/1/54246.jpg?s=d5f726d5cebd98e325dd585fdfe9c8ec
+

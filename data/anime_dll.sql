@@ -13,6 +13,22 @@ CREATE TABLE `series`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `producers`;
+CREATE TABLE `producers`
+(
+    `id`                        int NOT NULL AUTO_INCREMENT,
+    `name`                      varchar(50),
+    `image`                     JSON,
+    `status`                    int DEFAULT 1,
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `status` (`status`) USING BTREE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
+
 DROP TABLE IF EXISTS `film`;
 CREATE TABLE `film`
 (
@@ -32,14 +48,13 @@ CREATE TABLE `film`
     `max_episodes`              int,
     `num_episodes`              int,
     `completed`                 BOOLEAN NOT NULL DEFAULT FALSE,
-    `average_episode_duration`  int,
+    `average_episode_duration`  float,
     `source`                    varchar(50),
-    `age_rating`                int,
+    `age_rating_id`             int,
     `images`                    JSON,
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
     `series_id`                 int,
     PRIMARY KEY (`id`),
     KEY `state` (`state`) USING BTREE,
@@ -48,6 +63,22 @@ CREATE TABLE `film`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `age_ratings`;
+CREATE TABLE `age_ratings`
+(
+    `id`                        int NOT NULL AUTO_INCREMENT,
+    `name` varchar(50),
+    `description` TEXT,
+    `status`                    int DEFAULT 1,
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `status` (`status`) USING BTREE
+)ENGINE = InnoDB
+ DEFAULT CHARSET = utf8mb4
+ COLLATE = utf8mb4_unicode_ci;
+
 
 DROP TABLE IF EXISTS `alternative_titles`;
 CREATE TABLE `alternative_titles`
@@ -74,6 +105,7 @@ CREATE TABLE `genre`
     `id`                        int NOT NULL AUTO_INCREMENT,
     `name`                      varchar(50) NOT NULL,
     `status`                    int DEFAULT 1,
+    `description`               TEXT,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/PuerkitoBio/goquery"
@@ -10,26 +11,30 @@ import (
 
 func main() {
 	// variable c is a collector
+	var film Film
 	title := ""
 	c := colly.NewCollector()
 	d := colly.NewCollector()
-
 	// get main image
 	c.OnHTML(`#content > table > tbody > tr > td.borderClass > div > div:nth-child(1) > a > img`, func(e *colly.HTMLElement) {
 		fmt.Println("main_picture: " + e.Attr("data-src"))
+		film.Images = append(film.Images, e.Attr("data-src"))
 	})
 	// get title
 	c.OnHTML(`h1.title-name.h1_bold_none > strong`, func(e *colly.HTMLElement) {
 		title = e.Text
+		film.Title = e.Text
 		fmt.Println("title: " + title)
 	})
 	// get synopsis
 	c.OnHTML(`p[itemprop~="description"]`, func(e *colly.HTMLElement) {
+		film.Synopsis = e.Text
 		fmt.Println("synopsis: " + e.Text)
 	})
 	// get mean
 	c.OnHTML(`div.score-label`, func(e *colly.HTMLElement) {
 		fmt.Println("mean: " + e.Text)
+		film.Mean, _ = strconv.ParseFloat(e.Text, 64)
 	})
 	// get rank
 	c.OnHTML(`span.numbers.ranked > strong`, func(e *colly.HTMLElement) {
