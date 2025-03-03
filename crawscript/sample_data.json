@@ -5,6 +5,8 @@
     "enName" : null,
     "jpName" : "俺だけレベルアップな件 Season 2 -Arise from the Shadow-"
   },
+  "keyImages" : ["https://cdn.myanimelist.net/images/anime/1448/147351.jpg"],
+  "images" : [],
   "synopsis" : "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\n\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event. As the calamity looms closer, Jin-Woo must continue leveling up to make sure nothing stops him from reaching his ultimate goal—saving the life of his mother.\n\n[Written by MAL Rewrite]",
   "startDate" : "Jan 5, 2025",
   "endDate" : null,
@@ -13,9 +15,12 @@
   "genres": [
     "ActionAction", "AdventureAdventure", "FantasyFantasy"
   ],
+  "ageRating" : "R - 17+ (violence & profanity)",
+  "background" : "",
+  "state" : "Currently Airing",
   "averageEpisodeDuration" :23,
   "studios": ["A-1 Pictures"],
-  "producers" : ["Aniplex", "Crunchyroll", "Sonilude", "Netmarble", "Kakao piccoma", "D&C Media"],
+  "producers" : ["Aniplex", "Crunchyroll", "Sonilude", "Neetmarble", "Kakao piccoma", "D&C Media"],
   "season" : "Winter 2025",
   "broadcast": {
     "startTime" : "00:00",

@@ -68,7 +68,9 @@ DROP TABLE IF EXISTS `age_ratings`;
 CREATE TABLE `age_ratings`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
-    `name` varchar(50),
+    `long_name` varchar(50),
+    `short_name` varchar(50),
+    `image` json,
     `description` TEXT,
     `status`                    int DEFAULT 1,
     `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,

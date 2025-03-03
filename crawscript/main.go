@@ -31,6 +31,7 @@ func main() {
 		film.Synopsis = e.Text
 		fmt.Println("synopsis: " + e.Text)
 	})
+	// get background
 	// get mean
 	c.OnHTML(`div.score-label`, func(e *colly.HTMLElement) {
 		fmt.Println("mean: " + e.Text)
