@@ -43,6 +43,10 @@ dependencies {
     // aws
     implementation(platform("software.amazon.awssdk:bom:2.27.21"))
     implementation("software.amazon.awssdk:s3")
+    // spring security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // JWT
+    implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
 }
 
 tasks.named('test') {
