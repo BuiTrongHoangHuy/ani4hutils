@@ -62,3 +62,19 @@ module "db_sg" {
     }
   ]
 }
+
+
+module "mq_sq" {
+  source = "terraform-in-action/sg/aws"
+  vpc_id = module.vpc.vpc_id
+  ingress_rules =[
+    {
+      port =  5672
+      security_groups = [module.vm_sg.security_group.id]
+    },
+    {
+      port =  5672
+      cidr_blocks = ["172.30.0.0/16","172.31.0.0/16"]
+    }
+  ]
+}

@@ -16,6 +16,11 @@ output "cdn" {
   value = module.s3.image_cdn
 }
 
+output "broker_config" {
+  value = module.broker.config
+  sensitive = true
+}
+
 # output "lambdas" {
 #   value = module.lambdas.lambda
 # }
