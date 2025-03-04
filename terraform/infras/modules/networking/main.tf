@@ -39,6 +39,10 @@ module "vm_sg" {
     {
       port        = 22
       cidr_blocks = ["0.0.0.0/0"]
+    },
+    {
+      port = 22,
+      cidr_blocks = ["172.30.0.0/16","172.31.0.0/16"]
     }
   ]
 }
@@ -50,6 +54,10 @@ module "db_sg" {
     {
       port            = 3306
       security_groups = [module.vm_sg.security_group.id]
+    },
+    {
+      port = 3306,
+      cidr_blocks = ["172.30.0.0/16","172.31.0.0/16"]
     }
   ]
 }
