@@ -11,8 +11,6 @@ import org.springframework.stereotype.Component;
 import java.security.Key;
 import java.util.Date;
 
-import static io.grpc.Context.key;
-
 @Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
@@ -21,25 +19,50 @@ public class JwtUtils {
     private int accessTokenExpirationMs = 1000 * 60 * 30;
     private int refreshTokenExpirationMs = 1000 * 60 * 60 * 24 * 7;
 
-    public String generateJwtToken(Authentication authentication, long jwtExpirationInMs) {
+    public String generateJwtToken(Authentication authentication, long jwtExpirationInMs, String tokenType) {
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
 
         return Jwts.builder()
                 .setSubject((userPrincipal.getEmail()))
                 .setIssuedAt(java.util.Date.from(java.time.Instant.now()))
                 .setExpiration(new Date((new Date()).getTime() + jwtExpirationInMs))
+                .claim("token_type", tokenType)
                 .signWith(key(),SignatureAlgorithm.HS256)
                 .compact();
     }
 
+    public boolean isAccessToken(String token) {
+        return "access".equals(getTokenType(token));
+    }
+
+    public boolean isRefreshToken(String token) {
+        return "refresh".equals(getTokenType(token));
+    }
+
+    private String getTokenType(String token) {
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return claims.get("token_type", String.class); // Lấy claim token_type
+        } catch (Exception e) {
+            logger.error("Error extracting token_type: {}", e.getMessage());
+            return null;
+        }
+    }
+
     // generateAccessToken
     public String generateAccessToken(Authentication authentication) {
-        return generateJwtToken(authentication, accessTokenExpirationMs);
+        return generateJwtToken(authentication, accessTokenExpirationMs, "access");
     }
+
     // generateRefreshToken
     public String generateRefreshToken(Authentication authentication) {
-        return generateJwtToken(authentication, refreshTokenExpirationMs);
+        return generateJwtToken(authentication, refreshTokenExpirationMs, "refresh");
     }
+
     // get email from token
     public String getEmailFromJwtToken(String token){
         return Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(token).getBody().getSubject();
