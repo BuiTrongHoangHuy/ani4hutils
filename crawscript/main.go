@@ -64,9 +64,9 @@ type VoiceActor struct {
 
 func main() {
 	var films []Film
-	startId := 57334
-	n := 10
-
+	startId := 55000
+	n := 100
+	count := 0
 	for id := startId; id < startId+n; id++ {
 		var film Film
 		film.Id = id
@@ -191,14 +191,22 @@ func main() {
 			log.Println(err)
 			continue
 		}
-		time.Sleep(5 * time.Second)
+		time.Sleep(10 * time.Second)
 		log.Printf("id: %d \n", id)
 		films = append(films, film)
+		count++
+		if count == 10 {
+			count = 0
+			go func() {
+				if err := saveToJSONFilePretty(fmt.Sprintf("%d-%d.json", id-10, n+id-1), films); err != nil {
+					return
+				}
+			}()
+		}
 	}
 
-	if err := saveToJSONFilePretty(fmt.Sprintf("%d-%d.json", startId, n+startId-1), films); err != nil {
-		return
-	}
+	time.Sleep(5 * time.Second)
+
 }
 
 func saveToJSONFilePretty(filename string, data interface{}) error {
