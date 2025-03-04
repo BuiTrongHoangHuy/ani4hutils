@@ -21,6 +21,11 @@ output "broker_config" {
   sensitive = true
 }
 
+output "opensearch_config" {
+  value = module.opensearch.config
+  sensitive = true
+}
+
 # output "lambdas" {
 #   value = module.lambdas.lambda
 # }
