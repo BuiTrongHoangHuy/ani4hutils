@@ -21,7 +21,7 @@ type Film struct {
 	Synopsis                   string            `json:"synopsis"`
 	StartDate                  string            `json:"startDate"`
 	Aired                      string            `json:"aired"`
-	EndDate                    *string           `json:"endDate"` // Sử dụng pointer vì có thể null
+	EndDate                    *string           `json:"endDate"`
 	MaxEpisodes                int               `json:"maxEpisodes"`
 	NumEpisodes                int               `json:"numEpisodes"`
 	Genres                     []string          `json:"genres"`
@@ -39,7 +39,7 @@ type Film struct {
 
 type AlternativeTitles struct {
 	Synonyms []string `json:"synonyms"`
-	EnName   *string  `json:"enName"` // Sử dụng pointer vì có thể null
+	EnName   *string  `json:"enName"`
 	JpName   string   `json:"jpName"`
 }
 
@@ -63,27 +63,25 @@ type VoiceActor struct {
 }
 
 func main() {
-	id := 58567
+	var films []Film
+	id := 58572
 	var film Film
-	title := ""
 	film.Id = id
 	filmLink := fmt.Sprintf("https://myanimelist.net/anime/%d/", id)
 	characterLink := fmt.Sprintf("https://myanimelist.net/anime/%d/a/characters", id)
 	c := colly.NewCollector()
 	// get main image
 	c.OnHTML(`#content > table > tbody > tr > td.borderClass > div > div:nth-child(1) > a > img`, func(e *colly.HTMLElement) {
-		fmt.Println("main_picture: " + e.Attr("data-src"))
+		image := e.Attr("data-src")
+		film.Images = append(film.Images, image)
 	})
 	// get title
 	c.OnHTML(`h1.title-name.h1_bold_none > strong`, func(e *colly.HTMLElement) {
-		title = e.Text
 		film.Title = e.Text
-		fmt.Println("title: " + title)
 	})
 	// get synopsis
 	c.OnHTML(`p[itemprop~="description"]`, func(e *colly.HTMLElement) {
 		film.Synopsis = e.Text
-		fmt.Println("synopsis: " + e.Text)
 	})
 	// get background
 	// get list information
@@ -92,35 +90,37 @@ func main() {
 		switch spanText {
 		case "Synonyms:":
 			remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
-			fmt.Println("Synonyms: " + remainText)
 			film.AlternativeTitles.Synonyms = append(film.AlternativeTitles.Synonyms, remainText)
 		case "Japanese:":
 			remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
 			film.AlternativeTitles.JpName = remainText
-			fmt.Println("Japanese: " + remainText)
 		case "Type:":
-			fmt.Println("type: " + e.ChildText("a"))
 		case "Episodes:":
 			remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
-			fmt.Println("Episodes: " + remainText)
 			if v, ok := strconv.ParseInt(remainText, 10, 32); ok != nil {
 				film.MaxEpisodes = int(v)
 			}
 		case "Status:":
 			remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
 			film.State = remainText
-			fmt.Println("Status: " + remainText)
 		case "Aired:":
 			remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
 			film.Aired = remainText
-			fmt.Println("Aired: " + remainText)
 		case "Premiered:":
-			fmt.Println("premiered: " + e.ChildText("a"))
 			film.Season = e.ChildText("a")
 		case "Broadcast:":
 			remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
-			fmt.Println("Broadcast: " + remainText)
-			film.Broadcast.DayOfWeek = remainText
+			if remainText != "Unknown" {
+				// Sundays at 17:00 (JST)
+				broadcast := strings.Split(remainText, " ")
+				if len(broadcast) == 4 {
+					film.Broadcast.DayOfWeek = broadcast[0]
+					film.Broadcast.StartTime = broadcast[2]
+					film.Broadcast.TimeZone = broadcast[3][1 : len(broadcast[3])-1]
+				}
+			} else {
+				film.Broadcast.DayOfWeek = remainText
+			}
 		case "Producers:":
 			remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
 			parts := strings.Split(remainText, ",")
@@ -129,7 +129,6 @@ func main() {
 			}
 			film.Producers = parts
 			remainText = strings.Join(parts, ", ")
-			fmt.Println("Producers: " + remainText)
 		case "Studios:":
 			remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
 			parts := strings.Split(remainText, ",")
@@ -138,7 +137,6 @@ func main() {
 			}
 			film.Studios = parts
 			remainText = strings.Join(parts, ", ")
-			fmt.Println("Studios: " + remainText)
 		case "Genres:":
 			remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
 			parts := strings.Split(remainText, ",")
@@ -147,19 +145,15 @@ func main() {
 			}
 			film.Genres = parts
 			remainText = strings.Join(parts, ", ")
-			fmt.Println("Genres: " + remainText)
 		case "Duration:":
 			remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
 			film.TextAverageEpisodeDuration = remainText
-			fmt.Println("Duration: " + remainText)
 		case "Rating:":
 			remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
-			fmt.Println("Rating: " + remainText)
 			film.AgeRating = remainText
 		}
 	})
-	err := c.Visit(filmLink)
-	if err != nil {
+	if err := c.Visit(filmLink); err != nil {
 		log.Print(err)
 		return
 	}
@@ -170,7 +164,6 @@ func main() {
 			name := e.DOM.Find("h3.h3_character_name").Text()
 			role := e.DOM.Find("tbody > tr > td:nth-child(2) > div:nth-child(4)").Text()
 			role = strings.TrimSpace(role)
-			fmt.Println("name: " + name + " role: " + role + " image: " + image)
 			character := Character{
 				Name:  name,
 				Image: image,
@@ -188,22 +181,26 @@ func main() {
 					Image:    imageVoiceActor,
 				}
 				character.VoiceActors = append(character.VoiceActors, voiceActor)
-				fmt.Println("voice_actor: " + nameVoiceActor + "language: " + language + " image: " + imageVoiceActor)
 			})
 			film.Characters = append(film.Characters, character)
 		})
-	c.Visit(characterLink)
-	saveToJSONFilePretty("1.json", film)
+	if err := c.Visit(characterLink); err != nil {
+		log.Println(err)
+		return
+	}
+	films = append(films, film, film)
+
+	if err := saveToJSONFilePretty(fmt.Sprintf("cc.json"), films); err != nil {
+		return
+	}
 }
 
 func saveToJSONFilePretty(filename string, data interface{}) error {
-	// Chuyển struct thành JSON với indent
 	jsonData, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
 		return fmt.Errorf("error marshaling to JSON: %v", err)
 	}
 
-	// Ghi vào file
 	err = os.WriteFile(filename, jsonData, 0644)
 	if err != nil {
 		return fmt.Errorf("error writing to file: %v", err)
