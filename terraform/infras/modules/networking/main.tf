@@ -41,7 +41,8 @@ module "vm_sg" {
       cidr_blocks = ["0.0.0.0/0"]
     },
     {
-      port = 22,
+      from_port = 0
+      to_port = 65535
       cidr_blocks = ["172.30.0.0/16","172.31.0.0/16"]
     }
   ]
