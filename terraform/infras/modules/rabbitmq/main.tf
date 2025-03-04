@@ -28,4 +28,9 @@ resource "aws_mq_broker" "broker" {
   subnet_ids = [var.vpc.private_subnets[0]]
   security_groups = [var.sg.mq]
   auto_minor_version_upgrade = true
+  maintenance_window_start_time {
+    day_of_week = "WEDNESDAY"
+    time_of_day = "00:00"
+    time_zone   = "Asia/Ho_Chi_Minh"
+  }
 }
