@@ -11,6 +11,7 @@ resource "aws_db_instance" "database" {
   instance_class         = "db.t3.micro"
   identifier             = "${var.project}-db-instance"
   username               = "admin"
+  availability_zone      = var.az
   password               = random_password.password.result
   db_subnet_group_name   = var.vpc.database_subnet_group
   vpc_security_group_ids = [var.sg.db]

@@ -15,9 +15,8 @@ resource "aws_instance" "api" {
     volume_type = "gp2"
     volume_size = 20
   }
-
+  availability_zone = var.az
   user_data = base64encode(file("${path.module}/run.sh"))
-
   associate_public_ip_address = true
   ami = "ami-0198a868663199764"
   instance_type = "t2.micro"

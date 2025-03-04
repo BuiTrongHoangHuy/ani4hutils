@@ -9,6 +9,10 @@ variable "vpc" {
 variable "sg" {
   type = any
 }
+
+variable "az" {
+  type = string
+}
 #
 # variable "db_config" {
 #   type = object(

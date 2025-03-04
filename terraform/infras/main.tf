@@ -8,6 +8,8 @@ terraform {
   }
 }
 
+
+
 provider "aws" {
   region = "ap-southeast-1"
 }
@@ -15,6 +17,7 @@ provider "aws" {
 
 locals {
   project = "ani4h"
+  az      = "ap-southeast-1a"
 }
 
 data "aws_region" "current" {
@@ -57,6 +60,7 @@ module "database" {
   project = local.project
   vpc     = module.networking.vpc
   sg      = module.networking.sg
+  az = local.az
 }
 
 module "vm" {
@@ -64,6 +68,7 @@ module "vm" {
   project = local.project
   vpc =module.networking.vpc
   sg = module.networking.sg
+  az = local.az
 }
 
 module "s3" {

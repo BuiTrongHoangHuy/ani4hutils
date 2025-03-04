@@ -9,3 +9,7 @@ variable "vpc" {
 variable "sg" {
   type = any
 }
+
+variable "az" {
+  type = string
+}
