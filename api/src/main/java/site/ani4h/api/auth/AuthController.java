@@ -16,8 +16,9 @@ public class AuthController {
         this.authService = authService;
     }
     @PostMapping("/login")
-    public String login() {
-        return "Greetings from Spring Boot!";
+    public ResponseEntity<?> login(@RequestBody LoginRequest login) {
+        var res = authService.Login(login);
+        return ResponseEntity.ok(ApiResponse.success(res));
     }
 
 

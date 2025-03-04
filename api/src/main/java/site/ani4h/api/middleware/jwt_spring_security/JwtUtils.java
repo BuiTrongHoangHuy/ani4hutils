@@ -8,7 +8,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
+import java.nio.charset.StandardCharsets;
 import java.security.Key;
+import java.time.Instant;
 import java.util.Date;
 
 @Component
@@ -19,15 +21,13 @@ public class JwtUtils {
     private int accessTokenExpirationMs = 1000 * 60 * 30;
     private int refreshTokenExpirationMs = 1000 * 60 * 60 * 24 * 7;
 
-    public String generateJwtToken(Authentication authentication, long jwtExpirationInMs, String tokenType) {
-        UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-
+    public String generateJwtToken(String email, long jwtExpirationInMs, String tokenType) {
         return Jwts.builder()
-                .setSubject((userPrincipal.getEmail()))
-                .setIssuedAt(java.util.Date.from(java.time.Instant.now()))
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationInMs))
+                .setSubject(email) // Dùng email làm subject thay vì lấy từ UserDetailsImpl
+                .setIssuedAt(Date.from(Instant.now()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
                 .claim("token_type", tokenType)
-                .signWith(key(),SignatureAlgorithm.HS256)
+                .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
     }
 
@@ -54,13 +54,13 @@ public class JwtUtils {
     }
 
     // generateAccessToken
-    public String generateAccessToken(Authentication authentication) {
-        return generateJwtToken(authentication, accessTokenExpirationMs, "access");
+    public String generateAccessToken(String email) {
+        return generateJwtToken(email, accessTokenExpirationMs, "access");
     }
 
     // generateRefreshToken
-    public String generateRefreshToken(Authentication authentication) {
-        return generateJwtToken(authentication, refreshTokenExpirationMs, "refresh");
+    public String generateRefreshToken(String email) {
+        return generateJwtToken(email, refreshTokenExpirationMs, "refresh");
     }
 
     // get email from token
@@ -68,8 +68,8 @@ public class JwtUtils {
         return Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(token).getBody().getSubject();
     }
 
-    private Key key(){
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(jwtSecret));
+    private Key key() {
+        return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
     }
 
     public boolean validateJwtToken(String authToken) {
