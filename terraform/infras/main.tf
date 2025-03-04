@@ -69,6 +69,13 @@ module "database" {
   sg      = module.networking.sg
   az = local.az
 }
+module "opensearch" {
+  source = "./modules/opensearch"
+  project = local.project
+  az = local.az
+  sg = module.networking.sg
+  vpc = module.networking.vpc
+}
 
 module "vm" {
   source = "./modules/ec2"

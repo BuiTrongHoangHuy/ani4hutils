@@ -7,5 +7,6 @@ output "sg" {
     vm = module.vm_sg.security_group.id
     db = module.db_sg.security_group.id
     mq = module.mq_sq.security_group.id
+    opensearch = module.opensearch_sg.security_group.id
   }
 }
