@@ -17,7 +17,6 @@ public class SHA256PasswordEncoder implements PasswordEncoder {
 
     @Override
     public boolean matches(CharSequence rawPassword, String encodedPassword) {
-        // So sánh mật khẩu đã mã hóa với mật khẩu trong DB
         return encode(rawPassword).equals(encodedPassword);
     }
 

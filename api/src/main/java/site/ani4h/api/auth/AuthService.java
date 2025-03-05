@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.ani4h.api.common.UserAlreadyExistsException;
 import site.ani4h.api.middleware.jwt_spring_security.JwtUtils;
 import site.ani4h.api.middleware.jwt_spring_security.SHA256PasswordEncoder;
 import site.ani4h.api.middleware.jwt_spring_security.UserDetailsImpl;
@@ -42,12 +43,9 @@ public class AuthService {
     private SHA256PasswordEncoder passwordEncoder;
 
     @Autowired
-    private AuthenticationManager authenticationManager;
-
-    @Autowired
     private JwtUtils jwtUtils;
 
-    public AuthRegister Register( RegisterRequest req) {
+    public AuthRegister Register( RegisterRequest req) throws UserAlreadyExistsException {
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(req);
 
         if (!violations.isEmpty()) {
@@ -56,6 +54,11 @@ public class AuthService {
                 sb.append(constraintViolation.getMessage());
             }
             throw new ConstraintViolationException("Error occurred: " + sb.toString(), violations);
+        }
+
+        // check exists email
+        if(this.authRepository.findByEmail(req.getEmail()) != null) {
+            throw new UserAlreadyExistsException("User already exists");
         }
 
         var salt = RandomSequenceGenerator.RandomString(50);

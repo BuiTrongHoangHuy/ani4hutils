@@ -3,6 +3,8 @@ package site.ani4h.api.common;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 public class ApiResponse<T> {
@@ -24,6 +26,10 @@ public class ApiResponse<T> {
 
     public static <T> ApiResponse<T> error(String message) {
         return new ApiResponse<>( message, null);
+    }
+
+    public static ApiResponse<List<String>> error(String message, List<String> errors) {
+        return new ApiResponse<>( message, errors);
     }
 
     // Getters & Setters
