@@ -97,5 +97,25 @@ public class AuthService {
                 .build();
 
         return res;
+
+    }
+
+    public RefreshTokenResponse RefreshToken(String refreshToken) {
+        // validate token
+        jwtUtils.validateJwtToken(refreshToken);
+        // check type token is refresh token
+        if(!jwtUtils.isRefreshToken(refreshToken)) {
+            throw new RuntimeException("Invalid refresh token");
+        }
+
+        String email = jwtUtils.getEmailFromJwtToken(refreshToken);
+        String accessToken = jwtUtils.generateAccessToken(email);
+        RefreshTokenResponse res = RefreshTokenResponse.builder()
+                .email(email)
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .build();
+
+        return res;
     }
 }
