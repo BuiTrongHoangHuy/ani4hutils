@@ -4,27 +4,15 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import site.ani4h.api.common.UserAlreadyExistsException;
 import site.ani4h.api.middleware.jwt_spring_security.JwtUtils;
 import site.ani4h.api.middleware.jwt_spring_security.SHA256PasswordEncoder;
-import site.ani4h.api.middleware.jwt_spring_security.UserDetailsImpl;
 import site.ani4h.api.user.Role;
 import site.ani4h.api.user.UserCreate;
 import site.ani4h.api.user.UserRepository;
 import site.ani4h.api.utils.RandomSequenceGenerator;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Set;
 
 @Service

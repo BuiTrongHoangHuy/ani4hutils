@@ -6,7 +6,6 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -38,7 +37,6 @@ public class JwtUtils {
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
                 .claim("token_type", tokenType)
-                .claim("email", email)
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
     }
