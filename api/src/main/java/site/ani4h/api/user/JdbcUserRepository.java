@@ -1,5 +1,7 @@
 package site.ani4h.api.user;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -27,6 +29,15 @@ public class JdbcUserRepository implements UserRepository {
             ps.setString(5, userCreate.getRole().toString());
             return ps;
         }, keyHolder);
-        userCreate.setId(keyHolder.getKey().intValue());
+        userCreate.setId(Objects.requireNonNull(keyHolder.getKey()).intValue());
+    }
+    @Override
+    public User getUserById(int id) {
+        String sql = "SELECT * FROM `users` WHERE id = ?";
+        return jdbcTemplate.queryForObject(
+                sql,
+                new BeanPropertyRowMapper<>(User.class),
+                id
+        );
     }
 }

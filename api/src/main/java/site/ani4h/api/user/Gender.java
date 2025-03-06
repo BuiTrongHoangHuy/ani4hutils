@@ -18,5 +18,8 @@ public enum Gender {
         public String toString() {
             return "other";
         }
+    };
+    public static Gender fromString(String value) {
+        return value == null ? null : Gender.valueOf(value.toUpperCase());
     }
 }

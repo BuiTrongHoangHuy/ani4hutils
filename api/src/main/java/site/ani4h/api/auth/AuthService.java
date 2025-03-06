@@ -22,11 +22,11 @@ import java.util.Set;
 public class AuthService {
     private final AuthRepository authRepository;
     private final UserRepository userRepository;
-    @Autowired
-    private Validator validator;
-    public AuthService(AuthRepository authRepository, UserRepository userRepository) {
+    private final Validator validator;
+    public AuthService(AuthRepository authRepository, UserRepository userRepository, Validator validator) {
         this.authRepository = authRepository;
         this.userRepository = userRepository;
+        this.validator = validator;
     }
     public AuthRegister Register( RegisterRequest req) {
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(req);

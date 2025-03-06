@@ -11,7 +11,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class User {
-    public User(String id, String phoneNumber, String firstName, String lastName, String displayName, LocalDate dateOfBirth, Gender gender, Role role, Image avatar, Integer status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User(){};
+    public User(int id, String phoneNumber, String firstName, String lastName, String displayName, LocalDate dateOfBirth, Gender gender, Role role, Image avatar, Integer status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
@@ -25,7 +26,7 @@ public class User {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
-    private String id;
+    private int id;
     private String phoneNumber;
     private String firstName;
     private String lastName;
