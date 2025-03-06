@@ -26,9 +26,9 @@ public class GlobalExceptionHandler {
 
         // Log level by status code
         if (status.is5xxServerError()) {
-            logger.error("Lỗi hệ thống: {}", e.getMessage(), e); // Log cả stack trace
+            logger.error("Error: {}", e.getMessage(), e); // Log cả stack trace
         } else {
-            logger.warn("Cảnh báo: {}", e.getMessage());
+            logger.warn("Warn: {}", e.getMessage());
         }
 
         return ResponseEntity
@@ -41,9 +41,9 @@ public class GlobalExceptionHandler {
         HttpStatus status = getStatusFromException(e);
 
         if (status.is5xxServerError()) {
-            logger.error("Lỗi hệ thống: {}", e.getMessage(), e); // Log cả stack trace
+            logger.error("Error: {}", e.getMessage(), e); // Log cả stack trace
         } else {
-            logger.warn("Cảnh báo: {}", e.getMessage());
+            logger.warn("Warn: {}", e.getMessage());
         }
 
         return ResponseEntity
