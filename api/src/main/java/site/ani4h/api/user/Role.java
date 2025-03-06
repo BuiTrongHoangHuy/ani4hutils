@@ -12,5 +12,8 @@ public enum Role {
         public String toString() {
             return "user";
         }
-    },
+    };
+    public static Gender fromString(String value) {
+        return value == null ? null : Gender.valueOf(value.toUpperCase());
+    }
 }

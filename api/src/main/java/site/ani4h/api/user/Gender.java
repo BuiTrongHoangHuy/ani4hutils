@@ -1,19 +1,19 @@
 package site.ani4h.api.user;
 
 public enum Gender {
-    GENDER_MALE() {
+    MALE() {
         @Override
         public String toString() {
             return "male";
         }
     } ,
-    GENDER_FEMALE() {
+    FEMALE() {
         @Override
         public String toString() {
             return "female";
         }
     },
-    GENDER_OTHER() {
+    OTHER() {
         @Override
         public String toString() {
             return "other";
