@@ -37,6 +37,7 @@ public class JwtUtils {
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
                 .claim("token_type", tokenType)
+                .claim("email", email)
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -63,6 +64,21 @@ public class JwtUtils {
         }
     }
 
+    // get email from token
+    public String getEmailFromJwtToken(String token){
+        try {
+            Claims claims = Jwts.parserBuilder()
+                    .setSigningKey(key())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return claims.get("email", String.class); // Lấy claim token_type
+        } catch (Exception e) {
+            logger.error("Error extracting email: {}", e.getMessage());
+            return null;
+        }
+    }
+
     // generateAccessToken
     public String generateAccessToken(String email) {
         return generateJwtToken(email, accessTokenExpirationMs, "access");
@@ -71,11 +87,6 @@ public class JwtUtils {
     // generateRefreshToken
     public String generateRefreshToken(String email) {
         return generateJwtToken(email, refreshTokenExpirationMs, "refresh");
-    }
-
-    // get email from token
-    public String getEmailFromJwtToken(String token){
-        return Jwts.parserBuilder().setSigningKey(key()).build().parseClaimsJws(token).getBody().getSubject();
     }
 
     private Key key() {
