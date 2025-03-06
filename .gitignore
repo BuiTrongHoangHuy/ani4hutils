@@ -341,3 +341,4 @@ out/
 .vscode/
 /api/src/main/resources/application-dev.properties
 /api/src/main/resources/application-prod.properties
+/terraform/cloudflare/*
