@@ -30,4 +30,18 @@ public class JdbcAuthRepository implements AuthRepository {
 
         authRegister.setId(keyHolder.getKey().intValue());
     }
+
+    @Override
+    public Auth findByEmail(String email) {
+        String sql = "select * from `auths` where email = ?";
+        return jdbcTemplate.queryForObject(sql, new Object[]{email}, (rs, rowNum) -> {
+            Auth auth = new Auth();
+            auth.setId(rs.getInt("id"));
+            auth.setUserId(rs.getInt("user_id"));
+            auth.setEmail(rs.getString("email"));
+            auth.setPassword(rs.getString("password"));
+            auth.setSalt(rs.getString("salt"));
+            return auth;
+        });
+    }
 }

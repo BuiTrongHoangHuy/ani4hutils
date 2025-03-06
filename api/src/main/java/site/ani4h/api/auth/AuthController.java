@@ -16,14 +16,20 @@ public class AuthController {
         this.authService = authService;
     }
     @PostMapping("/login")
-    public String login() {
-        return "Greetings from Spring Boot!";
+    public ResponseEntity<?> login(@RequestBody LoginRequest login) {
+        var res = authService.Login(login);
+        return ResponseEntity.ok(ApiResponse.success(res));
     }
 
-
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody RegisterRequest register) {
+    public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest register) throws UserAlreadyExistsException {
         var res = authService.Register(register);
         return ResponseEntity.ok(ApiResponse.success(res.getId()));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<?> refresh(@Valid @RequestBody RefreshTokenRequest refresh) {
+        var res = authService.RefreshToken(refresh.getRefreshToken());
+        return ResponseEntity.ok(ApiResponse.success(res));
     }
 }
