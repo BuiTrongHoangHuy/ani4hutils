@@ -25,6 +25,7 @@ public class UserDetailsImpl implements UserDetails {
     @JsonIgnore
     private String password;
 
+    @JsonIgnore
     private String salt;
 
     public static UserDetailsImpl build(Integer id, Integer userId, String email, String password, String salt) {
@@ -60,5 +61,9 @@ public class UserDetailsImpl implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 }

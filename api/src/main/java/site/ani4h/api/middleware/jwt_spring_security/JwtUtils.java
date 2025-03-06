@@ -1,10 +1,12 @@
 package site.ani4h.api.middleware.jwt_spring_security;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.nio.charset.StandardCharsets;
@@ -16,16 +18,27 @@ import java.util.Date;
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
-    private String jwtSecret = "P7nK4vQ9mRwT2uJ5aY8eD3bHsZ6iL1xO";
-    private int accessTokenExpirationMs = 1000 * 60 * 30;
-    private int refreshTokenExpirationMs = 1000 * 60 * 60 * 24 * 7;
+    @Value("${jwt.secret}")
+    private String jwtSecret;
+
+    @Value("${jwt.access-token-expiration-ms}")
+    private int accessTokenExpirationMs;
+
+    @Value("${jwt.refresh-token-expiration-ms}")
+    private int refreshTokenExpirationMs;
+
+    @Autowired
+    private UserDetailsServiceImpl userDetailsService;
 
     public String generateJwtToken(String email, long jwtExpirationInMs, String tokenType) {
+        UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(email);
+
         return Jwts.builder()
-                .setSubject(email) // Dùng email làm subject thay vì lấy từ UserDetailsImpl
+                .setSubject(String.valueOf(userDetails.getUserId())) // Dùng email làm subject thay vì lấy từ UserDetailsImpl
                 .setIssuedAt(Date.from(Instant.now()))
                 .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
                 .claim("token_type", tokenType)
+                .claim("email", email)
                 .signWith(key(), SignatureAlgorithm.HS256)
                 .compact();
     }
