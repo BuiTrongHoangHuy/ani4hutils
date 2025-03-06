@@ -13,7 +13,7 @@ public enum Role {
             return "user";
         }
     };
-    public static Gender fromString(String value) {
-        return value == null ? null : Gender.valueOf(value.toUpperCase());
+    public static Role fromString(String value) {
+        return value == null ? null : Role.valueOf(value.toUpperCase());
     }
 }

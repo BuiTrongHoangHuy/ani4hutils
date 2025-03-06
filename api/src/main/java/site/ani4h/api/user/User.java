@@ -26,6 +26,13 @@ public class User {
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
+    public void setGender(String gender) {
+        this.gender = Gender.fromString(gender);
+    }
+
+    public void setRole(String role) {
+        this.role = Role.fromString(role);
+    }
     private int id;
     private String phoneNumber;
     private String firstName;
