@@ -14,7 +14,8 @@ public class UnmaskDataDeserializer extends StdDeserializer<Integer> {
 
     @Override
     public Integer deserialize(JsonParser jsonParser, DeserializationContext deserializationContext) throws IOException, JacksonException {
-        return 0;
+        String data  = jsonParser.getValueAsString();
+        return DataMasker.unmask(data);
     }
 
 }
