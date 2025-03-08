@@ -14,15 +14,9 @@ public class HashDataSerializer extends StdSerializer<Integer> {
 
     @Override
     public void serialize(Integer value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-        String hashedValue = applyCustomHash(value);
+        String hashedValue = DataMasker.mask(value);
         gen.writeString(hashedValue);
     }
 
-    private String applyCustomHash(Integer input) {
-        if (1 == (input)) {
-            // TODO: implement mask algorithm here
-            return "asdasd";
-        }
-        return input.toString();
-    }
+
 }
