@@ -6,9 +6,9 @@ import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 
 import java.io.IOException;
 
-public class HashDataSerializer extends StdSerializer<Integer> {
+public class MaskDataSerializer extends StdSerializer<Integer> {
 
-    public HashDataSerializer() {
+    public MaskDataSerializer() {
         super(Integer.class);
     }
 
