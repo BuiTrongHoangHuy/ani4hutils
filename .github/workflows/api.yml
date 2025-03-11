@@ -37,5 +37,5 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
         run: |
-          docker build -t $ECR_REGISTRY/ani4h-api:latest ./api
-          docker push $ECR_REGISTRY/ani4h-api:latest
+          docker build -t $ECR_REGISTRY/v2r1j0e6/ani4h-api:latest ./api
+          docker push $ECR_REGISTRY/v2r1j0e6/ani4h-api:latest
