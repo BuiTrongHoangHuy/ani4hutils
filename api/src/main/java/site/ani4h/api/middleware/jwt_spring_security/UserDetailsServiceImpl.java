@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if (auth == null) {
             throw new UsernameNotFoundException("User not found with username: " + email);
         } else {
-            return UserDetailsImpl.build(auth.getId(),auth.getUserId(),auth.getEmail(),auth.getPassword(),auth.getSalt());
+            return UserDetailsImpl.build(auth.getId().getLocalId(),auth.getUserId(),auth.getEmail(),auth.getPassword(),auth.getSalt());
         }
     }
 }

@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
+import site.ani4h.api.common.Uid;
 
 @Getter
 @Setter
@@ -17,7 +18,10 @@ public class AuthRegister {
         this.password = password;
         this.salt = salt;
     }
-    private Integer id = null;
+    private Uid id = null;
+    public void setId( int id ) {
+        this.id = new Uid(id,0,Auth.type);
+    }
     @NotBlank
     @NotNull
     private Integer userId;
@@ -28,5 +32,4 @@ public class AuthRegister {
     @Pattern(regexp ="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$")
     private String password;
     private String salt;
-
 }

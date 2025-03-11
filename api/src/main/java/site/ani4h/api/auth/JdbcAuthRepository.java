@@ -1,5 +1,7 @@
 package site.ani4h.api.auth;
 
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
@@ -33,15 +35,12 @@ public class JdbcAuthRepository implements AuthRepository {
 
     @Override
     public Auth findByEmail(String email) {
-        String sql = "select * from `auths` where email = ?";
-        return jdbcTemplate.queryForObject(sql, new Object[]{email}, (rs, rowNum) -> {
-            Auth auth = new Auth();
-            auth.setId(rs.getInt("id"));
-            auth.setUserId(rs.getInt("user_id"));
-            auth.setEmail(rs.getString("email"));
-            auth.setPassword(rs.getString("password"));
-            auth.setSalt(rs.getString("salt"));
-            return auth;
-        });
+        String sql = "SELECT * FROM `auths` WHERE email = ?";
+        try {
+            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Auth.class), email);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
+
 }
