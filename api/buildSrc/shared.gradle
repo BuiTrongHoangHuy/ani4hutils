@@ -1,11 +1,3 @@
-plugins {
-    id 'java'
-    id 'org.springframework.boot' version '3.4.3'
-    id 'io.spring.dependency-management' version '1.1.7'
-}
-
-group = 'site.ani4h'
-version = '0.1.0'
 
 java {
     toolchain {
@@ -16,6 +8,7 @@ java {
 repositories {
     mavenCentral()
 }
+
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
@@ -52,6 +45,4 @@ dependencies {
     implementation 'com.google.guava:guava:33.3.1-jre'
     implementation 'io.aergo:heraj-transport:1.4.2'
 }
-tasks.named('test') {
-    useJUnitPlatform()
-}
+
