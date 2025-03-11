@@ -89,3 +89,11 @@ module "s3" {
   source = "./modules/s3"
   project = local.project
 }
+
+module "gateway" {
+  source = "./modules/gateway"
+  project = local.project
+  vpc =module.networking.vpc
+  sg = module.networking.sg
+  az = local.az
+}

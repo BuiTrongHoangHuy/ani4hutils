@@ -41,6 +41,10 @@ module "vm_sg" {
       cidr_blocks = ["0.0.0.0/0"]
     },
     {
+      port        = 4000
+      cidr_blocks = ["0.0.0.0/0"]
+    },
+    {
       protocol = "-1"
       from_port = 0
       to_port = 65535
