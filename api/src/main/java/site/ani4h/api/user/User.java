@@ -1,13 +1,10 @@
 package site.ani4h.api.user;
 
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Getter;
 import lombok.Setter;
 import site.ani4h.api.common.Image;
-import site.ani4h.api.utils.MaskDataSerializer;
-import site.ani4h.api.utils.UnmaskDataDeserializer;
+import site.ani4h.api.common.Uid;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -16,7 +13,7 @@ import java.time.LocalDateTime;
 @Setter
 public class User {
     public User(){};
-    public User(int id, String phoneNumber, String firstName, String lastName, String displayName, LocalDate dateOfBirth, Gender gender, Role role, Image avatar, Integer status, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public User(Uid id, String phoneNumber, String firstName, String lastName, String displayName, LocalDate dateOfBirth, Gender gender, Role role, Image avatar, Integer status, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.phoneNumber = phoneNumber;
         this.firstName = firstName;
@@ -37,9 +34,10 @@ public class User {
     public void setRole(String role) {
         this.role = Role.fromString(role);
     }
-    @JsonSerialize(using = MaskDataSerializer.class)
-    @JsonDeserialize(using =  UnmaskDataDeserializer.class)
-    private int id;
+    public void setId(int id) {
+        this.id = new Uid(id,0,type);
+    }
+    private Uid id;
     private String phoneNumber;
     private String firstName;
     private String lastName;
@@ -51,4 +49,5 @@ public class User {
     private Integer status;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    static public int type = 1;
 }

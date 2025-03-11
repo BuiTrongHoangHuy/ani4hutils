@@ -3,6 +3,7 @@ package site.ani4h.api.user;
 import io.lettuce.core.dynamic.annotation.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.ani4h.api.common.Uid;
 
 @RestController
 @RequestMapping("user")
@@ -15,7 +16,7 @@ public class UserController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<User> getUser(@PathVariable()int id) {
-        return ResponseEntity.ok(userService.getUserById(id));
+    public ResponseEntity<User> getUser(@PathVariable() Uid id) {
+        return ResponseEntity.ok(userService.getUserById(id.getLocalId()));
     }
 }
