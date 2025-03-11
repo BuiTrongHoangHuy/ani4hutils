@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -38,6 +39,14 @@ public class JdbcUserRepository implements UserRepository {
                 sql,
                 new BeanPropertyRowMapper<>(User.class),
                 id
+        );
+    }
+
+    @Override
+    public List<User> getUsers() {
+        String sql = "SELECT * FROM `users`";
+        return jdbcTemplate.query(sql,
+                new BeanPropertyRowMapper<>(User.class)
         );
     }
 }
