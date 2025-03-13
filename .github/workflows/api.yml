@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Gradle build
-        run: ./gradlew build
+        run: ./gradlew build -p auth
         working-directory: ./api
 
       - name: Configure AWS credentials
