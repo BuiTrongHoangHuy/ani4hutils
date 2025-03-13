@@ -11,6 +11,7 @@ import site.ani4h.auth.middleware.jwt_spring_security.SHA256PasswordEncoder;
 import site.ani4h.auth.user.Role;
 import site.ani4h.auth.user.UserCreate;
 import site.ani4h.auth.user.UserRepository;
+import site.ani4h.share.errors.EntityAlreadyExist;
 import site.ani4h.share.utils.RandomSequenceGenerator;
 
 import java.util.Set;
@@ -33,7 +34,7 @@ public class AuthService {
     @Autowired
     private JwtUtils jwtUtils;
 
-    public AuthRegister Register( RegisterRequest req) throws UserAlreadyExistsException {
+    public AuthRegister Register( RegisterRequest req)  {
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(req);
 
         if (!violations.isEmpty()) {
@@ -46,7 +47,7 @@ public class AuthService {
 
         // check exists email
         if(this.authRepository.findByEmail(req.getEmail()) != null) {
-            throw new UserAlreadyExistsException("User already exists");
+            throw new EntityAlreadyExist("User");
         }
 
         var salt = RandomSequenceGenerator.RandomString(50);

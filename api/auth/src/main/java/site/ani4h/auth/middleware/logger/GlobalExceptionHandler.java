@@ -12,6 +12,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import site.ani4h.share.common.ApiResponse;
+import site.ani4h.share.errors.BaseException;
 
 import java.util.ArrayList;
 import java.util.List;
