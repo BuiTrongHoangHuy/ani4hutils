@@ -24,7 +24,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody @Valid RegisterRequest register)  {
         var res = authService.Register(register);
-        return ResponseEntity.ok(ApiResponse.success(res.getUserId()));
+        return ResponseEntity.ok(res.getUserId());
     }
 
     @PostMapping("/refresh")

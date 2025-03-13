@@ -22,40 +22,32 @@ public class GlobalExceptionHandler {
     private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(value = BaseException.class)
-    public ResponseEntity<ApiResponse> handleCustomException(BaseException e) {
+    public ResponseEntity<?> handleCustomException(BaseException e) {
         HttpStatus status = (e.getStatus() != null) ? e.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
-
-        // Log level by status code
         if (status.is5xxServerError()) {
-            logger.error("Error: {}", e.getMessage(), e); // Log cả stack trace
+            logger.error("Error: {}", e.getMessage(), e);
         } else {
-            logger.warn("Warn: {}", e.getMessage());
+            logger.info("Info: {}", e.getMessage());
         }
-
-        return ResponseEntity
-                .status(status)
-                .body(ApiResponse.error(e.getMessage()));
+        return ResponseEntity.status(status).body(ApiResponse.error(e.getMessage()));
     }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<?> handleSystemException(Exception e) {
         HttpStatus status = getStatusFromException(e);
-
         if (status.is5xxServerError()) {
-            logger.error("Error: {}", e.getMessage(), e); // Log cả stack trace
+            logger.error("Error: {}", e.getMessage(), e);
         } else {
             logger.warn("Warn: {}", e.getMessage());
         }
-
         return ResponseEntity
                 .status(status)
-                .body(ApiResponse.error(e.getMessage()));
+                .body(ApiResponse.error("Something went wrong in server"));
     }
 
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<?> MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         List<String> errors = new ArrayList<>();
-
         e.getBindingResult().getFieldErrors().forEach(error -> {
             errors.add(error.getField() + ": " + error.getDefaultMessage());
         });
@@ -64,7 +56,7 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity
                 .badRequest()
-                .body(ApiResponse.error("Registration Failed: Please provide valid data.", errors));
+                .body("Registration Failed: Please provide valid data.");
     }
 
     private static HttpStatus getStatusFromException(Exception e) {
