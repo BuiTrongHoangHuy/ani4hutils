@@ -65,7 +65,7 @@ type VoiceActor struct {
 func main() {
 	var films []Film
 	startId := 55000
-	n := 100
+	n := 1000
 	count := 0
 	for id := startId; id < startId+n; id++ {
 		var film Film
@@ -157,8 +157,8 @@ func main() {
 			}
 		})
 		if err := c.Visit(filmLink); err != nil {
-			log.Print(err)
-			continue
+			log.Println(err)
+			time.Sleep(2 * time.Second)
 		}
 		// get characters & staff
 		c.OnHTML(`div.anime-character-container.js-anime-character-container > table`,
@@ -189,9 +189,10 @@ func main() {
 			})
 		if err := c.Visit(characterLink); err != nil {
 			log.Println(err)
-			continue
+			time.Sleep(2 * time.Second)
+		} else {
+			time.Sleep(14 * time.Second)
 		}
-		time.Sleep(10 * time.Second)
 		log.Printf("id: %d \n", id)
 		films = append(films, film)
 		count++
@@ -205,8 +206,7 @@ func main() {
 		}
 	}
 
-	time.Sleep(5 * time.Second)
-
+	time.Sleep(60 * time.Second)
 }
 
 func saveToJSONFilePretty(filename string, data interface{}) error {
