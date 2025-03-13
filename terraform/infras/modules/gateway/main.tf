@@ -21,6 +21,7 @@ resource "aws_apigatewayv2_api" "rest_gateway" {
   name        = "${var.project}-gateway"
   description = "This is my API for demonstration purposes"
   protocol_type = "HTTP"
+  disable_execute_api_endpoint = true
 }
 
 resource "aws_apigatewayv2_stage" "v1" {
