@@ -1,4 +1,4 @@
-package site.ani4h.auth;
+package site.ani4h.film;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -6,9 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
+
 import java.util.Arrays;
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class }, scanBasePackages = {"site.ani4h.auth","site.ani4h.share.middlewares"})
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
 public class ApiApplication {
 
     public static void main(String[] args) {

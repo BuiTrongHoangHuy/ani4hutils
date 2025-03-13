@@ -1,4 +1,4 @@
-package site.ani4h.auth;
+package site.ani4h.share.middlewares.logger;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -11,7 +11,7 @@ import site.ani4h.share.common.ApiResponse;
 public class ApiResponseWrapperAdvice implements ResponseBodyAdvice<Object> {
     @Override
     public boolean supports(MethodParameter returnType, Class<? extends HttpMessageConverter<?>> converterType) {
-        return !returnType.getContainingClass().equals(ApiApplication.class);    }
+        return !returnType.getContainingClass().equals(ApiResponse.class);    }
 
     @Override
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
