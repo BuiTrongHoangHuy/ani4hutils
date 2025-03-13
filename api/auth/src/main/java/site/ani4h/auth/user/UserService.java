@@ -1,6 +1,7 @@
 package site.ani4h.auth.user;
 
 import org.springframework.stereotype.Service;
+import site.ani4h.share.common.Paging;
 
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class UserService {
     public User getUserById(int id) {
         return userRepository.getUserById(id);
     }
-    public List<User> getUsers() {
-        return userRepository.getUsers();
+    public List<User> getUsers(Paging paging) {
+        return userRepository.getUsers(paging);
     }
 }

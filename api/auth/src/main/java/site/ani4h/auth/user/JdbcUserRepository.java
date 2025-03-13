@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import site.ani4h.share.common.Paging;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -42,10 +43,12 @@ public class JdbcUserRepository implements UserRepository {
     }
 
     @Override
-    public List<User> getUsers() {
-        String sql = "SELECT * FROM `users`";
+    public List<User> getUsers(Paging paging) {
+        String sql = "SELECT * FROM `users` LIMIT ? OFFSET ?";
         return jdbcTemplate.query(sql,
-                new BeanPropertyRowMapper<>(User.class)
+                new BeanPropertyRowMapper<>(User.class),
+                paging.getPageSize(),
+                paging.getOffset()
         );
     }
 }

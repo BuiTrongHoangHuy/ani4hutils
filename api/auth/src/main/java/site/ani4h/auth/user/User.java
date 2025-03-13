@@ -30,7 +30,6 @@ public class User {
     public void setGender(String gender) {
         this.gender = Gender.fromString(gender);
     }
-
     public void setRole(String role) {
         this.role = Role.fromString(role);
     }
