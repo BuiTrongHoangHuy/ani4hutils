@@ -44,7 +44,7 @@ public class JdbcUserRepository implements UserRepository {
 
     @Override
     public List<User> getUsers(Paging paging) {
-        String sql = "SELECT * FROM `users` LIMIT ? OFFSET ?";
+        String sql = "SELECT * FROM `users`  ORDER BY `id` DESC LIMIT ? OFFSET ?";
         return jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(User.class),
                 paging.getPageSize(),
