@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
-	"log"
 	"os"
 	"strconv"
 	"strings"
@@ -68,6 +67,7 @@ func main() {
 	n := 1000
 	count := 0
 	for id := startId; id < startId+n; id++ {
+		fmt.Printf("id: %d ", id)
 		var film Film
 		film.Id = id
 		filmLink := fmt.Sprintf("https://myanimelist.net/anime/%d/", id)
@@ -157,8 +157,16 @@ func main() {
 			}
 		})
 		if err := c.Visit(filmLink); err != nil {
-			log.Println(err)
+			fmt.Print(" Film Not Found  \n")
 			time.Sleep(2 * time.Second)
+			count++
+			if count == 100 {
+				count = 0
+				if err = saveToJSONFilePretty(fmt.Sprintf("%d-%d.json", id-99, id), films); err != nil {
+					return
+				}
+			}
+			continue
 		}
 		// get characters & staff
 		c.OnHTML(`div.anime-character-container.js-anime-character-container > table`,
@@ -188,24 +196,31 @@ func main() {
 				film.Characters = append(film.Characters, character)
 			})
 		if err := c.Visit(characterLink); err != nil {
-			log.Println(err)
+			fmt.Print("Character Not Found ")
 			time.Sleep(2 * time.Second)
-		} else {
-			time.Sleep(14 * time.Second)
-		}
-		log.Printf("id: %d \n", id)
-		films = append(films, film)
-		count++
-		if count == 10 {
-			count = 0
-			go func() {
-				if err := saveToJSONFilePretty(fmt.Sprintf("%d-%d.json", id-10, n+id-1), films); err != nil {
+			count++
+			if count == 100 {
+				count = 0
+				if err = saveToJSONFilePretty(fmt.Sprintf("%d-%d.json", id-99, id), films); err != nil {
 					return
 				}
-			}()
+			}
+			continue
+		} else {
+			time.Sleep(2 * time.Second)
+		}
+		fmt.Print("Done \n")
+		if film.Title != "" {
+			films = append(films, film)
+		}
+		count++
+		if count == 100 {
+			count = 0
+			if err := saveToJSONFilePretty(fmt.Sprintf("%d-%d.json", id-99, id), films); err != nil {
+				return
+			}
 		}
 	}
-
 	time.Sleep(60 * time.Second)
 }
 
