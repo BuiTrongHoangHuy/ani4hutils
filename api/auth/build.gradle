@@ -20,11 +20,12 @@ repositories {
 
 
 graalvmNative {
-    toolchainDetection = true
     binaries {
         main {
-            javaLauncher = javaToolchains.launcherFor {
-            }
+            buildArgs.add('--verbose')
+            buildArgs.add('-H:+ReportExceptionStackTraces')
+            buildArgs.add('--allow-incomplete-classpath')
+            buildArgs.add('-H:+AllowIncompleteClasspath')
         }
     }
 }
