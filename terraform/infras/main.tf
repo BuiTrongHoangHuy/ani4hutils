@@ -83,6 +83,7 @@ module "vm" {
   vpc =module.networking.vpc
   sg = module.networking.sg
   az = local.az
+  ecs_cluster = module.ecs.ecs
 }
 
 module "s3" {
@@ -92,6 +93,14 @@ module "s3" {
 
 module "gateway" {
   source = "./modules/gateway"
+  project = local.project
+  vpc =module.networking.vpc
+  sg = module.networking.sg
+  az = local.az
+}
+
+module "ecs" {
+  source = "./modules/ecs"
   project = local.project
   vpc =module.networking.vpc
   sg = module.networking.sg

@@ -23,6 +23,7 @@ resource "aws_apigatewayv2_api" "rest_gateway" {
   protocol_type = "HTTP"
 }
 
+
 resource "aws_apigatewayv2_stage" "v1" {
   api_id = aws_apigatewayv2_api.rest_gateway.id
   name   = "v1"

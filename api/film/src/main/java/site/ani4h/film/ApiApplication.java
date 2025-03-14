@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.Arrays;
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class })
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class }, scanBasePackages = {"site.ani4h.film","site.ani4h.share.middlewares"})
 public class ApiApplication {
 
     public static void main(String[] args) {

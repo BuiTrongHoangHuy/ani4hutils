@@ -2,6 +2,10 @@ variable "project" {
   type = string
 }
 
+variable "ecs_cluster" {
+  type = string
+}
+
 variable "vpc" {
   type = any
 }
