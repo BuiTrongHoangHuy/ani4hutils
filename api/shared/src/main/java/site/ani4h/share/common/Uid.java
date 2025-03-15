@@ -2,7 +2,6 @@ package site.ani4h.share.common;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
-import com.google.common.primitives.Longs;
 import hera.util.Base58Utils;
 import lombok.extern.slf4j.Slf4j;
 
