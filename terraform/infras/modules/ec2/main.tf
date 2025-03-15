@@ -25,10 +25,36 @@ resource "aws_iam_role_policy_attachment" "ec2_instance_role_policy" {
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"
 }
 
+resource "aws_iam_policy" "ecr_pull_policy" {
+  name        = "${var.project}_ECR_Pull_Policy"
+  description = "Policy cho phép EC2 instance kéo image từ ECR"
+  policy      = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect   = "Allow"
+        Action   = [
+          "ecr:GetAuthorizationToken",
+          "ecr:BatchCheckLayerAvailability",
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage",
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
+
+resource "aws_iam_role_policy_attachment" "custom_ecr_pull_policy" {
+  role       = aws_iam_role.ec2_instance_role.name
+  policy_arn = aws_iam_policy.ecr_pull_policy.arn
+}
+
 resource "aws_iam_instance_profile" "ec2_instance_role_profile" {
   name  = "${var.project}_EC2_InstanceRoleProfile"
   role  = aws_iam_role.ec2_instance_role.id
 }
+
 
 data "aws_iam_policy_document" "ec2_instance_role_policy" {
   statement {
@@ -54,7 +80,7 @@ resource "aws_instance" "api" {
     ecs_cluster=var.ecs_cluster
   })
   associate_public_ip_address = true
-  ami = "3"
+  ami = "ami-0a5fa1b3c2f9851fc"
   iam_instance_profile = aws_iam_instance_profile.ec2_instance_role_profile.name
   instance_type = "t2.micro"
   vpc_security_group_ids = [var.sg.vm]

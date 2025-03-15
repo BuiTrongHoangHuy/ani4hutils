@@ -340,7 +340,10 @@ out/
 ### VS Code ###
 .vscode/
 application-dev.properties
+application.properties
 application-prod.properties
+
+/terraform/sidecar-containers/*
 /terraform/cloudflare/*
 
 
