@@ -342,3 +342,6 @@ out/
 application-dev.properties
 application-prod.properties
 /terraform/cloudflare/*
+
+
+crawscript/*.json
