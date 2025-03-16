@@ -10,7 +10,7 @@ import site.ani4h.share.common.ApiResponse;
 import site.ani4h.share.common.Image;
 
 @RestController
-@RequestMapping("upload")
+@RequestMapping("/v1/upload")
 public class UploadController {
 
     private final UploadService uploadService;

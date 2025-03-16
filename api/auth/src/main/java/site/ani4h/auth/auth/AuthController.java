@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import site.ani4h.share.common.ApiResponse;
 
 @RestController
-@RequestMapping("auth")
+@RequestMapping("/v1/auth")
 public class AuthController {
 
     private final AuthService authService;

@@ -7,7 +7,7 @@ import site.ani4h.share.common.Paging;
 import site.ani4h.share.common.Uid;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("/v1/user")
 public class UserController {
     private final UserService userService;
 
