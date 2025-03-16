@@ -8,20 +8,42 @@ terraform {
 
 resource "aws_ecs_cluster" "ecs" {
   name = "${var.project}-cluster"
+  service_connect_defaults {
+    namespace = aws_service_discovery_http_namespace.example.arn
+  }
 }
+resource "aws_service_discovery_http_namespace" "example" {
+  name        = "development"
+  description = "example"
+}
+
 
 resource "aws_ecs_service" "auth" {
   name = "service"
   task_definition = aws_ecs_task_definition.auth.arn
   cluster = aws_ecs_cluster.ecs.id
   desired_count = 1
+
   launch_type = "EC2"
+  service_connect_configuration {
+    enabled      = true
+    namespace = aws_service_discovery_http_namespace.example.arn
+    service {
+      port_name = "backend"
+      client_alias {
+        dns_name = "backend.my-namespace"
+        port     = 4000
+      }
+    }
+  }
 }
+
+
 
 resource "aws_ecs_task_definition" "auth" {
   family                = "auth-api"
   requires_compatibilities = ["EC2"]
-  network_mode = "host"
+  network_mode = "bridge"
   volume {
     name = "config"
   }
@@ -41,17 +63,21 @@ resource "aws_ecs_task_definition" "auth" {
     {
       name      = "first"
       image     = "public.ecr.aws/v2r1j0e6/ani4h-api"
-      memory    = 512
+      memory    = 100
       essential = true
       portMappings = [
         {
           containerPort = 4000
-          hostPort      = 4000
+          name: "backend"
         }
       ],
       environment = [
         { name = "SPRING_CONFIG_LOCATION", value = "/config/" },
       ],
+      linuxParameters: {
+        maxSwap: 300,
+        swappiness: 60
+      },
       mountPoints = [
         {
           sourceVolume  = "config"
