@@ -9,25 +9,22 @@ terraform {
 resource "aws_ecs_cluster" "ecs" {
   name = "${var.project}-cluster"
   service_connect_defaults {
-    namespace = aws_service_discovery_http_namespace.example.arn
+    namespace = aws_service_discovery_http_namespace.service_discovery.arn
   }
 }
-resource "aws_service_discovery_http_namespace" "example" {
-  name        = "development"
-  description = "example"
+resource "aws_service_discovery_http_namespace" "service_discovery" {
+  name        = var.project
 }
-
 
 resource "aws_ecs_service" "auth" {
   name = "service"
   task_definition = aws_ecs_task_definition.auth.arn
   cluster = aws_ecs_cluster.ecs.id
   desired_count = 1
-
   launch_type = "EC2"
   service_connect_configuration {
     enabled      = true
-    namespace = aws_service_discovery_http_namespace.example.arn
+    namespace = aws_service_discovery_http_namespace.service_discovery.arn
     service {
       port_name = "backend"
       client_alias {
