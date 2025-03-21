@@ -38,10 +38,12 @@ func main() {
 		producers := cleanProducerData(&films[i])
 		images := cleanImageData(&films[i])
 		genres := cleanGenreData(&films[i])
+		boardCast := cleanUpBoardCastData(&films[i])
 		films[i].StudioObjects = studios
 		films[i].ProducerObjets = producers
 		films[i].ImageObject = images
 		films[i].GenreObjects = genres
+		films[i].Broadcast = boardCast
 	}
 	log.Print(fileName)
 	log.Println("total: ", len(films))

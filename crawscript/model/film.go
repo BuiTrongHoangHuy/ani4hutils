@@ -24,7 +24,7 @@ type Film struct {
 	Producers                  []string          `json:"producers" gorm:"-"`
 	ProducerObjets             []Producer        `json:"producerObjets" gorm:""`
 	Season                     string            `json:"season"`
-	Broadcast                  Broadcast         `json:"broadcast"`
+	Broadcast                  *Broadcast        `json:"broadcast"`
 	Characters                 []Character       `json:"characters"`
 }
 
