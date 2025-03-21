@@ -1,5 +1,7 @@
 package model
 
+import "time"
+
 type Film struct {
 	Id                         int                  `json:"id" gorm:"column:id"`
 	Title                      string               `json:"title" gorm:"column:title"`
@@ -8,14 +10,17 @@ type Film struct {
 	Images                     []string             `json:"images"`
 	ImageObject                *Images              `json:"imageObjects" gorm:"column:images"`
 	Synopsis                   string               `json:"synopsis"`
-	StartDate                  string               `json:"startDate"`
+	StartDate                  *time.Time           `json:"startDate"`
+	EndDate                    *time.Time           `json:"endDate"`
 	Aired                      string               `json:"aired"`
-	EndDate                    *string              `json:"endDate"`
 	MaxEpisodes                int                  `json:"maxEpisodes"`
 	NumEpisodes                int                  `json:"numEpisodes"`
+	Year                       int                  `json:"year"`
+	Season                     string               `json:"season"`
 	Genres                     []string             `json:"genres"`
 	GenreObjects               []Genre              `json:"genreObjects"`
 	AgeRating                  string               `json:"ageRating"`
+	AgeRatingObject            *AgeRating           `json:"ageRatingObject"`
 	Background                 string               `json:"background"`
 	State                      string               `json:"state"`
 	AverageEpisodeDuration     int                  `json:"averageEpisodeDuration"`
@@ -24,7 +29,6 @@ type Film struct {
 	StudioObjects              []Studio             `json:"studioObjects" gorm:""`
 	Producers                  []string             `json:"producers" gorm:"-"`
 	ProducerObjets             []Producer           `json:"producerObjets" gorm:""`
-	Season                     string               `json:"season"`
 	Broadcast                  Broadcast            `json:"broadcast"`
 	Characters                 []Character          `json:"characters"`
 }
@@ -111,4 +115,16 @@ type Genre struct {
 
 func (*Genre) TableName() string {
 	return "genres"
+}
+
+type AgeRating struct {
+	Id          int    `json:"id"`
+	LongName    string `json:"longName"`
+	ShortName   string `json:"ShortName"`
+	Image       *Image `json:"image"`
+	Description string `json:"description"`
+}
+
+func (a *AgeRating) TableName() string {
+	return "age_ratings"
 }

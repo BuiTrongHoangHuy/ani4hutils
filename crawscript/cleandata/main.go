@@ -12,14 +12,29 @@ import (
 	"os"
 )
 
-var studioData map[string]model.Studio = map[string]model.Studio{}
+var studioData = map[string]model.Studio{}
 var studioIdCount int = 1
 
-var producerData map[string]model.Producer = map[string]model.Producer{}
+var producerData = map[string]model.Producer{}
 var producerIdCount int = 1
 
-var genreData map[string]model.Genre = map[string]model.Genre{}
+var genreData = map[string]model.Genre{}
 var genreIdCount int = 1
+
+var ageRatingData = map[string]model.AgeRating{}
+var ageRatingIdCount int = 1
+
+var (
+	StateOnAir    = "on_air"
+	StateFinished = "finished"
+	StateUpcoming = "upcoming"
+)
+
+var stateMap = map[string]string{
+	"Currently Airing": StateOnAir,
+	"Finished Airing":  StateFinished,
+	"Not yet aired":    StateUpcoming,
+}
 
 func main() {
 	var films []model.Film
@@ -35,22 +50,43 @@ func main() {
 
 	for i := range films {
 		studios := cleanStudioData(&films[i])
-		producers := cleanProducerData(&films[i])
-		images := cleanImageData(&films[i])
-		genres := cleanGenreData(&films[i])
-		boardCast := cleanUpBoardCastData(&films[i])
-		titles := cleanAlternativeTitleData(&films[i])
 		films[i].StudioObjects = studios
+
+		producers := cleanProducerData(&films[i])
 		films[i].ProducerObjets = producers
+
+		images := cleanImageData(&films[i])
 		films[i].ImageObject = images
+
+		genres := cleanGenreData(&films[i])
 		films[i].GenreObjects = genres
-		films[i].Broadcast = *boardCast
+
+		boardCast := cleanUpBoardCastData(&films[i])
+		if boardCast != nil {
+			films[i].Broadcast = *boardCast
+		}
+
+		titles := cleanAlternativeTitleData(&films[i])
 		films[i].AlternativeTitles = titles
+
+		year, season := cleanSeasonData(&films[i])
+		films[i].Season = season
+		films[i].Year = year
+
+		ageRating := cleanAgeRatingData(&films[i])
+		films[i].AgeRatingObject = ageRating
+
+		films[i].State = stateMap[films[i].State]
+
+		start, end := cleanTimeData(&films[i])
+		films[i].StartDate = start
+		films[i].EndDate = end
+
 	}
 	log.Print(fileName)
 	log.Println("total: ", len(films))
-	for i := range genreData {
-		log.Print(i)
+	for i, r := range dateMap {
+		log.Println(i, r, dateMapHandle[i])
 	}
 	model.SaveToJSONFilePretty("cleaned.json", films)
 }

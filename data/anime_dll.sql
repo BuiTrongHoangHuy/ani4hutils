@@ -16,13 +16,13 @@ CREATE TABLE `series`
 DROP TABLE IF EXISTS `producers`;
 CREATE TABLE `producers`
 (
-    `id`         int NOT NULL AUTO_INCREMENT,
-    `name`       varchar(50),
-    `image`      JSON,
-    `status`     int      DEFAULT 1,
-    `description` TEXT DEFAULT NULL,
-    `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `id`          int NOT NULL AUTO_INCREMENT,
+    `name`        varchar(50),
+    `image`       JSON,
+    `status`      int      DEFAULT 1,
+    `description` TEXT     DEFAULT NULL,
+    `created_at`  datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`  datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
@@ -33,29 +33,26 @@ CREATE TABLE `producers`
 DROP TABLE IF EXISTS `films`;
 CREATE TABLE `films`
 (
-    `id`                       int          NOT NULL AUTO_INCREMENT,
-    `title`                    varchar(255) NOT NULL,
-    `start_date`               datetime              DEFAULT CURRENT_TIMESTAMP,
-    `end_date`                 datetime              DEFAULT NULL,
+    `id`                       int               NOT NULL AUTO_INCREMENT,
+    `title`                    varchar(255)      NOT NULL,
+    `start_date`               datetime                   DEFAULT CURRENT_TIMESTAMP,
+    `end_date`                 datetime                   DEFAULT NULL,
     `synopsis`                 TEXT,
-    `background`               TEXT,
-    `mean`                     decimal(5, 2)         DEFAULT 0.00,
+    `images`                   JSON,
     `rank`                     int,
-    `popularity`               int                   DEFAULT 0,
-    `num_list_users`           int                   DEFAULT 0,
-    `num_scoring_users`        int                   DEFAULT 0,
-    `media_type`               varchar(50),
-    `state`                    enum ('upcoming','now_streaming', 'released', 'discontinued'),
+    `avg_star`                 float,
+    `total_star`               int unsigned,
+    `state`                    enum ('upcoming','on_air','now_streaming', 'finished'),
     `max_episodes`             int,
     `num_episodes`             int,
-    `completed`                BOOLEAN      NOT NULL DEFAULT FALSE,
+    `year`                     SMALLINT UNSIGNED,
+    `season`                   enum ('spring', 'summer', 'fall', 'winter') DEFAULT NULL,
+    `completed`                BOOLEAN           NOT NULL DEFAULT FALSE ,
     `average_episode_duration` float,
-    `source`                   varchar(50),
     `age_rating_id`            int,
-    `images`                   JSON,
-    `status`                   int                   DEFAULT 1,
-    `created_at`               datetime              DEFAULT CURRENT_TIMESTAMP,
-    `updated_at`               datetime              DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `status`                   int                        DEFAULT 1,
+    `created_at`               datetime                   DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`               datetime                   DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `series_id`                int,
     PRIMARY KEY (`id`),
     KEY `state` (`state`) USING BTREE,
@@ -70,9 +67,9 @@ CREATE TABLE `age_ratings`
 (
     `id`          int NOT NULL AUTO_INCREMENT,
     `long_name`   varchar(50),
-    `short_name`  varchar(50),
+    `short_name`  varchar(15),
     `image`       json,
-    `description` TEXT DEFAULT NULL,
+    `description` TEXT     DEFAULT NULL,
     `status`      int      DEFAULT 1,
     `created_at`  datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`  datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -87,13 +84,12 @@ DROP TABLE IF EXISTS `alternative_titles`;
 CREATE TABLE `alternative_titles`
 (
     `id`         int NOT NULL AUTO_INCREMENT,
-    `synonyms`   varchar(250),
-    `en_name`    varchar(250),
-    `ja_name`    varchar(250),
+    `synonyms`   varchar(255),
+    `en_name`    varchar(255),
+    `ja_name`    varchar(255),
     `status`     int      DEFAULT 1,
     `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
     `film_id`    int NOT NULL,
     PRIMARY KEY (`id`),
     KEY `film_id` (`film_id`) USING BTREE,
@@ -107,9 +103,9 @@ CREATE TABLE `genres`
 (
     `id`          int         NOT NULL AUTO_INCREMENT,
     `name`        varchar(50) NOT NULL,
-    `status`      int      DEFAULT 1,
     `description` TEXT,
     `image`       JSON,
+    `status`      int      DEFAULT 1,
     `created_at`  datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`  datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
@@ -131,25 +127,6 @@ CREATE TABLE `film_genre`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `seasons`;
-CREATE TABLE `seasons`
-(
-    `id`         int NOT NULL AUTO_INCREMENT,
-    `year`       int,
-    `season`     enum ('spring', 'summer', 'fall', 'winter'),
-    `status`     int      DEFAULT 1,
-    `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
-    `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
-    `film_id`    int NOT NULL,
-    PRIMARY KEY (`id`),
-    KEY `film_id` (`film_id`) USING BTREE,
-    KEY `season` (`season`) USING BTREE,
-    KEY `status` (`status`) USING BTREE
-) ENGINE = InnoDB
-  DEFAULT CHARSET = utf8mb4
-  COLLATE = utf8mb4_unicode_ci;
-
 DROP TABLE IF EXISTS `broadcasts`;
 CREATE TABLE `broadcasts`
 (
@@ -159,7 +136,6 @@ CREATE TABLE `broadcasts`
     `status`       int      DEFAULT 1,
     `created_at`   datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`   datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-
     `film_id`      int NOT NULL,
     PRIMARY KEY (`id`),
     KEY `film_id` (`film_id`) USING BTREE,

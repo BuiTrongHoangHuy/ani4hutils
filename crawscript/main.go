@@ -5,6 +5,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/caovanhoang63/ani4hutils/crawscript/model"
 	"github.com/gocolly/colly/v2"
+	"log"
 	"strconv"
 	"strings"
 	"time"
@@ -166,8 +167,9 @@ func main() {
 		if count == 100 {
 			count = 0
 			if err := model.SaveToJSONFilePretty(fmt.Sprintf("%d-%d.json", id-99, id), films); err != nil {
-				return
+				log.Println("Can't save file with error", err)
 			}
+			films = []model.Film{}
 		}
 	}
 	time.Sleep(10 * time.Second)
