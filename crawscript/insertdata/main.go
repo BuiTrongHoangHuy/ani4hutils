@@ -22,10 +22,5 @@ func main() {
 	}
 	log.Print(fileName)
 	log.Println("total: ", len(films))
-	//_, err := gorm.Open(mysql.Open(os.Getenv("DATABASE_URL")))
-	//if err != nil {
-	//	log.Fatalln(err)
-	//} else {
-	//	log.Print("Connect database success")
-	//}
+
 }

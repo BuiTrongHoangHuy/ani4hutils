@@ -4,9 +4,8 @@ type Film struct {
 	Id                         int               `json:"id" gorm:"column:id"`
 	Title                      string            `json:"title" gorm:"column:title"`
 	AlternativeTitles          AlternativeTitles `json:"alternativeTitles"`
-	MainImage                  string            `json:"mainImage" gorm:"-"`
 	Images                     []string          `json:"images"`
-	ImageObject                []Images          `json:"-" gorm:"column:images"`
+	ImageObject                *Images           `json:"imageObjects" gorm:"column:images"`
 	Synopsis                   string            `json:"synopsis"`
 	StartDate                  string            `json:"startDate"`
 	Aired                      string            `json:"aired"`
@@ -14,6 +13,7 @@ type Film struct {
 	MaxEpisodes                int               `json:"maxEpisodes"`
 	NumEpisodes                int               `json:"numEpisodes"`
 	Genres                     []string          `json:"genres"`
+	GenreObjects               []Genre           `json:"genreObjects"`
 	AgeRating                  string            `json:"ageRating"`
 	Background                 string            `json:"background"`
 	State                      string            `json:"state"`
@@ -73,27 +73,11 @@ func (v *VoiceActor) TableName() string {
 	return "actors"
 }
 
-//DROP TABLE IF EXISTS `studios`;
-//CREATE TABLE `studios`
-//(
-//`id`          int NOT NULL AUTO_INCREMENT,
-//`name`        varchar(50),
-//`image`       JSON,
-//`description` TEXT,
-//`status`      int      DEFAULT 1,
-//`created_at`  datetime DEFAULT CURRENT_TIMESTAMP,
-//`updated_at`  datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-//PRIMARY KEY (`id`),
-//KEY `status` (`status`) USING BTREE
-//) ENGINE = InnoDB
-//DEFAULT CHARSET = utf8mb4
-//COLLATE = utf8mb4_unicode_ci;
-
 type Studio struct {
-	Id          int
-	Name        string
-	Image       *Image
-	Description string
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
+	Image       *Image `json:"image"`
+	Description string `json:"description"`
 }
 
 func (*Studio) TableName() string {
@@ -101,12 +85,23 @@ func (*Studio) TableName() string {
 }
 
 type Producer struct {
-	Id          int
-	Name        string
-	Image       *Image
-	Description string
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
+	Image       *Image `json:"image"`
+	Description string `json:"description"`
 }
 
 func (*Producer) TableName() string {
 	return "producer"
+}
+
+type Genre struct {
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
+	Image       *Image `json:"image"`
+	Description string `json:"description"`
+}
+
+func (*Genre) TableName() string {
+	return "genres"
 }

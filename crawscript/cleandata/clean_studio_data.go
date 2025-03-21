@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/caovanhoang63/ani4hutils/crawscript/model"
-	"log"
 )
 
 func cleanStudioData(film *model.Film) []model.Studio {
@@ -14,7 +13,6 @@ func cleanStudioData(film *model.Film) []model.Studio {
 		var std model.Studio
 		if s, ok := studioData[studio]; ok {
 			std = s
-			log.Println(studio)
 		} else {
 			std = model.Studio{
 				Id:          studioIdCount,

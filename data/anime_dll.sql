@@ -109,6 +109,7 @@ CREATE TABLE `genres`
     `name`        varchar(50) NOT NULL,
     `status`      int      DEFAULT 1,
     `description` TEXT,
+    `image`       JSON,
     `created_at`  datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`  datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
