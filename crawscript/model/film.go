@@ -1,45 +1,52 @@
 package model
 
 type Film struct {
-	Id                         int               `json:"id" gorm:"column:id"`
-	Title                      string            `json:"title" gorm:"column:title"`
-	AlternativeTitles          AlternativeTitles `json:"alternativeTitles"`
-	Images                     []string          `json:"images"`
-	ImageObject                *Images           `json:"imageObjects" gorm:"column:images"`
-	Synopsis                   string            `json:"synopsis"`
-	StartDate                  string            `json:"startDate"`
-	Aired                      string            `json:"aired"`
-	EndDate                    *string           `json:"endDate"`
-	MaxEpisodes                int               `json:"maxEpisodes"`
-	NumEpisodes                int               `json:"numEpisodes"`
-	Genres                     []string          `json:"genres"`
-	GenreObjects               []Genre           `json:"genreObjects"`
-	AgeRating                  string            `json:"ageRating"`
-	Background                 string            `json:"background"`
-	State                      string            `json:"state"`
-	AverageEpisodeDuration     int               `json:"averageEpisodeDuration"`
-	TextAverageEpisodeDuration string            `json:"textAverageEpisodeDuration"`
-	Studios                    []string          `json:"studios" gorm:"-"`
-	StudioObjects              []Studio          `json:"studioObjects" gorm:""`
-	Producers                  []string          `json:"producers" gorm:"-"`
-	ProducerObjets             []Producer        `json:"producerObjets" gorm:""`
-	Season                     string            `json:"season"`
-	Broadcast                  *Broadcast        `json:"broadcast"`
-	Characters                 []Character       `json:"characters"`
+	Id                         int                  `json:"id" gorm:"column:id"`
+	Title                      string               `json:"title" gorm:"column:title"`
+	AlternativeTitlesRaw       AlternativeTitlesRaw `json:"alternativeTitles" gorm:"-"`
+	AlternativeTitles          *AlternativeTitles   `json:"alternativeTitleObject"`
+	Images                     []string             `json:"images"`
+	ImageObject                *Images              `json:"imageObjects" gorm:"column:images"`
+	Synopsis                   string               `json:"synopsis"`
+	StartDate                  string               `json:"startDate"`
+	Aired                      string               `json:"aired"`
+	EndDate                    *string              `json:"endDate"`
+	MaxEpisodes                int                  `json:"maxEpisodes"`
+	NumEpisodes                int                  `json:"numEpisodes"`
+	Genres                     []string             `json:"genres"`
+	GenreObjects               []Genre              `json:"genreObjects"`
+	AgeRating                  string               `json:"ageRating"`
+	Background                 string               `json:"background"`
+	State                      string               `json:"state"`
+	AverageEpisodeDuration     int                  `json:"averageEpisodeDuration"`
+	TextAverageEpisodeDuration string               `json:"textAverageEpisodeDuration"`
+	Studios                    []string             `json:"studios" gorm:"-"`
+	StudioObjects              []Studio             `json:"studioObjects" gorm:""`
+	Producers                  []string             `json:"producers" gorm:"-"`
+	ProducerObjets             []Producer           `json:"producerObjets" gorm:""`
+	Season                     string               `json:"season"`
+	Broadcast                  Broadcast            `json:"broadcast"`
+	Characters                 []Character          `json:"characters"`
 }
 
 func (f *Film) TableName() string {
 	return "films"
 }
 
-type AlternativeTitles struct {
+type AlternativeTitlesRaw struct {
 	Synonyms []string `json:"synonyms"`
 	EnName   *string  `json:"enName"`
 	JpName   string   `json:"jpName"`
 }
 
-func (f *AlternativeTitles) TableName() string {
+func (a *AlternativeTitles) TableName() string {
 	return "alternative_titles"
+}
+
+type AlternativeTitles struct {
+	Synonyms *string `json:"synonyms"`
+	EnName   *string `json:"enName"`
+	JpName   *string `json:"jpName"`
 }
 
 type Broadcast struct {

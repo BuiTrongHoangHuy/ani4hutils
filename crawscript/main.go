@@ -12,7 +12,7 @@ import (
 
 func main() {
 	var films []model.Film
-	startId := 55000
+	startId := 50000
 	n := 1000
 	count := 0
 	for id := startId; id < startId+n; id++ {
@@ -42,14 +42,14 @@ func main() {
 			switch spanText {
 			case "Synonyms:":
 				remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
-				film.AlternativeTitles.Synonyms = append(film.AlternativeTitles.Synonyms, remainText)
+				film.AlternativeTitlesRaw.Synonyms = append(film.AlternativeTitlesRaw.Synonyms, remainText)
 			case "Japanese:":
 				remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
-				film.AlternativeTitles.JpName = remainText
+				film.AlternativeTitlesRaw.JpName = remainText
 			case "Type:":
 			case "Episodes:":
 				remainText := strings.TrimSpace(strings.Replace(e.Text, spanText, "", 1))
-				if v, ok := strconv.ParseInt(remainText, 10, 32); ok != nil {
+				if v, ok := strconv.ParseInt(remainText, 10, 32); ok == nil {
 					film.MaxEpisodes = int(v)
 				}
 			case "Status:":
@@ -107,7 +107,7 @@ func main() {
 		})
 		if err := c.Visit(filmLink); err != nil {
 			fmt.Print(" Film Not Found  \n")
-			time.Sleep(2 * time.Second)
+			time.Sleep(5 * time.Second)
 			count++
 			if count == 100 {
 				count = 0
@@ -146,7 +146,7 @@ func main() {
 			})
 		if err := c.Visit(characterLink); err != nil {
 			fmt.Print("Character Not Found ")
-			time.Sleep(2 * time.Second)
+			time.Sleep(5 * time.Second)
 			count++
 			if count == 100 {
 				count = 0
@@ -156,7 +156,7 @@ func main() {
 			}
 			continue
 		} else {
-			time.Sleep(2 * time.Second)
+			time.Sleep(10 * time.Second)
 		}
 		fmt.Print("Done \n")
 		if film.Title != "" {
@@ -170,5 +170,5 @@ func main() {
 			}
 		}
 	}
-	time.Sleep(60 * time.Second)
+	time.Sleep(10 * time.Second)
 }

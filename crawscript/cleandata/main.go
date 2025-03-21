@@ -23,7 +23,7 @@ var genreIdCount int = 1
 
 func main() {
 	var films []model.Film
-	fileName := fmt.Sprintf("../data/56000-59599.json")
+	fileName := fmt.Sprintf("../data/all_data.json")
 	plan, _ := os.ReadFile(fileName)
 	var data []model.Film
 	err := json.Unmarshal(plan, &data)
@@ -39,11 +39,13 @@ func main() {
 		images := cleanImageData(&films[i])
 		genres := cleanGenreData(&films[i])
 		boardCast := cleanUpBoardCastData(&films[i])
+		titles := cleanAlternativeTitleData(&films[i])
 		films[i].StudioObjects = studios
 		films[i].ProducerObjets = producers
 		films[i].ImageObject = images
 		films[i].GenreObjects = genres
-		films[i].Broadcast = boardCast
+		films[i].Broadcast = *boardCast
+		films[i].AlternativeTitles = titles
 	}
 	log.Print(fileName)
 	log.Println("total: ", len(films))
