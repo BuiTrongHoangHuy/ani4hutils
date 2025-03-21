@@ -347,4 +347,4 @@ application-prod.properties
 /terraform/cloudflare/*
 
 
-crawscript/*.json
+crawscript/data/*.json

@@ -17,10 +17,8 @@ repositories {
     mavenCentral()
 }
 
-
 dependencies {
     apply from: rootProject.file('buildSrc/shared.gradle')
-
     implementation project(':shared')
 }
 

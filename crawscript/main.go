@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/PuerkitoBio/goquery"
+	"github.com/caovanhoang63/ani4hutils/crawscript/model"
 	"github.com/gocolly/colly/v2"
 	"os"
 	"strconv"
@@ -11,64 +12,14 @@ import (
 	"time"
 )
 
-type Film struct {
-	Id                         int               `json:"id"`
-	Title                      string            `json:"title"`
-	AlternativeTitles          AlternativeTitles `json:"alternativeTitles"`
-	MainImage                  string            `json:"mainImage"`
-	Images                     []string          `json:"images"`
-	Synopsis                   string            `json:"synopsis"`
-	StartDate                  string            `json:"startDate"`
-	Aired                      string            `json:"aired"`
-	EndDate                    *string           `json:"endDate"`
-	MaxEpisodes                int               `json:"maxEpisodes"`
-	NumEpisodes                int               `json:"numEpisodes"`
-	Genres                     []string          `json:"genres"`
-	AgeRating                  string            `json:"ageRating"`
-	Background                 string            `json:"background"`
-	State                      string            `json:"state"`
-	AverageEpisodeDuration     int               `json:"averageEpisodeDuration"`
-	TextAverageEpisodeDuration string            `json:"textAverageEpisodeDuration"`
-	Studios                    []string          `json:"studios"`
-	Producers                  []string          `json:"producers"`
-	Season                     string            `json:"season"`
-	Broadcast                  Broadcast         `json:"broadcast"`
-	Characters                 []Character       `json:"characters"`
-}
-
-type AlternativeTitles struct {
-	Synonyms []string `json:"synonyms"`
-	EnName   *string  `json:"enName"`
-	JpName   string   `json:"jpName"`
-}
-
-type Broadcast struct {
-	StartTime string `json:"startTime"`
-	DayOfWeek string `json:"dayOfWeek"`
-	TimeZone  string `json:"timeZone"`
-}
-
-type Character struct {
-	Name        string       `json:"name"`
-	Role        string       `json:"role"`
-	Image       string       `json:"image"`
-	VoiceActors []VoiceActor `json:"voiceActors"`
-}
-
-type VoiceActor struct {
-	Name     string `json:"name"`
-	Language string `json:"language"`
-	Image    string `json:"image"`
-}
-
 func main() {
-	var films []Film
+	var films []model.Film
 	startId := 55000
 	n := 1000
 	count := 0
 	for id := startId; id < startId+n; id++ {
 		fmt.Printf("id: %d ", id)
-		var film Film
+		var film model.Film
 		film.Id = id
 		filmLink := fmt.Sprintf("https://myanimelist.net/anime/%d/", id)
 		characterLink := fmt.Sprintf("https://myanimelist.net/anime/%d/a/characters", id)
@@ -175,7 +126,7 @@ func main() {
 				name := e.DOM.Find("h3.h3_character_name").Text()
 				role := e.DOM.Find("tbody > tr > td:nth-child(2) > div:nth-child(4)").Text()
 				role = strings.TrimSpace(role)
-				character := Character{
+				character := model.Character{
 					Name:  name,
 					Image: image,
 					Role:  role,
@@ -186,7 +137,7 @@ func main() {
 					nameVoiceActor := s.Find("div.spaceit_pad > a").Text()
 					language := s.Find("div.spaceit_pad.js-anime-character-language").Text()
 					language = strings.TrimSpace(language)
-					voiceActor := VoiceActor{
+					voiceActor := model.VoiceActor{
 						Name:     nameVoiceActor,
 						Language: language,
 						Image:    imageVoiceActor,
