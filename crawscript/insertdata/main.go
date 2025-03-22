@@ -13,17 +13,20 @@ import (
 )
 
 func main() {
-	godotenv.Load()
-	var genres []model.Genre
-	fileName := fmt.Sprintf("../data/genre.json")
+	var films []model.FilmCharacterActor
+	fileName := fmt.Sprintf("../data/character_actor.json")
 	plan, _ := os.ReadFile(fileName)
-	err := json.Unmarshal(plan, &genres)
+	err := json.Unmarshal(plan, &films)
+	if err != nil {
+		log.Println(err)
+	}
+	log.Println(len(films))
+	godotenv.Load()
 	db, err := gorm.Open(mysql.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
-
 	if err != nil {
 		log.Fatal(err)
 	}
-	if err = db.Create(genres).Error; err != nil {
-		log.Fatalln(err)
+	if err = db.Create(films).Error; err != nil {
+		log.Println(err)
 	}
 }

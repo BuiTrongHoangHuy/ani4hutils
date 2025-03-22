@@ -2,7 +2,6 @@ package main
 
 import (
 	"github.com/caovanhoang63/ani4hutils/crawscript/model"
-	"log"
 	"strings"
 	"time"
 	"unicode"
@@ -42,14 +41,15 @@ func cleanTimeData(film *model.Film) (*time.Time, *time.Time) {
 	case 20:
 		str := strings.Split(aired, " to ")
 		if !unicode.IsDigit(rune(aired[0])) {
-			start, _ := time.Parse(layout8, str[0])
-			end, _ := time.Parse(layout8, str[1])
-			return &start, &end
+			start, err1 := time.Parse(layout8, str[0])
+			end, err2 := time.Parse(layout8, str[1])
+			if err1 == nil && err2 == nil {
+				return &start, &end
+			}
 		}
 		start, err1 := time.Parse(layout12, str[0])
 		end, err2 := time.Parse(layout4, str[1])
 		if err1 == nil && err2 == nil {
-			log.Println()
 			return &start, &end
 		} else {
 			start, err1 = time.Parse(layout4, str[0])
@@ -61,7 +61,6 @@ func cleanTimeData(film *model.Film) (*time.Time, *time.Time) {
 		start, err1 := time.Parse(layout12, str[0])
 		end, err2 := time.Parse(layout4, str[1])
 		if err1 == nil && err2 == nil {
-			log.Println()
 			return &start, &end
 		} else {
 			start, err1 = time.Parse(layout4, str[0])
@@ -69,11 +68,19 @@ func cleanTimeData(film *model.Film) (*time.Time, *time.Time) {
 			return &start, &end
 		}
 	case 13:
-		start, _ := time.Parse(layout12, aired)
+		str := strings.Split(aired, " to ")
+		start, _ := time.Parse(layout8, str[0])
 		return &start, nil
 	case 12:
-		start, _ := time.Parse(layout12, aired)
+		start, err := time.Parse(layout12, aired)
+		if err != nil {
+			str := strings.Split(aired, " to ")
+			start, _ = time.Parse(layout4, str[0])
+			end, _ := time.Parse(layout4, str[1])
+			return &start, &end
+		}
 		return &start, nil
+
 	case 11:
 		start, _ := time.Parse(layout12, aired)
 		return &start, nil
@@ -83,15 +90,22 @@ func cleanTimeData(film *model.Film) (*time.Time, *time.Time) {
 		return &start, nil
 	case 16:
 		str := strings.Split(aired, " to ")
-		start, _ := time.Parse(layout12, str[0])
+		start, err := time.Parse(layout12, str[0])
+		if err != nil {
+			str = strings.Split(aired, " to ")
+			start, _ = time.Parse(layout8, str[0])
+			end, _ := time.Parse(layout4, str[1])
+			return &start, &end
+		}
+		return &start, nil
+	case 9:
+		str := strings.Split(aired, " to ")
+		start, _ := time.Parse(layout4, str[0])
 		return &start, nil
 	case 8:
 		start, _ := time.Parse(layout8, aired)
 		return &start, nil
-	case 9:
-		str := strings.Split(aired, " to ")
-		start, _ := time.Parse(layout12, str[0])
-		return &start, nil
+
 	case 4:
 		start, _ := time.Parse(layout4, aired)
 		return &start, nil

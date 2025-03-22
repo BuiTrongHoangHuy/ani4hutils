@@ -5,7 +5,7 @@ import "time"
 type FilmInsertModel struct {
 	Id                     int                `json:"id" gorm:"column:id"`
 	Title                  string             `json:"title" gorm:"column:title"`
-	Image                  *Images            `json:"images" gorm:"column:images"`
+	Image                  *Images            `json:"imageObjects" gorm:"column:images"`
 	Synopsis               string             `json:"synopsis" gorm:"column:synopsis"`
 	StartDate              *time.Time         `json:"startDate" gorm:"column:start_date"`
 	EndDate                *time.Time         `json:"endDate" gorm:"column:end_date"`
@@ -16,14 +16,19 @@ type FilmInsertModel struct {
 	State                  string             `json:"state" gorm:"column:state"`
 	AverageEpisodeDuration int                `json:"averageEpisodeDuration" gorm:"column:average_episode_duration"`
 	AgeRatingId            int                `json:"ageRatingId" gorm:"colum:age_rating_id"`
-	GenreObjects           []Genre            `json:"genres" gorm:"-"`
-	AgeRatingObject        *AgeRating         `json:"ageRating" gorm:"-"`
-	AlternativeTitles      *AlternativeTitles `json:"alternativeTitles" gorm:"-"`
-	StudioObjects          []Studio           `json:"studios" gorm:"-"`
-	ProducerObjets         []Producer         `json:"producers" gorm:"-"`
+	GenreObjects           []Genre            `json:"genreObjects" gorm:"-"`
+	AgeRatingObject        *AgeRating         `json:"ageRatingObject" gorm:"-"`
+	AlternativeTitles      *AlternativeTitles `json:"alternativeTitlesObject" gorm:"-"`
+	StudioObjects          []Studio           `json:"studioObjects" gorm:"-"`
+	ProducerObjets         []Producer         `json:"producerObjets" gorm:"-"`
 	Broadcast              Broadcast          `json:"broadcast" gorm:"-"`
 	Characters             []Character        `json:"characters" gorm:"-"`
 }
+
+func (m *FilmInsertModel) TabeName() string {
+	return "films"
+}
+
 type Film struct {
 	Id                         int                  `json:"id" gorm:"column:id"`
 	Title                      string               `json:"title" gorm:"column:title"`
@@ -91,8 +96,9 @@ type Character struct {
 	Id          int          `json:"id"`
 	Name        string       `json:"name"`
 	Role        string       `json:"role"`
-	Image       string       `json:"image"`
-	VoiceActors []VoiceActor `json:"voiceActors"`
+	Image       string       `json:"image" gorm:"-"`
+	ImageObject *Image       `json:"imageObject" gorm:"column:image"`
+	VoiceActors []VoiceActor `json:"voiceActors" gorm:"-"`
 }
 
 func (c *Character) TableName() string {
@@ -100,10 +106,11 @@ func (c *Character) TableName() string {
 }
 
 type VoiceActor struct {
-	Id       int    `json:"id"`
-	Name     string `json:"name"`
-	Language string `json:"language"`
-	Image    string `json:"image"`
+	Id          int    `json:"id"`
+	Name        string `json:"name"`
+	Language    string `json:"language"`
+	Image       string `json:"image" gorm:"-"`
+	ImageObject *Image `json:"imageObject" gorm:"column:image"`
 }
 
 func (v *VoiceActor) TableName() string {
@@ -129,7 +136,7 @@ type Producer struct {
 }
 
 func (*Producer) TableName() string {
-	return "producer"
+	return "producers"
 }
 
 type Genre struct {

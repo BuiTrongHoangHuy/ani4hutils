@@ -160,8 +160,8 @@ CREATE TABLE `studios`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `film_studio`;
-CREATE TABLE `film_studio`
+DROP TABLE IF EXISTS `film_studios`;
+CREATE TABLE `film_studios`
 (
     `id`        int NOT NULL AUTO_INCREMENT,
     `film_id`   int NOT NULL,
@@ -173,8 +173,8 @@ CREATE TABLE `film_studio`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `film_producer`;
-CREATE TABLE `film_producer`
+DROP TABLE IF EXISTS `film_producers`;
+CREATE TABLE `film_producers`
 (
     `id`        int NOT NULL AUTO_INCREMENT,
     `film_id`   int NOT NULL,
@@ -224,6 +224,10 @@ CREATE TABLE `film_characters`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+ALTER TABLE `film_characters` DROP COLUMN film_id;
+
+
+
 
 DROP TABLE IF EXISTS `actors`;
 CREATE TABLE `actors`
@@ -241,8 +245,8 @@ CREATE TABLE `actors`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `film_character_actor`;
-CREATE TABLE `film_character_actor`
+DROP TABLE IF EXISTS `film_character_actors`;
+CREATE TABLE `film_character_actors`
 (
     `id`                int NOT NULL AUTO_INCREMENT,
     `film_character_id` int NOT NULL,
@@ -250,6 +254,18 @@ CREATE TABLE `film_character_actor`
     PRIMARY KEY (`id`),
     KEY `film_character_id` (`film_character_id`) USING BTREE,
     KEY `actor_id` (`actor_id`) USING BTREE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+DROP TABLE IF EXISTS `film_film_characters`;
+CREATE TABLE `film_film_characters`
+(
+    `id`                int NOT NULL AUTO_INCREMENT,
+    `film_character_id` int NOT NULL,
+    `film_id`          int NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `film_character_id` (`film_character_id`) USING BTREE,
+    KEY `film_id` (`film_id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;

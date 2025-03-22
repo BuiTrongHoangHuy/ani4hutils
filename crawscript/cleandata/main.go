@@ -41,12 +41,12 @@ var stateMap = map[string]string{
 
 func main() {
 	var films []model.Film
-	fileName := fmt.Sprintf("../data/all_data.json")
+	fileName := fmt.Sprintf("../data/all_data3.json")
 	plan, _ := os.ReadFile(fileName)
 	var data []model.Film
 	err := json.Unmarshal(plan, &data)
 	if err != nil {
-		log.Print(err)
+		log.Fatal(err)
 	} else {
 		films = append(films, data...)
 	}
@@ -90,10 +90,40 @@ func main() {
 
 	}
 	log.Print(fileName)
+	// 3955
 	log.Println("total: ", len(films))
 	log.Println(characterIdCount)
 	model.SaveToJSONFilePretty("../data/cleaned.json", films)
 	storeMetaData()
+
+	var filmFilmCharacters []model.FilmFilmCharacter
+	var filmStudio []model.FilmStudio
+	var filmProducer []model.FilmProducer
+
+	for _, film := range films {
+		for _, character := range film.Characters {
+			filmFilmCharacters = append(filmFilmCharacters, model.FilmFilmCharacter{
+				FilmId:      film.Id,
+				CharacterId: character.Id,
+			})
+		}
+		for _, studio := range film.StudioObjects {
+			filmStudio = append(filmStudio, model.FilmStudio{
+				FilmId:   film.Id,
+				StudioId: studio.Id,
+			})
+		}
+		for _, producer := range film.ProducerObjets {
+			filmProducer = append(filmProducer, model.FilmProducer{
+				FilmId:     film.Id,
+				ProducerId: producer.Id,
+			})
+		}
+	}
+	model.SaveToJSONFilePretty("../data/film_film_character.json", filmFilmCharacters)
+	model.SaveToJSONFilePretty("../data/film_studio.json", filmStudio)
+	model.SaveToJSONFilePretty("../data/film_producer.json", filmProducer)
+
 }
 
 func storeMetaData() {
@@ -150,4 +180,16 @@ func storeMetaData() {
 		return characterArray[i].Id < characterArray[j].Id
 	})
 	model.SaveToJSONFilePretty("../data/character.json", characterArray)
+
+	var filmCharacterActors []model.FilmCharacterActor
+	for i := range characterArray {
+		for j := range characterArray[i].VoiceActors {
+			filmCharacterActors = append(filmCharacterActors, model.FilmCharacterActor{
+				FilmCharacterId: characterArray[i].Id,
+				ActorId:         characterArray[i].VoiceActors[j].Id,
+			})
+		}
+	}
+	model.SaveToJSONFilePretty("../data/character_actor.json", filmCharacterActors)
+
 }
