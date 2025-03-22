@@ -88,6 +88,10 @@ func main() {
 		character := cleanCharacterData(&films[i])
 		films[i].Characters = character
 
+		maxEp, numEp := cleanEpisodeData(&films[i])
+		films[i].MaxEpisodes = maxEp
+		films[i].NumEpisodes = numEp
+
 	}
 	log.Print(fileName)
 	// 3955
