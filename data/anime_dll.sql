@@ -47,7 +47,6 @@ CREATE TABLE `films`
     `num_episodes`             int,
     `year`                     SMALLINT UNSIGNED,
     `season`                   enum ('spring', 'summer', 'fall', 'winter') DEFAULT NULL,
-    `completed`                BOOLEAN           NOT NULL DEFAULT FALSE ,
     `average_episode_duration` float,
     `age_rating_id`            int,
     `status`                   int                        DEFAULT 1,
@@ -170,6 +169,19 @@ CREATE TABLE `film_studio`
     PRIMARY KEY (`id`),
     KEY `film_id` (`film_id`) USING BTREE,
     KEY `studio_id` (`studio_id`) USING BTREE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `film_producer`;
+CREATE TABLE `film_producer`
+(
+    `id`        int NOT NULL AUTO_INCREMENT,
+    `film_id`   int NOT NULL,
+    `producer_id` int NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `film_id` (`film_id`) USING BTREE,
+    KEY `studio_id` (`producer_id`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;

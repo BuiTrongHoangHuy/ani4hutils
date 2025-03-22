@@ -1,9 +1,12 @@
 package site.ani4h.auth;
 
+import org.apache.coyote.http11.AbstractHttp11Protocol;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import java.util.Arrays;
@@ -30,4 +33,17 @@ public class ApiApplication {
 
         };
     }
+    @Bean
+    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> webServerFactoryCustomizer()    {
+        return (tomcat) -> tomcat.addConnectorCustomizers((connector) -> {
+            if (connector.getProtocolHandler() instanceof AbstractHttp11Protocol) {
+                AbstractHttp11Protocol<?> protocolHandler = (AbstractHttp11Protocol<?>) connector
+                        .getProtocolHandler();
+                protocolHandler.setKeepAliveTimeout(80000);
+                protocolHandler.setMaxKeepAliveRequests(500);
+                protocolHandler.setUseKeepAliveResponseHeader(true);
+            }
+    });
 }
+}
+

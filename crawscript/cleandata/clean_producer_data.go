@@ -15,7 +15,7 @@ func cleanProducerData(film *model.Film) []model.Producer {
 			producer = s
 		} else {
 			producer = model.Producer{
-				Id:          studioIdCount,
+				Id:          producerIdCount,
 				Name:        producerStr,
 				Image:       nil,
 				Description: "",

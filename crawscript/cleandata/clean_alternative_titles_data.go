@@ -8,7 +8,7 @@ func cleanAlternativeTitleData(film *model.Film) *model.AlternativeTitles {
 	if rawTitle.JpName == "" && rawTitle.EnName == nil && len(rawTitle.Synonyms) == 0 {
 		return nil
 	}
-
+	titles.FilmId = film.Id
 	if len(rawTitle.Synonyms) > 0 {
 		titles.Synonyms = &rawTitle.Synonyms[0]
 	}

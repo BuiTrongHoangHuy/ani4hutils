@@ -17,7 +17,7 @@ func cleanAgeRatingData(film *model.Film) *model.AgeRating {
 	} else {
 		names := strings.Split(str, " - ")
 		rating = model.AgeRating{
-			Id:          studioIdCount,
+			Id:          ageRatingIdCount,
 			LongName:    str,
 			ShortName:   names[0],
 			Image:       nil,

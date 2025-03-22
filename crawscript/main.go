@@ -116,9 +116,7 @@ func main() {
 					return
 				}
 				films = []model.Film{}
-
 			}
-
 			continue
 		}
 		// get characters & staff
@@ -157,7 +155,7 @@ func main() {
 				if err = model.SaveToJSONFilePretty(fmt.Sprintf("%d-%d.json", id-99, id), films); err != nil {
 					continue
 				}
-
+				films = []model.Film{}
 			}
 			continue
 		} else {

@@ -2,6 +2,28 @@ package model
 
 import "time"
 
+type FilmInsertModel struct {
+	Id                     int                `json:"id" gorm:"column:id"`
+	Title                  string             `json:"title" gorm:"column:title"`
+	Image                  *Images            `json:"images" gorm:"column:images"`
+	Synopsis               string             `json:"synopsis" gorm:"column:synopsis"`
+	StartDate              *time.Time         `json:"startDate" gorm:"column:start_date"`
+	EndDate                *time.Time         `json:"endDate" gorm:"column:end_date"`
+	MaxEpisodes            int                `json:"maxEpisodes" gorm:"column:max_episodes"`
+	NumEpisodes            int                `json:"numEpisodes" gorm:"column:num_episodes"`
+	Year                   int                `json:"year" gorm:"column:year"`
+	Season                 string             `json:"season" gorm:"column:season"`
+	State                  string             `json:"state" gorm:"column:state"`
+	AverageEpisodeDuration int                `json:"averageEpisodeDuration" gorm:"column:average_episode_duration"`
+	AgeRatingId            int                `json:"ageRatingId" gorm:"colum:age_rating_id"`
+	GenreObjects           []Genre            `json:"genres" gorm:"-"`
+	AgeRatingObject        *AgeRating         `json:"ageRating" gorm:"-"`
+	AlternativeTitles      *AlternativeTitles `json:"alternativeTitles" gorm:"-"`
+	StudioObjects          []Studio           `json:"studios" gorm:"-"`
+	ProducerObjets         []Producer         `json:"producers" gorm:"-"`
+	Broadcast              Broadcast          `json:"broadcast" gorm:"-"`
+	Characters             []Character        `json:"characters" gorm:"-"`
+}
 type Film struct {
 	Id                         int                  `json:"id" gorm:"column:id"`
 	Title                      string               `json:"title" gorm:"column:title"`
@@ -48,12 +70,14 @@ func (a *AlternativeTitles) TableName() string {
 }
 
 type AlternativeTitles struct {
+	FilmId   int     `json:"filmId"`
 	Synonyms *string `json:"synonyms"`
 	EnName   *string `json:"enName"`
 	JpName   *string `json:"jpName"`
 }
 
 type Broadcast struct {
+	FilmId    int    `json:"filmId"`
 	StartTime string `json:"startTime"`
 	DayOfWeek string `json:"dayOfWeek"`
 	TimeZone  string `json:"timeZone"`
@@ -64,6 +88,7 @@ func (f *Broadcast) TableName() string {
 }
 
 type Character struct {
+	Id          int          `json:"id"`
 	Name        string       `json:"name"`
 	Role        string       `json:"role"`
 	Image       string       `json:"image"`
@@ -75,6 +100,7 @@ func (c *Character) TableName() string {
 }
 
 type VoiceActor struct {
+	Id       int    `json:"id"`
 	Name     string `json:"name"`
 	Language string `json:"language"`
 	Image    string `json:"image"`
