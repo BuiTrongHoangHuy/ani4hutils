@@ -13,8 +13,8 @@ import (
 
 func main() {
 	var films []model.Film
-	startId := 50000
-	n := 1000
+	startId := 51000
+	n := 3000
 	count := 0
 	for id := startId; id < startId+n; id++ {
 		fmt.Printf("id: %d ", id)
@@ -115,7 +115,10 @@ func main() {
 				if err = model.SaveToJSONFilePretty(fmt.Sprintf("%d-%d.json", id-99, id), films); err != nil {
 					return
 				}
+				films = []model.Film{}
+
 			}
+
 			continue
 		}
 		// get characters & staff
@@ -152,8 +155,9 @@ func main() {
 			if count == 100 {
 				count = 0
 				if err = model.SaveToJSONFilePretty(fmt.Sprintf("%d-%d.json", id-99, id), films); err != nil {
-					return
+					continue
 				}
+
 			}
 			continue
 		} else {
