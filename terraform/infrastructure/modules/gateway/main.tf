@@ -30,17 +30,17 @@ resource "aws_apigatewayv2_stage" "v1" {
   auto_deploy = true
 }
 
-resource "aws_apigatewayv2_integration" "example" {
-  api_id = aws_apigatewayv2_api.rest_gateway.id
-  integration_type = "HTTP_PROXY"
-
-  integration_method = "ANY"
-  integration_uri    = "http://13.229.228.35:4000/{proxy}"
-}
-
-resource "aws_apigatewayv2_route" "example" {
-  api_id = aws_apigatewayv2_api.rest_gateway.id
-  route_key = "ANY /{proxy+}"
-
-  target = "integrations/${aws_apigatewayv2_integration.example.id}"
-}
+# resource "aws_apigatewayv2_integration" "example" {
+#   api_id = aws_apigatewayv2_api.rest_gateway.id
+#   integration_type = "HTTP_PROXY"
+#
+#   integration_method = "ANY"
+#   integration_uri    = "http://13.229.228.35:4000/{proxy}"
+# }
+#
+# resource "aws_apigatewayv2_route" "example" {
+#   api_id = aws_apigatewayv2_api.rest_gateway.id
+#   route_key = "ANY /{proxy+}"
+#
+#   target = "integrations/${aws_apigatewayv2_integration.example.id}"
+# }
