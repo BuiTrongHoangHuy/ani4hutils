@@ -60,7 +60,7 @@ resource "aws_ecs_task_definition" "auth" {
     {
       name      = "first"
       image     = "public.ecr.aws/v2r1j0e6/ani4h-api"
-      memory    = 100
+      memory    = 500
       essential = true
       portMappings = [
         {

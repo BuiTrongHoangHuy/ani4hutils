@@ -26,10 +26,6 @@ public class ApiApplication {
             System.out.println("Let's inspect the beans provided by Spring Boot:");
 
             String[] beanNames = ctx.getBeanDefinitionNames();
-            Arrays.sort(beanNames);
-            for (String beanName : beanNames) {
-                System.out.println(beanName);
-            }
 
         };
     }
@@ -37,6 +33,7 @@ public class ApiApplication {
     public WebServerFactoryCustomizer<TomcatServletWebServerFactory> webServerFactoryCustomizer()    {
         return (tomcat) -> tomcat.addConnectorCustomizers((connector) -> {
             if (connector.getProtocolHandler() instanceof AbstractHttp11Protocol) {
+                System.out.println("Setup keep alive");
                 AbstractHttp11Protocol<?> protocolHandler = (AbstractHttp11Protocol<?>) connector
                         .getProtocolHandler();
                 protocolHandler.setKeepAliveTimeout(80000);
