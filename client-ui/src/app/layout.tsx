@@ -25,12 +25,19 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
+    <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <TopBar></TopBar>
-        {children}
-      </body>
+    >
+    <div className="">
+        <header className="absolute top-0 z-50 w-full">
+            <TopBar/>
+        </header>
+        <main className={"relative"}>
+            {children}
+        </main>
+        <footer></footer>
+    </div>
+    </body>
     </html>
   );
 }

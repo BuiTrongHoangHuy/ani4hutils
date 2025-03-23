@@ -37,8 +37,13 @@
     --noise: 0;
 }
 
-
-
+.vignette {
+    background-image: url("/love-is-war.jpg");
+    background-size: cover;
+    background-position: center center;
+    box-sizing: border-box;
+    box-shadow: inset 0 0 70px 50px black;
+}
 @plugin "daisyui/theme" {
     name: "light";
     default: false;

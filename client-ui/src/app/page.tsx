@@ -1,6 +1,10 @@
+import Carousel from "@/app/carousel";
+
 export default function Home() {
   return (
-    <div className={"card1"}></div>
+      <div className={"h-screen w-screen"}>
+        <Carousel className={"w-full h-[80%]"}/>
+      </div>
 )
   ;
 }
