@@ -113,13 +113,12 @@ CREATE TABLE `genres`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-DROP TABLE IF EXISTS `film_genre`;
-CREATE TABLE `film_genre`
+DROP TABLE IF EXISTS `film_genres`;
+CREATE TABLE `film_genres`
 (
-    `id`       int NOT NULL AUTO_INCREMENT,
     `film_id`  int NOT NULL,
     `genre_id` int NOT NULL,
-    PRIMARY KEY (`id`),
+    PRIMARY KEY (`film_id`,`genre_id`),
     KEY `film_id` (`film_id`) USING BTREE,
     KEY `genre_id` (`genre_id`) USING BTREE
 ) ENGINE = InnoDB
@@ -131,14 +130,15 @@ CREATE TABLE `broadcasts`
 (
     `id`           int NOT NULL AUTO_INCREMENT,
     `start_time`   time,
-    `date_of_week` enum ('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'),
+    `day_of_week` enum ('sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'),
     `status`       int      DEFAULT 1,
+    `time_zone` NVARCHAR(10),
     `created_at`   datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`   datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     `film_id`      int NOT NULL,
     PRIMARY KEY (`id`),
     KEY `film_id` (`film_id`) USING BTREE,
-    KEY `date_of_week` (`date_of_week`) USING BTREE,
+    KEY `day_of_week` (`day_of_week`) USING BTREE,
     KEY `status` (`status`) USING BTREE
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4

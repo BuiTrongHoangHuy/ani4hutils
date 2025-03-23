@@ -78,7 +78,9 @@ func main() {
 
 		ageRating := cleanAgeRatingData(&films[i])
 		films[i].AgeRatingObject = ageRating
-
+		if ageRating != nil {
+			films[i].AgeRatingId = ageRating.Id
+		}
 		films[i].State = stateMap[films[i].State]
 
 		start, end := cleanTimeData(&films[i])
@@ -103,6 +105,9 @@ func main() {
 	var filmFilmCharacters []model.FilmFilmCharacter
 	var filmStudio []model.FilmStudio
 	var filmProducer []model.FilmProducer
+	var titles []*model.AlternativeTitles
+	var broadcasts []model.Broadcast
+	var filmGenre []model.FilmGenre
 
 	for _, film := range films {
 		for _, character := range film.Characters {
@@ -111,6 +116,7 @@ func main() {
 				CharacterId: character.Id,
 			})
 		}
+		film.Characters = nil
 		for _, studio := range film.StudioObjects {
 			filmStudio = append(filmStudio, model.FilmStudio{
 				FilmId:   film.Id,
@@ -123,10 +129,24 @@ func main() {
 				ProducerId: producer.Id,
 			})
 		}
+		titles = append(titles, film.AlternativeTitles)
+		if !(film.Broadcast.DayOfWeek == "" || film.Broadcast.DayOfWeek == "Unknown") {
+			broadcasts = append(broadcasts, film.Broadcast)
+		}
+
+		for _, genre := range film.GenreObjects {
+			filmGenre = append(filmGenre, model.FilmGenre{
+				FilmId:  film.Id,
+				GenreId: genre.Id,
+			})
+		}
 	}
 	model.SaveToJSONFilePretty("../data/film_film_character.json", filmFilmCharacters)
 	model.SaveToJSONFilePretty("../data/film_studio.json", filmStudio)
 	model.SaveToJSONFilePretty("../data/film_producer.json", filmProducer)
+	model.SaveToJSONFilePretty("../data/alter_titles.json", titles)
+	model.SaveToJSONFilePretty("../data/broadcast.json", broadcasts)
+	model.SaveToJSONFilePretty("../data/film_genre.json", filmGenre)
 
 }
 

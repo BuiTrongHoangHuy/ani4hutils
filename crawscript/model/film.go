@@ -25,7 +25,7 @@ type FilmInsertModel struct {
 	Characters             []Character        `json:"characters" gorm:"-"`
 }
 
-func (m *FilmInsertModel) TabeName() string {
+func (m FilmInsertModel) TableName() string {
 	return "films"
 }
 
@@ -48,6 +48,7 @@ type Film struct {
 	GenreObjects               []Genre              `json:"genreObjects"`
 	AgeRating                  string               `json:"ageRating"`
 	AgeRatingObject            *AgeRating           `json:"ageRatingObject"`
+	AgeRatingId                int                  `json:"ageRatingId"`
 	Background                 string               `json:"background"`
 	State                      string               `json:"state"`
 	AverageEpisodeDuration     int                  `json:"averageEpisodeDuration"`
@@ -78,7 +79,7 @@ type AlternativeTitles struct {
 	FilmId   int     `json:"filmId"`
 	Synonyms *string `json:"synonyms"`
 	EnName   *string `json:"enName"`
-	JpName   *string `json:"jpName"`
+	JpName   *string `json:"jpName" gorm:"column:ja_name"`
 }
 
 type Broadcast struct {

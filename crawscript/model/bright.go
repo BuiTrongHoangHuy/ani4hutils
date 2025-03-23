@@ -17,5 +17,10 @@ type FilmProducer struct {
 
 type FilmFilmCharacter struct {
 	FilmId      int
-	CharacterId int
+	CharacterId int `json:"CharacterId" gorm:"column:film_character_id"`
+}
+
+type FilmGenre struct {
+	FilmId  int
+	GenreId int
 }
