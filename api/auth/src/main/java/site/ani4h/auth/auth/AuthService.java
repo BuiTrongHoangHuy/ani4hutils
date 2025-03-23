@@ -11,8 +11,8 @@ import site.ani4h.auth.middleware.jwt_spring_security.SHA256PasswordEncoder;
 import site.ani4h.auth.user.Role;
 import site.ani4h.auth.user.UserCreate;
 import site.ani4h.auth.user.UserRepository;
-import site.ani4h.share.errors.EntityAlreadyExist;
-import site.ani4h.share.utils.RandomSequenceGenerator;
+import site.ani4h.shared.errors.EntityAlreadyExist;
+import site.ani4h.shared.utils.RandomSequenceGenerator;
 
 import java.util.Set;
 

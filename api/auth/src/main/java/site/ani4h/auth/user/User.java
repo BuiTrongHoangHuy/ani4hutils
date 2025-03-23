@@ -3,8 +3,8 @@ package site.ani4h.auth.user;
 
 import lombok.Getter;
 import lombok.Setter;
-import site.ani4h.share.common.Image;
-import site.ani4h.share.common.Uid;
+import site.ani4h.shared.common.Image;
+import site.ani4h.shared.common.Uid;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

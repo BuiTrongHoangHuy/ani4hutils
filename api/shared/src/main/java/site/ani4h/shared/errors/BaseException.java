@@ -1,6 +1,5 @@
-package site.ani4h.share.errors;
+package site.ani4h.shared.errors;
 
-import lombok.Getter;
 import org.springframework.http.HttpStatus;
 
 @lombok.Getter

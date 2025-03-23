@@ -2,9 +2,9 @@ package site.ani4h.auth.user;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import site.ani4h.share.common.ApiResponse;
-import site.ani4h.share.common.Paging;
-import site.ani4h.share.common.Uid;
+import site.ani4h.shared.common.ApiResponse;
+import site.ani4h.shared.common.Paging;
+import site.ani4h.shared.common.Uid;
 
 @RestController
 @RequestMapping("/v1/user")

@@ -1,4 +1,4 @@
-package site.ani4h.share.errors;
+package site.ani4h.shared.errors;
 
 import org.springframework.http.HttpStatus;
 

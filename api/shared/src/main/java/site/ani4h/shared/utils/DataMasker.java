@@ -1,4 +1,4 @@
-package site.ani4h.share.utils;
+package site.ani4h.shared.utils;
 
 public class DataMasker {
     public static String mask(int input ) {

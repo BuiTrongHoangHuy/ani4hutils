@@ -1,4 +1,4 @@
-package site.ani4h.share.middlewares.logger;
+package site.ani4h.shared.middlewares.logger;
 
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
@@ -11,8 +11,8 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import site.ani4h.share.common.ApiResponse;
-import site.ani4h.share.errors.BaseException;
+import site.ani4h.shared.common.ApiResponse;
+import site.ani4h.shared.errors.BaseException;
 
 import java.util.ArrayList;
 import java.util.List;

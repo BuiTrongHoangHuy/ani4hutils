@@ -6,7 +6,7 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
-import site.ani4h.share.common.ApiResponse;
+import site.ani4h.shared.common.ApiResponse;
 
 public class ApiResponseWrapperAdvice implements ResponseBodyAdvice<Object> {
     @Override

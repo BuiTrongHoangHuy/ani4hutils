@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.Getter;
 import lombok.Setter;
-import site.ani4h.share.common.Uid;
+import site.ani4h.shared.common.Uid;
 
 @Getter
 @Setter

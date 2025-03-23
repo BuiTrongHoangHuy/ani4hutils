@@ -1,4 +1,4 @@
-package site.ani4h.share.common;
+package site.ani4h.shared.common;
 
 
 import com.fasterxml.jackson.core.JsonGenerator;

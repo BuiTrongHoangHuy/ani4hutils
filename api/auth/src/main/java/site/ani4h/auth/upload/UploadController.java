@@ -6,8 +6,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import site.ani4h.share.common.ApiResponse;
-import site.ani4h.share.common.Image;
+import site.ani4h.shared.common.ApiResponse;
+import site.ani4h.shared.common.Image;
 
 @RestController
 @RequestMapping("/v1/upload")

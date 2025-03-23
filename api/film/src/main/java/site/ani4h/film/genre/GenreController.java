@@ -1,10 +1,7 @@
 package site.ani4h.film.genre;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1/genre")
@@ -17,5 +14,10 @@ public class GenreController {
     public ResponseEntity<?>  createGenre(@RequestBody GenreCreate genre) {
         genreService.create(genre);
         return ResponseEntity.ok(genre.getId());
+    }
+    @GetMapping()
+    public ResponseEntity<?>  getGenres() {
+        var genres = genreService.getAll();
+        return ResponseEntity.ok(genres);
     }
 }

@@ -1,7 +1,6 @@
 package site.ani4h.film.genre;
 
 import org.springframework.stereotype.Component;
-import site.ani4h.share.common.Paging;
 
 import java.util.List;
 @Component

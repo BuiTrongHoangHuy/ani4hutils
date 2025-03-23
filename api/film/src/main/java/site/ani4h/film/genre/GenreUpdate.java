@@ -2,7 +2,7 @@ package site.ani4h.film.genre;
 
 import lombok.Getter;
 import lombok.Setter;
-import site.ani4h.share.common.Image;
+import site.ani4h.shared.common.Image;
 
 @Getter
 @Setter

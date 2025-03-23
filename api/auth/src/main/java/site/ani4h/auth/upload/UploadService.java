@@ -4,7 +4,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import site.ani4h.auth.utils.UploadProvider;
-import site.ani4h.share.common.Image;
+import site.ani4h.shared.common.Image;
 
 import java.io.File;
 import java.util.UUID;

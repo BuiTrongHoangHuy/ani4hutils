@@ -1,4 +1,4 @@
-package site.ani4h.share.utils;
+package site.ani4h.shared.utils;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
