@@ -2,6 +2,7 @@ package site.ani4h.film.genre;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.ani4h.shared.common.Uid;
 
 @RestController
 @RequestMapping("/v1/genre")
@@ -19,5 +20,10 @@ public class GenreController {
     public ResponseEntity<?>  getGenres() {
         var genres = genreService.getAll();
         return ResponseEntity.ok(genres);
+    }
+    @PatchMapping("{id}")
+    public ResponseEntity<?>  updateGenre(@PathVariable() Uid id,@RequestBody GenreUpdate genre) {
+        genreService.update(id.getLocalId(),genre);
+        return ResponseEntity.ok(true);
     }
 }

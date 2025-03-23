@@ -1,6 +1,8 @@
 package site.ani4h.film.genre;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
@@ -9,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,16 +46,25 @@ public class JdbcGenreRepository implements GenreRepository {
     }
 
     @Override
-    public void update(int id ,GenreUpdate genreUpdate) {
+    public void update(int id ,GenreUpdate genreUpdate)    {
         //language=MySQL
         String sql = """
                 UPDATE `genres`
                 SET name = COALESCE(?,name),
                     description = COALESCE(?,description),
-                    image =COALESCE(?,image)
+                    image =  ?
                 WHERE id = ?
                 """;
-        jdbcTemplate.update(sql,genreUpdate.getName(),genreUpdate.getDescription(),genreUpdate.getImage());
+        try {
+            var objectMapper = new ObjectMapper().writer().writeValueAsString(genreUpdate.getImage());
+            jdbcTemplate.update(sql,
+                    genreUpdate.getName(),
+                    genreUpdate.getDescription(),
+                    objectMapper,
+                    id);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
