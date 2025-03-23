@@ -39,7 +39,7 @@ public class JdbcGenreRepository implements GenreRepository {
     @Override
     public List<Genre> getGenre() {
         //language=MySQL
-        String sql = "SELECT * FROM `genres` WHERE status = 1";
+        String sql = "SELECT * FROM `genres` WHERE status = 1 ORDER BY id DESC";
         return jdbcTemplate.query(sql,
                 new BeanPropertyRowMapper<>(Genre.class)
         );
@@ -52,7 +52,7 @@ public class JdbcGenreRepository implements GenreRepository {
                 UPDATE `genres`
                 SET name = COALESCE(?,name),
                     description = COALESCE(?,description),
-                    image =  ?
+                    image = ?
                 WHERE id = ?
                 """;
         try {
@@ -60,7 +60,7 @@ public class JdbcGenreRepository implements GenreRepository {
             jdbcTemplate.update(sql,
                     genreUpdate.getName(),
                     genreUpdate.getDescription(),
-                    objectMapper,
+                    genreUpdate.getImage() == null ? null : objectMapper ,
                     id);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
