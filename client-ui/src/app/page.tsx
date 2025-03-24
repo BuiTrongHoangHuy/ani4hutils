@@ -1,5 +1,4 @@
 import Carousel from "@/app/carousel";
-import FilmListCard from "@/components/FilmListCard";
 import {FilmList} from "@/types/filmList";
 import ListFilm from "@/components/ListFilm";
 

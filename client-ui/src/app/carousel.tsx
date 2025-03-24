@@ -17,8 +17,10 @@ export default function Carousel({ className }: { className: string }) {
             pagination={{ clickable: true,
                 horizontalClass: "carousel-horizontal-pagination",
                 bulletElement: "div",
-                bulletClass: 'w-4 rounded-4xl mx-2 h-4 bg-gray-400 opacity-50 inline-block',
-                bulletActiveClass: 'w-8'}}
+                bulletClass:
+                    "w-4 rounded-4xl mx-2 h-4 bg-gray-400 opacity-50 inline-block transition-all duration-300 ease-in-out",
+                bulletActiveClass: "w-8",
+        }}
             slidesPerView={1}
             navigation={{
             }}
