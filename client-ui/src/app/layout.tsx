@@ -35,7 +35,29 @@ export default function RootLayout({
         <main className={"relative"}>
             {children}
         </main>
-        <footer></footer>
+        <footer className={"mt-20"}>
+            <div className={"divider"}></div>
+            <div className={"flex justify-evenly"}>
+                <div className={" space-y-2"}>
+                    <p>Thỏa thuận và Điều khoản</p>
+                    <p className={"opacity-50"}>Chính sách bảo mật</p>
+                    <p className={"opacity-50"}>Thỏa thuận và Điều khoản</p>
+                    <p className={"opacity-50"}>Chính sách Cookie</p>
+                </div>
+                <div className={" space-y-2"}>
+                    <p>Hỗ trợ và phản hồi</p>
+                    <p className={"opacity-50"}>Phản hồi1</p>
+                    <p className={"opacity-50"}>Câu hỏi thường gặp</p>
+                </div>
+                <div className={" space-y-2"}>
+                    <p>Thông tin về chúng tôi</p>
+                    <p className={"opacity-50"}>Gia nhập cùng chúng tôi</p>
+                    <p className={"opacity-50"}>Liên hệ với chúng tôi</p>
+
+                </div>
+            </div>
+            <div className={"divider"}></div>
+        </footer>
     </div>
     </body>
     </html>

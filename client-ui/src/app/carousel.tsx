@@ -45,13 +45,49 @@ export default function Carousel({ className }: { className: string }) {
                 </div>
             </SwiperSlide>
             <SwiperSlide>
-                <div className=" w-full h-[200px]"></div>
+                <div className="flex  flex-col h-full w-full bg-[url('/kaguya-ss2.jpg')] bg-cover bg-center box-border shadow-[inset_0_0_150px_100px_#000000]">
+                    <div className={"mt-auto p-20 "}>
+                        <div  className={"text-2xl font-bold drop-shadow-2xl mb-10"}>
+                            <Link href={"https://animevietsub.lol/phim/cuoc-chien-to-tinh-a3328/"}
+                            >Kaguya love is war: ss2</Link>
+                        </div>
+                        <div className={"flex gap-4"}>
+                            <div className={"btn btn-primary rounded-xs"}>vip</div>
+                            <div className={"btn opacity-60 rounded-xs text-white"}>Rom-com</div>
+                            <div className={"btn opacity-60 rounded-xs  text-white"}>School</div>
+                        </div>
+                    </div>
+                </div>
             </SwiperSlide>
             <SwiperSlide>
-                <div className=" w-full h-[200px]"></div>
+                <div className="flex  flex-col h-full w-full bg-[url('/kaguya-ss3.jpeg')] bg-cover bg-center box-border shadow-[inset_0_0_150px_100px_#000000]">
+                    <div className={"mt-auto p-20 "}>
+                        <div  className={"text-2xl font-bold drop-shadow-2xl mb-10"}>
+                            <Link href={"https://animevietsub.lol/phim/cuoc-chien-to-tinh-a3328/"}
+                            >Kaguya love is war: ss3</Link>
+                        </div>
+                        <div className={"flex gap-4"}>
+                            <div className={"btn btn-primary rounded-xs"}>vip</div>
+                            <div className={"btn opacity-60 rounded-xs text-white"}>Rom-com</div>
+                            <div className={"btn opacity-60 rounded-xs  text-white"}>School</div>
+                        </div>
+                    </div>
+                </div>
             </SwiperSlide>
             <SwiperSlide>
-                <div className=" w-full h-[200px]"></div>
+                <div className="flex  flex-col h-full w-full bg-[url('/nisekoi.jpg')] bg-cover bg-center box-border shadow-[inset_0_0_150px_100px_#000000]">
+                    <div className={"mt-auto p-20 "}>
+                        <div  className={"text-2xl font-bold drop-shadow-2xl mb-10"}>
+                            <Link href={"https://animevietsub.lol/phim/cuoc-chien-to-tinh-a3328/"}
+                            >Nisekoi</Link>
+                        </div>
+                        <div className={"flex gap-4"}>
+                            <div className={"btn btn-primary rounded-xs"}>vip</div>
+                            <div className={"btn opacity-60 rounded-xs text-white"}>Rom-com</div>
+                            <div className={"btn opacity-60 rounded-xs  text-white"}>School</div>
+                        </div>
+                    </div>
+                </div>
             </SwiperSlide>
         </Swiper>
     );
