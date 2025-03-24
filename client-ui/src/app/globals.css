@@ -79,3 +79,25 @@
     --noise: 0;
 }
 
+.carousel-horizontal-pagination {
+    padding-right: calc(var(--spacing) * 20);
+    margin-bottom:  calc(var(--spacing) * 20);
+    display: flex;
+    justify-content: flex-end;
+}
+
+.carousel-next-btn {
+    width: 20px;
+    height: 20px;
+    background: #06AD0C;
+}
+.swiper-button-prev {
+    color: white!important;
+    opacity: 50%;
+}
+
+.swiper-button-next {
+    color: white!important;
+    opacity: 50%;
+
+}
