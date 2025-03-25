@@ -2,6 +2,8 @@ package site.ani4h.film.ageRating;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.ani4h.film.ageRating.entity.AgeRatingCreate;
+import site.ani4h.film.ageRating.entity.AgeRatingUpdate;
 import site.ani4h.shared.common.Uid;
 
 @RestController

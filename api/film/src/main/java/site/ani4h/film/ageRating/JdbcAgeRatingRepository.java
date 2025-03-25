@@ -4,11 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
-import site.ani4h.film.genre.Genre;
+import site.ani4h.film.ageRating.entity.AgeRating;
+import site.ani4h.film.ageRating.entity.AgeRatingCreate;
+import site.ani4h.film.ageRating.entity.AgeRatingUpdate;
 
 import java.sql.PreparedStatement;
 import java.util.List;

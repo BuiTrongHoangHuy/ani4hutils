@@ -1,4 +1,4 @@
-package site.ani4h.film.film;
+package site.ani4h.film.film.entity;
 // enum ('upcoming','on_air','now_streaming','finished')
 public enum FilmState {
     UPCOMING(){},
@@ -6,6 +6,6 @@ public enum FilmState {
     NOW_STREAMING(){},
     FINISHED(){};
     public static FilmState fromString(String state) {
-        return valueOf(state.toUpperCase());
+        return state == null ? null : valueOf(state.toUpperCase());
     }
 }

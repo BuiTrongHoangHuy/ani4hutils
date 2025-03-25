@@ -1,6 +1,9 @@
 package site.ani4h.film.ageRating;
 
 import org.springframework.stereotype.Component;
+import site.ani4h.film.ageRating.entity.AgeRating;
+import site.ani4h.film.ageRating.entity.AgeRatingCreate;
+import site.ani4h.film.ageRating.entity.AgeRatingUpdate;
 
 import java.util.List;
 

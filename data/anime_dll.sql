@@ -29,7 +29,6 @@ CREATE TABLE `producers`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-
 DROP TABLE IF EXISTS `films`;
 CREATE TABLE `films`
 (
