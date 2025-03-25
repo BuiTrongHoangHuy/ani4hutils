@@ -21,4 +21,9 @@ public class AgeRatingServiceImpl implements AgeRatingService {
     public List<AgeRating> getAll() {
         return this.ageRatingRepository.getAll();
     }
+
+    @Override
+    public void update(int id, AgeRatingUpdate update) {
+        this.ageRatingRepository.update(id, update);
+    }
 }

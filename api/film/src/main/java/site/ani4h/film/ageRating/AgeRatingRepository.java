@@ -8,4 +8,5 @@ import java.util.List;
 public interface AgeRatingRepository {
     void create(AgeRatingCreate create);
     List<AgeRating> getAll();
+    void update(int id ,AgeRatingUpdate update);
 }

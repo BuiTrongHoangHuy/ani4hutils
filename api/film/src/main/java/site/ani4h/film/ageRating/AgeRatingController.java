@@ -2,6 +2,7 @@ package site.ani4h.film.ageRating;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.ani4h.shared.common.Uid;
 
 @RestController
 @RequestMapping("v1/age-rating")
@@ -21,5 +22,11 @@ public class AgeRatingController {
     @GetMapping()
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(ageRatingService.getAll());
+    }
+
+    @PatchMapping("{id}")
+    public ResponseEntity<?> update(@PathVariable Uid id, @RequestBody AgeRatingUpdate ageRatingUpdate) {
+        this.ageRatingService.update(id.getLocalId(), ageRatingUpdate);
+        return ResponseEntity.ok(true);
     }
 }
