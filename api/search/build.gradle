@@ -1,0 +1,30 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.3'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'site.ani4h'
+version = '0.1.0'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    apply from: rootProject.file('buildSrc/shared.gradle')
+
+    implementation project(':shared')
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
