@@ -1,4 +1,6 @@
 package site.ani4h.search.film;
+import co.elastic.clients.elasticsearch._types.query_dsl.MatchQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
@@ -47,6 +49,8 @@ public class FilmService {
                 .build();
 
         SearchHits<Film> searchHits = elasticsearchOperations.search(searchQuery, Film.class);
-        return searchHits.stream().map(hit -> hit.getContent()).collect(Collectors.toList());
+        return searchHits.stream()
+                .map(hit -> hit.getContent())
+                .collect(Collectors.toList());
     }
 }
