@@ -17,6 +17,15 @@ terraform {
 #     security_policy = "TLS_1_2"
 #   }
 # }
+
+
+resource "aws_apigatewayv2_vpc_link" "vpc_link" {
+  name = "${var.project}-vpc-link"
+  security_group_ids = [var.sg.vm]
+  subnet_ids = [var.vpc.public_subnets[0]]
+}
+
+
 resource "aws_apigatewayv2_api" "rest_gateway" {
   name        = "${var.project}-gateway"
   description = "This is my API for demonstration purposes"
@@ -33,11 +42,13 @@ resource "aws_apigatewayv2_stage" "v1" {
 # resource "aws_apigatewayv2_integration" "example" {
 #   api_id = aws_apigatewayv2_api.rest_gateway.id
 #   integration_type = "HTTP_PROXY"
-#
+#   connection_type = "VPC_LINK"
+#   connection_id = aws_apigatewayv2_vpc_link.vpc_link.id
+#   integration_uri = "arn:aws:servicediscovery:ap-southeast-1:686255971544:service/srv-pczm65gkfswxgbjx"
 #   integration_method = "ANY"
-#   integration_uri    = "http://13.229.228.35:4000/{proxy}"
-# }
 #
+#
+# }
 # resource "aws_apigatewayv2_route" "example" {
 #   api_id = aws_apigatewayv2_api.rest_gateway.id
 #   route_key = "ANY /{proxy+}"

@@ -6,10 +6,13 @@ terraform {
   }
 }
 
+
 resource "aws_ecs_cluster" "ecs" {
   name = "${var.project}-cluster"
+
   service_connect_defaults {
     namespace = aws_service_discovery_http_namespace.service_discovery.arn
+
   }
 }
 resource "aws_service_discovery_http_namespace" "service_discovery" {
@@ -35,7 +38,11 @@ resource "aws_ecs_service" "auth" {
   }
 }
 
-
+resource "aws_service_discovery_service" "auth" {
+  name = "backend"
+  namespace_id = aws_service_discovery_http_namespace.service_discovery.id
+  depends_on = [aws_ecs_service.auth]
+}
 
 resource "aws_ecs_task_definition" "auth" {
   family                = "auth-api"

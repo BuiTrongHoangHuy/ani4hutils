@@ -97,6 +97,7 @@ module "gateway" {
   vpc =module.networking.vpc
   sg = module.networking.sg
   az = local.az
+  # servicediscovery = module.ecs.servicediscovery
 }
 
 module "ecs" {
