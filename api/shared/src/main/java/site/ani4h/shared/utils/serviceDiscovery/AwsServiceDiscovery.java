@@ -16,7 +16,7 @@ import java.util.*;
 @Component
 public class AwsServiceDiscovery implements ServiceDiscovery {
     private ServiceDiscoveryClient client;
-    @Value("${servicediscovery.namespace}")
+    @Value("${aws.servicediscovery.namespace}")
     private String namespace;
     @Value("${aws.access-key-id}")
     private String accessKey;
@@ -45,7 +45,14 @@ public class AwsServiceDiscovery implements ServiceDiscovery {
                 .serviceName(service)
                 .build();
         var response = this.client.discoverInstances(request);
+        if (response.hasInstances()) {
+            System.out.println("Found " + response.instances().size() + " instances");
+        }
+        else {
+            System.out.println("No instances found");
+        }
         for (var instance : response.instances()) {
+            System.out.println(instance.hasAttributes());
             var serviceInstance = new ServiceInstance(
                     service,
                     instance.attributes().get("AWS_INSTANCE_IPV4"),
@@ -69,6 +76,7 @@ public class AwsServiceDiscovery implements ServiceDiscovery {
 
     @Override
     public ServiceInstance getServiceInstance(String service) {
+        System.out.println("CALLLL");
         if (!this.instances.containsKey(service)) {
             fetchServiceInstances(service);
         }
