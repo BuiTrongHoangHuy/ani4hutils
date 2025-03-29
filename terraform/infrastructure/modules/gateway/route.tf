@@ -18,12 +18,16 @@ resource "aws_apigatewayv2_route" "user" {
   api_id    = aws_apigatewayv2_api.rest_gateway.id
   route_key = "ANY /user"
   target = "integrations/${aws_apigatewayv2_integration.auth.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_type = "JWT"
 }
 
 resource "aws_apigatewayv2_route" "user_p" {
   api_id    = aws_apigatewayv2_api.rest_gateway.id
   route_key = "ANY /user/{proxy+}"
   target = "integrations/${aws_apigatewayv2_integration.auth.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_type = "JWT"
 }
 
 // film
