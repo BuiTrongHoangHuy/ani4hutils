@@ -1,25 +1,14 @@
 terraform {
   required_providers {
     aws = {
-      source  = "hashicorp/aws"
+      source = "hashicorp/aws"
     }
   }
 }
 data "aws_service_discovery_service" "auth" {
-  name = "backend"
+  name         = "backend"
   namespace_id = var.servicediscovery
 }
-
-#
-# resource "aws_apigatewayv2_domain_name" "domain" {
-#   domain_name = "api.ani4h.site"
-#   depends_on = [aws_acm_certificate.cert]
-#   domain_name_configuration {
-#     certificate_arn = aws_acm_certificate.cert.arn
-#     endpoint_type   = "REGIONAL"
-#     security_policy = "TLS_1_2"
-#   }
-# }
 
 
 resource "aws_apigatewayv2_vpc_link" "vpc_link" {
@@ -30,30 +19,57 @@ resource "aws_apigatewayv2_vpc_link" "vpc_link" {
 
 
 resource "aws_apigatewayv2_api" "rest_gateway" {
-  name        = "${var.project}-gateway"
-  description = "This is my API for demonstration purposes"
+  name          = "${var.project}-gateway"
+  description   = "This is my API for demonstration purposes"
   protocol_type = "HTTP"
 }
 
+resource "aws_cloudwatch_log_group" "log_group_v1" {
+
+}
 
 resource "aws_apigatewayv2_stage" "v1" {
-  api_id = aws_apigatewayv2_api.rest_gateway.id
-  name   = "v1"
+  api_id      = aws_apigatewayv2_api.rest_gateway.id
+  name        = "v1"
   auto_deploy = true
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.log_group_v1.arn
+    format = jsonencode(
+      {
+        errMsg                  = "$context.error.message"
+        errType                 = "$context.error.responseType"
+        httpMethod              = "$context.httpMethod"
+        intError                = "$context.integration.error"
+        intIntStatus            = "$context.integration.integrationStatus"
+        intLat                  = "$context.integration.latency"
+        intReqID                = "$context.integration.requestId"
+        intStatus               = "$context.integration.status"
+        integrationErrorMessage = "$context.integrationErrorMessage"
+        protocol                = "$context.protocol"
+        requestId               = "$context.requestId"
+        requestTime             = "$context.requestTime"
+        resourcePath            = "$context.resourcePath"
+        responseLength          = "$context.responseLength"
+        routeKey                = "$context.routeKey"
+        sourceIp                = "$context.identity.sourceIp"
+        status                  = "$context.status"
+      }
+    )
+  }
 }
 
 resource "aws_apigatewayv2_integration" "example" {
-  api_id = aws_apigatewayv2_api.rest_gateway.id
-  integration_type = "HTTP_PROXY"
-  connection_type = "VPC_LINK"
-  connection_id = aws_apigatewayv2_vpc_link.vpc_link.id
-  integration_uri = data.aws_service_discovery_service.auth.arn
+  api_id             = aws_apigatewayv2_api.rest_gateway.id
+  integration_type   = "HTTP_PROXY"
+  connection_type    = "VPC_LINK"
+  connection_id      = aws_apigatewayv2_vpc_link.vpc_link.id
+  integration_uri    = data.aws_service_discovery_service.auth.arn
   integration_method = "ANY"
 
 
 }
 resource "aws_apigatewayv2_route" "example" {
-  api_id = aws_apigatewayv2_api.rest_gateway.id
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
   route_key = "ANY /{proxy+}"
 
   target = "integrations/${aws_apigatewayv2_integration.example.id}"
