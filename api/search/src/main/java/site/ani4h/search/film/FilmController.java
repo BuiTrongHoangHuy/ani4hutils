@@ -24,4 +24,16 @@ public class FilmController {
         var films = filmService.getFilmsByTitle(title);
         return ResponseEntity.ok(films);
     }
+
+    @GetMapping("/all")
+    public ResponseEntity<?> getAllFilms() {
+        List<Film> films = filmService.getFilms();
+        return ResponseEntity.ok(films);
+    }
+
+    @GetMapping("/suggest")
+    public ResponseEntity<?> getFilmsByTitleSuggest(@RequestParam String keyword) {
+        var films = filmService.getFilmsByTitleSuggest(keyword);
+        return ResponseEntity.ok(films);
+    }
 }

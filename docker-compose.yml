@@ -40,17 +40,6 @@ services:
     depends_on:
       - elasticsearch
 
-  filebeat:
-    image: docker.elastic.co/beats/filebeat:7.17.28
-    container_name: filebeat
-    user: root
-    volumes:
-      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml
-      - ./logs:/app/logs  # Mount thư mục logs của tất cả microservices
-    command: sh -c "chmod 640 /usr/share/filebeat/filebeat.yml && filebeat -e"
-    depends_on:
-      - logstash
-
 volumes:
   es-data:
     driver: local

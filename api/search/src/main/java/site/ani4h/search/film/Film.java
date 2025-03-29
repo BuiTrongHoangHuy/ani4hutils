@@ -14,13 +14,16 @@ import site.ani4h.shared.common.Uid;
 @Setter
 public class Film {
     @Id
-    public String id;
+    private String id;
 
     @Field(type = FieldType.Text)
-    public String title;
+    private String title;
+
+    @Field(type = FieldType.Search_As_You_Type)
+    private String keyword;
 
     @Transient
-    public final static int type = 7;
+    private final static int type = 7;
 
     public void setId(int id) { this.id = new Uid(id, 0, type).toString(); }
 }
