@@ -1,8 +1,8 @@
-name: api-ci
+name: film-ci
 on:
   push:
     branches:
-      - deploy/api
+      - deploy/film-api
 jobs:
   Build:
     name: Build &  Deploy
@@ -12,7 +12,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Gradle build
-        run: ./gradlew build -p auth
+        run: ./gradlew build -p film
         working-directory: ./api
 
       - name: Configure AWS credentials
@@ -37,8 +37,8 @@ jobs:
         env:
           ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
         run: |
-          docker build -t $ECR_REGISTRY/v2r1j0e6/ani4h-api:latest ./api/auth
-          docker push $ECR_REGISTRY/v2r1j0e6/ani4h-api:latest
+          docker build -t $ECR_REGISTRY/v2r1j0e6/ani4h-api-film:latest ./api/film
+          docker push $ECR_REGISTRY/v2r1j0e6/ani4h-api-film:latest
   deploy:
     name: Build &  Deploy
     runs-on: ubuntu-latest
