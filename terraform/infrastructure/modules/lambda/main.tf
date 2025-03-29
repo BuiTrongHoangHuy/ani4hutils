@@ -34,6 +34,3 @@ resource "aws_lambda_function" "master_function" {
   package_type = "Image"
   timeout = 15*60
 }
-
-
-#686255971544.dkr.ecr.ap-southeast-1./ani4h-lambda-master:latest

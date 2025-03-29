@@ -27,6 +27,17 @@ dependencies {
     runtimeOnly 'com.mysql:mysql-connector-j'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'commons-io:commons-io:2.14.0'
+    // grpc
+    implementation 'io.grpc:grpc-protobuf:1.71.0'
+    implementation 'io.grpc:grpc-stub:1.71.0'
+    compileOnly 'com.google.protobuf:protobuf-java:4.30.0'
+    implementation 'net.devh:grpc-spring-boot-starter:3.1.0.RELEASE' exclude group: 'io.grpc', module: 'grpc-netty-shaded'
+    implementation 'net.devh:grpc-server-spring-boot-autoconfigure:2.15.0.RELEASE'
+    implementation 'io.grpc:grpc-core:1.71.0'
+//    compileOnly 'org.apache.tomcat:annotations-api:6.0.53'
+    implementation "io.grpc:grpc-netty:1.71.0"
+    runtimeOnly 'io.grpc:grpc-netty-shaded:1.71.0'
+
     // lombok
     compileOnly 'org.projectlombok:lombok:1.18.36'
     annotationProcessor 'org.projectlombok:lombok:1.18.36'

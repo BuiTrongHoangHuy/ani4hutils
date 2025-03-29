@@ -11,8 +11,6 @@ resource "aws_apigatewayv2_route" "auth_p" {
   target = "integrations/${aws_apigatewayv2_integration.auth.id}"
 }
 
-
-
 // user
 resource "aws_apigatewayv2_route" "user" {
   api_id    = aws_apigatewayv2_api.rest_gateway.id
@@ -55,6 +53,5 @@ resource "aws_apigatewayv2_route" "genre" {
 resource "aws_apigatewayv2_route" "genre_p" {
   api_id    = aws_apigatewayv2_api.rest_gateway.id
   route_key = "ANY /genre/{proxy+}"
-
   target    = "integrations/${aws_apigatewayv2_integration.film.id}"
 }
