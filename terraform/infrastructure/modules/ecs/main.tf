@@ -38,11 +38,7 @@ resource "aws_ecs_service" "auth" {
   }
 }
 
-resource "aws_service_discovery_service" "auth" {
-  name = "backend"
-  namespace_id = aws_service_discovery_http_namespace.service_discovery.id
-  depends_on = [aws_ecs_service.auth]
-}
+
 
 resource "aws_ecs_task_definition" "auth" {
   family                = "auth-api"

@@ -3,7 +3,5 @@ output "ecs" {
 }
 
 output "servicediscovery" {
-  value = aws_ecs_cluster.ecs.id
-
-
+  value = aws_service_discovery_http_namespace.service_discovery.id
 }

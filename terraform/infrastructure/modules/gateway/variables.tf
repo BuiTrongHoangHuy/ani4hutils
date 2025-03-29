@@ -14,6 +14,6 @@ variable "az" {
   type = string
 }
 
-# variable "servicediscovery" {
-#   type = string
-# }
+variable "servicediscovery" {
+  type = string
+}

@@ -5,7 +5,10 @@ terraform {
     }
   }
 }
-
+data "aws_service_discovery_service" "auth" {
+  name = "backend"
+  namespace_id = var.servicediscovery
+}
 
 #
 # resource "aws_apigatewayv2_domain_name" "domain" {
@@ -39,19 +42,19 @@ resource "aws_apigatewayv2_stage" "v1" {
   auto_deploy = true
 }
 
-# resource "aws_apigatewayv2_integration" "example" {
-#   api_id = aws_apigatewayv2_api.rest_gateway.id
-#   integration_type = "HTTP_PROXY"
-#   connection_type = "VPC_LINK"
-#   connection_id = aws_apigatewayv2_vpc_link.vpc_link.id
-#   integration_uri = "arn:aws:servicediscovery:ap-southeast-1:686255971544:service/srv-pczm65gkfswxgbjx"
-#   integration_method = "ANY"
-#
-#
-# }
-# resource "aws_apigatewayv2_route" "example" {
-#   api_id = aws_apigatewayv2_api.rest_gateway.id
-#   route_key = "ANY /{proxy+}"
-#
-#   target = "integrations/${aws_apigatewayv2_integration.example.id}"
-# }
+resource "aws_apigatewayv2_integration" "example" {
+  api_id = aws_apigatewayv2_api.rest_gateway.id
+  integration_type = "HTTP_PROXY"
+  connection_type = "VPC_LINK"
+  connection_id = aws_apigatewayv2_vpc_link.vpc_link.id
+  integration_uri = data.aws_service_discovery_service.auth.arn
+  integration_method = "ANY"
+
+
+}
+resource "aws_apigatewayv2_route" "example" {
+  api_id = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /{proxy+}"
+
+  target = "integrations/${aws_apigatewayv2_integration.example.id}"
+}
