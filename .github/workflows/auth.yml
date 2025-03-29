@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - deploy/auth-api
+      - deploy/api
 jobs:
   Build:
     name: Build &  Deploy
