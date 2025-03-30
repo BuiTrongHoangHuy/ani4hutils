@@ -32,11 +32,6 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/v2r1j0e6/ani4h-client-ui:latest ./client-ui
           docker push $ECR_REGISTRY/v2r1j0e6/ani4h-client-ui:latest
-  Deploy:
-    name: deploy
-    runs-on: ubuntu-latest
-    needs: Build
-    steps:
       - name: Deploy
         env:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
