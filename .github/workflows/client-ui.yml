@@ -35,6 +35,7 @@ jobs:
   Deploy:
     name: deploy
     runs-on: ubuntu-latest
+    needs: Build
     steps:
       - name: Deploy
         env:
@@ -50,7 +51,6 @@ jobs:
               docker pull $ECR_REGISTRY/v2r1j0e6/${APP_NAME}i:latest &&
               docker run -d --name ${APP_NAME} \
               -p 80:3000 \
-              -v ${PWD}/.log/:/app/.log/ \
               $ECR_REGISTRY/v2r1j0e6/${APP_NAME}:latest
           '  
 
