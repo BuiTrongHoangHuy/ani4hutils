@@ -42,16 +42,17 @@ jobs:
           PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           HOSTNAME: ${{ secrets.UI_HOST }}
           USER_NAME: ${{ secrets.SSH_USER_NAME }}
+          ECR_REGISTRY: ${{ steps.login-ecr-public.outputs.registry }}
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-              APP_NAME=ani4h-client-ui &&
-              docker rm -f ${APP_NAME} &&
-              echo pull &&
-              docker pull $ECR_REGISTRY/v2r1j0e6/${APP_NAME}i:latest &&
+              APP_NAME=ani4h-client-ui
+              docker rm -f ${APP_NAME} || true 
+              echo "pulling image"
+              docker pull ${ECR_REGISTRY}/${APP_NAME}:latest  
               docker run -d --name ${APP_NAME} \
-              -p 80:3000 \
-              $ECR_REGISTRY/v2r1j0e6/${APP_NAME}:latest
-          '  
+                -p 80:3000 \
+                ${ECR_REGISTRY}/${APP_NAME}:latest
+          '
 
   
