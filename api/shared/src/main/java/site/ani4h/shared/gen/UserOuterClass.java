@@ -3,7 +3,7 @@
 // source: site/ani4h/shared/proto/user.proto
 // Protobuf Java Version: 4.30.0
 
-package site.ani4h.shared;
+package site.ani4h.shared.gen;
 
 public final class UserOuterClass {
   private UserOuterClass() {}
@@ -25,34 +25,23 @@ public final class UserOuterClass {
     registerAllExtensions(
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
-  public interface GetUsersByIdsReqOrBuilder extends
-      // @@protoc_insertion_point(interface_extends:GetUsersByIdsReq)
+  public interface GetUsersByIdReqOrBuilder extends
+      // @@protoc_insertion_point(interface_extends:GetUsersByIdReq)
       com.google.protobuf.MessageOrBuilder {
 
     /**
-     * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-     * @return A list containing the ids.
+     * <code>int32 id = 1 [json_name = "id"];</code>
+     * @return The id.
      */
-    java.util.List<java.lang.Integer> getIdsList();
-    /**
-     * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-     * @return The count of ids.
-     */
-    int getIdsCount();
-    /**
-     * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-     * @param index The index of the element to return.
-     * @return The ids at the given index.
-     */
-    int getIds(int index);
+    int getId();
   }
   /**
-   * Protobuf type {@code GetUsersByIdsReq}
+   * Protobuf type {@code GetUsersByIdReq}
    */
-  public static final class GetUsersByIdsReq extends
+  public static final class GetUsersByIdReq extends
       com.google.protobuf.GeneratedMessage implements
-      // @@protoc_insertion_point(message_implements:GetUsersByIdsReq)
-      GetUsersByIdsReqOrBuilder {
+      // @@protoc_insertion_point(message_implements:GetUsersByIdReq)
+      GetUsersByIdReqOrBuilder {
   private static final long serialVersionUID = 0L;
     static {
       com.google.protobuf.RuntimeVersion.validateProtobufGencodeVersion(
@@ -61,58 +50,38 @@ public final class UserOuterClass {
         /* minor= */ 30,
         /* patch= */ 0,
         /* suffix= */ "",
-        GetUsersByIdsReq.class.getName());
+        GetUsersByIdReq.class.getName());
     }
-    // Use GetUsersByIdsReq.newBuilder() to construct.
-    private GetUsersByIdsReq(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
+    // Use GetUsersByIdReq.newBuilder() to construct.
+    private GetUsersByIdReq(com.google.protobuf.GeneratedMessage.Builder<?> builder) {
       super(builder);
     }
-    private GetUsersByIdsReq() {
-      ids_ = emptyIntList();
+    private GetUsersByIdReq() {
     }
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return site.ani4h.shared.UserOuterClass.internal_static_GetUsersByIdsReq_descriptor;
+      return site.ani4h.shared.gen.UserOuterClass.internal_static_GetUsersByIdReq_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return site.ani4h.shared.UserOuterClass.internal_static_GetUsersByIdsReq_fieldAccessorTable
+      return site.ani4h.shared.gen.UserOuterClass.internal_static_GetUsersByIdReq_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              site.ani4h.shared.UserOuterClass.GetUsersByIdsReq.class, site.ani4h.shared.UserOuterClass.GetUsersByIdsReq.Builder.class);
+              site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq.class, site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq.Builder.class);
     }
 
-    public static final int IDS_FIELD_NUMBER = 1;
-    @SuppressWarnings("serial")
-    private com.google.protobuf.Internal.IntList ids_ =
-        emptyIntList();
+    public static final int ID_FIELD_NUMBER = 1;
+    private int id_ = 0;
     /**
-     * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-     * @return A list containing the ids.
+     * <code>int32 id = 1 [json_name = "id"];</code>
+     * @return The id.
      */
     @java.lang.Override
-    public java.util.List<java.lang.Integer>
-        getIdsList() {
-      return ids_;
+    public int getId() {
+      return id_;
     }
-    /**
-     * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-     * @return The count of ids.
-     */
-    public int getIdsCount() {
-      return ids_.size();
-    }
-    /**
-     * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-     * @param index The index of the element to return.
-     * @return The ids at the given index.
-     */
-    public int getIds(int index) {
-      return ids_.getInt(index);
-    }
-    private int idsMemoizedSerializedSize = -1;
 
     private byte memoizedIsInitialized = -1;
     @java.lang.Override
@@ -128,13 +97,8 @@ public final class UserOuterClass {
     @java.lang.Override
     public void writeTo(com.google.protobuf.CodedOutputStream output)
                         throws java.io.IOException {
-      getSerializedSize();
-      if (getIdsList().size() > 0) {
-        output.writeUInt32NoTag(10);
-        output.writeUInt32NoTag(idsMemoizedSerializedSize);
-      }
-      for (int i = 0; i < ids_.size(); i++) {
-        output.writeInt32NoTag(ids_.getInt(i));
+      if (id_ != 0) {
+        output.writeInt32(1, id_);
       }
       getUnknownFields().writeTo(output);
     }
@@ -145,19 +109,9 @@ public final class UserOuterClass {
       if (size != -1) return size;
 
       size = 0;
-      {
-        int dataSize = 0;
-        for (int i = 0; i < ids_.size(); i++) {
-          dataSize += com.google.protobuf.CodedOutputStream
-            .computeInt32SizeNoTag(ids_.getInt(i));
-        }
-        size += dataSize;
-        if (!getIdsList().isEmpty()) {
-          size += 1;
-          size += com.google.protobuf.CodedOutputStream
-              .computeInt32SizeNoTag(dataSize);
-        }
-        idsMemoizedSerializedSize = dataSize;
+      if (id_ != 0) {
+        size += com.google.protobuf.CodedOutputStream
+          .computeInt32Size(1, id_);
       }
       size += getUnknownFields().getSerializedSize();
       memoizedSize = size;
@@ -169,13 +123,13 @@ public final class UserOuterClass {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof site.ani4h.shared.UserOuterClass.GetUsersByIdsReq)) {
+      if (!(obj instanceof site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq)) {
         return super.equals(obj);
       }
-      site.ani4h.shared.UserOuterClass.GetUsersByIdsReq other = (site.ani4h.shared.UserOuterClass.GetUsersByIdsReq) obj;
+      site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq other = (site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq) obj;
 
-      if (!getIdsList()
-          .equals(other.getIdsList())) return false;
+      if (getId()
+          != other.getId()) return false;
       if (!getUnknownFields().equals(other.getUnknownFields())) return false;
       return true;
     }
@@ -187,53 +141,51 @@ public final class UserOuterClass {
       }
       int hash = 41;
       hash = (19 * hash) + getDescriptor().hashCode();
-      if (getIdsCount() > 0) {
-        hash = (37 * hash) + IDS_FIELD_NUMBER;
-        hash = (53 * hash) + getIdsList().hashCode();
-      }
+      hash = (37 * hash) + ID_FIELD_NUMBER;
+      hash = (53 * hash) + getId();
       hash = (29 * hash) + getUnknownFields().hashCode();
       memoizedHashCode = hash;
       return hash;
     }
 
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseFrom(byte[] data)
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseFrom(java.io.InputStream input)
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input);
     }
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -241,26 +193,26 @@ public final class UserOuterClass {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseDelimitedFrom(java.io.InputStream input)
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseDelimitedFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input);
     }
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -273,7 +225,7 @@ public final class UserOuterClass {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(site.ani4h.shared.UserOuterClass.GetUsersByIdsReq prototype) {
+    public static Builder newBuilder(site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -289,26 +241,26 @@ public final class UserOuterClass {
       return builder;
     }
     /**
-     * Protobuf type {@code GetUsersByIdsReq}
+     * Protobuf type {@code GetUsersByIdReq}
      */
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
-        // @@protoc_insertion_point(builder_implements:GetUsersByIdsReq)
-        site.ani4h.shared.UserOuterClass.GetUsersByIdsReqOrBuilder {
+        // @@protoc_insertion_point(builder_implements:GetUsersByIdReq)
+        site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReqOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return site.ani4h.shared.UserOuterClass.internal_static_GetUsersByIdsReq_descriptor;
+        return site.ani4h.shared.gen.UserOuterClass.internal_static_GetUsersByIdReq_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return site.ani4h.shared.UserOuterClass.internal_static_GetUsersByIdsReq_fieldAccessorTable
+        return site.ani4h.shared.gen.UserOuterClass.internal_static_GetUsersByIdReq_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                site.ani4h.shared.UserOuterClass.GetUsersByIdsReq.class, site.ani4h.shared.UserOuterClass.GetUsersByIdsReq.Builder.class);
+                site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq.class, site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq.Builder.class);
       }
 
-      // Construct using site.ani4h.shared.UserOuterClass.GetUsersByIdsReq.newBuilder()
+      // Construct using site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq.newBuilder()
       private Builder() {
 
       }
@@ -322,24 +274,24 @@ public final class UserOuterClass {
       public Builder clear() {
         super.clear();
         bitField0_ = 0;
-        ids_ = emptyIntList();
+        id_ = 0;
         return this;
       }
 
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return site.ani4h.shared.UserOuterClass.internal_static_GetUsersByIdsReq_descriptor;
+        return site.ani4h.shared.gen.UserOuterClass.internal_static_GetUsersByIdReq_descriptor;
       }
 
       @java.lang.Override
-      public site.ani4h.shared.UserOuterClass.GetUsersByIdsReq getDefaultInstanceForType() {
-        return site.ani4h.shared.UserOuterClass.GetUsersByIdsReq.getDefaultInstance();
+      public site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq getDefaultInstanceForType() {
+        return site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq.getDefaultInstance();
       }
 
       @java.lang.Override
-      public site.ani4h.shared.UserOuterClass.GetUsersByIdsReq build() {
-        site.ani4h.shared.UserOuterClass.GetUsersByIdsReq result = buildPartial();
+      public site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq build() {
+        site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -347,43 +299,34 @@ public final class UserOuterClass {
       }
 
       @java.lang.Override
-      public site.ani4h.shared.UserOuterClass.GetUsersByIdsReq buildPartial() {
-        site.ani4h.shared.UserOuterClass.GetUsersByIdsReq result = new site.ani4h.shared.UserOuterClass.GetUsersByIdsReq(this);
+      public site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq buildPartial() {
+        site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq result = new site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(site.ani4h.shared.UserOuterClass.GetUsersByIdsReq result) {
+      private void buildPartial0(site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
-          ids_.makeImmutable();
-          result.ids_ = ids_;
+          result.id_ = id_;
         }
       }
 
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof site.ani4h.shared.UserOuterClass.GetUsersByIdsReq) {
-          return mergeFrom((site.ani4h.shared.UserOuterClass.GetUsersByIdsReq)other);
+        if (other instanceof site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq) {
+          return mergeFrom((site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(site.ani4h.shared.UserOuterClass.GetUsersByIdsReq other) {
-        if (other == site.ani4h.shared.UserOuterClass.GetUsersByIdsReq.getDefaultInstance()) return this;
-        if (!other.ids_.isEmpty()) {
-          if (ids_.isEmpty()) {
-            ids_ = other.ids_;
-            ids_.makeImmutable();
-            bitField0_ |= 0x00000001;
-          } else {
-            ensureIdsIsMutable();
-            ids_.addAll(other.ids_);
-          }
-          onChanged();
+      public Builder mergeFrom(site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq other) {
+        if (other == site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq.getDefaultInstance()) return this;
+        if (other.getId() != 0) {
+          setId(other.getId());
         }
         this.mergeUnknownFields(other.getUnknownFields());
         onChanged();
@@ -412,21 +355,10 @@ public final class UserOuterClass {
                 done = true;
                 break;
               case 8: {
-                int v = input.readInt32();
-                ensureIdsIsMutable();
-                ids_.addInt(v);
+                id_ = input.readInt32();
+                bitField0_ |= 0x00000001;
                 break;
               } // case 8
-              case 10: {
-                int length = input.readRawVarint32();
-                int limit = input.pushLimit(length);
-                ensureIdsIsMutable();
-                while (input.getBytesUntilLimit() > 0) {
-                  ids_.addInt(input.readInt32());
-                }
-                input.popLimit(limit);
-                break;
-              } // case 10
               default: {
                 if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                   done = true; // was an endgroup tag
@@ -444,107 +376,55 @@ public final class UserOuterClass {
       }
       private int bitField0_;
 
-      private com.google.protobuf.Internal.IntList ids_ = emptyIntList();
-      private void ensureIdsIsMutable() {
-        if (!ids_.isModifiable()) {
-          ids_ = makeMutableCopy(ids_);
-        }
-        bitField0_ |= 0x00000001;
-      }
+      private int id_ ;
       /**
-       * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-       * @return A list containing the ids.
+       * <code>int32 id = 1 [json_name = "id"];</code>
+       * @return The id.
        */
-      public java.util.List<java.lang.Integer>
-          getIdsList() {
-        ids_.makeImmutable();
-        return ids_;
+      @java.lang.Override
+      public int getId() {
+        return id_;
       }
       /**
-       * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-       * @return The count of ids.
-       */
-      public int getIdsCount() {
-        return ids_.size();
-      }
-      /**
-       * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-       * @param index The index of the element to return.
-       * @return The ids at the given index.
-       */
-      public int getIds(int index) {
-        return ids_.getInt(index);
-      }
-      /**
-       * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-       * @param index The index to set the value at.
-       * @param value The ids to set.
+       * <code>int32 id = 1 [json_name = "id"];</code>
+       * @param value The id to set.
        * @return This builder for chaining.
        */
-      public Builder setIds(
-          int index, int value) {
+      public Builder setId(int value) {
 
-        ensureIdsIsMutable();
-        ids_.setInt(index, value);
+        id_ = value;
         bitField0_ |= 0x00000001;
         onChanged();
         return this;
       }
       /**
-       * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-       * @param value The ids to add.
+       * <code>int32 id = 1 [json_name = "id"];</code>
        * @return This builder for chaining.
        */
-      public Builder addIds(int value) {
-
-        ensureIdsIsMutable();
-        ids_.addInt(value);
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-       * @param values The ids to add.
-       * @return This builder for chaining.
-       */
-      public Builder addAllIds(
-          java.lang.Iterable<? extends java.lang.Integer> values) {
-        ensureIdsIsMutable();
-        com.google.protobuf.AbstractMessageLite.Builder.addAll(
-            values, ids_);
-        bitField0_ |= 0x00000001;
-        onChanged();
-        return this;
-      }
-      /**
-       * <code>repeated int32 ids = 1 [json_name = "ids"];</code>
-       * @return This builder for chaining.
-       */
-      public Builder clearIds() {
-        ids_ = emptyIntList();
+      public Builder clearId() {
         bitField0_ = (bitField0_ & ~0x00000001);
+        id_ = 0;
         onChanged();
         return this;
       }
 
-      // @@protoc_insertion_point(builder_scope:GetUsersByIdsReq)
+      // @@protoc_insertion_point(builder_scope:GetUsersByIdReq)
     }
 
-    // @@protoc_insertion_point(class_scope:GetUsersByIdsReq)
-    private static final site.ani4h.shared.UserOuterClass.GetUsersByIdsReq DEFAULT_INSTANCE;
+    // @@protoc_insertion_point(class_scope:GetUsersByIdReq)
+    private static final site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new site.ani4h.shared.UserOuterClass.GetUsersByIdsReq();
+      DEFAULT_INSTANCE = new site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq();
     }
 
-    public static site.ani4h.shared.UserOuterClass.GetUsersByIdsReq getDefaultInstance() {
+    public static site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
-    private static final com.google.protobuf.Parser<GetUsersByIdsReq>
-        PARSER = new com.google.protobuf.AbstractParser<GetUsersByIdsReq>() {
+    private static final com.google.protobuf.Parser<GetUsersByIdReq>
+        PARSER = new com.google.protobuf.AbstractParser<GetUsersByIdReq>() {
       @java.lang.Override
-      public GetUsersByIdsReq parsePartialFrom(
+      public GetUsersByIdReq parsePartialFrom(
           com.google.protobuf.CodedInputStream input,
           com.google.protobuf.ExtensionRegistryLite extensionRegistry)
           throws com.google.protobuf.InvalidProtocolBufferException {
@@ -563,17 +443,17 @@ public final class UserOuterClass {
       }
     };
 
-    public static com.google.protobuf.Parser<GetUsersByIdsReq> parser() {
+    public static com.google.protobuf.Parser<GetUsersByIdReq> parser() {
       return PARSER;
     }
 
     @java.lang.Override
-    public com.google.protobuf.Parser<GetUsersByIdsReq> getParserForType() {
+    public com.google.protobuf.Parser<GetUsersByIdReq> getParserForType() {
       return PARSER;
     }
 
     @java.lang.Override
-    public site.ani4h.shared.UserOuterClass.GetUsersByIdsReq getDefaultInstanceForType() {
+    public site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
@@ -667,15 +547,15 @@ public final class UserOuterClass {
 
     public static final com.google.protobuf.Descriptors.Descriptor
         getDescriptor() {
-      return site.ani4h.shared.UserOuterClass.internal_static_PublicUserInfo_descriptor;
+      return site.ani4h.shared.gen.UserOuterClass.internal_static_PublicUserInfo_descriptor;
     }
 
     @java.lang.Override
     protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
         internalGetFieldAccessorTable() {
-      return site.ani4h.shared.UserOuterClass.internal_static_PublicUserInfo_fieldAccessorTable
+      return site.ani4h.shared.gen.UserOuterClass.internal_static_PublicUserInfo_fieldAccessorTable
           .ensureFieldAccessorsInitialized(
-              site.ani4h.shared.UserOuterClass.PublicUserInfo.class, site.ani4h.shared.UserOuterClass.PublicUserInfo.Builder.class);
+              site.ani4h.shared.gen.UserOuterClass.PublicUserInfo.class, site.ani4h.shared.gen.UserOuterClass.PublicUserInfo.Builder.class);
     }
 
     public static final int ID_FIELD_NUMBER = 1;
@@ -909,10 +789,10 @@ public final class UserOuterClass {
       if (obj == this) {
        return true;
       }
-      if (!(obj instanceof site.ani4h.shared.UserOuterClass.PublicUserInfo)) {
+      if (!(obj instanceof site.ani4h.shared.gen.UserOuterClass.PublicUserInfo)) {
         return super.equals(obj);
       }
-      site.ani4h.shared.UserOuterClass.PublicUserInfo other = (site.ani4h.shared.UserOuterClass.PublicUserInfo) obj;
+      site.ani4h.shared.gen.UserOuterClass.PublicUserInfo other = (site.ani4h.shared.gen.UserOuterClass.PublicUserInfo) obj;
 
       if (getId()
           != other.getId()) return false;
@@ -950,44 +830,44 @@ public final class UserOuterClass {
       return hash;
     }
 
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseFrom(
         java.nio.ByteBuffer data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseFrom(
         java.nio.ByteBuffer data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseFrom(
         com.google.protobuf.ByteString data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseFrom(
         com.google.protobuf.ByteString data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseFrom(byte[] data)
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseFrom(byte[] data)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data);
     }
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseFrom(
         byte[] data,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws com.google.protobuf.InvalidProtocolBufferException {
       return PARSER.parseFrom(data, extensionRegistry);
     }
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseFrom(java.io.InputStream input)
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input);
     }
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -995,26 +875,26 @@ public final class UserOuterClass {
           .parseWithIOException(PARSER, input, extensionRegistry);
     }
 
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseDelimitedFrom(java.io.InputStream input)
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseDelimitedFrom(java.io.InputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseDelimitedWithIOException(PARSER, input);
     }
 
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseDelimitedFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseDelimitedFrom(
         java.io.InputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseDelimitedWithIOException(PARSER, input, extensionRegistry);
     }
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseFrom(
         com.google.protobuf.CodedInputStream input)
         throws java.io.IOException {
       return com.google.protobuf.GeneratedMessage
           .parseWithIOException(PARSER, input);
     }
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo parseFrom(
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo parseFrom(
         com.google.protobuf.CodedInputStream input,
         com.google.protobuf.ExtensionRegistryLite extensionRegistry)
         throws java.io.IOException {
@@ -1027,7 +907,7 @@ public final class UserOuterClass {
     public static Builder newBuilder() {
       return DEFAULT_INSTANCE.toBuilder();
     }
-    public static Builder newBuilder(site.ani4h.shared.UserOuterClass.PublicUserInfo prototype) {
+    public static Builder newBuilder(site.ani4h.shared.gen.UserOuterClass.PublicUserInfo prototype) {
       return DEFAULT_INSTANCE.toBuilder().mergeFrom(prototype);
     }
     @java.lang.Override
@@ -1048,21 +928,21 @@ public final class UserOuterClass {
     public static final class Builder extends
         com.google.protobuf.GeneratedMessage.Builder<Builder> implements
         // @@protoc_insertion_point(builder_implements:PublicUserInfo)
-        site.ani4h.shared.UserOuterClass.PublicUserInfoOrBuilder {
+        site.ani4h.shared.gen.UserOuterClass.PublicUserInfoOrBuilder {
       public static final com.google.protobuf.Descriptors.Descriptor
           getDescriptor() {
-        return site.ani4h.shared.UserOuterClass.internal_static_PublicUserInfo_descriptor;
+        return site.ani4h.shared.gen.UserOuterClass.internal_static_PublicUserInfo_descriptor;
       }
 
       @java.lang.Override
       protected com.google.protobuf.GeneratedMessage.FieldAccessorTable
           internalGetFieldAccessorTable() {
-        return site.ani4h.shared.UserOuterClass.internal_static_PublicUserInfo_fieldAccessorTable
+        return site.ani4h.shared.gen.UserOuterClass.internal_static_PublicUserInfo_fieldAccessorTable
             .ensureFieldAccessorsInitialized(
-                site.ani4h.shared.UserOuterClass.PublicUserInfo.class, site.ani4h.shared.UserOuterClass.PublicUserInfo.Builder.class);
+                site.ani4h.shared.gen.UserOuterClass.PublicUserInfo.class, site.ani4h.shared.gen.UserOuterClass.PublicUserInfo.Builder.class);
       }
 
-      // Construct using site.ani4h.shared.UserOuterClass.PublicUserInfo.newBuilder()
+      // Construct using site.ani4h.shared.gen.UserOuterClass.PublicUserInfo.newBuilder()
       private Builder() {
 
       }
@@ -1087,17 +967,17 @@ public final class UserOuterClass {
       @java.lang.Override
       public com.google.protobuf.Descriptors.Descriptor
           getDescriptorForType() {
-        return site.ani4h.shared.UserOuterClass.internal_static_PublicUserInfo_descriptor;
+        return site.ani4h.shared.gen.UserOuterClass.internal_static_PublicUserInfo_descriptor;
       }
 
       @java.lang.Override
-      public site.ani4h.shared.UserOuterClass.PublicUserInfo getDefaultInstanceForType() {
-        return site.ani4h.shared.UserOuterClass.PublicUserInfo.getDefaultInstance();
+      public site.ani4h.shared.gen.UserOuterClass.PublicUserInfo getDefaultInstanceForType() {
+        return site.ani4h.shared.gen.UserOuterClass.PublicUserInfo.getDefaultInstance();
       }
 
       @java.lang.Override
-      public site.ani4h.shared.UserOuterClass.PublicUserInfo build() {
-        site.ani4h.shared.UserOuterClass.PublicUserInfo result = buildPartial();
+      public site.ani4h.shared.gen.UserOuterClass.PublicUserInfo build() {
+        site.ani4h.shared.gen.UserOuterClass.PublicUserInfo result = buildPartial();
         if (!result.isInitialized()) {
           throw newUninitializedMessageException(result);
         }
@@ -1105,14 +985,14 @@ public final class UserOuterClass {
       }
 
       @java.lang.Override
-      public site.ani4h.shared.UserOuterClass.PublicUserInfo buildPartial() {
-        site.ani4h.shared.UserOuterClass.PublicUserInfo result = new site.ani4h.shared.UserOuterClass.PublicUserInfo(this);
+      public site.ani4h.shared.gen.UserOuterClass.PublicUserInfo buildPartial() {
+        site.ani4h.shared.gen.UserOuterClass.PublicUserInfo result = new site.ani4h.shared.gen.UserOuterClass.PublicUserInfo(this);
         if (bitField0_ != 0) { buildPartial0(result); }
         onBuilt();
         return result;
       }
 
-      private void buildPartial0(site.ani4h.shared.UserOuterClass.PublicUserInfo result) {
+      private void buildPartial0(site.ani4h.shared.gen.UserOuterClass.PublicUserInfo result) {
         int from_bitField0_ = bitField0_;
         if (((from_bitField0_ & 0x00000001) != 0)) {
           result.id_ = id_;
@@ -1133,16 +1013,16 @@ public final class UserOuterClass {
 
       @java.lang.Override
       public Builder mergeFrom(com.google.protobuf.Message other) {
-        if (other instanceof site.ani4h.shared.UserOuterClass.PublicUserInfo) {
-          return mergeFrom((site.ani4h.shared.UserOuterClass.PublicUserInfo)other);
+        if (other instanceof site.ani4h.shared.gen.UserOuterClass.PublicUserInfo) {
+          return mergeFrom((site.ani4h.shared.gen.UserOuterClass.PublicUserInfo)other);
         } else {
           super.mergeFrom(other);
           return this;
         }
       }
 
-      public Builder mergeFrom(site.ani4h.shared.UserOuterClass.PublicUserInfo other) {
-        if (other == site.ani4h.shared.UserOuterClass.PublicUserInfo.getDefaultInstance()) return this;
+      public Builder mergeFrom(site.ani4h.shared.gen.UserOuterClass.PublicUserInfo other) {
+        if (other == site.ani4h.shared.gen.UserOuterClass.PublicUserInfo.getDefaultInstance()) return this;
         if (other.getId() != 0) {
           setId(other.getId());
         }
@@ -1558,12 +1438,12 @@ public final class UserOuterClass {
     }
 
     // @@protoc_insertion_point(class_scope:PublicUserInfo)
-    private static final site.ani4h.shared.UserOuterClass.PublicUserInfo DEFAULT_INSTANCE;
+    private static final site.ani4h.shared.gen.UserOuterClass.PublicUserInfo DEFAULT_INSTANCE;
     static {
-      DEFAULT_INSTANCE = new site.ani4h.shared.UserOuterClass.PublicUserInfo();
+      DEFAULT_INSTANCE = new site.ani4h.shared.gen.UserOuterClass.PublicUserInfo();
     }
 
-    public static site.ani4h.shared.UserOuterClass.PublicUserInfo getDefaultInstance() {
+    public static site.ani4h.shared.gen.UserOuterClass.PublicUserInfo getDefaultInstance() {
       return DEFAULT_INSTANCE;
     }
 
@@ -1599,17 +1479,17 @@ public final class UserOuterClass {
     }
 
     @java.lang.Override
-    public site.ani4h.shared.UserOuterClass.PublicUserInfo getDefaultInstanceForType() {
+    public site.ani4h.shared.gen.UserOuterClass.PublicUserInfo getDefaultInstanceForType() {
       return DEFAULT_INSTANCE;
     }
 
   }
 
   private static final com.google.protobuf.Descriptors.Descriptor
-    internal_static_GetUsersByIdsReq_descriptor;
+    internal_static_GetUsersByIdReq_descriptor;
   private static final 
     com.google.protobuf.GeneratedMessage.FieldAccessorTable
-      internal_static_GetUsersByIdsReq_fieldAccessorTable;
+      internal_static_GetUsersByIdReq_fieldAccessorTable;
   private static final com.google.protobuf.Descriptors.Descriptor
     internal_static_PublicUserInfo_descriptor;
   private static final 
@@ -1624,25 +1504,26 @@ public final class UserOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\"site/ani4h/shared/proto/user.proto\"$\n\020" +
-      "GetUsersByIdsReq\022\020\n\003ids\030\001 \003(\005R\003ids\"\232\001\n\016P" +
-      "ublicUserInfo\022\016\n\002id\030\001 \001(\005R\002id\022\035\n\nfirst_n" +
-      "ame\030\002 \001(\tR\tfirstName\022\033\n\tlast_name\030\003 \001(\tR" +
-      "\010lastName\022\033\n\tuser_name\030\004 \001(\tR\010userName\022\037" +
-      "\n\013system_role\030\006 \001(\tR\nsystemRole29\n\004User\022" +
-      "1\n\013GetUserById\022\021.GetUsersByIdsReq\032\017.Publ" +
-      "icUserInfoB\023\n\021site.ani4h.sharedb\006proto3"
+      "\n\"site/ani4h/shared/proto/user.proto\"!\n\017" +
+      "GetUsersByIdReq\022\016\n\002id\030\001 \001(\005R\002id\"\232\001\n\016Publ" +
+      "icUserInfo\022\016\n\002id\030\001 \001(\005R\002id\022\035\n\nfirst_name" +
+      "\030\002 \001(\tR\tfirstName\022\033\n\tlast_name\030\003 \001(\tR\010la" +
+      "stName\022\033\n\tuser_name\030\004 \001(\tR\010userName\022\037\n\013s" +
+      "ystem_role\030\006 \001(\tR\nsystemRole2:\n\004User\0222\n\013" +
+      "GetUserById\022\020.GetUsersByIdReq\032\017.PublicUs" +
+      "erInfo\"\000B\027\n\025site.ani4h.shared.genb\006proto" +
+      "3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_GetUsersByIdsReq_descriptor =
+    internal_static_GetUsersByIdReq_descriptor =
       getDescriptor().getMessageTypes().get(0);
-    internal_static_GetUsersByIdsReq_fieldAccessorTable = new
+    internal_static_GetUsersByIdReq_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
-        internal_static_GetUsersByIdsReq_descriptor,
-        new java.lang.String[] { "Ids", });
+        internal_static_GetUsersByIdReq_descriptor,
+        new java.lang.String[] { "Id", });
     internal_static_PublicUserInfo_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_PublicUserInfo_fieldAccessorTable = new

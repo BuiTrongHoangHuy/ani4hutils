@@ -1,4 +1,4 @@
-package site.ani4h.shared;
+package site.ani4h.shared.gen;
 
 import static io.grpc.MethodDescriptor.generateFullMethodName;
 
@@ -15,29 +15,29 @@ public final class UserGrpc {
   public static final java.lang.String SERVICE_NAME = "User";
 
   // Static method descriptors that strictly reflect the proto.
-  private static volatile io.grpc.MethodDescriptor<site.ani4h.shared.UserOuterClass.GetUsersByIdsReq,
-      site.ani4h.shared.UserOuterClass.PublicUserInfo> getGetUserByIdMethod;
+  private static volatile io.grpc.MethodDescriptor<site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq,
+      site.ani4h.shared.gen.UserOuterClass.PublicUserInfo> getGetUserByIdMethod;
 
   @io.grpc.stub.annotations.RpcMethod(
       fullMethodName = SERVICE_NAME + '/' + "GetUserById",
-      requestType = site.ani4h.shared.UserOuterClass.GetUsersByIdsReq.class,
-      responseType = site.ani4h.shared.UserOuterClass.PublicUserInfo.class,
+      requestType = site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq.class,
+      responseType = site.ani4h.shared.gen.UserOuterClass.PublicUserInfo.class,
       methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
-  public static io.grpc.MethodDescriptor<site.ani4h.shared.UserOuterClass.GetUsersByIdsReq,
-      site.ani4h.shared.UserOuterClass.PublicUserInfo> getGetUserByIdMethod() {
-    io.grpc.MethodDescriptor<site.ani4h.shared.UserOuterClass.GetUsersByIdsReq, site.ani4h.shared.UserOuterClass.PublicUserInfo> getGetUserByIdMethod;
+  public static io.grpc.MethodDescriptor<site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq,
+      site.ani4h.shared.gen.UserOuterClass.PublicUserInfo> getGetUserByIdMethod() {
+    io.grpc.MethodDescriptor<site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq, site.ani4h.shared.gen.UserOuterClass.PublicUserInfo> getGetUserByIdMethod;
     if ((getGetUserByIdMethod = UserGrpc.getGetUserByIdMethod) == null) {
       synchronized (UserGrpc.class) {
         if ((getGetUserByIdMethod = UserGrpc.getGetUserByIdMethod) == null) {
           UserGrpc.getGetUserByIdMethod = getGetUserByIdMethod =
-              io.grpc.MethodDescriptor.<site.ani4h.shared.UserOuterClass.GetUsersByIdsReq, site.ani4h.shared.UserOuterClass.PublicUserInfo>newBuilder()
+              io.grpc.MethodDescriptor.<site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq, site.ani4h.shared.gen.UserOuterClass.PublicUserInfo>newBuilder()
               .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
               .setFullMethodName(generateFullMethodName(SERVICE_NAME, "GetUserById"))
               .setSampledToLocalTracing(true)
               .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  site.ani4h.shared.UserOuterClass.GetUsersByIdsReq.getDefaultInstance()))
+                  site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq.getDefaultInstance()))
               .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
-                  site.ani4h.shared.UserOuterClass.PublicUserInfo.getDefaultInstance()))
+                  site.ani4h.shared.gen.UserOuterClass.PublicUserInfo.getDefaultInstance()))
               .setSchemaDescriptor(new UserMethodDescriptorSupplier("GetUserById"))
               .build();
         }
@@ -111,8 +111,8 @@ public final class UserGrpc {
 
     /**
      */
-    default void getUserById(site.ani4h.shared.UserOuterClass.GetUsersByIdsReq request,
-        io.grpc.stub.StreamObserver<site.ani4h.shared.UserOuterClass.PublicUserInfo> responseObserver) {
+    default void getUserById(site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq request,
+        io.grpc.stub.StreamObserver<site.ani4h.shared.gen.UserOuterClass.PublicUserInfo> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getGetUserByIdMethod(), responseObserver);
     }
   }
@@ -146,8 +146,8 @@ public final class UserGrpc {
 
     /**
      */
-    public void getUserById(site.ani4h.shared.UserOuterClass.GetUsersByIdsReq request,
-        io.grpc.stub.StreamObserver<site.ani4h.shared.UserOuterClass.PublicUserInfo> responseObserver) {
+    public void getUserById(site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq request,
+        io.grpc.stub.StreamObserver<site.ani4h.shared.gen.UserOuterClass.PublicUserInfo> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getGetUserByIdMethod(), getCallOptions()), request, responseObserver);
     }
@@ -171,7 +171,7 @@ public final class UserGrpc {
 
     /**
      */
-    public site.ani4h.shared.UserOuterClass.PublicUserInfo getUserById(site.ani4h.shared.UserOuterClass.GetUsersByIdsReq request) {
+    public site.ani4h.shared.gen.UserOuterClass.PublicUserInfo getUserById(site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetUserByIdMethod(), getCallOptions(), request);
     }
@@ -195,7 +195,7 @@ public final class UserGrpc {
 
     /**
      */
-    public site.ani4h.shared.UserOuterClass.PublicUserInfo getUserById(site.ani4h.shared.UserOuterClass.GetUsersByIdsReq request) {
+    public site.ani4h.shared.gen.UserOuterClass.PublicUserInfo getUserById(site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getGetUserByIdMethod(), getCallOptions(), request);
     }
@@ -219,8 +219,8 @@ public final class UserGrpc {
 
     /**
      */
-    public com.google.common.util.concurrent.ListenableFuture<site.ani4h.shared.UserOuterClass.PublicUserInfo> getUserById(
-        site.ani4h.shared.UserOuterClass.GetUsersByIdsReq request) {
+    public com.google.common.util.concurrent.ListenableFuture<site.ani4h.shared.gen.UserOuterClass.PublicUserInfo> getUserById(
+        site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getGetUserByIdMethod(), getCallOptions()), request);
     }
@@ -246,8 +246,8 @@ public final class UserGrpc {
     public void invoke(Req request, io.grpc.stub.StreamObserver<Resp> responseObserver) {
       switch (methodId) {
         case METHODID_GET_USER_BY_ID:
-          serviceImpl.getUserById((site.ani4h.shared.UserOuterClass.GetUsersByIdsReq) request,
-              (io.grpc.stub.StreamObserver<site.ani4h.shared.UserOuterClass.PublicUserInfo>) responseObserver);
+          serviceImpl.getUserById((site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq) request,
+              (io.grpc.stub.StreamObserver<site.ani4h.shared.gen.UserOuterClass.PublicUserInfo>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -271,8 +271,8 @@ public final class UserGrpc {
           getGetUserByIdMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
             new MethodHandlers<
-              site.ani4h.shared.UserOuterClass.GetUsersByIdsReq,
-              site.ani4h.shared.UserOuterClass.PublicUserInfo>(
+              site.ani4h.shared.gen.UserOuterClass.GetUsersByIdReq,
+              site.ani4h.shared.gen.UserOuterClass.PublicUserInfo>(
                 service, METHODID_GET_USER_BY_ID)))
         .build();
   }
@@ -283,7 +283,7 @@ public final class UserGrpc {
 
     @java.lang.Override
     public com.google.protobuf.Descriptors.FileDescriptor getFileDescriptor() {
-      return site.ani4h.shared.UserOuterClass.getDescriptor();
+      return site.ani4h.shared.gen.UserOuterClass.getDescriptor();
     }
 
     @java.lang.Override
