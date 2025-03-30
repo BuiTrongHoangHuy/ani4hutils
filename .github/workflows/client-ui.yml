@@ -32,5 +32,26 @@ jobs:
         run: |
           docker build -t $ECR_REGISTRY/v2r1j0e6/ani4h-client-ui:latest ./client-ui
           docker push $ECR_REGISTRY/v2r1j0e6/ani4h-client-ui:latest
+  Deploy:
+    name: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy
+        env:
+          PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          HOSTNAME: ${{ secrets.UI_HOST }}
+          USER_NAME: ${{ secrets.SSH_USER_NAME }}
+        run: |
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+              APP_NAME=ani4h-client-ui &&
+              docker rm -f ${APP_NAME} &&
+              echo pull &&
+              docker pull $ECR_REGISTRY/v2r1j0e6/${APP_NAME}i:latest &&
+              docker run -d --name ${APP_NAME} \
+              -p 80:3000 \
+              -v ${PWD}/.log/:/app/.log/ \
+              $ECR_REGISTRY/v2r1j0e6/${APP_NAME}:latest
+          '  
 
-
+  
