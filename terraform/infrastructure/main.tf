@@ -8,8 +8,6 @@ terraform {
   }
 }
 
-
-
 provider "aws" {
   region = "ap-southeast-1"
 }
@@ -40,11 +38,6 @@ module "broker" {
   vpc     = module.networking.vpc
   sg      = module.networking.sg
   az = local.az
-}
-
-variable "function_names" {
-  default = ["lambda-master","lambda-worker"]
-  type = list(string)
 }
 
 module "ecr" {
@@ -106,4 +99,5 @@ module "ecs" {
   vpc =module.networking.vpc
   sg = module.networking.sg
   az = local.az
+  services = var.services
 }
