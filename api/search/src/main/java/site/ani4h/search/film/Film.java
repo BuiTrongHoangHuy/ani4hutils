@@ -7,7 +7,10 @@ import org.springframework.data.annotation.Transient;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
+import site.ani4h.shared.common.Image;
 import site.ani4h.shared.common.Uid;
+
+import java.util.List;
 
 @Document(indexName = "films")
 @Getter
@@ -22,8 +25,17 @@ public class Film {
     @Field(type = FieldType.Search_As_You_Type)
     private String keyword;
 
-    @Transient
-    private final static int type = 7;
+    @Field(type = FieldType.Keyword)
+    private List<String> genres;
 
-    public void setId(int id) { this.id = new Uid(id, 0, type).toString(); }
+    @Field(type = FieldType.Nested)
+    private List<Image> images;
+
+    public void mapFromFilmModel(FilmModel filmModel) {
+        this.id = filmModel.getId().toString();
+        this.title = filmModel.getTitle();
+        this.keyword = filmModel.getTitle();
+        this.genres = filmModel.getGenres();
+        this.images = filmModel.getImages();
+    }
 }

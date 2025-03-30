@@ -6,5 +6,5 @@ import java.util.List;
 
 @Component
 public interface FilmRepository {
-    List<Film> getFilms();
+    List<FilmModel> getFilms();
 }

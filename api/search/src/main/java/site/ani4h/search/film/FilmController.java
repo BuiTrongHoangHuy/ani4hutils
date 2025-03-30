@@ -27,13 +27,19 @@ public class FilmController {
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllFilms() {
-        List<Film> films = filmService.getFilms();
+        List<FilmModel> films = filmService.getFilms();
         return ResponseEntity.ok(films);
     }
 
     @GetMapping("/suggest")
     public ResponseEntity<?> getFilmsByTitleSuggest(@RequestParam String keyword) {
         var films = filmService.getFilmsByTitleSuggest(keyword);
+        return ResponseEntity.ok(films);
+    }
+
+    @GetMapping("/filter")
+    public ResponseEntity<?> getFilmsByFilter(@RequestParam String genre) {
+        var films = filmService.getFilmsByFilter(genre);
         return ResponseEntity.ok(films);
     }
 }
