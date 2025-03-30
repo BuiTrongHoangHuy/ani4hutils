@@ -44,10 +44,10 @@ jobs:
               APP_NAME=ani4h-client-ui
               docker rm -f ${APP_NAME} || true 
               echo "pulling image"
-              docker pull ${ECR_REGISTRY}/v2r1j0e6/ani4h-client-ui:latest 
+              docker pull $ECR_REGISTRY/v2r1j0e6/ani4h-client-ui:latest 
               docker run -d --name ${APP_NAME} \
                 -p 80:3000 \
-                ${ECR_REGISTRY}/v2r1j0e6/ani4h-client-ui:latest
+                $ECR_REGISTRY/v2r1j0e6/ani4h-client-ui:latest
           '
 
   
