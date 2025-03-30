@@ -89,26 +89,22 @@ module "opensearch_sg" {
   vpc_id = module.vpc.vpc_id
   ingress_rules = [
     {
-      from_port = 443
-      to_port   = 443
+      port = 443
       protocol  = "tcp"
       security_groups = [module.vm_sg.security_group.id]
     },
     {
-      from_port = 80
-      to_port   = 80
+      port = 80
       protocol  = "tcp"
       security_groups = [module.vm_sg.security_group.id]
     },
     {
-      from_port = 443
-      to_port   = 443
+      port = 443
       protocol  = "tcp"
       cidr_blocks = ["172.30.0.0/16","172.31.0.0/16"]
     },
     {
-      from_port = 80
-      to_port   = 80
+      port = 80
       protocol  = "tcp"
       cidr_blocks = ["172.30.0.0/16","172.31.0.0/16"]
     },

@@ -5,7 +5,24 @@ terraform {
     }
   }
 }
-
+resource "aws_iam_policy" "ecr_policy" {
+  name        = "lambda_ecr_access"
+  description = "Allow Lambda to pull image from ECR"
+  policy      = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Effect = "Allow"
+        Action = [
+          "ecr:GetDownloadUrlForLayer",
+          "ecr:BatchGetImage",
+          "ecr:GetAuthorizationToken"
+        ]
+        Resource = "*"
+      }
+    ]
+  })
+}
 data "aws_iam_policy_document" "assume_role" {
   statement {
     effect = "Allow"
@@ -19,6 +36,11 @@ data "aws_iam_policy_document" "assume_role" {
   }
 }
 
+
+resource "aws_iam_role_policy_attachment" "lambda_ecr_attachment" {
+  policy_arn = aws_iam_policy.ecr_policy.arn
+  role       = aws_iam_role.iam_for_lambda.name
+}
 resource "aws_iam_role" "iam_for_lambda" {
   name               = "iam_for_lambda"
   assume_role_policy = data.aws_iam_policy_document.assume_role.json
