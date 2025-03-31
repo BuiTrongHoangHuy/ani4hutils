@@ -27,7 +27,7 @@ public class UserController {
     public ResponseEntity<?> getUsers(HttpServletRequest request,
                                       @ModelAttribute() Paging paging
     ) {
-        Requester requester = (Requester) request.getAttribute("requester");
+        var requester = Requester.getRequester(request);
         return ResponseEntity.ok(ApiResponse.success(userService.getUsers(paging)));
     }
 }
