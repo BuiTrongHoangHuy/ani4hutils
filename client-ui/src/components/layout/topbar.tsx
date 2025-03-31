@@ -8,12 +8,10 @@ export default function TopBar(className: {className?: string }) {
             </div>
             <div className="flex-1">
                 <ul className={"flex space-x-4"}>
-                    <li><NavButton name={"Trang chủ"} href={"/"}/></li>
-                    <li><NavButton name={"Dạng anime"} href={"/"}/></li>
-                    <li><NavButton name={"Top anime"} href={"/"}/></li>
-                    <li><NavButton name={"Thể loại"} href={"/"}/></li>
-                    <li><NavButton name={"Thư viện"} href={"/"}/></li>
-                    <li><NavButton name={"Lịch Chiếu"} href={"/"}/></li>
+                    <li><NavButton name={"Ranking"} href={"/"}/></li>
+                    <li><NavButton name={"Genres"} href={"/"}/></li>
+                    <li><NavButton name={"Library"} href={"/"}/></li>
+                    <li><NavButton name={"Schedules"} href={"/"}/></li>
                 </ul>
             </div>
 

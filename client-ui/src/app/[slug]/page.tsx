@@ -15,9 +15,19 @@ export default async function Page({
     const filmData = await fetch(`http://localhost:4000/v1/film`)
     const films : FilmList[] = (await filmData.json()).data
     return (
-        <div className={"w-screen h-screen mt-[64px] px-20 py-10 space-y-20 "}>
-            <div className={"flex justify-evenly"}>
-                <div className={"space-y-4 w-1/2 font-bold"}>
+        <div className={"w-screen mt-[64px] px-20 py-10 space-y-20 "}>
+
+            <div className={"flex justify-between"}>
+                <div
+                    className="w-[400px] h-[500px] space-y-3 relative">
+                    <Image
+                        className="rounded-md object-fill"
+                        fill={true}
+                        src={film.images?.[0]?.url || "https://placehold.co/300x400/png?text=ani4h.site"}
+                        alt={film.title}
+                    />
+                </div>
+                <div className={"space-y-4  w-2/3 font-bold"}>
                     <h1 className={"text-3xl font-bold"}>{film?.title}</h1>
                     <div className={"flex space-x-2"}>
                         <Image src={`/images/icons/start.svg`} alt={""} width="16" height="16"/>
@@ -32,7 +42,7 @@ export default async function Page({
                     </div>
                     <div className={"flex space-x-2"}>
                         <p>Category: </p>
-                        {film.genres.map((g,i) =>
+                        {film.genres.map((g, i) =>
                             <Link key={i} href={`/film?genre=${g.id}`}>{g.name}</Link>
                         )}
                     </div>
@@ -49,17 +59,14 @@ export default async function Page({
                         </div>
                     </div>
                 </div>
-                <div
-                    className="w-[800px] h-[500px] space-y-3 relative ">
-                    <Image
-                        className="rounded-md object-fill"
-                        fill={true}
-                        src={film.images?.[0]?.url || ""}
-                        alt={film.title}
-                    />
-                </div>
             </div>
-            <ListFilm title={"Proposal for you"} films={films}></ListFilm>
+            <div className={"flex space-x-4"}>
+                <Link href={`/${slug}`} className={"btn btn-primary p-6 text-xl rounded-md"}>Part 1</Link>
+                <Link href={`/${slug}`} className={"btn bg-gray-500 hover:gray-300 p-6 text-xl rounded-md"}>Part 2</Link>
+                <Link href={`/${slug}`} className={"btn bg-gray-500 hover:gray-300 p-6 text-xl rounded-md"}>Part 3</Link>
+                <Link href={`/${slug}`} className={"btn bg-gray-500 hover:gray-300 p-6 text-xl rounded-md"}>Part 4</Link>
+            </div>
+            <ListFilm title={"Proposal for you"} films={films} className={"px-0!"}></ListFilm>
         </div>
 
     )

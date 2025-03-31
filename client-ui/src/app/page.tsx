@@ -10,7 +10,7 @@ export default async function Home() {
     return (
         <div className={"w-screen"}>
             <Carousel className="w-full h-[80vh] z-[30]"/>
-            <div className="px-10 -mt-12 relative z-[40]">
+            <div className="px-10 -mt-12 relative z-[40] w-screen">
                 <ListFilm title={"Có thể bạn sẽ thích"} films={films}/>
                 <ListFilm title={"Có thể bạn sẽ thích"} films={films}/>
                 <ListFilm title={"Có thể bạn sẽ thích"} films={films}/>

@@ -11,7 +11,7 @@ export default function FilmListCard({film} : {film: FilmList}) {
                     <Image
                         className="rounded-md object-cover"
                         fill={true}
-                        src={film.images?.[0]?.url || ""}
+                        src={film.images?.[0]?.url || "https://placehold.co/200x300/png?text=ani4h"}
                         alt={film.title}
                     />
                 </div>
@@ -22,6 +22,6 @@ export default function FilmListCard({film} : {film: FilmList}) {
 }
 
 function slug(film : FilmList): string {
-    return film.title.toLowerCase().replace(" ","-")+'-'+film.id
+    return film.title.toLowerCase().split(" ").join("-")+'-'+film.id
 }
 
