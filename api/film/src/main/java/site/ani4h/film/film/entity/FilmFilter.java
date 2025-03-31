@@ -11,4 +11,5 @@ public class FilmFilter {
     private Uid ageRatingId;
     private int year;
     private FilmSeason  season;
+    private Uid genreId;
 }

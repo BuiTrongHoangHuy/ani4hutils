@@ -7,6 +7,7 @@ import site.ani4h.shared.common.Images;
 import site.ani4h.shared.common.Uid;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +29,7 @@ public class Film {
     private int status;
     private FilmState state;
     private AgeRating ageRating;
+    private List<Genre> genres;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Uid seriesId;
