@@ -13,7 +13,7 @@ import site.ani4h.shared.common.Uid;
 @Setter
 public class AuthRegister {
     public AuthRegister( Integer userId,String email, String password, String salt) {
-        this.userId =  userId;
+        this.userId =  new Uid(userId,0,1);
         this.email = email;
         this.password = password;
         this.salt = salt;
@@ -24,10 +24,12 @@ public class AuthRegister {
     }
     @NotBlank
     @NotNull
-    private Integer userId;
+    private Uid userId;
     @Email
     private String email;
-
+    public void setUserId (int userId ) {
+        this.userId = new Uid(userId,0,1);
+    }
     // Minimum eight characters, at least one letter and one number
     @Pattern(regexp ="^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$")
     private String password;
