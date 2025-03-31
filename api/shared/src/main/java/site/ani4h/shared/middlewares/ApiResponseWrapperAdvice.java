@@ -1,4 +1,4 @@
-package site.ani4h.shared.middlewares.logger;
+package site.ani4h.shared.middlewares;
 
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

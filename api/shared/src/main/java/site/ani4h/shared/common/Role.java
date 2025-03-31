@@ -1,4 +1,4 @@
-package site.ani4h.auth.auth.entity;
+package site.ani4h.shared.common;
 
 public enum Role {
     ADMIN(){

@@ -4,6 +4,7 @@ package site.ani4h.auth.auth.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import site.ani4h.shared.common.Role;
 import site.ani4h.shared.common.Uid;
 
 import java.time.LocalDateTime;

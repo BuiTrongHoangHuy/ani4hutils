@@ -1,4 +1,4 @@
-package site.ani4h.shared.middlewares.logger;
+package site.ani4h.shared.middlewares;
 
 import jakarta.validation.ConstraintViolationException;
 import org.slf4j.Logger;
