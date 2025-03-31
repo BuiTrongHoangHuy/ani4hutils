@@ -29,7 +29,6 @@ CREATE TABLE `producers`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
-
 DROP TABLE IF EXISTS `films`;
 CREATE TABLE `films`
 (
@@ -77,7 +76,7 @@ CREATE TABLE `age_ratings`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
-
+ALTER TABLE `age_ratings` ADD COLUMN min_age_to_watch tinyint DEFAULT 0 AFTER `description`;
 
 DROP TABLE IF EXISTS `alternative_titles`;
 CREATE TABLE `alternative_titles`

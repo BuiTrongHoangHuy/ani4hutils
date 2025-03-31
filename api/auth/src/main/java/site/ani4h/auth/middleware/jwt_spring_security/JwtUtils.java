@@ -1,16 +1,20 @@
 package site.ani4h.auth.middleware.jwt_spring_security;
 
 import io.jsonwebtoken.*;
-import io.jsonwebtoken.security.Keys;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import site.ani4h.auth.auth.entity.Auth;
 
-import java.nio.charset.StandardCharsets;
-import java.security.Key;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.*;
+import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.time.Instant;
+import java.util.Base64;
 import java.util.Date;
 
 @Component
@@ -22,25 +26,15 @@ public class JwtUtils {
 
     @Value("${jwt.access-token-expiration-ms}")
     private int accessTokenExpirationMs;
-
     @Value("${jwt.refresh-token-expiration-ms}")
     private int refreshTokenExpirationMs;
-
-    @Autowired
-    private UserDetailsServiceImpl userDetailsService;
-
-    public String generateJwtToken(String email, long jwtExpirationInMs, String tokenType) {
-        UserDetailsImpl userDetails = userDetailsService.loadUserByUsername(email);
-
-        return Jwts.builder()
-                .setSubject(String.valueOf(userDetails.getUserId())) // Dùng email làm subject thay vì lấy từ UserDetailsImpl
-                .setIssuedAt(Date.from(Instant.now()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
-                .claim("token_type", tokenType)
-                .claim("email", email)
-                .signWith(key(), SignatureAlgorithm.HS256)
-                .compact();
-    }
+    @Value("${jwt.issuer}")
+    private String issuer;
+    @Value("${jwt.aud}")
+    private String aud;
+    @Value("${jwt.key-id}")
+    private String keyId;
+    private static PrivateKey privateKey = null;
 
     public boolean isAccessToken(String token) {
         return "access".equals(getTokenType(token));
@@ -57,41 +51,94 @@ public class JwtUtils {
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-            return claims.get("token_type", String.class); // Lấy claim token_type
+            return claims.get("token_type", String.class);
         } catch (Exception e) {
             logger.error("Error extracting token_type: {}", e.getMessage());
             return null;
         }
     }
-
-    // get email from token
-    public String getEmailFromJwtToken(String token){
+    public String getClaim(String token,String key){
         try {
             Claims claims = Jwts.parserBuilder()
                     .setSigningKey(key())
                     .build()
                     .parseClaimsJws(token)
                     .getBody();
-            return claims.get("email", String.class); // Lấy claim token_type
+            return claims.get(key, String.class);
         } catch (Exception e) {
             logger.error("Error extracting email: {}", e.getMessage());
             return null;
         }
     }
-
     // generateAccessToken
-    public String generateAccessToken(String email) {
-        return generateJwtToken(email, accessTokenExpirationMs, "access");
+    public String generateAccessToken(Auth auth) {
+        return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setHeaderParam("kid",keyId)
+                .setSubject(String.valueOf(auth.getUserId()))
+                .setIssuedAt(Date.from(Instant.now()))
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpirationMs))
+                .setIssuer(issuer)
+                .setAudience(aud)
+                .claim("email", auth.getEmail())
+                .claim("scope",auth.getRole().toString().toLowerCase())
+                .signWith(key(), SignatureAlgorithm.RS256)
+                .compact();
     }
 
     // generateRefreshToken
-    public String generateRefreshToken(String email) {
-        return generateJwtToken(email, refreshTokenExpirationMs, "refresh");
+    public String generateRefreshToken(Auth auth) {
+        return Jwts.builder()
+                .setHeaderParam("typ", "JWT")
+                .setHeaderParam("kid",keyId)
+                .setSubject(String.valueOf(auth.getUserId()))
+                .setIssuedAt(Date.from(Instant.now()))
+                .setExpiration(new Date(System.currentTimeMillis() + accessTokenExpirationMs))
+                .setIssuer(issuer)
+                .setAudience(aud)
+                .claim("email", auth.getEmail())
+                .signWith(key(), SignatureAlgorithm.RS256)
+                .compact();
     }
 
-    private Key key() {
-        return Keys.hmacShaKeyFor(jwtSecret.getBytes(StandardCharsets.UTF_8));
+    private static PrivateKey key() {
+        if (privateKey == null) {
+            try {
+                KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+                String privateKeyPEM = getPrivateKeyPEM();
+                byte[] keyBytes = Base64.getDecoder().decode(privateKeyPEM);
+                PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
+                privateKey = keyFactory.generatePrivate(keySpec);
+            } catch (IOException e) {
+                throw new RuntimeException("Error reading private key file", e);
+            } catch (NoSuchAlgorithmException e) {
+                throw new RuntimeException("RSA algorithm not found", e);
+            } catch (InvalidKeySpecException e) {
+                throw new RuntimeException("Invalid key format", e);
+            }
+        }
+        return privateKey;
     }
+    private static String getPrivateKeyPEM() throws IOException {
+        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+        String privateKeyPEM;
+        try (InputStream is = classLoader.getResourceAsStream("private.key")) {
+            if (is == null) {
+                throw new IllegalArgumentException("File private.key not found in resources");
+            }
+
+            privateKeyPEM = new String(is.readAllBytes());
+        }
+
+        privateKeyPEM = privateKeyPEM
+                .replace("-----BEGIN PRIVATE KEY-----", "")
+                .replace("-----END PRIVATE KEY-----", "")
+                .replace("-----BEGIN RSA PRIVATE KEY-----", "")
+                .replace("-----END RSA PRIVATE KEY-----", "")
+                .replaceAll("\\s+", "");
+        return privateKeyPEM;
+    }
+
 
     public boolean validateJwtToken(String authToken) {
         try {
@@ -106,7 +153,6 @@ public class JwtUtils {
         } catch (IllegalArgumentException e) {
             logger.error("JWT claims string is empty: {}", e.getMessage());
         }
-
         return false;
     }
 }

@@ -21,25 +21,9 @@ public class ApiApplication {
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         System.out.println();
         return args -> {
-
             System.out.println("Let's inspect the beans provided by Spring Boot:");
-
             String[] beanNames = ctx.getBeanDefinitionNames();
-
         };
     }
-    @Bean
-    public WebServerFactoryCustomizer<TomcatServletWebServerFactory> webServerFactoryCustomizer()    {
-        return (tomcat) -> tomcat.addConnectorCustomizers((connector) -> {
-            if (connector.getProtocolHandler() instanceof AbstractHttp11Protocol) {
-                System.out.println("Setup keep alive");
-                AbstractHttp11Protocol<?> protocolHandler = (AbstractHttp11Protocol<?>) connector
-                        .getProtocolHandler();
-                protocolHandler.setKeepAliveTimeout(80000);
-                protocolHandler.setMaxKeepAliveRequests(500);
-                protocolHandler.setUseKeepAliveResponseHeader(true);
-            }
-    });
-}
 }
 

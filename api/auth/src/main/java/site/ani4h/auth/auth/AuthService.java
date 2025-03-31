@@ -6,12 +6,16 @@ import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import site.ani4h.auth.auth.entity.*;
+import site.ani4h.auth.auth.error.ErrorInvalidCredentials;
 import site.ani4h.auth.middleware.jwt_spring_security.JwtUtils;
 import site.ani4h.auth.middleware.jwt_spring_security.SHA256PasswordEncoder;
 import site.ani4h.auth.user.Role;
 import site.ani4h.auth.user.UserCreate;
 import site.ani4h.auth.user.UserRepository;
 import site.ani4h.shared.errors.EntityAlreadyExist;
+import site.ani4h.shared.errors.EntityNotFound;
+import site.ani4h.shared.errors.ErrorBadRequest;
 import site.ani4h.shared.utils.RandomSequenceGenerator;
 
 import java.util.Set;
@@ -68,24 +72,22 @@ public class AuthService {
     public LoginResponse Login(LoginRequest req) {
         Auth auth = this.authRepository.findByEmail(req.getEmail());
         if(auth == null) {
-            throw new RuntimeException("User not found");
+            throw new EntityNotFound("user");
         }
 
         String saltedPassword = auth.getSalt() + req.getPassword();
         if(!passwordEncoder.matches(saltedPassword, auth.getPassword())) {
-            throw new RuntimeException("Invalid credentials");
+            throw new ErrorInvalidCredentials();
         }
 
-        String jwtAccessToken = jwtUtils.generateAccessToken(req.getEmail());
-        String jwtRefreshToken = jwtUtils.generateRefreshToken(req.getEmail());
+        String jwtAccessToken = jwtUtils.generateAccessToken(auth);
+        String jwtRefreshToken = jwtUtils.generateRefreshToken(auth);
 
-        LoginResponse res = LoginResponse.builder()
+        return LoginResponse.builder()
                 .email(req.getEmail())
                 .accessToken(jwtAccessToken)
                 .refreshToken(jwtRefreshToken)
                 .build();
-
-        return res;
 
     }
 
@@ -94,17 +96,18 @@ public class AuthService {
         jwtUtils.validateJwtToken(refreshToken);
         // check type token is refresh token
         if(!jwtUtils.isRefreshToken(refreshToken)) {
-            throw new RuntimeException("Invalid refresh token");
+            throw new ErrorBadRequest("Invalid refresh token");
         }
 
-        String email = jwtUtils.getEmailFromJwtToken(refreshToken);
-        String accessToken = jwtUtils.generateAccessToken(email);
-        RefreshTokenResponse res = RefreshTokenResponse.builder()
+        String email = jwtUtils.getClaim(refreshToken,"email");
+        Auth auth = this.authRepository.findByEmail(email);
+
+        String accessToken = jwtUtils.generateAccessToken(auth);
+
+        return RefreshTokenResponse.builder()
                 .email(email)
                 .accessToken(accessToken)
                 .refreshToken(refreshToken)
                 .build();
-
-        return res;
     }
 }

@@ -26,6 +26,6 @@ output "opensearch_config" {
   sensitive = true
 }
 
-# output "lambdas" {
-#   value = module.lambdas.lambda
-# }
+output "servicediscovery" {
+  value = module.ecs.servicediscovery
+}

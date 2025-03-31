@@ -1,9 +1,11 @@
 package site.ani4h.auth.user;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.ani4h.shared.common.ApiResponse;
 import site.ani4h.shared.common.Paging;
+import site.ani4h.shared.common.Requester;
 import site.ani4h.shared.common.Uid;
 
 @RestController
@@ -22,10 +24,10 @@ public class UserController {
     }
 
     @GetMapping("")
-    public ResponseEntity<?> getUsers(
-            @ModelAttribute() Paging paging
+    public ResponseEntity<?> getUsers(HttpServletRequest request,
+                                      @ModelAttribute() Paging paging
     ) {
-        System.out.println(paging.getPage());
+        var requester = Requester.getRequester(request);
         return ResponseEntity.ok(ApiResponse.success(userService.getUsers(paging)));
     }
 }

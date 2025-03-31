@@ -13,3 +13,7 @@ variable "sg" {
 variable "az" {
   type = string
 }
+
+variable "services" {
+  type = set(string)
+}

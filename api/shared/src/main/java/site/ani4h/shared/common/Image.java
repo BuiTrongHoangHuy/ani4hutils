@@ -37,6 +37,7 @@ public class Image implements Serializable {
         this.extension = extension;
         this.cloudName = cloudName;
     }
+
     @JsonCreator
     public Image(String str) {
         ObjectMapper mapper = new ObjectMapper();

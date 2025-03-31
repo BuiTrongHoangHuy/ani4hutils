@@ -1,0 +1,18 @@
+syntax = "proto3";
+option java_package="site.ani4h.shared.gen";
+message GetUsersByIdReq {
+  int32 id = 1;
+}
+
+
+message PublicUserInfo {
+  int32 id = 1;
+  string first_name = 2;
+  string last_name = 3;
+  string user_name = 4;
+  string system_role = 6;
+}
+
+service User {
+  rpc GetUserById(GetUsersByIdReq) returns( PublicUserInfo) {};
+}

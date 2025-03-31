@@ -7,7 +7,8 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 
-@SpringBootApplication(exclude = { SecurityAutoConfiguration.class }, scanBasePackages = {"site.ani4h.film", "site.ani4h.shared"})
+@SpringBootApplication(exclude = { SecurityAutoConfiguration.class },
+        scanBasePackages = {"site.ani4h.film", "site.ani4h.shared"})
 public class ApiApplication {
 
     public static void main(String[] args) {
