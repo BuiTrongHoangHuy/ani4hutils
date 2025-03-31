@@ -3,6 +3,7 @@ package site.ani4h.film.film;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
+import site.ani4h.film.film.entity.Film;
 import site.ani4h.film.film.entity.FilmFilter;
 import site.ani4h.film.film.entity.FilmList;
 import site.ani4h.shared.common.Paging;
@@ -49,5 +50,14 @@ public class JdbcFilmRepository implements FilmRepository {
                 new BeanPropertyRowMapper<>(FilmList.class),
                 params.toArray()
         );
+    }
+
+    @Override
+    public Film getFilmById(int id) {
+        //language=MySQL
+        String sql = """
+                SELECT * FROM `films` WHERE id = ?
+                """;
+        return jdbcTemplate.queryForObject(sql,new BeanPropertyRowMapper<>(Film.class),id);
     }
 }

@@ -26,6 +26,10 @@ resource "aws_apigatewayv2_api" "rest_gateway" {
   name          = "${var.project}-gateway"
   description   = "This is my API for demonstration purposes"
   protocol_type = "HTTP"
+  cors_configuration {
+    allow_headers = ["*"]
+    allow_origins = ["*",]
+  }
 }
 
 resource "aws_cloudwatch_log_group" "log_group_v1" {

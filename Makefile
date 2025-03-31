@@ -10,3 +10,5 @@ proto:
 	@cd ./api/shared/src/main/java && buf generate
 tunnel:
 	./.tunnel.sh
+client-ui:
+	@cd ./client-ui && npm run dev

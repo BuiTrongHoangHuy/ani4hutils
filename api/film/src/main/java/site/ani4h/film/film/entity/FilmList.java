@@ -12,6 +12,7 @@ import java.util.List;
 @Getter
 @Setter
 public class FilmList {
+    private Uid id;
     private String title;
     private String synopsis;
     private Images images;
@@ -29,5 +30,8 @@ public class FilmList {
     }
     public void setAgeRatingId(int id) {
         this.ageRatingId = new Uid(id,0,AgeRating.type);
+    }
+    public void setId(int id) {
+        this.id = new Uid(id,0,Film.type);
     }
 }

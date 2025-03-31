@@ -3,7 +3,7 @@ import FilmListCard from "@/components/FilmListCard";
 
 export default function ListFilm({title, films} : {title?: string,films: FilmList[]}) {
     return (
-        <div className={"w-full space-y-4 px-10"}>
+        <div className={"w-full space-y-8 px-10 mb-30"}>
             <p className={"text-2xl font-bold"}>{title}</p>
             <ul className="flex space-x-10 w-full z-[50]">
                 {films.map((film, index) => {
