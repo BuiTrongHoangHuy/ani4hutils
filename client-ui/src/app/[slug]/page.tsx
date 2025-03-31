@@ -2,6 +2,7 @@ import Image from "next/image";
 import {film} from "@/types/film";
 import {FilmList} from "@/types/filmList";
 import ListFilm from "@/components/ListFilm";
+import Link from "next/link";
 
 export default async function Page({
                                        params,
@@ -28,6 +29,12 @@ export default async function Page({
                         <p>Update to {film.numEpisodes} episodes</p>
                         <div className={"divider divider-horizontal"}></div>
                         <p>Full {film.maxEpisodes} episodes</p>
+                    </div>
+                    <div className={"flex space-x-2"}>
+                        <p>Category: </p>
+                        {film.genres.map((g,i) =>
+                            <Link key={i} href={`/film?genre=${g.id}`}>{g.name}</Link>
+                        )}
                     </div>
                     <p className={"font-bold"}>{film?.synopsis}</p>
                     <p>Views: {film.view || 0}</p>
