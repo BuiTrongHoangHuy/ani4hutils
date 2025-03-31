@@ -21,7 +21,7 @@ public class JdbcFilmRepository implements FilmRepository {
 
     @Override
     public List<FilmModel> getFilms() {
-        String sql = "SELECT f.id, f.title, f.images, g.name " +
+        String sql = "SELECT f.id, f.title, f.images, f.synopsis, g.name " +
                 "FROM films f " +
                 "LEFT JOIN film_genres fg ON f.id = fg.film_id " +
                 "LEFT JOIN genres g ON fg.genre_id = g.id";
@@ -37,6 +37,7 @@ public class JdbcFilmRepository implements FilmRepository {
                 film.setId(rs.getInt("id"));
                 film.setTitle(rs.getString("title"));
                 film.setGenres(new ArrayList<>());
+                film.setSynopsis(rs.getString("synopsis"));
 
                 try {
                     String imagesJson = rs.getString("images");

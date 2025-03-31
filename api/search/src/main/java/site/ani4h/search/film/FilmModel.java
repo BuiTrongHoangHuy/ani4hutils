@@ -15,6 +15,7 @@ public class FilmModel {
     private String title;
     private List<Image> images;
     private List<String> genres;
+    private String synopsis;
     private final static int type = 7;
 
     public void setId(int id) { this.id = new Uid(id, 0, type); }

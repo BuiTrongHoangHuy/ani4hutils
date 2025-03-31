@@ -28,6 +28,9 @@ public class Film {
     @Field(type = FieldType.Keyword)
     private List<String> genres;
 
+    @Field(type = FieldType.Keyword)
+    private String synopsis;
+
     @Field(type = FieldType.Nested)
     private List<Image> images;
 
@@ -37,5 +40,6 @@ public class Film {
         this.keyword = filmModel.getTitle();
         this.genres = filmModel.getGenres();
         this.images = filmModel.getImages();
+        this.synopsis = filmModel.getSynopsis();
     }
 }

@@ -32,14 +32,22 @@ public class FilmController {
     }
 
     @GetMapping("/suggest")
-    public ResponseEntity<?> getFilmsByTitleSuggest(@RequestParam String keyword) {
-        var films = filmService.getFilmsByTitleSuggest(keyword);
+    public ResponseEntity<?> getFilmsByTitleSuggest(
+        @RequestParam String keyword,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int pageSize
+    ) {
+        var films = filmService.getFilmsByTitleSuggest(keyword, page, pageSize);
         return ResponseEntity.ok(films);
     }
 
     @GetMapping("/filter")
-    public ResponseEntity<?> getFilmsByFilter(@RequestParam String genre) {
-        var films = filmService.getFilmsByFilter(genre);
+    public ResponseEntity<?> getFilmsByFilter(
+        @RequestParam String genre,
+        @RequestParam(defaultValue = "0") int page,
+        @RequestParam(defaultValue = "10") int pageSize
+    ) {
+        var films = filmService.getFilmsByFilter(genre, page, pageSize);
         return ResponseEntity.ok(films);
     }
 }

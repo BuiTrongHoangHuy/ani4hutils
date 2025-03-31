@@ -68,30 +68,30 @@ public class FilmService {
     }
 
     // suggest keyword when user typing with prefix, completion
-    public List<String> getFilmsByTitleSuggest(String keyword) {
+    public List<Film> getFilmsByTitleSuggest(String keyword, int page, int pageSize) {
         String formatKeyword = keyword.toLowerCase();
 
         NativeQuery searchQuery = new NativeQueryBuilder()
-                .withQuery(QueryBuilders.matchPhrasePrefix(m->m.field("keyword").query(formatKeyword)))
-                .withPageable(PageRequest.of(0, 10))
+                .withQuery(QueryBuilders.matchPhrasePrefix(m->m.field("keyword").query(formatKeyword).maxExpansions(4)))
+                .withPageable(PageRequest.of(page, pageSize))
                 .build();
 
         System.out.println("Query: " + searchQuery.getQuery());
         SearchHits<Film> searchHits = elasticsearchOperations.search(searchQuery, Film.class);
         System.out.println("Search hits: " + searchHits.getTotalHits());
         return searchHits.stream()
-                .map(hit -> hit.getContent().getKeyword())
+                .map(SearchHit::getContent)
                 .collect(Collectors.toList());
     }
 
     // Filter
-    public List<Film> getFilmsByFilter(String genre){
+    public List<Film> getFilmsByFilter(String genre, int page, int pageSize){
 
         NativeQuery criteriaQuery = new NativeQueryBuilder()
                 .withQuery(QueryBuilders.bool(b -> b
                         .must(QueryBuilders.term(r -> r.field("genres").value(genre)))
                 ))
-                .withPageable(PageRequest.of(0, 10))
+                .withPageable(PageRequest.of(page, pageSize))
                 .build();
 
         SearchHits<Film> searchHits = elasticsearchOperations.search(criteriaQuery, Film.class);
