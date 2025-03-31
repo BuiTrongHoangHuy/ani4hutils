@@ -6,6 +6,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
+import site.ani4h.auth.auth.entity.Auth;
+import site.ani4h.auth.auth.entity.AuthRegister;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;

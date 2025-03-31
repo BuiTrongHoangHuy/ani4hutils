@@ -1,4 +1,4 @@
-package site.ani4h.auth.auth;
+package site.ani4h.auth.auth.entity;
 
 
 import jakarta.validation.constraints.Email;
@@ -20,7 +20,7 @@ public class AuthRegister {
     }
     private Uid id = null;
     public void setId( int id ) {
-        this.id = new Uid(id,0,Auth.type);
+        this.id = new Uid(id,0, Auth.type);
     }
     @NotBlank
     @NotNull

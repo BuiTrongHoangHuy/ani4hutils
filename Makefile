@@ -8,3 +8,5 @@ apply-dns:
 	@cd ./terraform/cloudflare && terraform apply
 proto:
 	@cd ./api/shared/src/main/java && buf generate
+tunnel:
+	./.tunnel.sh

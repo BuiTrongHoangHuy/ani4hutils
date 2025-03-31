@@ -1,4 +1,4 @@
-package site.ani4h.auth.auth;
+package site.ani4h.auth.auth.entity;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
