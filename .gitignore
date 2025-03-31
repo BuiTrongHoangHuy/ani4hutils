@@ -348,3 +348,4 @@ application-prod.properties
 
 
 crawscript/**/*.json
+private.key

@@ -33,7 +33,7 @@ public class AuthTokenFilter extends OncePerRequestFilter {
         try{
             String jwt = parseJwt(request);
             if(jwt != null && jwtUtils.validateJwtToken(jwt)){
-                String email = jwtUtils.getEmailFromJwtToken(jwt);
+                String email = jwtUtils.getClaim(jwt,"email");
                 // check access token
                 if(!jwtUtils.isAccessToken(jwt)){
                     throw new AuthenticationServiceException("Invalid token type");

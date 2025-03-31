@@ -23,6 +23,20 @@ CREATE TABLE `users`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+
+CREATE TABLE `user_permission` (
+    `id` int NOT NULL  AUTO_INCREMENT,
+    `user_id` int NOT NULL,
+    `role`          ENUM ('admin','user'),
+    `status`     INT                                DEFAULT 1,
+    `created_at` datetime                           DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` datetime                           DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    UNIQUE KEY `user_id` (`user_id`)  USING BTREE
+)ENGINE = InnoDB
+ DEFAULT CHARSET = utf8mb4
+ COLLATE = utf8mb4_unicode_ci;
+
 DROP TABLE IF EXISTS `auths`;
 CREATE TABLE `auths`
 (

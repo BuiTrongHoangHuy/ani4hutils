@@ -17,6 +17,7 @@ resource "aws_apigatewayv2_route" "user" {
   route_key = "ANY /user"
   target = "integrations/${aws_apigatewayv2_integration.auth.id}"
   authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["user","admin"]
   authorization_type = "JWT"
 }
 

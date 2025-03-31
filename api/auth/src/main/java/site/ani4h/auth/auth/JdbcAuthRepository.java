@@ -37,7 +37,7 @@ public class JdbcAuthRepository implements AuthRepository {
 
     @Override
     public Auth findByEmail(String email) {
-        String sql = "SELECT * FROM `auths` WHERE email = ?";
+        String sql = "SELECT a.*, p.role FROM `auths` a JOIN `user_permission` p ON a.user_id = p.user_id WHERE email = ?";
         try {
             return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Auth.class), email);
         } catch (EmptyResultDataAccessException e) {

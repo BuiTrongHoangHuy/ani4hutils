@@ -80,8 +80,8 @@ public class AuthService {
             throw new ErrorInvalidCredentials();
         }
 
-        String jwtAccessToken = jwtUtils.generateAccessToken(req.getEmail());
-        String jwtRefreshToken = jwtUtils.generateRefreshToken(req.getEmail());
+        String jwtAccessToken = jwtUtils.generateAccessToken(auth);
+        String jwtRefreshToken = jwtUtils.generateRefreshToken(auth);
 
         return LoginResponse.builder()
                 .email(req.getEmail())
@@ -99,8 +99,10 @@ public class AuthService {
             throw new ErrorBadRequest("Invalid refresh token");
         }
 
-        String email = jwtUtils.getEmailFromJwtToken(refreshToken);
-        String accessToken = jwtUtils.generateAccessToken(email);
+        String email = jwtUtils.getClaim(refreshToken,"email");
+        Auth auth = this.authRepository.findByEmail(email);
+
+        String accessToken = jwtUtils.generateAccessToken(auth);
 
         return RefreshTokenResponse.builder()
                 .email(email)
