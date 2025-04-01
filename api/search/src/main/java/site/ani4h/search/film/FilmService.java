@@ -1,5 +1,8 @@
 package site.ani4h.search.film;
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.core.search.Hit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
@@ -17,7 +20,6 @@ public class FilmService {
     private final FilmRepository filmRepository;
     private final FilmElasticsearchRepository filmElasticsearchRepository;
     private final ElasticsearchOperations elasticsearchOperations;
-
 
     @Autowired
     public FilmService(
@@ -54,7 +56,7 @@ public class FilmService {
     }
 
     // Search for films by title
-    public List<Film> getFilmsByTitle(String title) {
+    public List<Film> getFilmsByTitle(String title) throws Exception {
         NativeQuery searchQuery = new NativeQueryBuilder()
                 .withQuery(QueryBuilders.match(m->m.field("title").query(title).fuzziness("AUTO")))
                 .build();

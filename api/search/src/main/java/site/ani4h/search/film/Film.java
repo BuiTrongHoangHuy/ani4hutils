@@ -3,12 +3,10 @@ package site.ani4h.search.film;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 import site.ani4h.shared.common.Image;
-import site.ani4h.shared.common.Uid;
 
 import java.util.List;
 
@@ -33,6 +31,9 @@ public class Film {
 
     @Field(type = FieldType.Nested)
     private List<Image> images;
+
+    public Film() {
+    }
 
     public void mapFromFilmModel(FilmModel filmModel) {
         this.id = filmModel.getId().toString();

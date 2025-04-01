@@ -9,7 +9,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class }, scanBasePackages = {"site.ani4h.search", "site.ani4h.shared"})
-@EnableElasticsearchRepositories(basePackages = "site.ani4h.search.film")
 public class ApiApplication {
 
     public static void main(String[] args) { SpringApplication.run(ApiApplication.class, args); }

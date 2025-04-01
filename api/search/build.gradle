@@ -21,8 +21,6 @@ dependencies {
     apply from: rootProject.file('buildSrc/shared.gradle')
 
     implementation project(':shared')
-
-    implementation 'org.springframework.boot:spring-boot-starter-data-elasticsearch'
 }
 
 tasks.named('test') {
