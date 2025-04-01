@@ -11,6 +11,8 @@ import site.ani4h.shared.common.Uid;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
@@ -71,16 +73,13 @@ public class RequestExtractor implements HandlerInterceptor {
         }
         return privateKey;
     }
+    public static String SOURCE_R00T_PATH  = System.getProperty("user.dir");
     private static String getPrivateKeyPEM() throws IOException {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        String privateKeyPEM;
-        try (InputStream is = classLoader.getResourceAsStream("private.key")) {
-            if (is == null) {
-                throw new IllegalArgumentException("File private.key not found in resources");
-            }
-
-            privateKeyPEM = new String(is.readAllBytes());
+        String filePath = System.getenv().getOrDefault("PRIVATE_KEY_PATH", SOURCE_R00T_PATH+ "/config/private.key");
+        if (!Files.exists(Paths.get(filePath))) {
+            throw new IllegalArgumentException("File private.key not found at " + filePath);
         }
+        String privateKeyPEM = Files.readString(Paths.get(filePath));
 
         privateKeyPEM = privateKeyPEM
                 .replace("-----BEGIN PRIVATE KEY-----", "")
@@ -90,4 +89,5 @@ public class RequestExtractor implements HandlerInterceptor {
                 .replaceAll("\\s+", "");
         return privateKeyPEM;
     }
+
 }
