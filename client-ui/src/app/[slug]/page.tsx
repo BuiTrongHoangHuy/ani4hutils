@@ -10,9 +10,9 @@ export default async function Page({
     params: Promise<{ slug: string }>
 }) {
     const { slug } = await params
-    const data = await fetch(`http://localhost:4000/v1/film/${slug.split('-')[slug.split('-').length-1]}`)
+    const data = await fetch(`${url}/v1/film/${slug.split('-')[slug.split('-').length-1]}`)
     const film : film = (await data.json()).data
-    const filmData = await fetch(`http://localhost:4000/v1/film`)
+    const filmData = await fetch(`${url}/v1/film`)
     const films : FilmList[] = (await filmData.json()).data
     return (
         <div className={"w-screen mt-[64px] px-20 py-10 space-y-20 "}>

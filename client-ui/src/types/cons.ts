@@ -1,0 +1,1 @@
+export const url = "https://api.ani4h.site"

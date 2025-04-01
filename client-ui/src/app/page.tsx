@@ -1,10 +1,11 @@
 import Carousel from "@/app/carousel";
 import ListFilm from "@/components/ListFilm";
 import {FilmList} from "@/types/filmList";
+import {url} from "@/types/cons";
 
 
 export default async function Home() {
-    const data = await fetch("http://localhost:4000/v1/film?ageRatingId=gGzTFTGJB8Wj&limit=1")
+    const data = await fetch(`${url}/v1/film?ageRatingId=gGzTFTGJB8Wj&limit=1`)
     const films : FilmList[] = (await data.json()).data || []
     console.log(films)
     return (
