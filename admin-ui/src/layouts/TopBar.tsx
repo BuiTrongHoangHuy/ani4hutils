@@ -5,12 +5,6 @@ export default function TopBar(className: {className?: string }) {
                 <a href={"/"} className="btn btn-ghost text-xl">Ani4h</a>
             </div>
             <div className="flex-1">
-                <ul className={"flex space-x-4"}>
-                    <li><NavButton name={"Ranking"} href={"/"}/></li>
-                    <li><NavButton name={"Genres"} href={"/"}/></li>
-                    <li><NavButton name={"Library"} href={"/"}/></li>
-                    <li><NavButton name={"Schedules"} href={"/"}/></li>
-                </ul>
             </div>
 
             <label className="input">
@@ -44,18 +38,10 @@ export default function TopBar(className: {className?: string }) {
                         </li>
                         <li><a>Settings</a></li>
                         <li><a>Logout</a></li>
-                        <li><a>Logout</a></li>
                     </ul>
                 </div>
             </div>
-            <div className={"btn btn-outline btn-primary "}>Download</div>
         </div>
     )
 }
 
-
-function NavButton({name, href}: { name: string, href: string }) {
-    return <a className={"hover:text-primary"} href={href}>
-        {name}
-    </a>
-}
