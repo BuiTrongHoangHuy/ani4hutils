@@ -32,7 +32,8 @@ public class JwtUtils {
     @Value("${jwt.key-id}")
     private String keyId;
     private static PrivateKey privateKey = null;
-
+    public JwtUtils(){
+    }
     public boolean isAccessToken(String token) {
         return "access".equals(getTokenType(token));
     }
