@@ -6,12 +6,8 @@ export  interface Authenticate {
 }
 
 export interface AuthenticationResponseData {
-    accessToken: {
-        token: string;
-    };
-    refreshToken: {
-        token: string;
-    };
+    accessToken: string
+    refreshToken: string
 }
 
 interface AuthenticationResponse {

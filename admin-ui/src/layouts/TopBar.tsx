@@ -1,4 +1,7 @@
+import {useNavigate} from "react-router-dom";
+
 export default function TopBar(className: {className?: string }) {
+    const navigate = useNavigate();
     return (
         <div className={`navbar bg-base-red shadow-sm ${className} space-x-4`}>
             <div className="flex-none">
@@ -37,7 +40,12 @@ export default function TopBar(className: {className?: string }) {
                             </a>
                         </li>
                         <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
+                        <li><a onClick={e => {
+                            e.preventDefault()
+                            localStorage.removeItem("token")
+                            localStorage.removeItem("refeshToken")
+                            navigate('/login')
+                        }}>Logout</a></li>
                     </ul>
                 </div>
             </div>

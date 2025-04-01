@@ -14,7 +14,9 @@ export default function Login() {
                     {email : email!,password: password!}
                 ).then(
                     r => {
-                        localStorage.setItem("token",r.data.accessToken.token)
+                        console.log(r)
+                        localStorage.setItem("token",r.data.accessToken)
+                        localStorage.setItem("refreshToken",r.data.refreshToken)
                         toast.success("Login success")
                         navigate("/");
                     }
