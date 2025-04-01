@@ -28,7 +28,8 @@ resource "aws_apigatewayv2_api" "rest_gateway" {
   protocol_type = "HTTP"
   cors_configuration {
     allow_headers = ["*"]
-    allow_origins = ["*",]
+    allow_origins = ["*"]
+    allow_methods = ["*"]
   }
 }
 
