@@ -122,25 +122,3 @@
     padding: 5px;
     cursor: pointer;
 }
-
-.seek-bar {
-    flex-grow: 1;
-    cursor: pointer;
-}
-
-.seek-bar::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    width: 12px;
-    height: 12px;
-    background: white;
-    border-radius: 50%;
-    cursor: pointer;
-}
-
-.seek-bar::-moz-range-thumb {
-    width: 12px;
-    height: 12px;
-    background: white;
-    border-radius: 50%;
-    cursor: pointer;
-}

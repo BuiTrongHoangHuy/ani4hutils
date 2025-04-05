@@ -21,7 +21,6 @@ export default function Player() {
         }
         setDuration(player.current.getDuration());
     };
-
     const onChangeBitrate = (e: ChangeEvent<HTMLSelectElement>) => {
         const selectedLevel = e.target.value;
         const hls = player.current?.getInternalPlayer("hls");
@@ -68,10 +67,9 @@ export default function Player() {
                 onReady={handleReady}
                 onProgress={handleProgress}
                 width="100%"
-
                 height="100%"
             />
-            <div className="absolute h-8  flex items-center space-x-2 justify-between w-full bg-base-100 opacity-50">
+            <div className="absolute h-8 p-2 -mt-8 flex items-center space-x-2 justify-between w-full bg-base-100 opacity-50">
                 <button onClick={togglePlay}>{playing ? <PauseIcon/> : <PlayIcon/>}</button>
                 <input type="range" min="0" step={"any"} max="1" onChange={handleSeek} value={progress}
                        className="range w-full range-xs range-primary"/> <select
