@@ -1,8 +1,8 @@
-name: master-lambda-ci
+name: worker-lambda-ci
 on:
   push:
     branches:
-      - deploy/ffmpeg-master-lambda
+      - deploy/ffmpeg-worker-lambda
 jobs:
   build:
     name: Build &  Deploy
