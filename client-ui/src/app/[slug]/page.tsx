@@ -17,7 +17,6 @@ export default async function Page({
     const films : FilmList[] = (await filmsData.json()).data
     return (
         <div className={"w-screen mt-[64px] px-20 py-10 space-y-20 "}>
-
             <div className={"flex justify-between"}>
                 <div
                     className="w-[400px] h-[500px] space-y-3 relative">
@@ -50,10 +49,10 @@ export default async function Page({
                     <p className={"font-bold"}>{filmData?.synopsis}</p>
                     <p>Views: {filmData.view || 0}</p>
                     <div className={"flex w-full justify-end space-x-5"}>
-                        <div className={"btn btn-primary text-2xl px-8 py-6"}>
-                            <Image src={`/images/icons/img.png`} alt={""} width="16" height="16"/>
+                        <Link href={`${slug}/episode-1`} className={"btn btn-primary text-2xl px-8 py-6"}>
+                            <Image src={`/images/icons/play.png`} alt={""} width="16" height="16"/>
                             Transmit
-                        </div>
+                        </Link>
                         <div className={"btn bg-gray-500 hover:gray-300 text-2xl px-8 py-6"}>
                             <Image src={`/images/icons/plus.svg`} alt={""} width="24" height="24"/>
                             Save
