@@ -28,7 +28,6 @@ func GenerateMasterM3U8(maxRes int) string {
 			codec = "avc1.42c01f"
 		}
 
-		// Tính Average Bandwidth (bps)
 		avgBandwidth := (info.VBitRate + info.ABitRate) * 1000
 
 		lines = append(lines, fmt.Sprintf(
