@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -117,8 +118,13 @@ func handleRequest(ctx context.Context, event events.S3Event) (string, error) {
 		if err = file.Close(); err != nil {
 			return "", err
 		}
+
+		maxRes := 0
 		for k, v := range common.ResolutionMap {
 			if probeData.Streams[0].Height >= k {
+				if k > maxRes {
+					maxRes = k
+				}
 				_ = ldClient.Invoke(ctx, "test-worker", common.Event{
 					BucketName: record.S3.Bucket.Name,
 					ObjectKey:  record.S3.Object.Key,
@@ -127,6 +133,17 @@ func handleRequest(ctx context.Context, event events.S3Event) (string, error) {
 				}, true)
 
 			}
+		}
+		outputBucket := "ani4h-film-storage"
+		m3u8 := common.GenerateMasterM3U8(maxRes)
+		body := bytes.NewReader([]byte(m3u8))
+		_, err = s3Client.PutObject(ctx, &s3.PutObjectInput{
+			Bucket: aws.String(outputBucket),
+			Key:    aws.String(objectKey + "/" + "master.m3u8"),
+			Body:   body,
+		})
+		if err != nil {
+			return "", err
 		}
 		return res, nil
 	}

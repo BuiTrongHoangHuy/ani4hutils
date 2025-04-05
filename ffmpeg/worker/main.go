@@ -63,6 +63,12 @@ func handleRequest(ctx context.Context, event common.Event) error {
 		return fmt.Errorf("failed to create output dir: %w", err)
 	}
 
+	// Giả sử event.Height là chiều cao độ phân giải cần sử dụng
+	eventHeight := event.Height
+
+	// Lấy thông tin từ ResolutionMap
+	resolutionInfo := common.ResolutionMap[eventHeight]
+
 	args := []string{
 		"-i", tmpInputFile,
 		"-crf", "32",
@@ -70,20 +76,24 @@ func handleRequest(ctx context.Context, event common.Event) error {
 		"-threads", "0",
 		"-x264-params", "scenecut=0",
 		"-map", "0:v:0", "-map", "0:a:0",
-		"-filter:v:0", "scale=-2:360", "-b:v:0", "800k", "-maxrate:v:0", "900k", "-bufsize:v:0", "1200k",
+		"-filter:v:0", fmt.Sprintf("scale=-2:%d", resolutionInfo.Height),
+		"-b:v:0", fmt.Sprintf("%dk", resolutionInfo.VBitRate),
+		"-maxrate:v:0", fmt.Sprintf("%dk", resolutionInfo.VBitRate+100),
+		"-bufsize:v:0", fmt.Sprintf("%dk", resolutionInfo.VBitRate+200),
 		"-c:v", "libx264",
 		"-c:a", "aac",
 		"-ar", "48000",
-		"-b:a", "128k",
+		"-b:a", fmt.Sprintf("%dk", resolutionInfo.ABitRate),
 		"-hls_time", "10",
 		"-hls_list_size", "0",
 		"-f", "hls",
 		"-master_pl_name", "master.m3u8",
 		"-hls_segment_filename", tmpOutputDir + "/%v_%03d.m4s",
 		"-hls_segment_type", "fmp4",
-		"-var_stream_map", "v:0,a:0,name:360p",
+		"-var_stream_map", fmt.Sprintf("v:0,a:0,name:%dp", resolutionInfo.Height),
 		tmpOutputDir + "/index-%v.m3u8",
 	}
+
 	cmd := exec.CommandContext(ctx, "ffmpeg", args...)
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
@@ -98,6 +108,9 @@ func handleRequest(ctx context.Context, event common.Event) error {
 		return fmt.Errorf("failed to read output dir: %w", err)
 	}
 	for _, f := range files {
+		if f.Name() == "master.m3u8" {
+			continue
+		}
 		filePath := fmt.Sprintf("%s/%s", tmpOutputDir, f.Name())
 		fileData, err := os.ReadFile(filePath)
 		if err != nil {
@@ -105,7 +118,7 @@ func handleRequest(ctx context.Context, event common.Event) error {
 		}
 		_, err = s3Client.PutObject(ctx, &s3.PutObjectInput{
 			Bucket: aws.String(outputBucket),
-			Key:    aws.String(event.ObjectKey + fmt.Sprintf("%dx%d", event.Width, event.Height) + "/" + f.Name()),
+			Key:    aws.String(event.ObjectKey + "/" + f.Name()),
 			Body:   bytes.NewReader(fileData),
 		})
 		if err != nil {
