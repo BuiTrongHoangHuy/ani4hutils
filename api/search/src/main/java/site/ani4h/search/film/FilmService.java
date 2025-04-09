@@ -1,8 +1,6 @@
 package site.ani4h.search.film;
-import co.elastic.clients.elasticsearch.ElasticsearchClient;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
-import co.elastic.clients.elasticsearch.core.SearchResponse;
-import co.elastic.clients.elasticsearch.core.search.Hit;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
@@ -15,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Service
 public class FilmService {
     private final FilmRepository filmRepository;
@@ -42,6 +41,8 @@ public class FilmService {
         if(films.isEmpty()) {
             return;
         }
+
+        log.info("Syncing " + films.size() + " films...");
 
         // Convert FilmModel to Film
         List<Film> filmList = films.stream()

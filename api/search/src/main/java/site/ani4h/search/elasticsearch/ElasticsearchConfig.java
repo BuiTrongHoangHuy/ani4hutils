@@ -6,7 +6,6 @@ import co.elastic.clients.transport.ElasticsearchTransport;
 import co.elastic.clients.transport.rest_client.RestClientTransport;
 import co.elastic.clients.util.ContentType;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.Header;
 import org.apache.http.HttpHost;
 import org.apache.http.HttpResponseInterceptor;
 import org.apache.http.message.BasicHeader;
@@ -14,8 +13,6 @@ import org.apache.http.ssl.SSLContextBuilder;
 import org.elasticsearch.client.RestClient;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.elasticsearch.client.ClientConfiguration;
-import org.springframework.data.elasticsearch.client.elc.ElasticsearchConfiguration;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
 import org.springframework.http.HttpHeaders;
 
@@ -30,31 +27,6 @@ import java.util.List;
 @EnableElasticsearchRepositories(basePackages = "site.ani4h.search.film")
 public class ElasticsearchConfig  {
 
-//    @Override
-//    public ClientConfiguration clientConfiguration() {
-//        SSLContext sslContext;
-//        try {
-//            sslContext = SSLContextBuilder
-//                    .create()
-//                    .loadTrustMaterial(null, (certificate, authType) -> true) // Bỏ qua xác thực chứng chỉ
-//                    .build();
-//        } catch (Exception e) {
-//            throw new RuntimeException("Failed to create SSL context", e);
-//        }
-//
-//        // Tắt hostname verification
-//        HostnameVerifier hostnameVerifier = (hostname, session) -> true;
-//
-//        HttpHeaders headers = new HttpHeaders();
-//        headers.add("Content-Type", "application/json");
-//
-//        return ClientConfiguration.builder()
-//                .connectedTo("localhost:9200") // Dùng localhost
-//                .usingSsl(sslContext, hostnameVerifier) // Bỏ qua kiểm tra hostname
-//                .withDefaultHeaders(headers)
-//                .build();
-//    }
-//
     private SSLContext sslContext() {
         try {
             return SSLContextBuilder.create()
