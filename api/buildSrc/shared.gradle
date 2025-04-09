@@ -55,6 +55,12 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
     implementation 'com.google.guava:guava:33.3.1-jre'
     implementation 'io.aergo:heraj-transport:1.4.2'
+    // Logback
+    implementation 'net.logstash.logback:logstash-logback-encoder:7.3'
+    // elasticsearch
+    implementation 'co.elastic.clients:elasticsearch-java:7.17.28'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.17.0'
+    implementation 'org.elasticsearch.client:elasticsearch-rest-client:7.17.28'
 }
 
 

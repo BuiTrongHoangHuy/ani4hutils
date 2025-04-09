@@ -21,6 +21,7 @@ import java.util.Map;
 @JsonSerialize
 @JsonDeserialize
 public class Image implements Serializable {
+    public Image(){}
     @JsonCreator
     public Image(
             @JsonProperty("id") String id,
