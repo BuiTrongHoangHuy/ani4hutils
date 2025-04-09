@@ -38,9 +38,16 @@ export default function Player() {
     };
 
     const handleProgress = (state:  OnProgressProps) => {
+        const hls = player.current?.getInternalPlayer("hls");
+        const currentLevel = hls?.currentLevel;
+
+        console.log("Resolution:", hls?.levels[currentLevel].height + "p");
+        console.log("Bitrate:", hls?.levels[currentLevel].bitrate / 1000 + " kbps");
+        console.log("loaded", state.loadedSeconds)
+        console.log("played", state.playedSeconds)
         setProgress(state.played);
         setPlayedTime(state.playedSeconds)
-        console.log(state.played)
+        //console.log(state.played)
     };
     const toggleFullscreen = () => {
         if (!isFullscreen) {
@@ -76,6 +83,12 @@ export default function Player() {
                 config={{
                     file: {
                         forceHLS: true,
+                        hlsOptions:{
+                            maxBufferLength:30,
+                            maxMaxBufferLength: 60,
+                            liveSyncDuration: 15,
+                            lowLatencyMode:true,
+                        }
                     },
                 }}
                 onDuration={handleDuration}
