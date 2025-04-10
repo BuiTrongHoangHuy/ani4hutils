@@ -39,7 +39,8 @@ export default function TopBar(className: { className?: string }) {
                     toast.error("Invalid credentials")
                 } else {
                     toast.success("Login success")
-                    setIsLogin(true)
+                    setIsLogin(true);
+                    (document.getElementById('login_modal') as HTMLDialogElement)?.close();
                 }
             }
         )
