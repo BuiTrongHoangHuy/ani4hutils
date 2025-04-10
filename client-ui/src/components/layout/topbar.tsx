@@ -73,8 +73,11 @@ export default function TopBar(className: { className?: string }) {
                     <div className={"flex justify-center space-x-10"}>
                         <Image className={"cursor-pointer"} src={"/images/icons/facebook-logo.svg"}
                                alt={"login with facebook"} width={40} height={40}></Image>
+                        <Link href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=935540841053-b9ncdcaq9dr8aeh9fd5q6ku5n729n399&redirect_uri=http%3A//localhost%3A3000/oauth&response_type=token&scope=https://www.googleapis.com/auth/userinfo.profile`}>
+
                         <Image className={"cursor-pointer "} src={"/images/icons/google-logo.svg"}
                                alt={"login with goole"} width={40} height={40}></Image>
+                        </Link>
                     </div>
                 </div>
             </dialog>
@@ -101,8 +104,10 @@ export default function TopBar(className: { className?: string }) {
                     <div className={"flex justify-center space-x-10"}>
                         <Image className={"cursor-pointer"} src={"/images/icons/facebook-logo.svg"}
                                alt={"login with facebook"} width={40} height={40}></Image>
-                        <Image className={"cursor-pointer"} src={"/images/icons/google-logo.svg"}
-                               alt={"login with goole"} width={40} height={40}></Image>
+                        <Link href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=935540841053-b9ncdcaq9dr8aeh9fd5q6ku5n729n399&redirect_uri=http%3A//localhost%3A3000/oauth&response_type=token}`}>
+                            <Image className={"cursor-pointer"} src={"/images/icons/google-logo.svg"}
+                                   alt={"login with goole"} width={40} height={40}></Image>
+                        </Link>
                     </div>
                 </div>
             </dialog>
