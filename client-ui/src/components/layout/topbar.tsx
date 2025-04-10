@@ -72,7 +72,7 @@ export default function TopBar(className: { className?: string }) {
                     <div className={"flex justify-center space-x-10"}>
                         <Image className={"cursor-pointer"} src={"/images/icons/facebook-logo.svg"}
                                alt={"login with facebook"} width={40} height={40}></Image>
-                        <Image className={"cursor-pointer"} src={"/images/icons/google-logo.svg"}
+                        <Image className={"cursor-pointer "} src={"/images/icons/google-logo.svg"}
                                alt={"login with goole"} width={40} height={40}></Image>
                     </div>
                 </div>
@@ -150,7 +150,7 @@ export default function TopBar(className: { className?: string }) {
                                         </a>
                                     </li>
                                     <li><a>Settings</a></li>
-                                    <li ><a onClick={onLogout} >Logout</a></li>
+                                    <li><a onClick={onLogout}>Logout</a></li>
                                 </ul>
                             </div>
                         </div> :
@@ -159,7 +159,7 @@ export default function TopBar(className: { className?: string }) {
                                  onClick={() => (document.getElementById('login_modal') as HTMLDialogElement)?.showModal()}>Login
                             </div>
                             <div className={"btn btn-outline btn-primary "}
-                                 onClick={() =>( document.getElementById('sign_up_modal')  as HTMLDialogElement)?.showModal()}>Signup
+                                 onClick={() => (document.getElementById('sign_up_modal') as HTMLDialogElement)?.showModal()}>Signup
                             </div>
                         </div>
                 }
