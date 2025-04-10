@@ -8,9 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import site.ani4h.auth.auth.entity.LoginRequest;
-import site.ani4h.auth.auth.entity.RefreshTokenRequest;
-import site.ani4h.auth.auth.entity.RegisterRequest;
+import site.ani4h.auth.auth.entity.*;
 import site.ani4h.shared.common.ApiResponse;
 import site.ani4h.shared.common.Requester;
 
@@ -28,6 +26,14 @@ public class AuthController {
             HttpServletRequest request,
             @RequestBody LoginRequest login) {
         var res = authService.Login(login);
+        return ResponseEntity.ok(ApiResponse.success(res));
+    }
+    @PostMapping("/google-oauth")
+    public ResponseEntity<?> google(
+            @RequestBody GoogleOauthRequest oauthRequest) {
+
+        var res = LoginResponse.builder().accessToken(oauthRequest.getToken()).build();
+
         return ResponseEntity.ok(ApiResponse.success(res));
     }
 

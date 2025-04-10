@@ -1,5 +1,8 @@
 'use client'
 import {useEffect, useState} from "react";
+import {FullScreenLoading} from "@/components/FullScreenLoading";
+import {useRouter} from "next/navigation";
+import {toast} from "react-toastify";
 
 export default  function Page() {
     const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -14,15 +17,28 @@ export default  function Page() {
             }
         }
     }, []);
-
+    const router = useRouter()
+    useEffect(() => {
+        fetch("api/oauth/google", {
+            method: "POST",
+            body : JSON.stringify({
+                token: accessToken
+            })
+        }).then(r => {
+            if (r.status == 200) {
+                router.push("/")
+            }
+        }).catch(
+            e => {
+                console.error(e)
+            }
+        )
+    }, [accessToken, router]);
     return (
         <div>
-            <h1>OAuth Redirect</h1>
-            {accessToken ? (
-                <p>Access Token: {accessToken}</p>
-            ) : (
-                <p>Đang xử lý token...</p>
-            )}
+            <FullScreenLoading isLoading={true}/>
+            <div className={"h-screen w-screen"}>
+            </div>
         </div>
     );
 }
