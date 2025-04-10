@@ -1,4 +1,4 @@
-import PlayerWrapper from "@/app/[slug]/[id]/PlayerWrapper";
+import PlayerWrapper from "@/app/film/[slug]/[id]/PlayerWrapper";
 
 export default async function  Page({
                                   params,

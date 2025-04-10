@@ -49,7 +49,7 @@ export default async function Page({
                     <p className={"font-bold"}>{filmData?.synopsis}</p>
                     <p>Views: {filmData.view || 0}</p>
                     <div className={"flex w-full justify-end space-x-5"}>
-                        <Link href={`${slug}/episode-1`} className={"btn btn-primary text-2xl px-8 py-6"}>
+                        <Link href={`/film/${slug}/episode-1`} className={"btn btn-primary text-2xl px-8 py-6"}>
                             <Image src={`/images/icons/play.png`} alt={""} width="16" height="16"/>
                             Transmit
                         </Link>

@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function FilmListCard({film} : {film: FilmList}) {
     return (
-        <Link href={`/${slug(film)}`}>
+        <Link href={`/film/${slug(film)}`}>
             <div className={"cursor-pointer hover:scale-110 transition-transform duration-300 "}>
                 <div
                     className="w-64 h-80 space-y-3 relative">
