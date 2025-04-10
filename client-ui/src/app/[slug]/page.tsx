@@ -23,8 +23,8 @@ export default async function Page({
                     <Image
                         className="rounded-md object-fill"
                         fill={true}
-                        src={filmData.images?.[0]?.url || "https://placehold.co/300x400/png?text=ani4h.site"}
-                        alt={filmData.title}
+                        src={filmData?.images?.[0]?.url || "https://placehold.co/300x400/png?text=ani4h.site"}
+                        alt={filmData?.title}
                     />
                 </div>
                 <div className={"space-y-4  w-2/3 font-bold"}>
