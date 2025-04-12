@@ -13,9 +13,6 @@ import java.time.LocalDateTime;
 @Setter
 public class Genre
 {
-    public void setId(int id) {
-        this.id = new Uid(id,0,type);
-    }
     private Uid id;
     private String name;
     private String description;
@@ -24,4 +21,8 @@ public class Genre
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     public final static int type  = 2;
+    public void setId(int id) {
+        this.id = new Uid(id,0,type);
+    }
+
 }

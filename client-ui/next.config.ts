@@ -11,6 +11,16 @@ const nextConfig: NextConfig = {
                 pathname: '/images/**',
                 search: '',
             },
+            {
+                protocol: "https",
+                hostname: "placehold.co",
+                pathname: '/**'
+            },
+            {
+                protocol: "https",
+                hostname: "img.daisyui.com",
+                pathname: '/**'
+            }
         ],
     },
 };

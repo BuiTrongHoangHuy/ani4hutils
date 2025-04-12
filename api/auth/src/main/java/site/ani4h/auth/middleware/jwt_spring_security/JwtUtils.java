@@ -3,13 +3,13 @@ package site.ani4h.auth.middleware.jwt_spring_security;
 import io.jsonwebtoken.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import site.ani4h.auth.auth.entity.Auth;
 
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -20,9 +20,6 @@ import java.util.Date;
 @Component
 public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
-
-    @Value("${jwt.secret}")
-    private String jwtSecret;
 
     @Value("${jwt.access-token-expiration-ms}")
     private int accessTokenExpirationMs;
@@ -35,7 +32,8 @@ public class JwtUtils {
     @Value("${jwt.key-id}")
     private String keyId;
     private static PrivateKey privateKey = null;
-
+    public JwtUtils(){
+    }
     public boolean isAccessToken(String token) {
         return "access".equals(getTokenType(token));
     }
@@ -119,16 +117,14 @@ public class JwtUtils {
         }
         return privateKey;
     }
+    public static String SOURCE_R00T_PATH  = System.getProperty("user.dir");
     private static String getPrivateKeyPEM() throws IOException {
-        ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
-        String privateKeyPEM;
-        try (InputStream is = classLoader.getResourceAsStream("private.key")) {
-            if (is == null) {
-                throw new IllegalArgumentException("File private.key not found in resources");
-            }
-
-            privateKeyPEM = new String(is.readAllBytes());
+        String filePath = System.getenv().getOrDefault("PRIVATE_KEY_PATH", SOURCE_R00T_PATH+ "/config/private.key");
+        if (!Files.exists(Paths.get(filePath))) {
+            throw new IllegalArgumentException("File private.key not found at " + filePath);
         }
+
+        String privateKeyPEM = Files.readString(Paths.get(filePath));
 
         privateKeyPEM = privateKeyPEM
                 .replace("-----BEGIN PRIVATE KEY-----", "")

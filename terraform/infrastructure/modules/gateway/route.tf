@@ -1,13 +1,13 @@
 // auth
 resource "aws_apigatewayv2_route" "auth" {
   api_id    = aws_apigatewayv2_api.rest_gateway.id
-  route_key = "ANY /auth"
+  route_key = "POST /auth"
   target = "integrations/${aws_apigatewayv2_integration.auth.id}"
 }
 
 resource "aws_apigatewayv2_route" "auth_p" {
   api_id    = aws_apigatewayv2_api.rest_gateway.id
-  route_key = "ANY /auth/{proxy+}"
+  route_key = "POST /auth/{proxy+}"
   target = "integrations/${aws_apigatewayv2_integration.auth.id}"
 }
 

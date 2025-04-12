@@ -4,6 +4,7 @@ import io.grpc.stub.StreamObserver;
 import lombok.AllArgsConstructor;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 import org.springframework.stereotype.Component;
+import site.ani4h.film.film.entity.Film;
 import site.ani4h.film.film.entity.FilmFilter;
 import site.ani4h.film.film.entity.FilmList;
 import site.ani4h.shared.common.Paging;
@@ -26,6 +27,11 @@ public class FilmServiceImpl implements FilmService {
         var a = userStub.getUserById(UserOuterClass.GetUsersByIdReq.newBuilder().build());
 
         return filmRepository.getFilms(paging, filter);
+    }
+
+    @Override
+    public Film getFilmById(int id) {
+        return filmRepository.getFilmById(id);
     }
 
 }

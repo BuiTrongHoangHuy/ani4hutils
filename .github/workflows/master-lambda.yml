@@ -60,4 +60,4 @@ jobs:
         env:
           ECR_REGISTRY: ${{ needs.build.outputs.registry }}
           ECR_REPOSITORY: ani4h-lambda-master
-        run: aws lambda update-function-code --function-name $ECR_REPOSITORY --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:latest
+        run: aws lambda update-function-code --function-name test-master --image-uri $ECR_REGISTRY/$ECR_REPOSITORY:latest

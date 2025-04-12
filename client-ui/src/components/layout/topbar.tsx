@@ -1,83 +1,177 @@
+'use client'
 import Link from "next/link";
-
-export default function TopBar(className: {className?: string }) {
+import Image from "next/image";
+import React, { FormEvent, useEffect, useState} from "react";
+import {toast, ToastContainer} from "react-toastify";
+export default function TopBar(className: { className?: string }) {
+    const [isLogin, setIsLogin] = useState<boolean>(false)
+    useEffect(() => {
+        fetch("/api/me", {
+            method: "GET"
+        }).then(r => {
+            if (r.status == 200) {
+                setIsLogin(true)
+            }
+        })
+    }, [])
+    const onLogout = async (e: React.MouseEvent<HTMLAnchorElement> ) => {
+        e.preventDefault();
+        fetch("/api/logout").then(
+            () =>{
+                setIsLogin(false)
+            }
+        )
+    }
+    const onLogin = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const formData = new FormData(e.currentTarget);
+        fetch("/api/login", {
+            method: "POST",
+            body: JSON.stringify({
+                email: formData.get("email"),
+                password: formData.get("password"),
+            }),
+        }).then(
+            r => {
+                if (r.status >= 500) {
+                    toast.error("Error")
+                } else if (r.status >= 400) {
+                    toast.error("Invalid credentials")
+                } else {
+                    toast.success("Login success")
+                    setIsLogin(true);
+                    (document.getElementById('login_modal') as HTMLDialogElement)?.close();
+                }
+            }
+        )
+    }
     return (
-        <div className={`navbar bg-base-red shadow-sm ${className}`}>
-            <div className="flex-none">
-                <a className="btn btn-ghost text-xl">Ani4h</a>
-            </div>
-            <div className="flex-1">
-                <ul className={"flex space-x-4"}>
-                    <li><NavButton name={"Trang chủ"} href={"/"}/></li>
-                    <li><NavButton name={"Dạng anime"} href={"/"}/></li>
-                    <li><NavButton name={"Top anime"} href={"/"}/></li>
-                    <li><NavButton name={"Thể loại"} href={"/"}/></li>
-                    <li><NavButton name={"Thư viện"} href={"/"}/></li>
-                    <li><NavButton name={"Lịch Chiếu"} href={"/"}/></li>
-                </ul>
-            </div>
-
-            <label className="input">
-                <input type="search" required placeholder="Search"/>
-                <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                    <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none" stroke="currentColor">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <path d="m21 21-4.3-4.3"></path>
-                    </g>
-                </svg>
-            </label>
-            <details className="dropdown">
-                <summary className="btn m-1">Vi</summary>
-                <ul className="menu dropdown-content bg-base-100 rounded-box z-1 w-52 p-2 shadow-sm">
-                    <li><a>Vi</a></li>
-                    <li><a>En</a></li>
-                </ul>
-            </details>
-
-            <div className="flex">
-
-                <label className="swap swap-rotate ">
-                    <input type="checkbox" className="theme-controller " value="light"/>
-                    <svg
-                        className="swap-on h-10 w-10 fill-current"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M5.64,17l-.71.71a1,1,0,0,0,0,1.41,1,1,0,0,0,1.41,0l.71-.71A1,1,0,0,0,5.64,17ZM5,12a1,1,0,0,0-1-1H3a1,1,0,0,0,0,2H4A1,1,0,0,0,5,12Zm7-7a1,1,0,0,0,1-1V3a1,1,0,0,0-2,0V4A1,1,0,0,0,12,5ZM5.64,7.05a1,1,0,0,0,.7.29,1,1,0,0,0,.71-.29,1,1,0,0,0,0-1.41l-.71-.71A1,1,0,0,0,4.93,6.34Zm12,.29a1,1,0,0,0,.7-.29l.71-.71a1,1,0,1,0-1.41-1.41L17,5.64a1,1,0,0,0,0,1.41A1,1,0,0,0,17.66,7.34ZM21,11H20a1,1,0,0,0,0,2h1a1,1,0,0,0,0-2Zm-9,8a1,1,0,0,0-1,1v1a1,1,0,0,0,2,0V20A1,1,0,0,0,12,19ZM18.36,17A1,1,0,0,0,17,18.36l.71.71a1,1,0,0,0,1.41,0,1,1,0,0,0,0-1.41ZM12,6.5A5.5,5.5,0,1,0,17.5,12,5.51,5.51,0,0,0,12,6.5Zm0,9A3.5,3.5,0,1,1,15.5,12,3.5,3.5,0,0,1,12,15.5Z"/>
-                    </svg>
-                    <svg
-                        className="swap-off h-10 w-10 fill-current"
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 24 24">
-                        <path
-                            d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.25-2A1,1,0,0,0,8,2.36,10.14,10.14,0,1,0,22,14.05,1,1,0,0,0,21.64,13Zm-9.5,6.69A8.14,8.14,0,0,1,7.08,5.22v.27A10.15,10.15,0,0,0,17.22,15.63a9.79,9.79,0,0,0,2.1-.22A8.11,8.11,0,0,1,12.14,19.73Z"/>
-                    </svg>
-                </label>
-                <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
-                        <div className="w-10 rounded-full">
-                            <img
-                                alt="Tailwind CSS Navbar component"
-                                src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"/>
+        <>
+            <ToastContainer/>
+            {/*Login Modal*/}
+            <dialog id="login_modal" className="modal">
+                <div className="modal-box rounded-md p-10 space-y-4">
+                    <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+                    <form action="/api/login" method={"POST"} onSubmit={onLogin}>
+                        <div className={"space-y-4"}>
+                            <input name={"email"} type="email" className={"input w-full rounded-md"}
+                                   placeholder={"Enter your email"}/>
+                            <input name={"password"} type="password" className={"input w-full rounded-md"}
+                                   placeholder={"Enter your password"}/>
+                            <button type={"submit"} className={"btn btn-primary w-full rounded-md"}>Login</button>
                         </div>
+                    </form>
+                    <p className={"text-center"}>Do you have an account?
+                        <span onClick={() => {
+                            (document.getElementById('login_modal') as HTMLDialogElement)?.close();
+                            (document.getElementById('sign_up_modal') as HTMLDialogElement)?.showModal()
+                        }} className={"text-primary cursor-pointer"}> Register now</span>
+                    </p>
+                    <div className="divider opacity-50">or log in by</div>
+                    <div className={"flex justify-center space-x-10"}>
+                        <Image className={"cursor-pointer"} src={"/images/icons/facebook-logo.svg"}
+                               alt={"login with facebook"} width={40} height={40}></Image>
+                        <Link href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=935540841053-b9ncdcaq9dr8aeh9fd5q6ku5n729n399&redirect_uri=http%3A//localhost%3A3000/oauth&response_type=token&scope=https://www.googleapis.com/auth/userinfo.profile`}>
+
+                        <Image className={"cursor-pointer "} src={"/images/icons/google-logo.svg"}
+                               alt={"login with goole"} width={40} height={40}></Image>
+                        </Link>
                     </div>
-                    <ul
-                        tabIndex={0}
-                        className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-                        <li>
-                            <a className="justify-between">
-                                Profile
-                                <span className="badge">New</span>
-                            </a>
-                        </li>
-                        <li><a>Settings</a></li>
-                        <li><a>Logout</a></li>
-                        <li><a>Logout</a></li>
+                </div>
+            </dialog>
+            {/*Sign up modal*/}
+            <dialog id="sign_up_modal" className="modal">
+                <div className="modal-box rounded-md p-10 space-y-4">
+                    <form method="dialog">
+                        <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                    </form>
+                    <form action="/api/sign-up" method={"POST"}>
+                        <div className={"space-y-4"}>
+                            <input type="email" className={"input w-full rounded-md"} placeholder={"Enter your email"}/>
+                            <button type={"submit"} className={"btn btn-primary w-full rounded-md"}>Send code</button>
+                        </div>
+                    </form>
+                    <p onClick={() => {
+                        (document.getElementById('sign_up_modal') as HTMLDialogElement)?.close();
+                        (document.getElementById('login_modal') as HTMLDialogElement)?.showModal();
+                    }
+                    }
+                       className={"text-center text-primary cursor-pointer"}>Already have an account?
+                    </p>
+                    <div className="divider opacity-50">or sign up with</div>
+                    <div className={"flex justify-center space-x-10"}>
+                        <Image className={"cursor-pointer"} src={"/images/icons/facebook-logo.svg"}
+                               alt={"login with facebook"} width={40} height={40}></Image>
+                        <Link href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=935540841053-b9ncdcaq9dr8aeh9fd5q6ku5n729n399&redirect_uri=http%3A//localhost%3A3000/oauth&response_type=token}`}>
+                            <Image className={"cursor-pointer"} src={"/images/icons/google-logo.svg"}
+                                   alt={"login with goole"} width={40} height={40}></Image>
+                        </Link>
+                    </div>
+                </div>
+            </dialog>
+
+            <div className={`navbar bg-base-red shadow-sm ${className} space-x-4`}>
+                <div className="flex-none">
+                    <Link href={"/"} className="btn btn-ghost text-xl">Ani4h</Link>
+                </div>
+                <div className="flex-1">
+                    <ul className={"flex space-x-4"}>
+                        <li><NavButton name={"Ranking"} href={"/"}/></li>
+                        <li><NavButton name={"Genres"} href={"/"}/></li>
+                        <li><NavButton name={"Library"} href={"/"}/></li>
+                        <li><NavButton name={"Schedules"} href={"/"}/></li>
                     </ul>
                 </div>
+                <label className="input">
+                    <input type="search" required placeholder="Search"/>
+                    <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                        <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none"
+                           stroke="currentColor">
+                            <circle cx="11" cy="11" r="8"></circle>
+                            <path d="m21 21-4.3-4.3"></path>
+                        </g>
+                    </svg>
+                </label>
+                {/*profile avatar*/}
+                {
+                    isLogin ?
+                        <div className="flex">
+                            <div className="dropdown dropdown-end">
+                                <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+                                    <div className="w-10 rounded-full">
+                                        <img
+                                            alt="Tailwind CSS Navbar component"
+                                            src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"/>
+                                    </div>
+                                </div>
+                                <ul
+                                    tabIndex={0}
+                                    className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
+                                    <li>
+                                        <a className="justify-between">
+                                            Profile
+                                            <span className="badge">New</span>
+                                        </a>
+                                    </li>
+                                    <li><a>Settings</a></li>
+                                    <li><a onClick={onLogout}>Logout</a></li>
+                                </ul>
+                            </div>
+                        </div> :
+                        <div className={"space-x-4"}>
+                            <div className={"btn btn-outline btn-primary "}
+                                 onClick={() => (document.getElementById('login_modal') as HTMLDialogElement)?.showModal()}>Login
+                            </div>
+                            <div className={"btn btn-outline btn-primary "}
+                                 onClick={() => (document.getElementById('sign_up_modal') as HTMLDialogElement)?.showModal()}>Signup
+                            </div>
+                        </div>
+                }
+                <div className={"btn btn-primary "}>Download</div>
             </div>
-            <div className={"btn btn-outline btn-primary "}>Download</div>
-        </div>
+        </>
     )
 }
 

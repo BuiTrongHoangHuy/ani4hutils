@@ -26,17 +26,16 @@ public class AuthService {
     private final AuthRepository authRepository;
     private final UserRepository userRepository;
     private final Validator validator;
-    public AuthService(AuthRepository authRepository, UserRepository userRepository, Validator validator) {
+    private final SHA256PasswordEncoder passwordEncoder;
+    private final JwtUtils jwtUtils;
+    public AuthService(AuthRepository authRepository, UserRepository userRepository, Validator validator, SHA256PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
         this.authRepository = authRepository;
         this.userRepository = userRepository;
         this.validator = validator;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtUtils = jwtUtils;
     }
 
-    @Autowired
-    private SHA256PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private JwtUtils jwtUtils;
 
     public AuthRegister Register( RegisterRequest req)  {
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(req);
