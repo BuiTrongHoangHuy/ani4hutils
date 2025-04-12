@@ -1,4 +1,4 @@
-package site.ani4h.search.film;
+package site.ani4h.search.film.entity;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -16,6 +16,9 @@ public class FilmModel {
     private List<Image> images;
     private List<String> genres;
     private String synopsis;
+    private String synonyms;
+    private String ja_name;
+    private String en_name;
     private final static int type = 7;
 
     public void setId(int id) { this.id = new Uid(id, 0, type); }

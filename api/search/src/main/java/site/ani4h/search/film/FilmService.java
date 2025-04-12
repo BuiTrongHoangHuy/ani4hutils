@@ -9,6 +9,8 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHit;
 import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Service;
+import site.ani4h.search.film.entity.Film;
+import site.ani4h.search.film.entity.FilmModel;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -59,7 +61,11 @@ public class FilmService {
     // Search for films by title
     public List<Film> getFilmsByTitle(String title) throws Exception {
         NativeQuery searchQuery = new NativeQueryBuilder()
-                .withQuery(QueryBuilders.match(m->m.field("title").query(title).fuzziness("AUTO")))
+                .withQuery(QueryBuilders.multiMatch(m->m
+                        .fields("title","synonyms", "ja_name", "en_name")
+                        .query(title)
+                        .fuzziness("AUTO")
+                ))
                 .build();
 
         System.out.println("Query: " + searchQuery.getQuery());

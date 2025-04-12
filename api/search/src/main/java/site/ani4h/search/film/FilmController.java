@@ -3,6 +3,7 @@ package site.ani4h.search.film;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.ani4h.search.film.entity.FilmModel;
 import site.ani4h.shared.common.Requester;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class FilmController {
     public ResponseEntity<?> getFilmsByTitle(@RequestParam String title, HttpServletRequest request) throws Exception {
         var requester = Requester.getRequester(request);
         var films = filmService.getFilmsByTitle(title);
-        return ResponseEntity.ok(requester);
+        return ResponseEntity.ok(films);
     }
 
     @GetMapping("/all")

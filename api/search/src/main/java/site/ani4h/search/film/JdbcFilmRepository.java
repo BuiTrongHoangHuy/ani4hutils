@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.springframework.stereotype.Component;
+import site.ani4h.search.film.entity.FilmModel;
 import site.ani4h.shared.common.Image;
 
 import java.util.ArrayList;
@@ -21,8 +22,9 @@ public class JdbcFilmRepository implements FilmRepository {
 
     @Override
     public List<FilmModel> getFilms() {
-        String sql = "SELECT f.id, f.title, f.images, f.synopsis, g.name " +
+        String sql = "SELECT f.id, f.title, f.images, f.synopsis, g.name, a.synonyms, a.ja_name, a.en_name " +
                 "FROM films f " +
+                "LEFT JOIN alternative_titles a ON f.id = a.film_id " +
                 "LEFT JOIN film_genres fg ON f.id = fg.film_id " +
                 "LEFT JOIN genres g ON fg.genre_id = g.id";
 
@@ -38,6 +40,9 @@ public class JdbcFilmRepository implements FilmRepository {
                 film.setTitle(rs.getString("title"));
                 film.setGenres(new ArrayList<>());
                 film.setSynopsis(rs.getString("synopsis"));
+                film.setSynonyms(rs.getString("synonyms"));
+                film.setJa_name(rs.getString("ja_name"));
+                film.setEn_name(rs.getString("en_name"));
 
                 try {
                     String imagesJson = rs.getString("images");
