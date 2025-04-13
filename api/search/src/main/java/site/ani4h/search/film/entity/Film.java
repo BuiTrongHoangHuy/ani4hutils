@@ -19,11 +19,11 @@ public class Film {
     @Id
     private String id;
 
+    @Field(type = FieldType.Keyword)
+    private String uid;
+
     @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search")
     private String title;
-
-    @Field(type = FieldType.Search_As_You_Type)
-    private String keyword;
 
     @Field(type = FieldType.Keyword)
     private List<String> genres;
@@ -38,10 +38,10 @@ public class Film {
     private String synonyms;
 
     @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search")
-    private String ja_name;
+    private String jaName;
 
     @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search")
-    private String en_name;
+    private String enName;
 
     public Film() {
     }
@@ -49,12 +49,12 @@ public class Film {
     public void mapFromFilmModel(FilmModel filmModel) {
         this.id = filmModel.getId().toString();
         this.title = filmModel.getTitle();
-        this.keyword = filmModel.getTitle();
+        this.uid = filmModel.getId().toString();
         this.genres = filmModel.getGenres();
         this.images = filmModel.getImages();
         this.synopsis = filmModel.getSynopsis();
         this.synonyms = filmModel.getSynonyms();
-        this.ja_name = filmModel.getJa_name();
-        this.en_name = filmModel.getEn_name();
+        this.jaName = filmModel.getJa_name();
+        this.enName = filmModel.getEn_name();
     }
 }

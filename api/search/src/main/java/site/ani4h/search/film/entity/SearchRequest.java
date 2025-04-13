@@ -7,9 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class FilmSearchRequest {
+public class SearchRequest {
     private String title;
     private String genre;
-    private String year;
-    private String season;
+    private String uid;
+    private Float score;
 }
