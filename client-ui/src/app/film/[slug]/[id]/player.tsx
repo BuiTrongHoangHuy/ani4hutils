@@ -3,7 +3,7 @@
 import ReactPlayer from "react-player";
 import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {OnProgressProps} from "react-player/types/base";
-import {ExpandIcon, PauseIcon, PlayIcon, ShrinkIcon, Volume2, VolumeX, SkipForward, Settings} from "lucide-react";
+import {ExpandIcon, PauseIcon, PlayIcon, ShrinkIcon, Volume2, VolumeX, SkipForward, Settings, RotateCcw, RotateCw} from "lucide-react";
 import {formatTime} from "@/utils/format";
 
 export default function Player() {
@@ -40,17 +40,22 @@ export default function Player() {
     };
 
     const handleProgress = (state:  OnProgressProps) => {
-        const hls = player.current?.getInternalPlayer("hls");
-        const currentLevel = hls?.currentLevel;
+        try{
+            const hls = player.current?.getInternalPlayer("hls");
+            const currentLevel = hls?.currentLevel;
 
-        console.log("Resolution:", hls?.levels[currentLevel].height + "p");
-        console.log("Bitrate:", hls?.levels[currentLevel].bitrate / 1000 + " kbps");
-        console.log("loaded", state.loadedSeconds)
-        console.log("played", state.playedSeconds)
-        setProgress(state.played);
-        setLoaded(state.loaded);
-        setPlayedTime(state.playedSeconds)
-        //console.log(state.played)
+            console.log("Resolution:", hls?.levels[currentLevel].height + "p");
+            console.log("Bitrate:", hls?.levels[currentLevel].bitrate / 1000 + " kbps");
+            console.log("loaded", state.loadedSeconds)
+            console.log("played", state.playedSeconds)
+            setProgress(state.played);
+            setLoaded(state.loaded);
+            setPlayedTime(state.playedSeconds)
+            //console.log(state.played)
+        }catch (e){
+            console.log(e)
+        }
+
     };
     const toggleFullscreen = () => {
         if (!isFullscreen) {
@@ -94,7 +99,23 @@ export default function Player() {
             setShowControls(false);
         }, 3000);
     };
+    const rewind5Seconds = () => {
+        if (!player.current) return;
+        const currentTime = player.current.getCurrentTime();
+        const newTime = Math.max(0, currentTime - 5);
+        player.current.seekTo(newTime, "seconds");
+        setPlayedTime(newTime);
+        setProgress(newTime / duration);
+    };
 
+    const fastForward5Seconds = () => {
+        if (!player.current) return;
+        const currentTime = player.current.getCurrentTime();
+        const newTime = Math.min(duration, currentTime + 5);
+        player.current.seekTo(newTime, "seconds");
+        setPlayedTime(newTime);
+        setProgress(newTime / duration);
+    };
     useEffect(() => {
         return () => {
             if (hideControlsTimeout.current) {
@@ -106,7 +127,7 @@ export default function Player() {
         <div className="player-wrapper" ref={playerWrapper} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
             <ReactPlayer
                 ref={player}
-                url="https://d2oh79ptmlqizl.cloudfront.net/output.webm/master.m3u8"
+                url="https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
                 playing={playing}
                 muted={muted}
                 controls={false}
@@ -115,7 +136,7 @@ export default function Player() {
                         forceHLS: true,
                         hlsOptions:{
                             maxBufferLength:30,
-                            maxMaxBufferLength: 60,
+                            maxMaxBufferLength: 180,
                             liveSyncDuration: 15,
                             lowLatencyMode:true,
                         }
@@ -143,7 +164,6 @@ export default function Player() {
                        className="absolute top-[-4] left-0 right-0 w-full range-primary
                        range [--range-thumb:var(--color-primary)] cursor-pointer
                        [--range-thumb-size:calc(var(--size-selector,0.25rem)*2)]
-                       hover:[--range-thumb-size:calc(var(--size-selector,0.25rem)*2.5)]
                        [--range-bg:transparent]
                         "/>
 
@@ -153,6 +173,12 @@ export default function Player() {
                 </button>
                 <span className="text-sm ">{formatTime(playedTime)} / {formatTime(duration)}</span>
                 <div className="flex-1"></div>
+                <button className="cursor-pointer hover:text-primary" onClick={rewind5Seconds} >
+                    <RotateCcw size={20}/>
+                </button>
+                <button className="cursor-pointer hover:text-primary" onClick={fastForward5Seconds} >
+                    <RotateCw size={20}/>
+                </button>
                 <button className="cursor-pointer hover:text-primary"  >
                     <SkipForward size={20}/>
                 </button>
