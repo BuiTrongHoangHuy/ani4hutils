@@ -10,4 +10,12 @@ import java.util.List;
 public class SearchResponse {
     List<FilmResponse> data;
     PagingSearch paging;
+
+    public SearchResponse() {
+    }
+
+    public SearchResponse(List<FilmResponse> data, PagingSearch paging) {
+        this.data = data;
+        this.paging = paging;
+    }
 }

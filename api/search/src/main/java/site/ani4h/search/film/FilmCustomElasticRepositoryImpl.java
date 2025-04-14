@@ -4,6 +4,7 @@ import co.elastic.clients.elasticsearch._types.SortOptions;
 import co.elastic.clients.elasticsearch._types.SortOptionsBuilders;
 import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
+import co.elastic.clients.elasticsearch._types.query_dsl.TextQueryType;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
@@ -47,7 +48,11 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
 
         NativeQueryBuilder queryBuilder = new NativeQueryBuilder()
                 .withQuery(QueryBuilders.multiMatch(m -> m
-                        .fields("title", "synonyms", "ja_name", "en_name")
+                        .fields(
+                                "title", "title.standard^2",
+                                "synonyms", "synonyms.standard^2",
+                                "jaName", "jaName.standard"
+                        )
                         .query(request.getTitle())
                         .fuzziness("AUTO")
                 ))
@@ -55,14 +60,18 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
                 .withPageable(PageRequest.of(0, 10));
 
         if (request.getUid() != null && request.getScore() != null) {
-            queryBuilder.withSearchAfter(List.of(request.getScore(), request.getUid()));
+            if(request.getUid().isEmpty() || request.getScore() == 0) {
+                throw new IllegalArgumentException("Uid and score must not be empty or zero");
+            }
+            else {
+                queryBuilder.withSearchAfter(List.of(request.getScore(), request.getUid()));
+            }
         }
 
         NativeQuery searchQuery = queryBuilder.build();
 
         System.out.println("Query: " + searchQuery.getQuery());
         SearchHits<FilmResponse> searchHits = elasticsearchOperations.search(searchQuery, FilmResponse.class);
-
         System.out.println("Search hits: " + searchHits.getTotalHits());
 
         // Duyệt qua các kết quả và gán điểm số vào FilmResponse
@@ -74,7 +83,9 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
                 })
                 .collect(Collectors.toList());
 
+        // Set PagingSearch
         PagingSearch pagingSearch = new PagingSearch();
+        pagingSearch.setTotal((int) searchHits.getTotalHits());
         if(!searchHits.getSearchHits().isEmpty()){
             List<Object> sortValues = searchHits.getSearchHits().get(searchHits.getSearchHits().size() - 1).getSortValues();
             pagingSearch.setUid(
@@ -85,9 +96,7 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
             );
         }
 
-        SearchResponse searchResponse = new SearchResponse();
-        searchResponse.setData(data);
-        searchResponse.setPaging(pagingSearch);
+        SearchResponse searchResponse = new SearchResponse(data, pagingSearch);
 
         return searchResponse;
     }

@@ -3,10 +3,7 @@ package site.ani4h.search.film.entity;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.data.elasticsearch.annotations.Field;
-import org.springframework.data.elasticsearch.annotations.FieldType;
-import org.springframework.data.elasticsearch.annotations.Setting;
+import org.springframework.data.elasticsearch.annotations.*;
 import site.ani4h.shared.common.Image;
 
 import java.util.List;
@@ -22,7 +19,12 @@ public class Film {
     @Field(type = FieldType.Keyword)
     private String uid;
 
-    @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search")
+    @MultiField(
+            mainField = @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search"),
+            otherFields = {
+                    @InnerField(suffix = "standard", type = FieldType.Text, analyzer = "standard")
+            }
+    )
     private String title;
 
     @Field(type = FieldType.Keyword)
@@ -34,13 +36,28 @@ public class Film {
     @Field(type = FieldType.Nested)
     private List<Image> images;
 
-    @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search")
+    @MultiField(
+            mainField = @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search"),
+            otherFields = {
+                    @InnerField(suffix = "standard", type = FieldType.Text, analyzer = "standard")
+            }
+    )
     private String synonyms;
 
-    @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search")
+    @MultiField(
+            mainField = @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search"),
+            otherFields = {
+                    @InnerField(suffix = "standard", type = FieldType.Text, analyzer = "standard")
+            }
+    )
     private String jaName;
 
-    @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search")
+    @MultiField(
+            mainField = @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search"),
+            otherFields = {
+                    @InnerField(suffix = "standard", type = FieldType.Text, analyzer = "standard")
+            }
+    )
     private String enName;
 
     public Film() {

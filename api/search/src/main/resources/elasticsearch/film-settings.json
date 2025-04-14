@@ -18,6 +18,9 @@
         "type": "custom",
         "tokenizer": "standard",
         "filter": ["lowercase"]
+      },
+      "standard": {
+        "type": "standard"
       }
     }
   }
