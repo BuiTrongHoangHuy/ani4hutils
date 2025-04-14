@@ -1,7 +1,7 @@
 'use client'
 
 import ReactPlayer from "react-player";
-import {ChangeEvent, useRef, useState} from "react";
+import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {OnProgressProps} from "react-player/types/base";
 import {ExpandIcon, PauseIcon, PlayIcon, ShrinkIcon, Volume2, VolumeX, SkipForward, Settings} from "lucide-react";
 import {formatTime} from "@/utils/format";
@@ -18,7 +18,8 @@ export default function Player() {
     const [playedTime, setPlayedTime] = useState(0);
     const [loaded, setLoaded] = useState(0);
     const [playbackRate, setPlaybackRate] = useState(1);
-
+    const [showControls, setShowControls] = useState(true);
+    const hideControlsTimeout = useRef<NodeJS.Timeout | null>(null);
     const handleReady = () => {
         const hls = player.current?.getInternalPlayer("hls");
         if (!player.current) return
@@ -74,8 +75,35 @@ export default function Player() {
     const handleDuration = (duration:number) =>{
         setDuration(duration)
     }
+
+    const handleMouseMove = () => {
+        setShowControls(true);
+        if (hideControlsTimeout.current) {
+            clearTimeout(hideControlsTimeout.current);
+        }
+        hideControlsTimeout.current = setTimeout(() => {
+            setShowControls(false);
+        }, 3000);
+    };
+
+    const handleMouseLeave = () => {
+        if (hideControlsTimeout.current) {
+            clearTimeout(hideControlsTimeout.current);
+        }
+        hideControlsTimeout.current = setTimeout(() => {
+            setShowControls(false);
+        }, 3000);
+    };
+
+    useEffect(() => {
+        return () => {
+            if (hideControlsTimeout.current) {
+                clearTimeout(hideControlsTimeout.current);
+            }
+        };
+    }, []);
     return (
-        <div className="player-wrapper" ref={playerWrapper}>
+        <div className="player-wrapper" ref={playerWrapper} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
             <ReactPlayer
                 ref={player}
                 url="https://d2oh79ptmlqizl.cloudfront.net/output.webm/master.m3u8"
@@ -100,16 +128,17 @@ export default function Player() {
                 width="100%"
                 height="100%"
             />
-            <div className="absolute bottom-0 left-0 right-0 px-4 pb-2 pt-4 flex items-center text-white
-            gap-5 justify-between w-full bg-base-100 opacity-50">
-
-
+            <div className={`absolute bottom-0 left-0 right-0 px-4 pb-2 pt-4 flex items-center text-white
+            gap-5 justify-between w-full bg-base-100 transition-opacity duration-500
+            ${showControls || !playing ? "opacity-50":"opacity-0 pointer-events-none"}
+            `}>
                 <input type="range" min="0" step={"any"} max="1" value={loaded} readOnly={true}
                        className="absolute top-[-4] left-0 right-0 w-full
-                       range [--range-thumb:var(--color-white)] cursor-pointer
+                       range [--range-thumb:var(--color-white)]
                        [--range-thumb-size:calc(var(--size-selector,0.25rem)*2)]
                        [--range-bg:gray]
                         "/>
+
                 <input type="range" min="0" step={"any"} max="1" onChange={handleSeek} value={progress}
                        className="absolute top-[-4] left-0 right-0 w-full range-primary
                        range [--range-thumb:var(--color-primary)] cursor-pointer
