@@ -1,9 +1,16 @@
 'use client'
 import Link from "next/link";
 import Image from "next/image";
-import React, { FormEvent, useEffect, useState} from "react";
+import React, {FormEvent, useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
+
 export default function TopBar(className: { className?: string }) {
+    const clientId = "935540841053-b9ncdcaq9dr8aeh9fd5q6ku5n729n399";
+    const redirectUrl = "http%3A%2F%2Flocalhost%3A3000%2Foauth%3Fprovider%3De5CRsyQCqZvX";
+    const scope = encodeURIComponent(
+        "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/user.birthday.read"
+    );
+
     const [isLogin, setIsLogin] = useState<boolean>(false)
     useEffect(() => {
         fetch("/api/me", {
@@ -14,10 +21,10 @@ export default function TopBar(className: { className?: string }) {
             }
         })
     }, [])
-    const onLogout = async (e: React.MouseEvent<HTMLAnchorElement> ) => {
+    const onLogout = async (e: React.MouseEvent<HTMLAnchorElement>) => {
         e.preventDefault();
         fetch("/api/logout").then(
-            () =>{
+            () => {
                 setIsLogin(false)
             }
         )
@@ -73,10 +80,9 @@ export default function TopBar(className: { className?: string }) {
                     <div className={"flex justify-center space-x-10"}>
                         <Image className={"cursor-pointer"} src={"/images/icons/facebook-logo.svg"}
                                alt={"login with facebook"} width={40} height={40}></Image>
-                        <Link href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=935540841053-b9ncdcaq9dr8aeh9fd5q6ku5n729n399&redirect_uri=http%3A//localhost%3A3000/oauth&response_type=token&scope=https://www.googleapis.com/auth/userinfo.profile`}>
-
-                        <Image className={"cursor-pointer "} src={"/images/icons/google-logo.svg"}
-                               alt={"login with goole"} width={40} height={40}></Image>
+                        <Link href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUrl}&response_type=token&scope=${scope}`}>
+                            <Image className={"cursor-pointer "} src={"/images/icons/google-logo.svg"}
+                                   alt={"login with goole"} width={40} height={40}></Image>
                         </Link>
                     </div>
                 </div>
@@ -104,7 +110,8 @@ export default function TopBar(className: { className?: string }) {
                     <div className={"flex justify-center space-x-10"}>
                         <Image className={"cursor-pointer"} src={"/images/icons/facebook-logo.svg"}
                                alt={"login with facebook"} width={40} height={40}></Image>
-                        <Link href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=935540841053-b9ncdcaq9dr8aeh9fd5q6ku5n729n399&redirect_uri=http%3A//localhost%3A3000/oauth&response_type=token}`}>
+                        <Link
+                            href={`https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=http%3A//localhost%3A3000/oauth&response_type=token}`}>
                             <Image className={"cursor-pointer"} src={"/images/icons/google-logo.svg"}
                                    alt={"login with goole"} width={40} height={40}></Image>
                         </Link>

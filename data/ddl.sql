@@ -59,7 +59,7 @@ CREATE TABLE `external_auth_providers`
 (
     `id`         int NOT NULL AUTO_INCREMENT,
     `name`       varchar(50),
-    `endpoint`   varchar(50) DEFAULT NULL,
+    `endpoint`   varchar(255) DEFAULT NULL,
     `status`     INT         DEFAULT 1,
     `created_at` datetime    DEFAULT CURRENT_TIMESTAMP,
     `updated_at` datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -70,16 +70,15 @@ CREATE TABLE `external_auth_providers`
   COLLATE = utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `external_auths`;
-
-
 CREATE TABLE `external_auths`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
     `user_id`                   int NOT NULL,
+    `external_user_id`          VARCHAR(255) NOT NULL,
     `external_auth_provider_id` int NOT NULL,
     `auth_token`                VARCHAR(255),
     `status`                    INT      DEFAULT 1,
-    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,32
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY `user_id` (`user_id`) USING BTREE,

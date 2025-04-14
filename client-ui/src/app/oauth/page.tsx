@@ -1,10 +1,12 @@
 'use client'
 import {useEffect, useState} from "react";
 import {FullScreenLoading} from "@/components/FullScreenLoading";
-import {useRouter} from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 
-export default  function Page() {
+export default function Page() {
     const [accessToken, setAccessToken] = useState<string | null>(null);
+    const searchParams = useSearchParams()
+    const provider = searchParams.get("provider")
     useEffect(() => {
         if (typeof window !== 'undefined') {
             const hash = window.location.hash.substring(1);
@@ -18,15 +20,15 @@ export default  function Page() {
     }, []);
     const router = useRouter()
     useEffect(() => {
-        fetch("api/oauth/google", {
+        fetch(`api/oauth?provider=${provider}`, {
             method: "POST",
-            body : JSON.stringify({
+            body: JSON.stringify({
                 token: accessToken
             })
         }).then(r => {
-            if (r.status == 200) {
-                router.push("/")
-            }
+            // if (r.status == 200) {
+            //     // router.push("/")
+            // }
         }).catch(
             e => {
                 console.error(e)

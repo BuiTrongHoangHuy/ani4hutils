@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import site.ani4h.auth.auth.entity.*;
 import site.ani4h.auth.auth.error.ErrorInvalidCredentials;
+import site.ani4h.auth.externalprovider.ExternalProviderRepository;
 import site.ani4h.auth.middleware.jwt_spring_security.JwtUtils;
 import site.ani4h.auth.middleware.jwt_spring_security.SHA256PasswordEncoder;
 import site.ani4h.auth.user.Role;
@@ -25,12 +26,14 @@ import java.util.Set;
 public class AuthService {
     private final AuthRepository authRepository;
     private final UserRepository userRepository;
+    private final ExternalProviderRepository externalProviderRepository;
     private final Validator validator;
     private final SHA256PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
-    public AuthService(AuthRepository authRepository, UserRepository userRepository, Validator validator, SHA256PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
+    public AuthService(AuthRepository authRepository, UserRepository userRepository, ExternalProviderRepository externalProviderRepository, Validator validator, SHA256PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
         this.authRepository = authRepository;
         this.userRepository = userRepository;
+        this.externalProviderRepository = externalProviderRepository;
         this.validator = validator;
         this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
@@ -86,6 +89,16 @@ public class AuthService {
                 .email(req.getEmail())
                 .accessToken(jwtAccessToken)
                 .refreshToken(jwtRefreshToken)
+                .build();
+
+    }
+
+    public LoginResponse ExternalLogin(ExternalLoginRequest req) {
+        var provider = externalProviderRepository.get(req.getProvider().getLocalId());
+        var user = GetExternalDataAdapter.getUserData(req, provider);
+        System.out.println(provider.getName() );
+
+        return LoginResponse.builder()
                 .build();
 
     }

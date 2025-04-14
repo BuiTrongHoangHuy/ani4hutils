@@ -20,7 +20,7 @@ public class ExternalProviderController {
     }
 
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<?> create(HttpServletRequest request, @RequestBody ExternalAuthProviderCreate create) {
         var requester = Requester.getRequester(request);
         if (requester == null) {
@@ -40,7 +40,7 @@ public class ExternalProviderController {
         return ResponseEntity.ok(ApiResponse.success(true));
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     public ResponseEntity<?> getAll() {
         return ResponseEntity.ok(ApiResponse.success(this.externalProviderService.listAll()));
     }

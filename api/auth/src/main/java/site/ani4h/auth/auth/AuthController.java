@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.ani4h.auth.auth.entity.*;
+import site.ani4h.auth.externalprovider.ExternalAuthProvider;
+import site.ani4h.auth.externalprovider.ExternalProviderRepository;
 import site.ani4h.shared.common.ApiResponse;
-import site.ani4h.shared.common.Requester;
 
 @RestController
 @RequestMapping("/v1/auth")
@@ -20,6 +21,7 @@ public class AuthController {
 
     public AuthController(AuthService authService) {
         this.authService = authService;
+
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(
@@ -28,12 +30,10 @@ public class AuthController {
         var res = authService.Login(login);
         return ResponseEntity.ok(ApiResponse.success(res));
     }
-    @PostMapping("/google-oauth")
-    public ResponseEntity<?> google(
-            @RequestBody GoogleOauthRequest oauthRequest) {
-
-        var res = LoginResponse.builder().accessToken(oauthRequest.getToken()).build();
-
+    @PostMapping("/oauth")
+    public ResponseEntity<?> externalLogin(
+            @RequestBody ExternalLoginRequest oauthRequest) {
+        var res = authService.ExternalLogin(oauthRequest);
         return ResponseEntity.ok(ApiResponse.success(res));
     }
 
