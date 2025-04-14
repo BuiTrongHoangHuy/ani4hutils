@@ -16,6 +16,7 @@ export default function Player() {
     const [isFullscreen, setIsFullscreen] = useState(false);
     const [muted, setMuted] = useState(false)
     const [playedTime, setPlayedTime] = useState(0);
+    const [loaded, setLoaded] = useState(0);
     const [playbackRate, setPlaybackRate] = useState(1);
 
     const handleReady = () => {
@@ -46,6 +47,7 @@ export default function Player() {
         console.log("loaded", state.loadedSeconds)
         console.log("played", state.playedSeconds)
         setProgress(state.played);
+        setLoaded(state.loaded);
         setPlayedTime(state.playedSeconds)
         //console.log(state.played)
     };
@@ -100,13 +102,22 @@ export default function Player() {
             />
             <div className="absolute bottom-0 left-0 right-0 px-4 pb-2 pt-4 flex items-center text-white
             gap-5 justify-between w-full bg-base-100 opacity-50">
+
+
+                <input type="range" min="0" step={"any"} max="1" value={loaded} readOnly={true}
+                       className="absolute top-[-4] left-0 right-0 w-full
+                       range [--range-thumb:var(--color-white)] cursor-pointer
+                       [--range-thumb-size:calc(var(--size-selector,0.25rem)*2)]
+                       [--range-bg:gray]
+                        "/>
                 <input type="range" min="0" step={"any"} max="1" onChange={handleSeek} value={progress}
                        className="absolute top-[-4] left-0 right-0 w-full range-primary
                        range [--range-thumb:var(--color-primary)] cursor-pointer
                        [--range-thumb-size:calc(var(--size-selector,0.25rem)*2)]
                        hover:[--range-thumb-size:calc(var(--size-selector,0.25rem)*2.5)]
-                       [--range-bg:gray]
+                       [--range-bg:transparent]
                         "/>
+
                 <button className="cursor-pointer hover:text-primary" onClick={togglePlay}>{playing ? <PauseIcon size={20}/> : <PlayIcon size={20}/>}</button>
                 <button  onClick={toggleMute} className="cursor-pointer hover:text-primary" >
                     {muted ? <VolumeX size={20}/> : <Volume2 size={20}/> }
