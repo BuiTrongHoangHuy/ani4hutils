@@ -146,6 +146,14 @@ export default function Player() {
     const handleControlsClick = (e: React.MouseEvent<HTMLDivElement>) => {
         e.stopPropagation();
     };
+    const handleSkipClick = () =>{
+        if (!player.current) return;
+        const currentTime = player.current.getCurrentTime();
+        const newTime = Math.min(duration, currentTime + 150);
+        player.current.seekTo(newTime, "seconds");
+        setPlayedTime(newTime);
+        setProgress(newTime / duration);
+    }
     useEffect(() => {
         return () => {
             if (hideControlsTimeout.current) {
@@ -216,7 +224,7 @@ export default function Player() {
                 <button className="cursor-pointer hover:text-primary tooltip" data-tip="Fast Forward 5s" onClick={fastForward5Seconds} >
                     <RotateCw size={20}/>
                 </button>
-                <button className="cursor-pointer hover:text-primary tooltip" data-tip="Skip OP/ED" >
+                <button className="cursor-pointer hover:text-primary tooltip" data-tip="Skip OP/ED" onClick={handleSkipClick} >
                     <SkipForward size={20}/>
                 </button>
                 <div className="relative flex justify-center items-center">
