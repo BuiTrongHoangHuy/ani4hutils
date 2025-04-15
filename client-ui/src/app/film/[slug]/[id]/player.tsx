@@ -21,6 +21,9 @@ export default function Player() {
     const [showControls, setShowControls] = useState(true);
     const hideControlsTimeout = useRef<NodeJS.Timeout | null>(null);
     const [selectedLevel, setSelectedLevel] = useState(-1);
+    const [volume, setVolume] = useState(1);
+    const [previousVolume, setPreviousVolume] = useState(1)
+    const [showVolumeSlider, setShowVolumeSlider] = useState(false);
     const handleReady = () => {
         const hls = player.current?.getInternalPlayer("hls");
         if (!player.current || !hls ) return
@@ -87,8 +90,19 @@ export default function Player() {
 
     const toggleMute = () =>{
         setMuted(!muted);
+        if (muted) {
+            setVolume(previousVolume > 0 ? previousVolume : 1)
+        } else {
+            setPreviousVolume(volume);
+            setVolume(0);
+        }
     }
-
+    const handleVolumeChange = (e: ChangeEvent<HTMLInputElement>) => {
+        const newVolume = parseFloat(e.target.value);
+        setVolume(newVolume);
+        setPreviousVolume(newVolume);
+        setMuted(newVolume === 0);
+    };
     const handleDuration = (duration:number) =>{
         setDuration(duration)
     }
@@ -172,6 +186,7 @@ export default function Player() {
                 url="https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
                 playing={playing}
                 muted={muted}
+                volume={volume}
                 controls={false}
                 config={{
                     file: {
@@ -193,7 +208,7 @@ export default function Player() {
             />
             <div className={`absolute bottom-0 left-0 right-0 px-4 pb-2 pt-4 flex items-center text-white
             gap-5 justify-between w-full bg-base-100 transition-opacity duration-500
-            ${showControls || !playing ? "opacity-50":"opacity-0 pointer-events-none"}
+            ${showControls || !playing ? "opacity-70":"opacity-0 pointer-events-none"}
             `}
                 onClick={handleControlsClick}
             >
@@ -213,9 +228,29 @@ export default function Player() {
 
                 <button className="cursor-pointer hover:text-primary tooltip" data-tip={`${playing ? "Pause" : "Play"}`}
                         onClick={togglePlay}>{playing ? <PauseIcon size={20}/> : <PlayIcon size={20}/>}</button>
-                <button  onClick={toggleMute} className="cursor-pointer hover:text-primary" >
-                    {muted ? <VolumeX size={20}/> : <Volume2 size={20}/> }
-                </button>
+
+                <div className="flex justify-center items-center gap-3"
+                     onMouseEnter={() => setShowVolumeSlider(true)}
+                     onMouseLeave={() => setShowVolumeSlider(false)}
+                >
+                    <button  onClick={toggleMute} className="cursor-pointer hover:text-primary tooltip"
+                             data-tip={`${muted ? "Un Mute" : "Mute"}`}>
+                        {muted ? <VolumeX size={20}/> : <Volume2 size={20}/> }
+                    </button>
+                    {showVolumeSlider && (
+                        <input
+                            type="range"
+                            min="0"
+                            max="1"
+                            step="0.01"
+                            value={volume}
+                            onChange={handleVolumeChange}
+                            className=" w-24  range-primary range
+                            [--range-thumb-size:calc(var(--size-selector,0.25rem)*1.5)]
+                            [--range-bg:gray] cursor-pointer"
+                        />
+                    )}
+                </div>
                 <span className="text-sm ">{formatTime(playedTime)} / {formatTime(duration)}</span>
                 <div className="flex-1"></div>
                 <button className="cursor-pointer hover:text-primary tooltip" data-tip="Rewind 5s" onClick={rewind5Seconds} >
