@@ -14,4 +14,10 @@ public class UserData {
     private LocalDate dateOfBirth;
     private String firstName;
     private String lastName;
+
+    public UserData(LocalDate dateOfBirth, String firstName, String lastName) {
+        this.dateOfBirth = dateOfBirth;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 }

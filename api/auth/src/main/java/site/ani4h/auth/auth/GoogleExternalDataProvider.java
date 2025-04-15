@@ -13,6 +13,7 @@ public class GoogleExternalDataProvider {
 
     public static UserData getUserData(String token) {
         try {
+
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://www.googleapis.com/oauth2/v2/userinfo"))
                     .header("Authorization", "Bearer " + token)
@@ -22,12 +23,10 @@ public class GoogleExternalDataProvider {
             HttpClient client = HttpClient.newHttpClient();
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            String body = response.body();
-            System.out.println("BODY" + body);
             if (response.statusCode() == 200) {
                 ObjectMapper mapper = new ObjectMapper();
-                 mapper.readValue(response.body(), GoogleUserData.class);
-                 return null;
+                 var data = mapper.readValue(response.body(), GoogleUserData.class);
+                 return new UserData(null,data.getFamilyName(),data.getGivenName());
             } else {
                 System.err.println("Failed to fetch user data. Status: " + response.statusCode());
             }
