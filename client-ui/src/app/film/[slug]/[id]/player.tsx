@@ -3,7 +3,7 @@
 import ReactPlayer from "react-player";
 import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {OnProgressProps} from "react-player/types/base";
-import {ExpandIcon, PauseIcon, PlayIcon, ShrinkIcon, Volume2, VolumeX, SkipForward, Settings, RotateCcw, RotateCw} from "lucide-react";
+import {ExpandIcon, PauseIcon, PlayIcon, ShrinkIcon, Volume2, VolumeX, SkipForward, CircleGauge, RotateCcw, RotateCw} from "lucide-react";
 import {formatTime} from "@/utils/format";
 
 export default function Player() {
@@ -20,20 +20,32 @@ export default function Player() {
     const [playbackRate, setPlaybackRate] = useState(1);
     const [showControls, setShowControls] = useState(true);
     const hideControlsTimeout = useRef<NodeJS.Timeout | null>(null);
+    const [selectedLevel, setSelectedLevel] = useState(-1);
     const handleReady = () => {
         const hls = player.current?.getInternalPlayer("hls");
-        if (!player.current) return
+        if (!player.current || !hls ) return
         if (hls && hls.levels) {
             setLevels(hls.levels);
+            setSelectedLevel(hls.currentLevel)
+           hls.currentLevel = -1;
         }
+        hls.on("hlsLevelSwitched", (event: string, data: { level: number }) => {
+            setSelectedLevel(data.level);
+        });
         //setDuration(player.current.getDuration());
     };
     const onChangeBitrate = (e: ChangeEvent<HTMLSelectElement>) => {
-        const selectedLevel = e.target.value;
+        const selectedLevels = e.target.value;
         const hls = player.current?.getInternalPlayer("hls");
-        if (hls) {
-            hls.currentLevel = selectedLevel;
+        try{
+            if (hls) {
+                hls.currentLevel = Number(selectedLevels);
+                setSelectedLevel(Number(selectedLevels));
+            }
+        }catch (e){
+            console.log(e)
         }
+
     };
     const togglePlay = () => {
         setPlaying(!playing);
@@ -176,7 +188,7 @@ export default function Player() {
                 <button className="cursor-pointer hover:text-primary" onClick={rewind5Seconds} >
                     <RotateCcw size={20}/>
                 </button>
-                <button className="cursor-pointer hover:text-primary" onClick={fastForward5Seconds} >
+                <button className="cursor-pointer hover:text-primary"  onClick={fastForward5Seconds} >
                     <RotateCw size={20}/>
                 </button>
                 <button className="cursor-pointer hover:text-primary"  >
@@ -184,7 +196,7 @@ export default function Player() {
                 </button>
                 <div className="relative flex justify-center items-center">
                     <div className="dropdown dropdown-top p-0">
-                        <div tabIndex={0} role="button" className="btn hover:text-primary p-0"><Settings size={20}/></div>
+                        <div tabIndex={0} role="button" className="btn hover:text-primary p-0"><CircleGauge size={20}/></div>
                         <ul tabIndex={0} className="dropdown-content menu bg-black rounded z-1  p-2">
                             {[0.25 ,0.5, 0.75, 1, 1.25, 1.5, 2].map(rate => (
                                 <li
@@ -202,7 +214,10 @@ export default function Player() {
                 </div>
                 <select
                     className="cursor-pointer hover:border-primary bg-base-100 border border-white px-1 text-sm rounded flex justify-center items-center pb-1"
-                onChange={onChangeBitrate}>
+                onChange={onChangeBitrate}
+                value={selectedLevel}
+                >
+                    <option value={-1}>Auto</option>
                 {levels.length > 0 ? (
                     levels.map((level: { height: number }, id) => (
                         <option key={id} value={id}>
