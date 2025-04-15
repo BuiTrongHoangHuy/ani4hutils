@@ -3,8 +3,13 @@ import Link from "next/link";
 import Image from "next/image";
 import React, { FormEvent, useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
+import {router} from "next/client";
+import {useRouter} from "next/navigation";
 export default function TopBar(className: { className?: string }) {
     const [isLogin, setIsLogin] = useState<boolean>(false)
+    const router = useRouter()
+
+    const [query, setQuery] = useState<string>("")
     useEffect(() => {
         fetch("/api/me", {
             method: "GET"
@@ -45,6 +50,16 @@ export default function TopBar(className: { className?: string }) {
             }
         )
     }
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if(event.key === 'Enter') {
+            event.preventDefault();
+            const query = (event.target as HTMLInputElement).value.trim();
+            if (query) {
+                router.push(`/search?q=${encodeURIComponent(query)}`)
+            }
+        }
+    }
+
     return (
         <>
             <ToastContainer/>
@@ -125,7 +140,12 @@ export default function TopBar(className: { className?: string }) {
                     </ul>
                 </div>
                 <label className="input">
-                    <input type="search" required placeholder="Search"/>
+                    <input
+                        type="search"
+                        required placeholder="Search"
+                        onChange={(e) => setQuery(e.target.value)}
+                        onKeyDown={handleKeyDown}
+                    />
                     <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
                         <g strokeLinejoin="round" strokeLinecap="round" strokeWidth="2.5" fill="none"
                            stroke="currentColor">

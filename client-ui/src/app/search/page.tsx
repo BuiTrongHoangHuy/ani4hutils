@@ -1,10 +1,11 @@
+'use client'
 import {SearchList} from "@/types/searchList";
 import SearchListCard from "@/components/SearchListCard";
 import FilmCard from "@/components/FilmCard";
+import {useEffect} from "react";
+import {useSearchParams} from "next/navigation";
 
-
-
-export default async function SearchPage() {
+export default function SearchPage() {
     const data: SearchList[] = [
         {
             id: "1",
@@ -97,6 +98,11 @@ export default async function SearchPage() {
             numEpisodes: 24
         },
     ]
+    const searchParams = useSearchParams();
+    const query = searchParams.get("q") || "";
+    useEffect(() => {
+        console.log("hellooooooooo");
+    }, [])
 
     return (
         <div className={"w-screen mt-[64px] pl-20 pr-20 pt-8"}>
