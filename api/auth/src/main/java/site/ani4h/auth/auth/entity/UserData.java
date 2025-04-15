@@ -1,11 +1,8 @@
 package site.ani4h.auth.auth.entity;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-
+import site.ani4h.shared.common.Image;
 import java.time.LocalDate;
 
 @Getter
@@ -14,10 +11,15 @@ public class UserData {
     private LocalDate dateOfBirth;
     private String firstName;
     private String lastName;
+    private Image avatar;
+    private String id;
+    private String email;
 
-    public UserData(LocalDate dateOfBirth, String firstName, String lastName) {
+    public UserData(String id,String email ,LocalDate dateOfBirth, String firstName, String lastName,Image avatar) {
+        this.id = id;
         this.dateOfBirth = dateOfBirth;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.avatar = avatar;
     }
 }

@@ -9,17 +9,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import site.ani4h.auth.auth.entity.*;
-import site.ani4h.auth.externalprovider.ExternalAuthProvider;
-import site.ani4h.auth.externalprovider.ExternalProviderRepository;
 import site.ani4h.shared.common.ApiResponse;
 
 @RestController
 @RequestMapping("/v1/auth")
 public class AuthController {
-
+    private final Oauth2Service oauth2Service;
     private final AuthService authService;
 
-    public AuthController(AuthService authService) {
+    public AuthController(Oauth2Service oauth2Service, AuthService authService) {
+        this.oauth2Service = oauth2Service;
         this.authService = authService;
 
     }
@@ -30,10 +29,17 @@ public class AuthController {
         var res = authService.Login(login);
         return ResponseEntity.ok(ApiResponse.success(res));
     }
-    @PostMapping("/oauth")
-    public ResponseEntity<?> externalLogin(
+    @PostMapping("/oauth/login")
+    public ResponseEntity<?> oauth2Login(
             @RequestBody ExternalLoginRequest oauthRequest) {
-        var res = authService.ExternalLogin(oauthRequest);
+        var res = oauth2Service.login(oauthRequest);
+        return ResponseEntity.ok(ApiResponse.success(res));
+    }
+
+    @PostMapping("/oauth/register")
+    public ResponseEntity<?> oauth2Register(
+            @RequestBody ExternalLoginRequest oauthRequest) {
+        var res = oauth2Service.register(oauthRequest);
         return ResponseEntity.ok(ApiResponse.success(res));
     }
 

@@ -63,6 +63,7 @@ dependencies {
     implementation 'org.elasticsearch.client:elasticsearch-rest-client:7.17.28'
     // Google Api Client
     compileOnly 'com.google.api-client:google-api-client:1.32.1'
+    implementation 'com.google.apis:google-api-services-people:v1-rev20240313-2.0.0'
 }
 
 

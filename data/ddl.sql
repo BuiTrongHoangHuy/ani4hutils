@@ -78,7 +78,7 @@ CREATE TABLE `external_auths`
     `external_auth_provider_id` int NOT NULL,
     `auth_token`                VARCHAR(255),
     `status`                    INT      DEFAULT 1,
-    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,32
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     `updated_at`                datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY `user_id` (`user_id`) USING BTREE,

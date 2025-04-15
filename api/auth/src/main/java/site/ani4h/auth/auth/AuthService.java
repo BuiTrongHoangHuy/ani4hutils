@@ -26,19 +26,17 @@ import java.util.Set;
 public class AuthService {
     private final AuthRepository authRepository;
     private final UserRepository userRepository;
-    private final ExternalProviderRepository externalProviderRepository;
     private final Validator validator;
-    private final SHA256PasswordEncoder passwordEncoder;
     private final JwtUtils jwtUtils;
-    public AuthService(AuthRepository authRepository, UserRepository userRepository, ExternalProviderRepository externalProviderRepository, Validator validator, SHA256PasswordEncoder passwordEncoder, JwtUtils jwtUtils) {
+    private final SHA256PasswordEncoder passwordEncoder;
+
+    public AuthService(AuthRepository authRepository, UserRepository userRepository, Validator validator, JwtUtils jwtUtils, SHA256PasswordEncoder passwordEncoder) {
         this.authRepository = authRepository;
         this.userRepository = userRepository;
-        this.externalProviderRepository = externalProviderRepository;
         this.validator = validator;
-        this.passwordEncoder = passwordEncoder;
         this.jwtUtils = jwtUtils;
+        this.passwordEncoder = passwordEncoder;
     }
-
 
     public AuthRegister Register( RegisterRequest req)  {
         Set<ConstraintViolation<RegisterRequest>> violations = validator.validate(req);
@@ -50,12 +48,9 @@ public class AuthService {
             }
             throw new ConstraintViolationException("Error occurred: " + sb.toString(), violations);
         }
-
-        // check exists email
         if(this.authRepository.findByEmail(req.getEmail()) != null) {
             throw new EntityAlreadyExist("User");
         }
-
         var salt = RandomSequenceGenerator.RandomString(50);
         var displayName = req.getEmail().split("@")[0];
 
@@ -93,20 +88,9 @@ public class AuthService {
 
     }
 
-    public LoginResponse ExternalLogin(ExternalLoginRequest req) {
-        var provider = externalProviderRepository.get(req.getProvider().getLocalId());
-        var user = GetExternalDataAdapter.getUserData(req, provider);
-        System.out.println(provider.getName() );
-
-        return LoginResponse.builder()
-                .build();
-
-    }
 
     public RefreshTokenResponse RefreshToken(String refreshToken) {
-        // validate token
         jwtUtils.validateJwtToken(refreshToken);
-        // check type token is refresh token
         if(!jwtUtils.isRefreshToken(refreshToken)) {
             throw new ErrorBadRequest("Invalid refresh token");
         }

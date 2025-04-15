@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import site.ani4h.auth.auth.entity.Auth;
 import site.ani4h.auth.auth.entity.AuthRegister;
+import site.ani4h.auth.user.Role;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -41,7 +42,7 @@ public class JdbcAuthRepository implements AuthRepository {
         int authId = keyHolder.getKey().intValue();
         authRegister.setId(authId);
 
-        jdbcTemplate.update(insertPermissionSql, authRegister.getUserId().getLocalId(), "user");
+        jdbcTemplate.update(insertPermissionSql, authRegister.getUserId().getLocalId(), Role.USER.toString());
     }
 
     @Override

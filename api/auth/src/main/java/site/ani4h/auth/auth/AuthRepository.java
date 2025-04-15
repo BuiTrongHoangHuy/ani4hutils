@@ -8,6 +8,6 @@ import site.ani4h.auth.auth.entity.AuthRegister;
 
 @Repository
 public interface AuthRepository {
-    public void create(AuthRegister authRegister);
-    public Auth findByEmail(String email);
+    void create(AuthRegister authRegister);
+    Auth findByEmail(String email);
 }

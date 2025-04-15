@@ -1,39 +1,75 @@
 package site.ani4h.auth.auth;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import site.ani4h.auth.auth.entity.GoogleUserData;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+import com.google.api.client.googleapis.auth.oauth2.GoogleIdTokenVerifier;
+import com.google.api.client.http.javanet.NetHttpTransport;
+import com.google.api.client.json.gson.GsonFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 import site.ani4h.auth.auth.entity.UserData;
+import site.ani4h.shared.common.Image;
 
-import java.net.URI;
-import java.net.http.HttpClient;
-import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
+import java.util.Collections;
 
+@Component
 public class GoogleExternalDataProvider {
-
-    public static UserData getUserData(String token) {
+    @Value("${spring.security.oauth2.client.registration.google.client-id}")
+    private String clientId;
+    @Value("${spring.security.oauth2.client.registration.google.client-secret}")
+    private String clientSecret;
+    public GoogleExternalDataProvider() {
+    }
+    public  UserData getUserData(String token) {
         try {
-
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://www.googleapis.com/oauth2/v2/userinfo"))
-                    .header("Authorization", "Bearer " + token)
-                    .GET()
+            var verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                    .setAudience(Collections.singleton(this.clientId))
                     .build();
+            GoogleIdToken idToken = verifier.verify(token);
+            if (idToken != null) {
+                GoogleIdToken.Payload payload = idToken.getPayload();
+                String userId = payload.getSubject();
+                String email = payload.getEmail();
+                String name = (String) payload.get("name");
+                String pictureUrl = (String) payload.get("picture");
+                String locale = (String) payload.get("locale");
 
-            HttpClient client = HttpClient.newHttpClient();
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+                String familyName = (String) payload.get("family_name");
 
-            if (response.statusCode() == 200) {
-                ObjectMapper mapper = new ObjectMapper();
-                 var data = mapper.readValue(response.body(), GoogleUserData.class);
-                 return new UserData(null,data.getFamilyName(),data.getGivenName());
+                String givenName = (String) payload.get("given_name");
+                var avatar =  new Image();
+                avatar.setUrl(pictureUrl);
+                return new UserData(userId,email,null,familyName,givenName,avatar);
             } else {
-                System.err.println("Failed to fetch user data. Status: " + response.statusCode());
+                throw new RuntimeException("Invalid token");
             }
-        } catch (Exception e) {
+        } catch (
+                Exception e
+        ) {
             throw new RuntimeException(e);
         }
+    }
+    public  String verifyToken(String token) {
+        try {
+            var verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
+                    .setAudience(Collections.singleton(this.clientId))
+                    .build();
+            GoogleIdToken idToken = verifier.verify(token);
+            if (idToken != null) {
+                GoogleIdToken.Payload payload = idToken.getPayload();
+                String userId = payload.getSubject();
+                if (userId != null) {
+                    return userId;
+                } else {
+                    throw new RuntimeException("Invalid token");
+                }
+            } else {
+                throw new RuntimeException("Invalid token");
+            }
 
-        return null;
+        } catch (
+                Exception e
+        ) {
+            throw new RuntimeException(e);
+        }
     }
 }
