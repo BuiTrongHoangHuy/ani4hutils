@@ -128,6 +128,24 @@ export default function Player() {
         setPlayedTime(newTime);
         setProgress(newTime / duration);
     };
+    const handlePlayerClick = (e: React.MouseEvent<HTMLDivElement>) => {
+
+        const target = e.target as HTMLElement;
+        if (
+            target.closest("button") ||
+            target.closest("input") ||
+            target.closest("select") ||
+            target.closest(".dropdown")
+        ) {
+            return;
+        }
+        togglePlay();
+        setShowControls(true);
+        handleMouseLeave();
+    };
+    const handleControlsClick = (e: React.MouseEvent<HTMLDivElement>) => {
+        e.stopPropagation();
+    };
     useEffect(() => {
         return () => {
             if (hideControlsTimeout.current) {
@@ -136,7 +154,11 @@ export default function Player() {
         };
     }, []);
     return (
-        <div className="player-wrapper" ref={playerWrapper} onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+        <div className="player-wrapper" ref={playerWrapper}
+             onMouseMove={handleMouseMove}
+             onMouseLeave={handleMouseLeave}
+             onClick={handlePlayerClick}
+        >
             <ReactPlayer
                 ref={player}
                 url="https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
@@ -164,7 +186,9 @@ export default function Player() {
             <div className={`absolute bottom-0 left-0 right-0 px-4 pb-2 pt-4 flex items-center text-white
             gap-5 justify-between w-full bg-base-100 transition-opacity duration-500
             ${showControls || !playing ? "opacity-50":"opacity-0 pointer-events-none"}
-            `}>
+            `}
+                onClick={handleControlsClick}
+            >
                 <input type="range" min="0" step={"any"} max="1" value={loaded} readOnly={true}
                        className="absolute top-[-4] left-0 right-0 w-full
                        range [--range-thumb:var(--color-white)]
@@ -179,24 +203,25 @@ export default function Player() {
                        [--range-bg:transparent]
                         "/>
 
-                <button className="cursor-pointer hover:text-primary" onClick={togglePlay}>{playing ? <PauseIcon size={20}/> : <PlayIcon size={20}/>}</button>
+                <button className="cursor-pointer hover:text-primary tooltip" data-tip={`${playing ? "Pause" : "Play"}`}
+                        onClick={togglePlay}>{playing ? <PauseIcon size={20}/> : <PlayIcon size={20}/>}</button>
                 <button  onClick={toggleMute} className="cursor-pointer hover:text-primary" >
                     {muted ? <VolumeX size={20}/> : <Volume2 size={20}/> }
                 </button>
                 <span className="text-sm ">{formatTime(playedTime)} / {formatTime(duration)}</span>
                 <div className="flex-1"></div>
-                <button className="cursor-pointer hover:text-primary" onClick={rewind5Seconds} >
+                <button className="cursor-pointer hover:text-primary tooltip" data-tip="Rewind 5s" onClick={rewind5Seconds} >
                     <RotateCcw size={20}/>
                 </button>
-                <button className="cursor-pointer hover:text-primary"  onClick={fastForward5Seconds} >
+                <button className="cursor-pointer hover:text-primary tooltip" data-tip="Fast Forward 5s" onClick={fastForward5Seconds} >
                     <RotateCw size={20}/>
                 </button>
-                <button className="cursor-pointer hover:text-primary"  >
+                <button className="cursor-pointer hover:text-primary tooltip" data-tip="Skip OP/ED" >
                     <SkipForward size={20}/>
                 </button>
                 <div className="relative flex justify-center items-center">
                     <div className="dropdown dropdown-top p-0">
-                        <div tabIndex={0} role="button" className="btn hover:text-primary p-0"><CircleGauge size={20}/></div>
+                        <div tabIndex={0} role="button" className="btn hover:text-primary p-0 tooltip" data-tip="Playback Rate"><CircleGauge size={20}/></div>
                         <ul tabIndex={0} className="dropdown-content menu bg-black rounded z-1  p-2">
                             {[0.25 ,0.5, 0.75, 1, 1.25, 1.5, 2].map(rate => (
                                 <li
@@ -228,7 +253,7 @@ export default function Player() {
                     <option>Loading...</option>
                 )}
             </select>
-                <button onClick={toggleFullscreen} className="cursor-pointer hover:text-primary" >
+                <button onClick={toggleFullscreen} className="cursor-pointer hover:text-primary tooltip" data-tip={`${isFullscreen ? "Exit Fullscreen" : "Fullscreen"}`} >
                     {isFullscreen ? <ShrinkIcon size={20}/> :<ExpandIcon size={20}/>}
                 </button>
             </div>
