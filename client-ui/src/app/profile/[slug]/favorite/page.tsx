@@ -1,5 +1,4 @@
 import {SearchList} from "@/types/searchList";
-import FilmCard from "@/components/FilmCard";
 import FavoriteCard from "@/components/FavoriteCard";
 
 export default function FavoritePage() {
