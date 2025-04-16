@@ -45,7 +45,7 @@ export default function FilmCard(
                             alt={film.title}
                         />
                     </div>
-                    <p className="line-clamp-1" style={{fontSize: fontSize}}>{film.title}</p>
+                    <p className="line-clamp-2" style={{fontSize: fontSize}}>{film.title}</p>
                 </div>
             }
         </Link>

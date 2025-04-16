@@ -1,7 +1,6 @@
 import {SearchList} from "@/types/searchList";
 import Link from "next/link";
 import Image from "next/image";
-import {IconsMetadata} from "next/dist/lib/metadata/generate/icons";
 
 export default function SearchListCard({film}: {film: SearchList}) {
     return(

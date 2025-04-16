@@ -100,9 +100,6 @@ export default function SearchPage() {
     ]
     const searchParams = useSearchParams();
     const query = searchParams.get("q") || "";
-    useEffect(() => {
-        console.log("hellooooooooo");
-    }, [])
 
     return (
         <div className={"w-screen mt-[64px] pl-20 pr-20 pt-8"}>
