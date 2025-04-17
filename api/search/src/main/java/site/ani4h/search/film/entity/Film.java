@@ -14,10 +14,10 @@ import java.util.List;
 @Setter
 public class Film {
     @Id
-    private String id;
+    private int id;
 
     @Field(type = FieldType.Keyword)
-    private String uid;
+    private int idSort;
 
     @MultiField(
             mainField = @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search"),
@@ -64,9 +64,9 @@ public class Film {
     }
 
     public void mapFromFilmModel(FilmModel filmModel) {
-        this.id = filmModel.getId().toString();
+        this.id = filmModel.getId().getLocalId();
         this.title = filmModel.getTitle();
-        this.uid = filmModel.getId().toString();
+        this.idSort = filmModel.getId().getLocalId();
         this.genres = filmModel.getGenres();
         this.images = filmModel.getImages();
         this.synopsis = filmModel.getSynopsis();

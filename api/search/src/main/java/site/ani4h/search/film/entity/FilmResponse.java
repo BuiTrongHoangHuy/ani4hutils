@@ -2,7 +2,6 @@ package site.ani4h.search.film.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Transient;
 import org.springframework.data.elasticsearch.annotations.Document;
 import site.ani4h.shared.common.Image;
 

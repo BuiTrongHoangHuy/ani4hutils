@@ -1,19 +1,18 @@
 package site.ani4h.search.film;
 
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.ani4h.search.film.entity.FilmModel;
 import site.ani4h.search.film.entity.SearchRequest;
-import site.ani4h.shared.common.Requester;
+import site.ani4h.shared.common.PagingSearch;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/v1/search")
 public class FilmController {
-    private final FilmService filmService;
-    public FilmController(FilmService filmService) {
+    private final FilmServiceImpl filmService;
+    public FilmController(FilmServiceImpl filmService) {
         this.filmService = filmService;
     }
 
@@ -24,8 +23,8 @@ public class FilmController {
     }
 
     @GetMapping()
-    public ResponseEntity<?> getFilmsByTitle(SearchRequest request) throws Exception {
-        var films = filmService.getFilmsByTitle(request);
+    public ResponseEntity<?> getFilmsByTitle(@ModelAttribute SearchRequest request, @ModelAttribute PagingSearch paging) {
+        var films = filmService.searchFilms(request, paging);
         return ResponseEntity.ok(films);
     }
 

@@ -19,7 +19,7 @@ public class FilmModel {
     private String synonyms;
     private String ja_name;
     private String en_name;
-    private final static int type = 7;
+    private final static int type = 3;
 
     public void setId(int id) { this.id = new Uid(id, 0, type); }
 }
