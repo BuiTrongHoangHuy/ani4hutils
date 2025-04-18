@@ -2,6 +2,8 @@ package site.ani4h.search.film;
 
 import co.elastic.clients.elasticsearch._types.SortOptionsBuilders;
 import co.elastic.clients.elasticsearch._types.SortOrder;
+import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
@@ -30,15 +32,7 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
     public SearchResponse search(SearchRequest request, PagingSearch paging) {
 
         NativeQueryBuilder queryBuilder = new NativeQueryBuilder()
-                .withQuery(QueryBuilders.multiMatch(m -> m
-                        .fields(
-                                "title", "title.standard^2",
-                                "synonyms", "synonyms.standard^2",
-                                "jaName", "jaName.standard"
-                        )
-                        .query(request.getTitle())
-                        .fuzziness("AUTO")
-                ))
+                .withQuery(buildSearchQuery(request))
                 .withSort(SortOptionsBuilders.score(s -> s.order(SortOrder.Desc)))
                 .withSort(SortOptionsBuilders.field(f -> f.field("idSort").order(SortOrder.Asc)));
 
@@ -71,6 +65,52 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
         PagingSearch pagingSearch = getPagingSearch(paging, searchHits);
 
         return new SearchResponse(data, pagingSearch);
+    }
+
+
+    private static Query buildSearchQuery(SearchRequest request) {
+        BoolQuery.Builder boolQuery = QueryBuilders.bool();
+
+        if(request.getTitle() != null && !request.getTitle().isEmpty()){
+            boolQuery.must(QueryBuilders.multiMatch(m -> m
+                    .fields(
+                            "title", "title.standard^2",
+                            "synonyms", "synonyms.standard^2",
+                            "jaName", "jaName.standard"
+                    )
+                    .query(request.getTitle())
+                    .fuzziness("AUTO")
+            ));
+        }
+
+        if(request.getGenreId() != null && !request.getGenreId().isEmpty()){
+            int genreId = Integer.parseInt(request.getGenreId());
+            boolQuery.filter(f -> f
+                    .term(t -> t.field("genres.id").value(genreId))
+            );
+        }
+
+        if(request.getYear() > 1900 && request.getYear() < 2100){
+            boolQuery.filter(f -> f
+                    .term(t -> t.field("year").value(request.getYear()))
+            );
+        }
+
+        if(request.getSeason() != null && !request.getSeason().isEmpty()){
+            boolQuery.filter(f -> f
+                    .term(t -> t.field("season").value(request.getSeason()))
+            );
+        }
+
+        if(request.getState() != null && !request.getState().isEmpty()){
+            boolQuery.filter(f -> f
+                    .term(t -> t.field("state").value(request.getState()))
+            );
+        }
+
+        return Query.of(q -> q
+                .bool(boolQuery.build())
+        );
     }
 
     private static PagingSearch getPagingSearch(PagingSearch paging, SearchHits<Film> searchHits) {
