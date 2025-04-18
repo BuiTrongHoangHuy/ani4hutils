@@ -92,7 +92,7 @@ public class Film {
         filmResponse.setSynonyms(this.synonyms);
         filmResponse.setJaName(this.jaName);
         filmResponse.setEnName(this.enName);
-        filmResponse.setGenres(this.genres);
+        filmResponse.setGenres(this.genres.stream().map(Genre::mapToGenreResponse).toList());
         filmResponse.setImages(this.images);
         filmResponse.setAvgStar(this.avgStar);
         filmResponse.setTotalStar(this.totalStar);

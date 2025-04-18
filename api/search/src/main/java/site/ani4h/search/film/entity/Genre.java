@@ -15,4 +15,11 @@ public class Genre {
         this.id = id;
         this.name = name;
     }
+
+    public GenreResponse mapToGenreResponse() {
+        GenreResponse genreResponse = new GenreResponse();
+        genreResponse.setId(id);
+        genreResponse.setName(name);
+        return genreResponse;
+    }
 }

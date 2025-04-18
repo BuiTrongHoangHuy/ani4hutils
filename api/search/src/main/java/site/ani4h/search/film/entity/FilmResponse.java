@@ -20,7 +20,7 @@ public class FilmResponse {
     private String jaName;
     private String enName;
     private List<Image> images;
-    private List<Genre> genres;
+    private List<GenreResponse> genres;
     private float avgStar;
     private int totalStar;
     private int maxEpisodes;

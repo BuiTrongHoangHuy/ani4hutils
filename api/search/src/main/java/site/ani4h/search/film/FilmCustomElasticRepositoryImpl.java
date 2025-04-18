@@ -14,6 +14,7 @@ import org.springframework.data.elasticsearch.core.SearchHits;
 import org.springframework.stereotype.Repository;
 import site.ani4h.search.film.entity.*;
 import site.ani4h.shared.common.PagingSearch;
+import site.ani4h.shared.common.Uid;
 
 import java.util.List;
 import java.util.Objects;
@@ -84,9 +85,10 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
         }
 
         if(request.getGenreId() != null && !request.getGenreId().isEmpty()){
-            int genreId = Integer.parseInt(request.getGenreId());
+            Uid uid = new Uid(request.getGenreId());
+            int id = uid.getLocalId();
             boolQuery.filter(f -> f
-                    .term(t -> t.field("genres.id").value(genreId))
+                    .term(t -> t.field("genres.id").value(id))
             );
         }
 
