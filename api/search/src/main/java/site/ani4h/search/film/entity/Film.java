@@ -27,15 +27,6 @@ public class Film {
     )
     private String title;
 
-    @Field(type = FieldType.Keyword)
-    private List<String> genres;
-
-    @Field(type = FieldType.Keyword)
-    private String synopsis;
-
-    @Field(type = FieldType.Nested)
-    private List<Image> images;
-
     @MultiField(
             mainField = @Field(type = FieldType.Text, analyzer = "autocomplete", searchAnalyzer = "autocomplete_search"),
             otherFields = {
@@ -60,18 +51,57 @@ public class Film {
     )
     private String enName;
 
+    @Field(type = FieldType.Object)
+    private List<Genre> genres;
+
+    @Field(type = FieldType.Keyword)
+    private String synopsis;
+
+    @Field(type = FieldType.Nested)
+    private List<Image> images;
+
+    @Field(type = FieldType.Keyword)
+    private float avgStar;
+
+    @Field(type = FieldType.Keyword)
+    private int totalStar;
+
+    @Field(type = FieldType.Keyword)
+    private int maxEpisodes;
+
+    @Field(type = FieldType.Keyword)
+    private int numEpisodes;
+
+    @Field(type = FieldType.Keyword)
+    private int year;
+
+    @Field(type = FieldType.Keyword)
+    private String season;
+
+    @Field(type = FieldType.Keyword)
+    private String state;
+
     public Film() {
     }
 
-    public void mapFromFilmModel(FilmModel filmModel) {
-        this.id = filmModel.getId().getLocalId();
-        this.title = filmModel.getTitle();
-        this.idSort = filmModel.getId().getLocalId();
-        this.genres = filmModel.getGenres();
-        this.images = filmModel.getImages();
-        this.synopsis = filmModel.getSynopsis();
-        this.synonyms = filmModel.getSynonyms();
-        this.jaName = filmModel.getJa_name();
-        this.enName = filmModel.getEn_name();
+    public FilmResponse mapToResponse() {
+        FilmResponse filmResponse = new FilmResponse();
+        filmResponse.setId(this.id);
+        filmResponse.setTitle(this.title);
+        filmResponse.setSynopsis(this.synopsis);
+        filmResponse.setSynonyms(this.synonyms);
+        filmResponse.setJaName(this.jaName);
+        filmResponse.setEnName(this.enName);
+        filmResponse.setGenres(this.genres);
+        filmResponse.setImages(this.images);
+        filmResponse.setAvgStar(this.avgStar);
+        filmResponse.setTotalStar(this.totalStar);
+        filmResponse.setMaxEpisodes(this.maxEpisodes);
+        filmResponse.setNumEpisodes(this.numEpisodes);
+        filmResponse.setYear(this.year);
+        filmResponse.setSeason(this.season);
+        filmResponse.setState(this.state);
+
+        return filmResponse;
     }
 }

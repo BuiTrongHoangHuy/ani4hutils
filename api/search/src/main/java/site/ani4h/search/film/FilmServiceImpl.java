@@ -27,28 +27,19 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public List<FilmModel> getFilms() {
+    public List<Film> getFilms() {
         return filmRepository.getFilms();
     }
 
     @Override
     public void syncFilmsToElastic() {
-        List<FilmModel> films = filmRepository.getFilms();
+        List<Film> films = filmRepository.getFilms();
 
         if(films.isEmpty()) {
             return;
         }
 
-        // Convert FilmModel to Film
-        List<Film> filmList = films.stream()
-                .map(filmModel -> {
-                    Film film = new Film();
-                    film.mapFromFilmModel(filmModel);
-                    return film;
-                })
-                .collect(Collectors.toList());
-
-        filmElasticsearchRepository.saveAll(filmList);
+        filmElasticsearchRepository.saveAll(films);
     }
 
     // Search Films

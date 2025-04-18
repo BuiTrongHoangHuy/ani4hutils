@@ -2,7 +2,7 @@ package site.ani4h.search.film;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import site.ani4h.search.film.entity.FilmModel;
+import site.ani4h.search.film.entity.Film;
 import site.ani4h.search.film.entity.SearchRequest;
 import site.ani4h.shared.common.PagingSearch;
 
@@ -30,7 +30,7 @@ public class FilmController {
 
     @GetMapping("/all")
     public ResponseEntity<?> getAllFilms() {
-        List<FilmModel> films = filmService.getFilms();
+        List<Film> films = filmService.getFilms();
         return ResponseEntity.ok(films);
     }
 }

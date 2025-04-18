@@ -9,13 +9,13 @@ import java.util.List;
 @Getter
 @Setter
 public class SearchResponse {
-    List<Film> data;
+    List<FilmResponse> data;
     PagingSearch paging;
 
     public SearchResponse() {
     }
 
-    public SearchResponse(List<Film> data, PagingSearch paging) {
+    public SearchResponse(List<FilmResponse> data, PagingSearch paging) {
         this.data = data;
         this.paging = paging;
     }

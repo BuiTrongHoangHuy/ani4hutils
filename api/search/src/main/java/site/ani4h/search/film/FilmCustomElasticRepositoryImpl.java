@@ -61,9 +61,9 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
         SearchHits<Film> searchHits = elasticsearchOperations.search(searchQuery, Film.class);
         log.info("Search Hits: {}", searchHits.getTotalHits());
 
-        List<Film> data = searchHits.stream()
+        List<FilmResponse> data = searchHits.stream()
                 .map(searchHit -> {
-                    return searchHit.getContent();
+                    return searchHit.getContent().mapToResponse();
                 })
                 .collect(Collectors.toList());
 
