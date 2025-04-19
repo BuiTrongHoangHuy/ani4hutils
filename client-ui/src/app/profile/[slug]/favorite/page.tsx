@@ -1,4 +1,4 @@
-import {SearchList} from "@/types/searchList";
+import {SearchList} from "@/types/search/searchList";
 import FavoriteCard from "@/components/FavoriteCard";
 
 export default function FavoritePage() {

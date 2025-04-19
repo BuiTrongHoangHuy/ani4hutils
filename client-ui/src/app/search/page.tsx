@@ -1,115 +1,120 @@
 'use client'
-import {SearchList} from "@/types/searchList";
+import {SearchList} from "@/types/search/searchList";
 import SearchListCard from "@/components/SearchListCard";
 import FilmCard from "@/components/FilmCard";
-import {useEffect} from "react";
 import {useSearchParams} from "next/navigation";
+import {useEffect, useRef, useState} from "react";
+import {PagingSearch} from "@/types/search/pagingSearch";
 
 export default function SearchPage() {
-    const data: SearchList[] = [
-        {
-            id: "1",
-            title: "Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 2002,
-            views: 1000000,
-            avgStar: 4.5,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "2",
-            title: "Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "3",
-            title: "Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "4",
-            title: "Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "5",
-            title: "Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-    ]
     const searchParams = useSearchParams();
-    const query = searchParams.get("q") || "";
+    const title = searchParams.get("q") || "";
+    const [data, setData] = useState<SearchList[]>([]);
+    const [canFetch, setCanFetch] = useState(false);
+    const [paging, setPaging] = useState<PagingSearch>({
+        cursor: "",
+        nextCursor: "",
+        page: 1,
+        pageSize: 10,
+    });
+    const loader = useRef(null);
+    const [hasMore, setHasMore] = useState(true);
+
+    const fetchData = async () => {
+        try{
+            console.log("Paging: ", paging);
+            const res = await fetch(`http://localhost:4000/v1/search?${buildSearchQuery(title, paging)}`)
+            const result = await res.json()
+            if (result.data) {
+                setData((prev) => [...prev, ...result.data.data]);
+                setPaging({
+                    ...paging,
+                    cursor: result.data.paging.cursor,
+                    nextCursor: result.data.paging.nextCursor,
+                });
+
+                if(result.data.paging.nextCursor === null) {
+                    setHasMore(false);
+                }
+                else {
+                    setHasMore(true);
+                }
+            } else {
+                console.error("Error fetching data:", result);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        }
+    }
+
+    useEffect(() => {
+        if(title){
+            setPaging({
+                cursor: "",
+                nextCursor: "",
+                page: 1,
+                pageSize: 10,
+            });
+            setData([]);
+            setHasMore(true);
+            setCanFetch(true);
+        }
+    }, [title]);
+
+    useEffect(() => {
+        if(canFetch){
+            console.log("Fetching data: UseEffect CanFetch");
+            fetchData();
+            setCanFetch(false);
+        }
+    }, [canFetch]);
+
+    useEffect(() => {
+        if(paging.cursor !== "" && paging.cursor === paging.nextCursor && paging.nextCursor !== null){
+            console.log("Fetching data: UseEffect Cursor");
+            fetchData();
+        }
+    }, [paging.cursor]);
+
+    useEffect(() => {
+        if(!loader.current || !hasMore) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting){
+                setPaging((prev) => ({
+                    ...prev,
+                    cursor: prev.nextCursor,
+                }));
+            }
+        }, {
+            root: null,
+            rootMargin: "100px",
+            threshold: 0,
+        })
+
+        observer.observe(loader.current);
+
+        return () => {
+            if(loader.current){
+                observer.unobserve(loader.current);
+            }
+        };
+
+    }, [loader, hasMore]);
 
     return (
         <div className={"w-screen mt-[64px] pl-20 pr-20 pt-8"}>
             <div className={"flex flex-row w-full h-full space-x-4"}>
                 <div className={"flex flex-col flex-1 h-full space-y-8"}>
-                    {
-                        data.map((film, index) =>
-                            <SearchListCard film={film} key={index} />
-                        )
-                    }
+                    <div>
+                        {
+                            data.map((film, index) =>
+                                <SearchListCard film={film} key={index} />
+                            )
+                        }
+                    </div>
+                    {hasMore && <div ref={loader} style={{ height: "40px" }} />}
+                    {!hasMore && <p>Hết dữ liệu.</p>}
                 </div>
 
                 <div className={"flex flex-col w-86 h-full space-y-4"}>
@@ -143,4 +148,18 @@ export default function SearchPage() {
             </div>
         </div>
     );
+}
+
+function buildSearchQuery(title: string, paging: PagingSearch): string {
+    const params = new URLSearchParams();
+    params.append("title", title);
+    if(paging.cursor) {
+        params.append("cursor", paging.cursor);
+    }
+    if(paging.nextCursor){
+        params.append("nextCursor", paging.nextCursor);
+    }
+    params.append("page", paging.page.toString());
+    params.append("pageSize", paging.pageSize.toString());
+    return params.toString();
 }

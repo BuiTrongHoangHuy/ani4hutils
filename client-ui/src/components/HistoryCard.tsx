@@ -1,4 +1,4 @@
-import {SearchList} from "@/types/searchList";
+import {SearchList} from "@/types/search/searchList";
 import Image from "next/image";
 import {Trash} from "lucide-react";
 

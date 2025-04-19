@@ -1,4 +1,4 @@
-import {SearchList} from "@/types/searchList";
+import {SearchList} from "@/types/search/searchList";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -32,7 +32,7 @@ export default function FilmCard(
                             alt={film.title}
                         />
                     </div>
-                    <p className="line-clamp-1" style={{fontSize: fontSize}}>{film.title}</p>
+                    <p className="flex-1 line-clamp-1" style={{fontSize: fontSize}}>{film.title}</p>
                 </div>
                 :
                 <div className={"flex flex-col cursor-pointer hover:scale-103 transition-transform duration-200"} style={{width: width*4}}>

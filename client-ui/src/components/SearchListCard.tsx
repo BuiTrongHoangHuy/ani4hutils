@@ -1,4 +1,4 @@
-import {SearchList} from "@/types/searchList";
+import {SearchList} from "@/types/search/searchList";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -20,7 +20,7 @@ export default function SearchListCard({film}: {film: SearchList}) {
                         <span className="font-normal opacity-50"> ({film.year})</span>
                     </p>
                     <p className="line-clamp-4 opacity-60">{film.synopsis}</p>
-                    <p className="font-normal">Genres: {film.genres.join(", ")}</p>
+                    <p className="font-normal">Genres: {film.genres.map(g => g.name).join(", ")}</p>
                     <p className="font-normal">Views: {film.views?.toLocaleString()}</p>
                     <p className="font-normal">Score: {film.avgStar}/10</p>
                     <p className="font-normal">Episodes: {film.numEpisodes}/{film.maxEpisodes}</p>
