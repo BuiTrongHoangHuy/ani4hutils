@@ -1,6 +1,7 @@
 package site.ani4h.search.film;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import site.ani4h.search.film.entity.*;
 import site.ani4h.shared.common.PagingSearch;
@@ -32,7 +33,9 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
+    @Scheduled(cron = "0 */30 * * * *")
     public void syncFilmsToElastic() {
+        log.info("Syncing films to Elasticsearch...");
         List<Film> films = filmRepository.getFilms();
 
         if(films.isEmpty()) {
@@ -40,6 +43,7 @@ public class FilmServiceImpl implements FilmService {
         }
 
         filmElasticsearchRepository.saveAll(films);
+        log.info("Synced {} films to Elasticsearch", films.size());
     }
 
     // Search Films
