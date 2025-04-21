@@ -3,7 +3,7 @@ import {SearchList} from "@/types/search/searchList";
 import HistoryCard from "@/components/HistoryCard";
 
 export default function HistoryPage() {
-    const data: SearchList[] = [
+    const data = [
         {
             id: "1",
             title: "EP01: Solo Leveling",
@@ -208,7 +208,7 @@ export default function HistoryPage() {
         <div>
             <div className={"flex flex-col w-full space-y-8 ml-8"}>
                 <p className={"font-bold text-xl text-orange-500"}>History</p>
-                <div className={"grid grid-cols-3 gap-8"}>
+                <div className={"flex flex-col gap-8"}>
                     {data.map((film, i) =>
                         <HistoryCard film={film} key={i} />
                     )}

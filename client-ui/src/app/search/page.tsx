@@ -106,7 +106,7 @@ export default function SearchPage() {
         <div className={"w-screen mt-[64px] pl-20 pr-20 pt-8"}>
             <div className={"flex flex-row w-full h-full space-x-4"}>
                 <div className={"flex flex-col flex-1 h-full space-y-8"}>
-                    <div>
+                    <div className={"flex flex-col space-y-4"}>
                         {
                             data.map((film, index) =>
                                 <SearchListCard film={film} key={index} />
