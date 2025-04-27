@@ -25,6 +25,26 @@ public class AwsServiceDiscovery implements ServiceDiscovery {
     private final Map<String, List<ServiceInstance>> instances =
             Collections.synchronizedMap(new HashMap<>());
 
+    // Debug
+    @Value("${debug}")
+    private boolean debug;
+
+    @Value("${auth.http.server.port}")
+    private int authHttpPort;
+    @Value("${auth.grpc.server.port}")
+    private int authGrpcPort;
+
+    @Value("${film.http.server.port}")
+    private int filmHttpPort;
+    @Value("${film.grpc.server.port}")
+    private int filmGrpcPort;
+
+    @Value("${search.http.server.port}")
+    private int searchHttpPort;
+    @Value("${search.grpc.server.port}")
+    private int searchGrpcPort;
+
+
     public AwsServiceDiscovery() {}
     @PostConstruct
     public void init() {
@@ -76,6 +96,24 @@ public class AwsServiceDiscovery implements ServiceDiscovery {
 
     @Override
     public ServiceInstance getServiceInstance(String service) {
+        if(debug){
+            if(service.equals("auth")){
+                String port = String.valueOf(authHttpPort) + "-" + String.valueOf(authGrpcPort);
+                return new ServiceInstance(service, "localhost", "localhost", port, InstanceHealth.HEALTHY.toString());
+            }
+            else if(service.equals("film")){
+                String port = String.valueOf(filmHttpPort) + "-" + String.valueOf(filmGrpcPort);
+                return new ServiceInstance(service, "localhost", "localhost", port, InstanceHealth.HEALTHY.toString());
+            }
+            else if(service.equals("search")){
+                String port = String.valueOf(searchHttpPort) + "-" + String.valueOf(searchGrpcPort);
+                return new ServiceInstance(service, "localhost", "localhost", port, InstanceHealth.HEALTHY.toString());
+            }
+            else{
+                return null;
+            }
+        }
+
         System.out.println("CALLLL");
         if (!this.instances.containsKey(service)) {
             fetchServiceInstances(service);

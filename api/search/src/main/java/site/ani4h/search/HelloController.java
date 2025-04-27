@@ -1,12 +1,26 @@
 package site.ani4h.search;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import site.ani4h.shared.utils.serviceDiscovery.ServiceDiscovery;
+import site.ani4h.shared.utils.serviceDiscovery.ServiceInstance;
 
+@Slf4j
 @RestController
 @RequestMapping
 public class HelloController {
-    @GetMapping("/v1")
-    public String index() { return "Hello World"; }
+    private final ServiceDiscovery serviceDiscovery;
+
+    public HelloController(ServiceDiscovery serviceDiscovery) {
+        this.serviceDiscovery = serviceDiscovery;
+    }
+
+    @GetMapping("/discovery")
+    public ResponseEntity<?> TestDiscovery(@RequestParam String service) {
+        log.info("Test discovery service " + service);
+        ServiceInstance serviceInstance = serviceDiscovery.getServiceInstance(service);
+        return ResponseEntity.ok(serviceInstance);
+    }
 }
