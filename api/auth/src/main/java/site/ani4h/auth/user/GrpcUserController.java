@@ -16,7 +16,13 @@ public class GrpcUserController extends UserGrpc.UserImplBase {
     public void getUserById(UserOuterClass.GetUsersByIdReq request,
                             StreamObserver<UserOuterClass.PublicUserInfo> responseObserver){
         var user = userService.getUserById(request.getId());
-        var res = UserOuterClass.PublicUserInfo.newBuilder().setUserName(user.getFirstName() + user.getLastName()).build();
+        var res = UserOuterClass.PublicUserInfo.newBuilder()
+                .setId(user.getId().getLocalId())
+                .setFirstName(user.getFirstName())
+                .setLastName(user.getLastName())
+                .setUserName(user.getFirstName() + user.getLastName())
+                .setSystemRole(user.getRole().name())
+                .build();
         responseObserver.onNext(res);
         responseObserver.onCompleted();
     }

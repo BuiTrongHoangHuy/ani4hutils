@@ -98,15 +98,15 @@ public class AwsServiceDiscovery implements ServiceDiscovery {
     public ServiceInstance getServiceInstance(String service) {
         if(debug){
             if(service.equals("auth")){
-                String port = String.valueOf(authHttpPort) + "-" + String.valueOf(authGrpcPort);
+                String port = String.valueOf(authGrpcPort);
                 return new ServiceInstance(service, "localhost", "localhost", port, InstanceHealth.HEALTHY.toString());
             }
             else if(service.equals("film")){
-                String port = String.valueOf(filmHttpPort) + "-" + String.valueOf(filmGrpcPort);
+                String port = String.valueOf(filmGrpcPort);
                 return new ServiceInstance(service, "localhost", "localhost", port, InstanceHealth.HEALTHY.toString());
             }
             else if(service.equals("search")){
-                String port = String.valueOf(searchHttpPort) + "-" + String.valueOf(searchGrpcPort);
+                String port = String.valueOf(searchGrpcPort);
                 return new ServiceInstance(service, "localhost", "localhost", port, InstanceHealth.HEALTHY.toString());
             }
             else{
