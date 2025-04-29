@@ -93,6 +93,7 @@ CREATE TABLE `favorites`
     `id`         int NOT NULL AUTO_INCREMENT,
     `user_id`    int NOT NULL,
     `film_id`   int NOT NULL,
+    `created_at`                datetime DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (`id`),
     KEY `user_id` (`user_id`) USING BTREE,
     KEY `anime_id` (`film_id`) USING BTREE

@@ -1,7 +1,12 @@
 package site.ani4h.film.favorite;
 
 import org.springframework.web.bind.annotation.*;
+import site.ani4h.film.favorite.entity.FavoriteFilm;
 import site.ani4h.film.favorite.entity.FavoriteRequest;
+import site.ani4h.shared.common.Paging;
+import site.ani4h.shared.common.Uid;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("v1/favorite")
@@ -25,5 +30,10 @@ public class FavoriteController {
     @GetMapping("/is-favorite")
     public boolean isFavorite(@ModelAttribute FavoriteRequest request) {
         return favoriteService.isFavorite(request);
+    }
+
+    @GetMapping("/list")
+    public List<FavoriteFilm> getFavoriteFilms(@RequestParam Uid userId, @ModelAttribute Paging paging) {
+        return favoriteService.getFavoriteFilms(userId, paging);
     }
 }
