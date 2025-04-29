@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link";
 import Image from "next/image";
-import React, { FormEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
 export default function TopBar(className: { className?: string }) {
     const [isLogin, setIsLogin] = useState<boolean>(false)
@@ -44,6 +44,31 @@ export default function TopBar(className: { className?: string }) {
                 }
             }
         )
+    }
+    const onUpload = async ( e: ChangeEvent<HTMLInputElement>)=>{
+
+        const files = (e.target as HTMLInputElement).files;
+        if (files) {
+            const response = await fetch(`http://localhost:4001/v1/upload/film`,{
+                method:"POST",
+            });
+
+            const presignedUrl = await response.json();
+            console.log(presignedUrl)
+            // Upload file trực tiếp lên S3
+            await fetch(presignedUrl.data, {
+                method: 'PUT',
+                body: files[0],
+                headers: {
+                    'Content-Type': 'video/mp4'
+                }
+            }).then(
+                (res) =>{
+                    console.log('Upload thành công!');
+                }
+            )
+        }
+
     }
     return (
         <>
@@ -169,7 +194,7 @@ export default function TopBar(className: { className?: string }) {
                             </div>
                         </div>
                 }
-                <div className={"btn btn-primary "}>Download</div>
+                <input type={"file"} className={"btn btn-primary input "} onChange={onUpload} ></input>
             </div>
         </>
     )
