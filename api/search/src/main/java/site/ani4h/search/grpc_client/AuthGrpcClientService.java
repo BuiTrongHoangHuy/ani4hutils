@@ -18,13 +18,11 @@ import javax.annotation.PreDestroy;
 public class AuthGrpcClientService {
     private final ServiceDiscovery serviceDiscovery;
     private final String serviceName = "auth";
-    private final GrpcChannelFactory channelFactory;
     private UserGrpc.UserBlockingStub userStub;
     private ManagedChannel channel;
 
-    public AuthGrpcClientService(ServiceDiscovery serviceDiscovery, @Lazy GrpcChannelFactory channelFactory) {
+    public AuthGrpcClientService(ServiceDiscovery serviceDiscovery) {
         this.serviceDiscovery = serviceDiscovery;
-        this.channelFactory = channelFactory;
 
         initializeChannelAndStub();
     }

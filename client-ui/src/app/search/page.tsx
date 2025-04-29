@@ -23,7 +23,7 @@ export default function SearchPage() {
     const fetchData = async () => {
         try{
             console.log("Paging: ", paging);
-            const res = await fetch(`http://localhost:4000/v1/search?${buildSearchQuery(title, paging)}`)
+            const res = await fetch(`http://localhost:4003/v1/search?${buildSearchQuery(title, paging)}`)
             const result = await res.json()
             if (result.data) {
                 setData((prev) => [...prev, ...result.data.data]);

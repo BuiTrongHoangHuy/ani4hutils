@@ -70,8 +70,6 @@ CREATE TABLE `external_auth_providers`
   COLLATE = utf8mb4_unicode_ci;
 
 DROP TABLE IF EXISTS `external_auths`;
-
-
 CREATE TABLE `external_auths`
 (
     `id`                        int NOT NULL AUTO_INCREMENT,
@@ -88,4 +86,34 @@ CREATE TABLE `external_auths`
 ) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `favorites`;
+CREATE TABLE `favorites`
+(
+    `id`         int NOT NULL AUTO_INCREMENT,
+    `user_id`    int NOT NULL,
+    `film_id`   int NOT NULL,
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`) USING BTREE,
+    KEY `anime_id` (`film_id`) USING BTREE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `watch_history`;
+CREATE TABLE `watch_history`
+(
+    `id`         int NOT NULL AUTO_INCREMENT,
+    `user_id`    int NOT NULL,
+    `episode_id`   int NOT NULL,
+    `watched_duration` int NOT NULL,
+    `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`) USING BTREE,
+    KEY `anime_id` (`episode_id`) USING BTREE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
 
