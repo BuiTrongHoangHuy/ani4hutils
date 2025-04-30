@@ -1,7 +1,11 @@
 package site.ani4h.film.watch_history;
 
 import org.springframework.stereotype.Repository;
+import site.ani4h.film.watch_history.entity.EpisodeWatchHistory;
 import site.ani4h.film.watch_history.entity.WatchHistoryRequest;
+import site.ani4h.shared.common.Paging;
+
+import java.util.List;
 
 @Repository
 public interface WatchHistoryRepository {
@@ -12,4 +16,6 @@ public interface WatchHistoryRepository {
     void update(WatchHistoryRequest request);
 
     void delete(WatchHistoryRequest request);
+
+    List<EpisodeWatchHistory> getWatchHistoryByUserId(WatchHistoryRequest request, Paging paging);
 }
