@@ -4,9 +4,9 @@ export default function TopBar(className: {className?: string }) {
     const navigate = useNavigate();
     return (
         <div className={`navbar bg-base-red shadow-sm ${className} space-x-4`}>
-            <div className="flex-none">
+            {/*<div className="flex-none">
                 <a href={"/"} className="btn btn-ghost text-xl">Ani4h</a>
-            </div>
+            </div>*/}
             <div className="flex-1">
             </div>
 
