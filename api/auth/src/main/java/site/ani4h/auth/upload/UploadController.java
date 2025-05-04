@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import site.ani4h.shared.common.ApiResponse;
 import site.ani4h.shared.common.Image;
+import site.ani4h.shared.common.Uid;
 
 @RestController
 @RequestMapping("/v1/upload")
@@ -43,11 +44,11 @@ public class UploadController {
 
     @GetMapping("episode-video-url")
     public ResponseEntity<?> getEpisodeVideoUploadUrl(
-            @RequestParam("filmId") String filmId,
+            @RequestParam("filmId") Uid filmId,
             @RequestParam("episodeNumber") int episodeNumber,
             @RequestParam("fileExtension") String fileExtension) {
         try {
-            String folder = "film/" + filmId+"/episode_"+episodeNumber+"/";
+            String folder = "film/" + filmId.getLocalId()+"/episode_"+episodeNumber+"/";
             String fileName = "episode_" + episodeNumber + "." + fileExtension;
             String url = this.uploadService.UploadFilm(folder, fileName);
             return ResponseEntity.ok(ApiResponse.success(url));
