@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import episodeService, { Episode } from '../../services/episodeService';
+import EpisodeUpload from './EpisodeUpload';
 
 interface EpisodeListProps {
   filmId: string;
@@ -17,6 +18,7 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
   const [episodes, setEpisodes] = useState<Episode[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
 
   useEffect(() => {
     fetchEpisodes();
@@ -37,6 +39,14 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
   };
 
 
+  const handleEpisodeAdded = () => {
+    fetchEpisodes();
+    onEpisodeAdded();
+    setShowUploadModal(false);
+  };
+
+
+
   if (loading) {
     return (
       <div className="flex justify-center items-center h-24">
@@ -51,6 +61,8 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
         <h2 className="text-xl font-semibold">Episodes ({numEpisodes}/{maxEpisodes})</h2>
         <button 
           className="btn btn-primary btn-sm"
+          onClick={() => setShowUploadModal(true)}
+          disabled={numEpisodes >= maxEpisodes}
         >
           Add Episode
         </button>
@@ -121,6 +133,20 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
               ))}
             </tbody>
           </table>
+        </div>
+      )}
+
+      {showUploadModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-base-100 p-6 rounded-lg w-full max-w-2xl">
+            <h2 className="text-xl font-semibold mb-4">Add New Episode</h2>
+            <EpisodeUpload
+              filmId={filmId}
+              nextEpisodeNumber={numEpisodes + 1}
+              onEpisodeAdded={handleEpisodeAdded}
+              onCancel={() => setShowUploadModal(false)}
+            />
+          </div>
         </div>
       )}
 
