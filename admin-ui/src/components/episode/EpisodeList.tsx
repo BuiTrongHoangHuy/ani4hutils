@@ -1,0 +1,131 @@
+import React, { useState, useEffect } from 'react';
+import episodeService, { Episode } from '../../services/episodeService';
+
+interface EpisodeListProps {
+  filmId: string;
+  maxEpisodes: number;
+  numEpisodes: number;
+  onEpisodeAdded: () => void;
+}
+
+const EpisodeList: React.FC<EpisodeListProps> = ({ 
+  filmId, 
+  maxEpisodes, 
+  numEpisodes,
+  onEpisodeAdded 
+}) => {
+  const [episodes, setEpisodes] = useState<Episode[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetchEpisodes();
+  }, [filmId]);
+
+  const fetchEpisodes = async () => {
+    setLoading(true);
+    try {
+      const response = await episodeService.getEpisodesByFilmId(filmId);
+      setEpisodes(response.data.data);
+      setError(null);
+    } catch (err) {
+      console.error('Error fetching episodes:', err);
+      setError('Failed to load episodes. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-24">
+        <div className="loading loading-spinner loading-md"></div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-8">
+      <div className="flex justify-between items-center mb-4">
+        <h2 className="text-xl font-semibold">Episodes ({numEpisodes}/{maxEpisodes})</h2>
+        <button 
+          className="btn btn-primary btn-sm"
+        >
+          Add Episode
+        </button>
+      </div>
+
+      {error && (
+        <div className="alert alert-error mb-4">
+          <span>{error}</span>
+        </div>
+      )}
+
+      {episodes.length === 0 ? (
+        <div className="bg-base-200 p-6 rounded-lg text-center">
+          No episodes available for this film.
+        </div>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="table w-full">
+            <thead>
+              <tr>
+                <th>Episode</th>
+                <th>Title</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Video</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {episodes.map((episode) => (
+                <tr key={episode.id}>
+                  <td>{episode.episodeNumber}</td>
+                  <td>{episode.title}</td>
+                  <td>{episode.duration ? `${episode.duration} min` : 'N/A'}</td>
+                  <td>
+                    <span className={`badge ${
+                      episode.state === 'released' ? 'badge-success' : 'badge-warning'
+                    }`}>
+                      {episode.state}
+                    </span>
+                  </td>
+                  <td>
+                    {episode.videoUrl ? (
+                      <button
+                        className="btn btn-xs btn-outline"
+                      >
+                        View
+                      </button>
+                    ) : (
+                      <span className="text-error">No video</span>
+                    )}
+                  </td>
+                  <td>
+                    <div className="flex space-x-2">
+                      <button
+                        className="btn btn-xs btn-warning"
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="btn btn-xs btn-error"
+                      >
+                        Delete
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
+
+    </div>
+  );
+};
+
+export default EpisodeList;

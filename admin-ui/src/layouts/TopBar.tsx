@@ -43,7 +43,7 @@ export default function TopBar(className: {className?: string }) {
                         <li><a onClick={e => {
                             e.preventDefault()
                             localStorage.removeItem("token")
-                            localStorage.removeItem("refeshToken")
+                            localStorage.removeItem("refreshToken")
                             navigate('/login')
                         }}>Logout</a></li>
                     </ul>

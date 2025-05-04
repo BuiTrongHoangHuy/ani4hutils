@@ -1,6 +1,7 @@
 import  { useEffect, useState } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import filmService, { Film } from '../../services/filmService';
+import EpisodeList from '../../components/episode/EpisodeList';
 
 const FilmDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -160,6 +161,14 @@ const FilmDetail = () => {
         </div>
       </div>
 
+      {film  && (
+        <EpisodeList
+          filmId={film.id}
+          maxEpisodes={film.maxEpisodes}
+          numEpisodes={film.numEpisodes}
+          onEpisodeAdded={fetchFilm}
+        />
+      )}
     </div>
   );
 };
