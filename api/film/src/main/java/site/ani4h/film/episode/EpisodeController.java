@@ -31,4 +31,24 @@ public class EpisodeController {
         return ResponseEntity.ok(ApiResponse.success(episode));
     }
 
+    @PostMapping("/episode")
+    public ResponseEntity<?> createEpisode(@RequestBody EpisodeCreate episodeCreate) {
+        Episode episode = new Episode();
+        episode.setTitle(episodeCreate.getTitle());
+        episode.setEpisodeNumber(episodeCreate.getEpisodeNumber());
+        episode.setSynopsis(episodeCreate.getSynopsis());
+        episode.setDuration(episodeCreate.getDuration());
+        episode.setThumbnail(episodeCreate.getThumbnail());
+        episode.setVideoUrl(episodeCreate.getVideoUrl());
+        episode.setAirDate(episodeCreate.getAirDate());
+        if (episodeCreate.getState() != null) {
+            episode.setState(episodeCreate.getState());
+        }
+        episode.setFilmId(episodeCreate.getFilmId().getLocalId());
+
+        Episode createdEpisode = episodeService.createEpisode(episode);
+        return ResponseEntity.ok(ApiResponse.success(createdEpisode));
+    }
+
+
 }

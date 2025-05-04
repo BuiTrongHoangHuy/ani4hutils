@@ -34,4 +34,41 @@ public class JdbcEpisodeRepository implements EpisodeRepository {
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Episode.class), id);
     }
 
+    @Override
+    public Episode createEpisode(Episode episode) {
+        String sql = "INSERT INTO episodes (title, episode_number, synopsis, duration, thumbnail, video_url, " +
+                "air_date, state, film_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
+        jdbcTemplate.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            ps.setString(1, episode.getTitle());
+            ps.setInt(2, episode.getEpisodeNumber());
+            ps.setString(3, episode.getSynopsis());
+            ps.setInt(4, episode.getDuration());
+            ps.setString(5, episode.getThumbnail() != null ? episode.getThumbnail().toString() : null);
+            ps.setString(6, episode.getVideoUrl().substring(episode.getVideoUrl().indexOf("/film")));
+            ps.setTimestamp(7, episode.getAirDate() != null ? Timestamp.valueOf(episode.getAirDate()) : null);
+            ps.setString(8, episode.getState() != null ? String.valueOf(episode.getState()) : null);
+            ps.setInt(9, episode.getFilmId().getLocalId());
+            return ps;
+        }, keyHolder);
+
+        int id = Objects.requireNonNull(keyHolder.getKey()).intValue();
+        episode.setId(id);
+
+        updateFilmEpisodeCount(episode.getFilmId().getLocalId());
+
+        return episode;
+    }
+
+
+    private void updateFilmEpisodeCount(int filmId) {
+        String countSql = "SELECT COUNT(*) FROM episodes WHERE film_id = ?";
+        int episodeCount = jdbcTemplate.queryForObject(countSql, Integer.class, filmId);
+
+        String updateSql = "UPDATE films SET num_episodes = ? WHERE id = ?";
+        jdbcTemplate.update(updateSql, episodeCount, filmId);
+    }
 }

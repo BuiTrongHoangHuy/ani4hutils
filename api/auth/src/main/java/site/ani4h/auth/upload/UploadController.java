@@ -1,6 +1,7 @@
 package site.ani4h.auth.upload;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,6 +37,21 @@ public class UploadController {
             String url = this.uploadService.UploadFilm("film","hehe.webm");
             return ResponseEntity.ok(ApiResponse.success(url));
         } catch (Exception e ) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @GetMapping("episode-video-url")
+    public ResponseEntity<?> getEpisodeVideoUploadUrl(
+            @RequestParam("filmId") String filmId,
+            @RequestParam("episodeNumber") int episodeNumber,
+            @RequestParam("fileExtension") String fileExtension) {
+        try {
+            String folder = "film/" + filmId+"/episode_"+episodeNumber+"/";
+            String fileName = "episode_" + episodeNumber + "." + fileExtension;
+            String url = this.uploadService.UploadFilm(folder, fileName);
+            return ResponseEntity.ok(ApiResponse.success(url));
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

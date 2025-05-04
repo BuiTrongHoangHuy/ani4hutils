@@ -7,4 +7,5 @@ import java.util.List;
 public interface EpisodeService {
     List<Episode> getEpisodesByFilmId(int filmId);
     Episode getEpisodeById(int id);
+    Episode createEpisode(Episode episode);
 }
