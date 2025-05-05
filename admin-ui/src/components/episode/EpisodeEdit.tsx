@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Episode, EpisodeUpdate } from '../../services/episodeService';
+import episodeService, { Episode, EpisodeUpdate } from '../../services/episodeService';
 
 interface EpisodeEditProps {
   episode: Episode;
@@ -41,10 +41,71 @@ const EpisodeEdit: React.FC<EpisodeEditProps> = ({
     }
   };
 
+  const uploadVideoToS3 = async (url: string, file: File): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
+
+      xhr.upload.addEventListener('progress', (event) => {
+        if (event.lengthComputable) {
+          const percentComplete = Math.round((event.loaded / event.total) * 100);
+          setUploadProgress(percentComplete);
+        }
+      });
+
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve();
+        } else {
+          reject(new Error(`Upload failed with status ${xhr.status}`));
+        }
+      });
+
+      xhr.addEventListener('error', () => {
+        reject(new Error('Upload failed due to network error'));
+      });
+
+      xhr.open('PUT', url);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.send(file);
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    setUploading(true);
+    setError(null);
+
+    try {
+      let updatedVideoUrl = formData.videoUrl;
+
+      if (videoFile) {
+        const fileExtension = videoFile.name.split('.').pop() || '';
+
+        const uploadUrlResponse = await episodeService.getVideoUploadUrl(
+          episode.filmId,
+          formData.episodeNumber || episode.episodeNumber,
+          fileExtension
+        );
+
+        const uploadUrl = uploadUrlResponse.data.data;
+
+        await uploadVideoToS3(uploadUrl, videoFile);
+
+        updatedVideoUrl = uploadUrl.split('?')[0];
+      }
+
+      await episodeService.updateEpisode({
+        ...formData,
+        videoUrl: updatedVideoUrl
+      });
+
+      onEpisodeUpdated();
+    } catch (err) {
+      console.error('Error updating episode:', err);
+      setError('Failed to update episode. Please try again later.');
+      setUploading(false);
+    }
   };
 
   return (
