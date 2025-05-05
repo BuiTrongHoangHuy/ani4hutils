@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import episodeService, { Episode } from '../../services/episodeService';
 import EpisodeUpload from './EpisodeUpload';
+import EpisodeEdit from './EpisodeEdit';
+import VideoPlayerModal from './VideoPlayerModal';
 
 interface EpisodeListProps {
   filmId: string;
@@ -19,6 +21,8 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
   const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
+  const [showEditModal, setShowEditModal] = useState<boolean>(false);
+  const [currentEpisode, setCurrentEpisode] = useState<Episode | null>(null);
 
   useEffect(() => {
     fetchEpisodes();
@@ -39,13 +43,24 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
   };
 
 
+
   const handleEpisodeAdded = () => {
     fetchEpisodes();
     onEpisodeAdded();
     setShowUploadModal(false);
   };
 
+  const handleEpisodeUpdated = () => {
+    fetchEpisodes();
+    onEpisodeAdded();
+    setShowEditModal(false);
+    setCurrentEpisode(null);
+  };
 
+  const handleEditEpisode = (episode: Episode) => {
+    setCurrentEpisode(episode);
+    setShowEditModal(true);
+  };
 
   if (loading) {
     return (
@@ -83,7 +98,7 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
           <table className="table w-full">
             <thead>
               <tr>
-                <th>Episode</th>
+                <th>Episode #</th>
                 <th>Title</th>
                 <th>Duration</th>
                 <th>Status</th>
@@ -99,7 +114,7 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
                   <td>{episode.duration ? `${episode.duration} min` : 'N/A'}</td>
                   <td>
                     <span className={`badge ${
-                      episode.state === 'released' ? 'badge-success' : 'badge-warning'
+                      episode.state === 'RELEASED' ? 'badge-success' : 'badge-warning'
                     }`}>
                       {episode.state}
                     </span>
@@ -118,6 +133,7 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
                   <td>
                     <div className="flex space-x-2">
                       <button
+                        onClick={() => handleEditEpisode(episode)}
                         className="btn btn-xs btn-warning"
                       >
                         Edit
@@ -145,6 +161,22 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
               nextEpisodeNumber={numEpisodes + 1}
               onEpisodeAdded={handleEpisodeAdded}
               onCancel={() => setShowUploadModal(false)}
+            />
+          </div>
+        </div>
+      )}
+
+      {showEditModal && currentEpisode && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-base-100 p-6 rounded-lg w-full max-w-2xl">
+            <h2 className="text-xl font-semibold mb-4">Edit Episode</h2>
+            <EpisodeEdit
+              episode={currentEpisode}
+              onEpisodeUpdated={handleEpisodeUpdated}
+              onCancel={() => {
+                setShowEditModal(false);
+                setCurrentEpisode(null);
+              }}
             />
           </div>
         </div>
