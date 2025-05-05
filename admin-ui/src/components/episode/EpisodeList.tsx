@@ -23,6 +23,8 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
   const [showUploadModal, setShowUploadModal] = useState<boolean>(false);
   const [showEditModal, setShowEditModal] = useState<boolean>(false);
   const [currentEpisode, setCurrentEpisode] = useState<Episode | null>(null);
+  const [showVideoModal, setShowVideoModal] = useState<boolean>(false);
+  const [currentVideoUrl, setCurrentVideoUrl] = useState<string>('');
 
   useEffect(() => {
     fetchEpisodes();
@@ -122,6 +124,10 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
                   <td>
                     {episode.videoUrl ? (
                       <button
+                        onClick={() => {
+                          setCurrentVideoUrl(episode.videoUrl || '');
+                          setShowVideoModal(true);
+                        }}
                         className="btn btn-xs btn-outline"
                       >
                         View
@@ -182,6 +188,12 @@ const EpisodeList: React.FC<EpisodeListProps> = ({
         </div>
       )}
 
+      {showVideoModal && currentVideoUrl && (
+        <VideoPlayerModal
+          videoUrl={currentVideoUrl}
+          onClose={() => setShowVideoModal(false)}
+        />
+      )}
     </div>
   );
 };
