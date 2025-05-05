@@ -1,11 +1,14 @@
 package site.ani4h.film.episode;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Component;
 import site.ani4h.film.episode.entity.Episode;
+import site.ani4h.film.episode.entity.EpisodeUpdate;
 
 import java.sql.PreparedStatement;
 import java.sql.Statement;
@@ -64,22 +67,38 @@ public class JdbcEpisodeRepository implements EpisodeRepository {
     }
 
     @Override
-    public Episode updateEpisode(Episode episode) {
-        String sql = "UPDATE episodes SET title = ?, episode_number = ?, synopsis = ?, duration = ?, " +
-                "thumbnail = ?, video_url = ?, air_date = ?, state = ? WHERE id = ?";
+    public void updateEpisode(int id, EpisodeUpdate episode) {
+        /*String sql = "UPDATE episodes SET title = ?, episode_number = ?, synopsis = ?, duration = ?, " +
+                "thumbnail = ?, video_url = ?, air_date = ?, state = ? WHERE id = ?";*/
+        String sql = """
+                UPDATE `episodes`
+                SET title = COALESCE(?,title),
+                    episode_number = COALESCE(?,episode_number),
+                    synopsis = COALESCE(?,synopsis),
+                    duration = COALESCE(?,duration),
+                    thumbnail = ?,
+                    video_url = COALESCE(?,video_url),
+                    air_date = COALESCE(?,air_date),
+                    state = COALESCE(?,state)
+                WHERE id = ?
+                """;
+        try {
 
-        jdbcTemplate.update(sql,
-                episode.getTitle(),
-                episode.getEpisodeNumber(),
-                episode.getSynopsis(),
-                episode.getDuration(),
-                episode.getThumbnail() != null ? episode.getThumbnail().toString() : null,
-                episode.getVideoUrl().substring(episode.getVideoUrl().indexOf("/film")),
-                episode.getAirDate() != null ? Timestamp.valueOf(episode.getAirDate()) : null,
-                episode.getState() != null ? String.valueOf(episode.getState())  : null,
-                episode.getId().getLocalId());
+            var objectMapper = new ObjectMapper().writer().writeValueAsString(episode.getThumbnail());
+            jdbcTemplate.update(sql,
+                    episode.getTitle(),
+                    episode.getEpisodeNumber(),
+                    episode.getSynopsis(),
+                    episode.getDuration(),
+                    episode.getThumbnail() == null ? null : objectMapper,
+                    episode.getVideoUrl()== null ? null : episode.getVideoUrl().substring(episode.getVideoUrl().indexOf("/film"))+"/master.m3u8",
+                    episode.getAirDate() != null ? Timestamp.valueOf(episode.getAirDate()) : null,
+                    episode.getState() != null ? String.valueOf(episode.getState())  : null,
+                    id);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
 
-        return episode;
     }
 
 

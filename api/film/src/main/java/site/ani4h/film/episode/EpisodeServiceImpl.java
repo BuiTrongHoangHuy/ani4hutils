@@ -2,6 +2,7 @@ package site.ani4h.film.episode;
 
 import org.springframework.stereotype.Service;
 import site.ani4h.film.episode.entity.Episode;
+import site.ani4h.film.episode.entity.EpisodeUpdate;
 
 import java.util.List;
 
@@ -29,8 +30,8 @@ public class EpisodeServiceImpl implements EpisodeService {
     }
 
     @Override
-    public Episode updateEpisode(Episode episode) {
-        return episodeRepository.updateEpisode(episode);
+    public void updateEpisode(int id,EpisodeUpdate episode) {
+         episodeRepository.updateEpisode(id, episode);
     }
 
 }

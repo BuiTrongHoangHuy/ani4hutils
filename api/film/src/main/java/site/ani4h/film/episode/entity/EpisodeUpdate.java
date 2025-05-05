@@ -10,13 +10,12 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class EpisodeUpdate {
-    private Uid id;
     private String title;
-    private int episodeNumber;
+    private Integer episodeNumber;
     private String synopsis;
-    private int duration;
+    private Integer duration;
     private Image thumbnail;
     private String videoUrl;
     private LocalDateTime airDate;
-    private String state;
+    private EpisodeState state;
 }

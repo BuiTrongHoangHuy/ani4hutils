@@ -64,23 +64,8 @@ public class EpisodeController {
 
     @PutMapping("/episode/{id}")
     public ResponseEntity<?> updateEpisode(@PathVariable Uid id, @RequestBody EpisodeUpdate episodeUpdate) {
-        Episode episode = episodeService.getEpisodeById(id.getLocalId());
-        episode.setTitle(episodeUpdate.getTitle());
-        episode.setEpisodeNumber(episodeUpdate.getEpisodeNumber());
-        episode.setSynopsis(episodeUpdate.getSynopsis());
-        episode.setDuration(episodeUpdate.getDuration());
-        episode.setThumbnail(episodeUpdate.getThumbnail());
-        episode.setVideoUrl(episodeUpdate.getVideoUrl()+"/master.m3u8");
-        episode.setAirDate(episodeUpdate.getAirDate());
-        if (episodeUpdate.getState() != null) {
-            episode.setState(episodeUpdate.getState());
-        }
-
-        Episode updatedEpisode = episodeService.updateEpisode(episode);
-        if (updatedEpisode.getVideoUrl() != null && !updatedEpisode.getVideoUrl().isEmpty()) {
-            updatedEpisode.setVideoUrl(cdnVideoUrl + updatedEpisode.getVideoUrl());
-        }
-        return ResponseEntity.ok(ApiResponse.success(updatedEpisode));
+        episodeService.updateEpisode(id.getLocalId(), episodeUpdate);
+        return ResponseEntity.ok(true);
     }
 
 }
