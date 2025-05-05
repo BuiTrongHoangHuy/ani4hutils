@@ -59,4 +59,17 @@ public class FilmServiceImpl implements FilmService {
 
         return filmCustomElasticRepository.search(request, paging);
     }
+
+    @Override
+    public SearchResponse contentBasedRecommendMLT(ContentBasedRequest request, PagingSearch paging) {
+        if(request == null) {
+            throw new IllegalArgumentException("Content based request must not be null");
+        }
+
+        if(paging == null) {
+            paging = new PagingSearch();
+        }
+
+        return filmCustomElasticRepository.contentBasedRecommendMLT(request, paging);
+    }
 }

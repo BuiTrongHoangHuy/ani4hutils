@@ -2,9 +2,7 @@ package site.ani4h.search.film;
 
 import co.elastic.clients.elasticsearch._types.SortOptionsBuilders;
 import co.elastic.clients.elasticsearch._types.SortOrder;
-import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
-import co.elastic.clients.elasticsearch._types.query_dsl.Query;
-import co.elastic.clients.elasticsearch._types.query_dsl.QueryBuilders;
+import co.elastic.clients.elasticsearch._types.query_dsl.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.client.elc.NativeQuery;
@@ -31,24 +29,8 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
 
     @Override
     public SearchResponse search(SearchRequest request, PagingSearch paging) {
-
-        NativeQueryBuilder queryBuilder = new NativeQueryBuilder()
-                .withQuery(buildSearchQuery(request))
-                .withSort(SortOptionsBuilders.score(s -> s.order(SortOrder.Desc)))
-                .withSort(SortOptionsBuilders.field(f -> f.field("idSort").order(SortOrder.Asc)));
-
-        if(paging != null) {
-            if(paging.getCursor() != null && !paging.getCursor().isEmpty()) {
-                int id = getIdFromCursor(paging.getCursor());
-                float score = getScoreFromCursor(paging.getCursor());
-
-                queryBuilder.withSearchAfter(List.of(score, id))
-                            .withPageable(PageRequest.of(0, 10));
-            }
-            else {
-                queryBuilder.withPageable(PageRequest.of(paging.getPage() - 1, paging.getPageSize()));
-            }
-        }
+        NativeQueryBuilder queryBuilder = buildPagingForQuery(paging);
+        queryBuilder.withQuery(buildSearchQuery(request));
 
         NativeQuery searchQuery = queryBuilder.build();
 
@@ -68,6 +50,71 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
         return new SearchResponse(data, pagingSearch);
     }
 
+    @Override
+    public SearchResponse contentBasedRecommendMLT(ContentBasedRequest request, PagingSearch paging) {
+        String likedId = String.valueOf(request.getId().getLocalId());
+
+        MoreLikeThisQuery mltQuery = MoreLikeThisQuery.of(q -> q
+                .fields("title", "synopsis", "genres", "jaName")
+                .like(like -> like
+                        .document(doc -> doc
+                                .index("films")
+                                .id(String.valueOf(request.getId().getLocalId()))
+                        )
+                )
+                .minTermFreq(1)
+                .minDocFreq(1)
+        );
+
+        Query boolQuery = Query.of(q -> q
+                .bool(b -> b
+                        .must(m -> m.moreLikeThis(mltQuery))
+                        .mustNot(mn -> mn.ids(i -> i.values(likedId)))
+                )
+        );
+
+        NativeQueryBuilder queryBuilder = buildPagingForQuery(paging);
+        queryBuilder.withQuery(boolQuery);
+
+        NativeQuery recommend = queryBuilder.build();
+        SearchHits<Film> searchHits = elasticsearchOperations.search(recommend, Film.class);
+
+        List<FilmResponse> data = searchHits.stream()
+                .map(searchHit -> {
+                    return searchHit.getContent().mapToResponse();
+                })
+                .collect(Collectors.toList());
+
+        PagingSearch pagingSearch = getPagingSearch(paging, searchHits);
+
+        return new SearchResponse(data, pagingSearch);
+    }
+
+    @Override
+    public SearchResponse collaborativeFilteringRecommend(PagingSearch paging) {
+        return null;
+    }
+
+    private NativeQueryBuilder buildPagingForQuery(PagingSearch paging) {
+        NativeQueryBuilder queryBuilder = new NativeQueryBuilder()
+                .withSort(SortOptionsBuilders.score(s -> s.order(SortOrder.Desc)))
+                .withSort(SortOptionsBuilders.field(f -> f.field("idSort").order(SortOrder.Asc)));
+
+        if(paging != null) {
+            if(paging.getCursor() != null && !paging.getCursor().isEmpty()) {
+                int id = getIdFromCursor(paging.getCursor());
+                float score = getScoreFromCursor(paging.getCursor());
+
+                queryBuilder.withSearchAfter(List.of(score, id))
+                        .withPageable(PageRequest.of(0, 10));
+            }
+            else {
+                queryBuilder.withPageable(PageRequest.of(paging.getPage() - 1, paging.getPageSize()));
+            }
+        }
+
+        return queryBuilder;
+    }
 
     private static Query buildSearchQuery(SearchRequest request) {
         BoolQuery.Builder boolQuery = QueryBuilders.bool();

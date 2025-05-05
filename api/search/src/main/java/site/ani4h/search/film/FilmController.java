@@ -2,6 +2,7 @@ package site.ani4h.search.film;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.ani4h.search.film.entity.ContentBasedRequest;
 import site.ani4h.search.film.entity.Film;
 import site.ani4h.search.film.entity.SearchRequest;
 import site.ani4h.shared.common.PagingSearch;
@@ -20,6 +21,12 @@ public class FilmController {
     public ResponseEntity<?> syncFilmsToElastic() {
         filmService.syncFilmsToElastic();
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/recommend-mlt")
+    public ResponseEntity<?> contentBasedRecommendMLT(@ModelAttribute ContentBasedRequest request, @ModelAttribute PagingSearch paging) {
+        var films = filmService.contentBasedRecommendMLT(request, paging);
+        return ResponseEntity.ok(films);
     }
 
     @GetMapping()
