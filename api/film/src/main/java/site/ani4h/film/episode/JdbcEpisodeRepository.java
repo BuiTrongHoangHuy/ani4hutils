@@ -63,6 +63,25 @@ public class JdbcEpisodeRepository implements EpisodeRepository {
         return episode;
     }
 
+    @Override
+    public Episode updateEpisode(Episode episode) {
+        String sql = "UPDATE episodes SET title = ?, episode_number = ?, synopsis = ?, duration = ?, " +
+                "thumbnail = ?, video_url = ?, air_date = ?, state = ? WHERE id = ?";
+
+        jdbcTemplate.update(sql,
+                episode.getTitle(),
+                episode.getEpisodeNumber(),
+                episode.getSynopsis(),
+                episode.getDuration(),
+                episode.getThumbnail() != null ? episode.getThumbnail().toString() : null,
+                episode.getVideoUrl().substring(episode.getVideoUrl().indexOf("/film")),
+                episode.getAirDate() != null ? Timestamp.valueOf(episode.getAirDate()) : null,
+                episode.getState() != null ? String.valueOf(episode.getState())  : null,
+                episode.getId().getLocalId());
+
+        return episode;
+    }
+
 
     private void updateFilmEpisodeCount(int filmId) {
         String countSql = "SELECT COUNT(*) FROM episodes WHERE film_id = ?";

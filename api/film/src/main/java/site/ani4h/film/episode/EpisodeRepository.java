@@ -8,4 +8,5 @@ public interface EpisodeRepository {
     List<Episode> getEpisodesByFilmId(int filmId);
     Episode getEpisodeById(int id);
     Episode createEpisode(Episode episode);
+    Episode updateEpisode(Episode episode);
 }

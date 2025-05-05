@@ -63,14 +63,14 @@ public class EpisodeController {
     }
 
     @PutMapping("/episode/{id}")
-    public ResponseEntity<?> updateEpisode(@PathVariable int id, @RequestBody EpisodeUpdate episodeUpdate) {
-        Episode episode = episodeService.getEpisodeById(id);
+    public ResponseEntity<?> updateEpisode(@PathVariable Uid id, @RequestBody EpisodeUpdate episodeUpdate) {
+        Episode episode = episodeService.getEpisodeById(id.getLocalId());
         episode.setTitle(episodeUpdate.getTitle());
         episode.setEpisodeNumber(episodeUpdate.getEpisodeNumber());
         episode.setSynopsis(episodeUpdate.getSynopsis());
         episode.setDuration(episodeUpdate.getDuration());
         episode.setThumbnail(episodeUpdate.getThumbnail());
-        episode.setVideoUrl(episodeUpdate.getVideoUrl());
+        episode.setVideoUrl(episodeUpdate.getVideoUrl()+"/master.m3u8");
         episode.setAirDate(episodeUpdate.getAirDate());
         if (episodeUpdate.getState() != null) {
             episode.setState(episodeUpdate.getState());
@@ -83,9 +83,4 @@ public class EpisodeController {
         return ResponseEntity.ok(ApiResponse.success(updatedEpisode));
     }
 
-    @DeleteMapping("/episode/{id}")
-    public ResponseEntity<?> deleteEpisode(@PathVariable int id) {
-        episodeService.deleteEpisode(id);
-        return ResponseEntity.ok(ApiResponse.success("Episode deleted successfully"));
-    }
 }

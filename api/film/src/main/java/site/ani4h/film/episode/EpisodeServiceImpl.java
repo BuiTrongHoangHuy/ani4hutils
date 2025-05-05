@@ -28,4 +28,9 @@ public class EpisodeServiceImpl implements EpisodeService {
         return episodeRepository.createEpisode(episode);
     }
 
+    @Override
+    public Episode updateEpisode(Episode episode) {
+        return episodeRepository.updateEpisode(episode);
+    }
+
 }
