@@ -28,7 +28,7 @@ public class WatchHistoryController {
     }
 
     @DeleteMapping("/delete")
-    public void delete(@RequestBody WatchHistoryRequest request) {
+    public void delete(@ModelAttribute WatchHistoryRequest request) {
         watchHistoryService.delete(request);
     }
 

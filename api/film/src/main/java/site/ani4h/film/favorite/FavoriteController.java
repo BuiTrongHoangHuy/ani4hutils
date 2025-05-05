@@ -23,7 +23,7 @@ public class FavoriteController {
     }
 
     @DeleteMapping("/remove")
-    public void removeFavorite(@RequestBody FavoriteRequest request) {
+    public void removeFavorite(@ModelAttribute FavoriteRequest request) {
         favoriteService.removeFavorite(request);
     }
 

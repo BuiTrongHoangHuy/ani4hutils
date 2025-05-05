@@ -117,4 +117,38 @@ CREATE TABLE `watch_history`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_unicode_ci;
 
+DROP TABLE IF EXISTS `subscriptions`;
+CREATE TABLE `subscriptions`
+(
+    `id`            int NOT NULL    AUTO_INCREMENT,
+    `name`          varchar(50)     DEFAULT NULL,
+    `price`         decimal(10,2)   DEFAULT NULL,
+    `quality`       ENUM ('Fair','Good','Excellent') DEFAULT 'Fair',
+    `resolution`    ENUM('480p','720p','1080p','2K + HDR', '4K + HDR') DEFAULT '480p',
+    `max_simultaneous_streams` int DEFAULT 1,
+    `status`        INT         DEFAULT 1,
+    `created_at`    datetime    DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`    datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
+DROP TABLE IF EXISTS `user_subscriptions`;
+CREATE TABLE `user_subscriptions`
+(
+    `id`                int NOT NULL AUTO_INCREMENT,
+    `user_id`           int NOT NULL,
+    `subscription_id`   int NOT NULL,
+    `status`            INT         DEFAULT 1,
+    `created_at`        datetime    DEFAULT CURRENT_TIMESTAMP,
+    `updated_at`        datetime    DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`) USING BTREE,
+    KEY `subscription_id` (`subscription_id`) USING BTREE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
+
 
