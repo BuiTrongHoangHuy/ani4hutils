@@ -3,5 +3,5 @@ import {NextResponse} from "next/server";
 
 export default async  function POST()  {
     (await cookies()).delete("accessToken");
-    return NextResponse.json({ status: 201 });
+    return NextResponse.json(true,{ status: 201 });
 }
