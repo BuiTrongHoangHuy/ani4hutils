@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link";
 import Image from "next/image";
-import React, { FormEvent, useEffect, useState} from "react";
+import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
 import {router} from "next/client";
 import {useRouter} from "next/navigation";
@@ -50,6 +50,7 @@ export default function TopBar(className: { className?: string }) {
             }
         )
     }
+
     const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
         if(event.key === 'Enter') {
             event.preventDefault();
@@ -189,7 +190,7 @@ export default function TopBar(className: { className?: string }) {
                             </div>
                         </div>
                 }
-                <div className={"btn btn-primary "}>Download</div>
+                <input type={"file"} className={"btn btn-primary input "} onChange={onUpload} ></input>
             </div>
         </>
     )

@@ -27,7 +27,7 @@ public class UploadService {
     public String UploadFilm(String folder, String fileName) {
         String ext  = FilenameUtils.getExtension(fileName);
         UUID uuid = UUID.randomUUID();
-        String dst = folder + File.separator + uuid + "." + ext;
+        String dst = folder + uuid + "." + ext;
         return this.provider.uploadFileWithPreSignedUrl(dst);
     }
 }
