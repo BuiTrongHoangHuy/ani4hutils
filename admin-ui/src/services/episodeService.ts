@@ -33,7 +33,6 @@ export interface EpisodeCreate {
 }
 
 export interface EpisodeUpdate {
-  id: number;
   title?: string;
   episodeNumber?: number;
   synopsis?: string;
@@ -58,8 +57,8 @@ const createEpisode = (episode: EpisodeCreate): Promise<AxiosResponse<Episode>> 
   return axiosInstance.post(`/v1/episode`, episode);
 };
 
-const updateEpisode = (episode: EpisodeUpdate): Promise<AxiosResponse<Episode>> => {
-  return axiosInstance.put(`/v1/episode/${episode.id}`, episode);
+const updateEpisode = (id: number,episode: EpisodeUpdate): Promise<AxiosResponse<Episode>> => {
+  return axiosInstance.put(`/v1/episode/${id}`, episode);
 };
 
 
