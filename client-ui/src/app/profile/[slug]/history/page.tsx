@@ -1,5 +1,3 @@
-import FavoriteCard from "@/components/FavoriteCard";
-import {SearchList} from "@/types/search/searchList";
 import HistoryCard from "@/components/HistoryCard";
 
 export default function HistoryPage() {

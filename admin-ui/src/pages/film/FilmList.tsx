@@ -6,7 +6,6 @@ function FilmList () {
   const [films, setFilms] = useState<Film[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [totalPages, setTotalPages] = useState<number>(0);
 
   const [paging, setPaging] = useState<Paging>({
     page: 0,
@@ -25,7 +24,6 @@ function FilmList () {
       try {
         const response = await filmService.getFilms(paging, filter);
         setFilms(response.data.data);
-        //setTotalPages(response.data.totalPages);
         setError(null);
       } catch (err) {
         setError('Failed to fetch films. Please try again later.');
@@ -45,10 +43,6 @@ function FilmList () {
       [name]: value === '' ? undefined : name === 'year' ? parseInt(value) : value
     }));
     setPaging(prev => ({ ...prev, page: 0 }));
-  };
-
-  const handlePageChange = (newPage: number) => {
-    setPaging(prev => ({ ...prev, page: newPage }));
   };
 
 
@@ -108,7 +102,10 @@ function FilmList () {
       </div>
 
       {error && (
-        <div className="alert alert-error mb-4">
+        <div role="alert" className="alert alert-error mb-4">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 shrink-0 stroke-current" fill="none" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
           <span>{error}</span>
         </div>
       )}
@@ -118,6 +115,7 @@ function FilmList () {
           <div className="loading loading-spinner loading-lg"></div>
         </div>
       ) : (
+        <>
           <div className="overflow-x-auto">
             <table className="table w-full">
               <thead>
@@ -169,7 +167,7 @@ function FilmList () {
                       <td>
                         <div className="flex space-x-2">
                           <Link
-                            to={``}
+                            to={`/film/${film.id}`}
                             className="btn btn-sm btn-info"
                           >
                             View
@@ -200,6 +198,7 @@ function FilmList () {
             </table>
           </div>
 
+        </>
       )}
     </div>
   );
