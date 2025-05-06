@@ -51,17 +51,27 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
     }
 
     @Override
-    public SearchResponse contentBasedRecommendMLT(ContentBasedRequest request, PagingSearch paging) {
-        String likedId = String.valueOf(request.getId().getLocalId());
+    public SearchResponse moreLikeThisQuery(List<Integer> filmIds,PagingSearch paging) {
+        if(filmIds.isEmpty()){
+            return new SearchResponse(List.of(), paging);
+        }
+
+        List<String> likedIds = filmIds.stream()
+                .map(id -> String.valueOf(id))
+                .collect(Collectors.toList());
+
+        List<Like> likes = likedIds.stream()
+                .map(id -> Like.of(l -> l
+                        .document(doc -> doc
+                                .index("films")
+                                .id(id)
+                        )
+                ))
+                .collect(Collectors.toList());
 
         MoreLikeThisQuery mltQuery = MoreLikeThisQuery.of(q -> q
                 .fields("title", "synopsis", "genres", "jaName")
-                .like(like -> like
-                        .document(doc -> doc
-                                .index("films")
-                                .id(String.valueOf(request.getId().getLocalId()))
-                        )
-                )
+                .like(likes)
                 .minTermFreq(1)
                 .minDocFreq(1)
         );
@@ -69,7 +79,7 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
         Query boolQuery = Query.of(q -> q
                 .bool(b -> b
                         .must(m -> m.moreLikeThis(mltQuery))
-                        .mustNot(mn -> mn.ids(i -> i.values(likedId)))
+                        .mustNot(mn -> mn.ids(i -> i.values(likedIds)))
                 )
         );
 
@@ -88,11 +98,6 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
         PagingSearch pagingSearch = getPagingSearch(paging, searchHits);
 
         return new SearchResponse(data, pagingSearch);
-    }
-
-    @Override
-    public SearchResponse collaborativeFilteringRecommend(PagingSearch paging) {
-        return null;
     }
 
     private NativeQueryBuilder buildPagingForQuery(PagingSearch paging) {

@@ -11,6 +11,5 @@ import java.util.List;
 @Repository
 public interface FilmCustomElasticRepository {
     SearchResponse search(SearchRequest searchRequest, PagingSearch paging);
-    SearchResponse contentBasedRecommendMLT(ContentBasedRequest request,PagingSearch paging);
-    SearchResponse collaborativeFilteringRecommend(PagingSearch paging);
+    SearchResponse moreLikeThisQuery(List<Integer> filmIds, PagingSearch paging);
 }

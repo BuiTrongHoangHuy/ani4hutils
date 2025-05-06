@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import site.ani4h.search.film.entity.*;
+import site.ani4h.search.grpc_client.favorite.FavoriteGrpcClientService;
 import site.ani4h.shared.common.PagingSearch;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,16 +17,19 @@ public class FilmServiceImpl implements FilmService {
     private final FilmRepository filmRepository;
     private final FilmElasticsearchRepository filmElasticsearchRepository;
     private final FilmCustomElasticRepository filmCustomElasticRepository;
+    private final FavoriteGrpcClientService favoriteGrpcClientService;
 
     @Autowired
     public FilmServiceImpl(
             FilmRepository filmRepository,
             FilmElasticsearchRepository filmElRepository,
-            FilmCustomElasticRepository filmCustomElasticRepository
+            FilmCustomElasticRepository filmCustomElasticRepository,
+            FavoriteGrpcClientService favoriteGrpcClientService
     ) {
         this.filmRepository = filmRepository;
         this.filmElasticsearchRepository = filmElRepository;
         this.filmCustomElasticRepository = filmCustomElasticRepository;
+        this.favoriteGrpcClientService = favoriteGrpcClientService;
     }
 
     @Override
@@ -70,6 +75,16 @@ public class FilmServiceImpl implements FilmService {
             paging = new PagingSearch();
         }
 
-        return filmCustomElasticRepository.contentBasedRecommendMLT(request, paging);
+        List<Integer> filmIds = new ArrayList<>();
+        filmIds.add(request.getId().getLocalId());
+
+        return filmCustomElasticRepository.moreLikeThisQuery(filmIds, paging);
+    }
+
+    @Override
+    public SearchResponse userBasedRecommendMLT(int userId, PagingSearch paging) {
+        List<Integer> filmIds = favoriteGrpcClientService.getFilmIdRecentFavorites(userId, 5);
+
+        return filmCustomElasticRepository.moreLikeThisQuery(filmIds, paging);
     }
 }

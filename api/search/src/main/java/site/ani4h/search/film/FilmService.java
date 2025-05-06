@@ -18,4 +18,6 @@ public interface FilmService {
     List<Film> getFilms();
 
     SearchResponse contentBasedRecommendMLT(ContentBasedRequest request, PagingSearch paging);
+
+    SearchResponse userBasedRecommendMLT(int userId, PagingSearch paging);
 }

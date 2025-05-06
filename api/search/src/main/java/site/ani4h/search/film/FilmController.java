@@ -6,6 +6,7 @@ import site.ani4h.search.film.entity.ContentBasedRequest;
 import site.ani4h.search.film.entity.Film;
 import site.ani4h.search.film.entity.SearchRequest;
 import site.ani4h.shared.common.PagingSearch;
+import site.ani4h.shared.common.Uid;
 
 import java.util.List;
 
@@ -23,11 +24,18 @@ public class FilmController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/recommend-mlt")
+    @GetMapping("/content-based")
     public ResponseEntity<?> contentBasedRecommendMLT(@ModelAttribute ContentBasedRequest request, @ModelAttribute PagingSearch paging) {
         var films = filmService.contentBasedRecommendMLT(request, paging);
         return ResponseEntity.ok(films);
     }
+
+    @GetMapping("/user-based")
+    public ResponseEntity<?> userBasedRecommendMLT(@RequestParam Uid userId, @ModelAttribute PagingSearch paging) {
+        var films = filmService.userBasedRecommendMLT(userId.getLocalId(), paging);
+        return ResponseEntity.ok(films);
+    }
+
 
     @GetMapping()
     public ResponseEntity<?> getFilmsByTitle(@ModelAttribute SearchRequest request, @ModelAttribute PagingSearch paging) {
