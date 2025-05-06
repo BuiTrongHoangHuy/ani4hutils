@@ -48,28 +48,4 @@ public class GoogleExternalDataProvider {
             throw new RuntimeException(e);
         }
     }
-    public  String verifyToken(String token) {
-        try {
-            var verifier = new GoogleIdTokenVerifier.Builder(new NetHttpTransport(), new GsonFactory())
-                    .setAudience(Collections.singleton(this.clientId))
-                    .build();
-            GoogleIdToken idToken = verifier.verify(token);
-            if (idToken != null) {
-                GoogleIdToken.Payload payload = idToken.getPayload();
-                String userId = payload.getSubject();
-                if (userId != null) {
-                    return userId;
-                } else {
-                    throw new RuntimeException("Invalid token");
-                }
-            } else {
-                throw new RuntimeException("Invalid token");
-            }
-
-        } catch (
-                Exception e
-        ) {
-            throw new RuntimeException(e);
-        }
-    }
 }
