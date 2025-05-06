@@ -1,0 +1,14 @@
+syntax = "proto3";
+option java_package="site.ani4h.shared.gen";
+message GetListFilmIdRecentFavoriteReq {
+  int32 user_id = 1;
+  int32 limit = 2;
+}
+
+message ListFilmIdRecentFavoriteRes {
+  repeated int32 film_id = 1;
+}
+
+service Favorite {
+  rpc GetListFilmIdRecentFavorite(GetListFilmIdRecentFavoriteReq) returns(ListFilmIdRecentFavoriteRes) {};
+}

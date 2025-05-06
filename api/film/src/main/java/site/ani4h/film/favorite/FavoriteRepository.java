@@ -15,4 +15,6 @@ public interface FavoriteRepository {
     boolean isFavorite(int userId, int filmId);
 
     List<FavoriteFilm> getFavoriteFilms(int userId, Paging paging);
+
+    List<Integer> getRecentByUserId(int userId, int limit);
 }

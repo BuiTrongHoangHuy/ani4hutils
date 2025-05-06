@@ -4,6 +4,7 @@ import org.springframework.stereotype.Repository;
 import site.ani4h.film.watch_history.entity.EpisodeWatchHistory;
 import site.ani4h.film.watch_history.entity.WatchHistoryRequest;
 import site.ani4h.shared.common.Paging;
+import site.ani4h.shared.common.Uid;
 
 import java.util.List;
 
@@ -18,4 +19,6 @@ public interface WatchHistoryRepository {
     void delete(WatchHistoryRequest request);
 
     List<EpisodeWatchHistory> getWatchHistoryByUserId(WatchHistoryRequest request, Paging paging);
+
+    List<Integer> getRecentByUserId(int userId, int limit);
 }

@@ -7,6 +7,7 @@ import site.ani4h.film.watch_history.entity.EpisodeWatchHistory;
 import site.ani4h.film.watch_history.entity.WatchHistoryRequest;
 import site.ani4h.shared.common.Image;
 import site.ani4h.shared.common.Paging;
+import site.ani4h.shared.common.Uid;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -93,5 +94,20 @@ public class JdbcWatchHistoryRepository implements WatchHistoryRepository {
         }, request.getUserId().getLocalId(), paging.getPageSize(), paging.getOffset());
 
         return new ArrayList<>(episodeMap.values());
+    }
+
+    @Override
+    public List<Integer> getRecentByUserId(int userId, int limit) {
+        String sql = """
+                SELECT e.film_id, MAX(wh.update_at) AS last_watch_time
+                FROM watch_history wh
+                INNER JOIN episodes e ON wh.episode_id = e.id
+                WHERE wh.user_id = ?
+                GROUP BY e.film_id
+                ORDER BY last_watch_time DESC
+                LIMIT ?
+                """;
+
+        return jdbcTemplate.query(sql, (rs, rowNum) -> rs.getInt("film_id"), userId, limit);
     }
 }

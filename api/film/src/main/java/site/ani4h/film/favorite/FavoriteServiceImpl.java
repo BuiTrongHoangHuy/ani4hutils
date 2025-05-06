@@ -35,4 +35,9 @@ public class FavoriteServiceImpl implements FavoriteService {
     public List<FavoriteFilm> getFavoriteFilms(Uid userId, Paging paging) {
         return favoriteRepository.getFavoriteFilms(userId.getLocalId(), paging);
     }
+
+    @Override
+    public List<Integer> getRecentByUserId(int userId, int limit) {
+        return favoriteRepository.getRecentByUserId(userId, limit);
+    }
 }

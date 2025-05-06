@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import site.ani4h.film.watch_history.entity.EpisodeWatchHistory;
 import site.ani4h.film.watch_history.entity.WatchHistoryRequest;
 import site.ani4h.shared.common.Paging;
+import site.ani4h.shared.common.Uid;
 
 import java.util.List;
 
@@ -39,5 +40,14 @@ public class WatchHistoryController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.ok(watchHistory);
+    }
+
+    @GetMapping("/recent")
+    public ResponseEntity<?> getRecentByUserId(@RequestParam Uid userId, @RequestParam int limit) {
+        List<Integer> recentEpisodes = watchHistoryService.getRecentByUserId(userId.getLocalId(), limit);
+        if (recentEpisodes.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(recentEpisodes);
     }
 }

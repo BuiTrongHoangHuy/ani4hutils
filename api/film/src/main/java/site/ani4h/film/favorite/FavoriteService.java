@@ -17,4 +17,6 @@ public interface FavoriteService {
     boolean isFavorite(FavoriteRequest request);
 
     List<FavoriteFilm> getFavoriteFilms(Uid userId, Paging paging);
+
+    List<Integer> getRecentByUserId(int userId, int limit);
 }

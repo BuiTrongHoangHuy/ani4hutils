@@ -36,4 +36,9 @@ public class FavoriteController {
     public List<FavoriteFilm> getFavoriteFilms(@RequestParam Uid userId, @ModelAttribute Paging paging) {
         return favoriteService.getFavoriteFilms(userId, paging);
     }
+
+    @GetMapping("/recent")
+    public List<Integer> getRecentByUserId(@RequestParam Uid userId, @RequestParam int limit) {
+        return favoriteService.getRecentByUserId(userId.getLocalId(), limit);
+    }
 }

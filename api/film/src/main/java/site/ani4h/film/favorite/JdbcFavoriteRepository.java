@@ -124,4 +124,10 @@ public class JdbcFavoriteRepository implements FavoriteRepository {
 
         return new ArrayList<>(filmMap.values());
     }
+
+    @Override
+    public List<Integer> getRecentByUserId(int userId, int limit) {
+        String sql = "SELECT film_id FROM favorites WHERE user_id = ? ORDER BY created_at DESC LIMIT ?";
+        return jdbcTemplate.queryForList(sql, Integer.class, userId, limit);
+    }
 }
