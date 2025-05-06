@@ -5,6 +5,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import site.ani4h.search.film.entity.*;
 import site.ani4h.search.grpc_client.favorite.FavoriteGrpcClientService;
+import site.ani4h.search.grpc_client.history.HistoryGrpcClientService;
 import site.ani4h.shared.common.PagingSearch;
 
 import java.util.ArrayList;
@@ -18,18 +19,21 @@ public class FilmServiceImpl implements FilmService {
     private final FilmElasticsearchRepository filmElasticsearchRepository;
     private final FilmCustomElasticRepository filmCustomElasticRepository;
     private final FavoriteGrpcClientService favoriteGrpcClientService;
+    private final HistoryGrpcClientService historyGrpcClientService;
 
     @Autowired
     public FilmServiceImpl(
             FilmRepository filmRepository,
             FilmElasticsearchRepository filmElRepository,
             FilmCustomElasticRepository filmCustomElasticRepository,
-            FavoriteGrpcClientService favoriteGrpcClientService
+            FavoriteGrpcClientService favoriteGrpcClientService,
+            HistoryGrpcClientService historyGrpcClientService
     ) {
         this.filmRepository = filmRepository;
         this.filmElasticsearchRepository = filmElRepository;
         this.filmCustomElasticRepository = filmCustomElasticRepository;
         this.favoriteGrpcClientService = favoriteGrpcClientService;
+        this.historyGrpcClientService = historyGrpcClientService;
     }
 
     @Override
@@ -82,7 +86,7 @@ public class FilmServiceImpl implements FilmService {
     }
 
     @Override
-    public SearchResponse userBasedRecommendMLT(UserBasedRequest request, PagingSearch paging) {
+    public SearchResponse userFavoriteRecommendMLT(UserBasedRequest request, PagingSearch paging) {
         List<Integer> filmIds;
 
         try {
@@ -106,5 +110,23 @@ public class FilmServiceImpl implements FilmService {
         }
 
         return filmCustomElasticRepository.randomFilmIds(size);
+    }
+
+    @Override
+    public SearchResponse userHistoryRecommendMLT(UserBasedRequest request, PagingSearch paging) {
+        List<Integer> filmIds;
+
+        try {
+            filmIds = historyGrpcClientService.getListFilmIdRecentHistory(request.getUserId(), 5);
+            if (filmIds == null || filmIds.isEmpty()) {
+                log.warn("User {} has no recent histories. Fallback to random films.", request.getUserId());
+                filmIds = randomFilmIds(5);
+            }
+        } catch (Exception e) {
+            log.error("Failed to fetch histories for user {}: {}. Fallback to random films.", request.getUserId(), e.getMessage());
+            filmIds = randomFilmIds(5);
+        }
+
+        return filmCustomElasticRepository.moreLikeThisQuery(filmIds, request.getSeed(), paging);
     }
 }

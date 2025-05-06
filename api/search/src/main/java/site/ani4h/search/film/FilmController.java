@@ -31,12 +31,17 @@ public class FilmController {
         return ResponseEntity.ok(films);
     }
 
-    @GetMapping("/user-based")
-    public ResponseEntity<?> userBasedRecommendMLT(@RequestParam UserBasedRequest request, @ModelAttribute PagingSearch paging) {
-        var films = filmService.userBasedRecommendMLT(request, paging);
+    @GetMapping("/user-favorite")
+    public ResponseEntity<?> userFavoriteRecommendMLT(@RequestParam UserBasedRequest request, @ModelAttribute PagingSearch paging) {
+        var films = filmService.userFavoriteRecommendMLT(request, paging);
         return ResponseEntity.ok(films);
     }
 
+    @GetMapping("/user-history")
+    public ResponseEntity<?> userHistoryRecommendMLT(@RequestParam UserBasedRequest request, @ModelAttribute PagingSearch paging) {
+        var films = filmService.userHistoryRecommendMLT(request, paging);
+        return ResponseEntity.ok(films);
+    }
 
     @GetMapping()
     public ResponseEntity<?> getFilmsByTitle(@ModelAttribute SearchRequest request, @ModelAttribute PagingSearch paging) {

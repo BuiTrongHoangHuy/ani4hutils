@@ -2,17 +2,18 @@ package site.ani4h.search.grpc_client;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import site.ani4h.search.grpc_client.auth.AuthGrpcClientService;
 import site.ani4h.search.grpc_client.favorite.FavoriteGrpcClientService;
 import site.ani4h.shared.common.Uid;
 
 @RestController
 @RequestMapping("/v1/auth-grpc")
-public class AuthGrpcClientController {
+public class GrpcClientController {
     private final AuthGrpcClientService authGrpcClientService;
     private final FavoriteGrpcClientService favoriteGrpcClientService;
 
-    public AuthGrpcClientController(AuthGrpcClientService authGrpcClientService,
-                                     FavoriteGrpcClientService favoriteGrpcClientService)  {
+    public GrpcClientController(AuthGrpcClientService authGrpcClientService,
+                                FavoriteGrpcClientService favoriteGrpcClientService)  {
         this.authGrpcClientService = authGrpcClientService;
         this.favoriteGrpcClientService = favoriteGrpcClientService;
     }

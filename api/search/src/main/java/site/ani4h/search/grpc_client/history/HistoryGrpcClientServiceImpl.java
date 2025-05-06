@@ -1,29 +1,25 @@
-package site.ani4h.search.grpc_client;
+package site.ani4h.search.grpc_client.history;
 
 import io.grpc.ManagedChannel;
-import io.grpc.ManagedChannelBuilder;
 import io.grpc.netty.NettyChannelBuilder;
-import net.devh.boot.grpc.client.channelfactory.GrpcChannelFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import site.ani4h.shared.gen.UserGrpc;
-import site.ani4h.shared.gen.UserOuterClass;
+import site.ani4h.shared.gen.HistoryGrpc;
+import site.ani4h.shared.gen.HistoryOuterClass;
 import site.ani4h.shared.utils.serviceDiscovery.ServiceDiscovery;
 import site.ani4h.shared.utils.serviceDiscovery.ServiceInstance;
 
 import javax.annotation.PreDestroy;
+import java.util.List;
 
 @Service
-public class AuthGrpcClientService {
+public class HistoryGrpcClientServiceImpl implements HistoryGrpcClientService {
     private final ServiceDiscovery serviceDiscovery;
-    private final String serviceName = "auth";
-    private UserGrpc.UserBlockingStub userStub;
+    private final String serviceName = "film";
+    private HistoryGrpc.HistoryBlockingStub historyStub;
     private ManagedChannel channel;
 
-    public AuthGrpcClientService(ServiceDiscovery serviceDiscovery) {
+    public HistoryGrpcClientServiceImpl(ServiceDiscovery serviceDiscovery) {
         this.serviceDiscovery = serviceDiscovery;
-
         initializeChannelAndStub();
     }
 
@@ -38,25 +34,24 @@ public class AuthGrpcClientService {
         this.channel = NettyChannelBuilder.forAddress(address,port)
                 .usePlaintext()
                 .build();
-        this.userStub = UserGrpc.newBlockingStub(channel);
+        this.historyStub = HistoryGrpc.newBlockingStub(channel);
     }
 
-    public UserGrpcResponse getUserById(int userId) {
-        if(userStub == null) {
+    @Override
+    public List<Integer> getListFilmIdRecentHistory(int userId, int limit) {
+        if(historyStub == null) {
             initializeChannelAndStub();
         }
-        UserOuterClass.GetUsersByIdReq request = UserOuterClass.GetUsersByIdReq.newBuilder()
-                .setId(userId)
+
+        HistoryOuterClass.GetListFilmIdRecentHistoryReq request = HistoryOuterClass.GetListFilmIdRecentHistoryReq.newBuilder()
+                .setUserId(userId)
+                .setLimit(limit)
                 .build();
-        UserOuterClass.PublicUserInfo result = userStub.getUserById(request);
-        UserGrpcResponse res = new UserGrpcResponse(
-                result.getId(),
-                result.getFirstName(),
-                result.getLastName(),
-                result.getUserName(),
-                result.getSystemRole()
-        );
-        return res;
+
+        HistoryOuterClass.ListFilmIdRecentHistoryRes result = historyStub.getListFilmIdRecentHistory(request);
+        List<Integer> filmIds = result.getFilmIdList();
+
+        return filmIds;
     }
 
     @PreDestroy

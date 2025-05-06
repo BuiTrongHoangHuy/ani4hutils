@@ -16,7 +16,9 @@ public interface FilmService {
 
     SearchResponse contentBasedRecommendMLT(ContentBasedRequest request, PagingSearch paging);
 
-    SearchResponse userBasedRecommendMLT(UserBasedRequest request, PagingSearch paging);
+    SearchResponse userFavoriteRecommendMLT(UserBasedRequest request, PagingSearch paging);
+
+    SearchResponse userHistoryRecommendMLT(UserBasedRequest request, PagingSearch paging);
 
     List<Integer> randomFilmIds(int size);
 }

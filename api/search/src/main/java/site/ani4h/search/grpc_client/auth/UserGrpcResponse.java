@@ -1,4 +1,4 @@
-package site.ani4h.search.grpc_client;
+package site.ani4h.search.grpc_client.auth;
 
 import lombok.Getter;
 import lombok.Setter;
