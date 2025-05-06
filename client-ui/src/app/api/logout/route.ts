@@ -1,7 +1,7 @@
 import {cookies} from "next/headers";
 import {NextResponse} from "next/server";
 
-export default async  function POST()  {
+export async function POST() {
     (await cookies()).delete("accessToken");
-    return NextResponse.json({ status: 201 });
+    return NextResponse.json(true,{ status: 201 });
 }

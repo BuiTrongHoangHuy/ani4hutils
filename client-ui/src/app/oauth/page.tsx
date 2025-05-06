@@ -2,7 +2,6 @@
 import {useEffect, useState} from "react";
 import {FullScreenLoading} from "@/components/FullScreenLoading";
 import {useRouter} from "next/navigation";
-import {toast} from "react-toastify";
 
 export default  function Page() {
     const [accessToken, setAccessToken] = useState<string | null>(null);

@@ -1,9 +1,13 @@
-import {SearchList} from "@/types/search/searchList";
 import Image from "next/image";
-import {Trash, X} from "lucide-react";
-
+import { X} from "lucide-react";
+interface film {
+    images :{url:string,width: number,height: number}[],
+    title:string,
+    genres:string[],
+    synopsis:string
+}
 export default function HistoryCard(
-    {film}: {film: any}
+    {film}: {film: film}
 ){
     return (
         <div

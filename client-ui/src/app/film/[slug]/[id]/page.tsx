@@ -6,6 +6,7 @@ export default async function  Page({
     params: Promise<{ id: string }>
 }) {
     const { id } = await params
+    console.log(id)
     return (
         <div className={"w-screen mt-[64px] px-20 py-10 space-y-20"}>
             <PlayerWrapper></PlayerWrapper>

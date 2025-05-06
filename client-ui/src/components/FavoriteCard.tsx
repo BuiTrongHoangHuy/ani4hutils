@@ -1,7 +1,7 @@
 import {SearchList} from "@/types/search/searchList";
 import Image from "next/image";
 import Link from "next/link";
-import {Trash, Trash2} from "lucide-react";
+import {Trash} from "lucide-react";
 
 export default function FavoriteCard(
     {film}: {film: SearchList}
