@@ -1,17 +1,17 @@
-import  { useEffect, useState } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import filmService, { Film } from '../../services/filmService';
 import EpisodeList from '../../components/episode/EpisodeList';
 
-const FilmDetail = () => {
+const FilmDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
-  const navigate = useNavigate();
   const [film, setFilm] = useState<Film | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
   const fetchFilm = async () => {
     if (!id) return;
+
     setLoading(true);
     try {
       const response = await filmService.getFilmById(id);
@@ -79,7 +79,7 @@ const FilmDetail = () => {
           <Link to={``} className="btn btn-warning">
             Edit
           </Link>
-          <button  className="btn btn-error">
+          <button className="btn btn-error">
             Delete
           </button>
         </div>
@@ -157,11 +157,23 @@ const FilmDetail = () => {
                 )}
               </div>
             </div>
+
+            {film.seriesId && (
+              <div className="mt-6">
+                <h2 className="text-lg font-semibold mb-2">Series Information</h2>
+                <p>
+                  <span className="font-medium">Part of Series ID:</span> {film.seriesId}
+                  <Link to={`/film/${film.seriesId}`} className="btn btn-xs btn-link ml-2">
+                    View Series
+                  </Link>
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>
 
-      {film  && (
+      {film && (
         <EpisodeList
           filmId={film.id}
           maxEpisodes={film.maxEpisodes}

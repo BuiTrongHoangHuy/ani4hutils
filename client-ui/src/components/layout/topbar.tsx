@@ -1,7 +1,7 @@
 'use client'
 import Link from "next/link";
 import Image from "next/image";
-import React, {ChangeEvent, FormEvent, useEffect, useState} from "react";
+import React, { FormEvent, useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
 import {router} from "next/client";
 import {useRouter} from "next/navigation";
@@ -190,7 +190,7 @@ export default function TopBar(className: { className?: string }) {
                             </div>
                         </div>
                 }
-                <input type={"file"} className={"btn btn-primary input "} onChange={onUpload} ></input>
+                <button className={"btn btn-primary"}>Download</button>
             </div>
         </>
     )
