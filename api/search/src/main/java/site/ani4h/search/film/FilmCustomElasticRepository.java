@@ -11,5 +11,6 @@ import java.util.List;
 @Repository
 public interface FilmCustomElasticRepository {
     SearchResponse search(SearchRequest searchRequest, PagingSearch paging);
-    SearchResponse moreLikeThisQuery(List<Integer> filmIds, PagingSearch paging);
+    SearchResponse moreLikeThisQuery(List<Integer> filmIds,int seed, PagingSearch paging);
+    List<Integer> randomFilmIds(int size);
 }

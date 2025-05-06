@@ -1,10 +1,7 @@
 package site.ani4h.search.film;
 
 import org.springframework.stereotype.Service;
-import site.ani4h.search.film.entity.ContentBasedRequest;
-import site.ani4h.search.film.entity.Film;
-import site.ani4h.search.film.entity.SearchRequest;
-import site.ani4h.search.film.entity.SearchResponse;
+import site.ani4h.search.film.entity.*;
 import site.ani4h.shared.common.PagingSearch;
 
 import java.util.List;
@@ -19,5 +16,7 @@ public interface FilmService {
 
     SearchResponse contentBasedRecommendMLT(ContentBasedRequest request, PagingSearch paging);
 
-    SearchResponse userBasedRecommendMLT(int userId, PagingSearch paging);
+    SearchResponse userBasedRecommendMLT(UserBasedRequest request, PagingSearch paging);
+
+    List<Integer> randomFilmIds(int size);
 }

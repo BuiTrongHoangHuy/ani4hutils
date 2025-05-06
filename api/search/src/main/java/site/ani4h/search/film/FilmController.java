@@ -5,6 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import site.ani4h.search.film.entity.ContentBasedRequest;
 import site.ani4h.search.film.entity.Film;
 import site.ani4h.search.film.entity.SearchRequest;
+import site.ani4h.search.film.entity.UserBasedRequest;
 import site.ani4h.shared.common.PagingSearch;
 import site.ani4h.shared.common.Uid;
 
@@ -31,8 +32,8 @@ public class FilmController {
     }
 
     @GetMapping("/user-based")
-    public ResponseEntity<?> userBasedRecommendMLT(@RequestParam Uid userId, @ModelAttribute PagingSearch paging) {
-        var films = filmService.userBasedRecommendMLT(userId.getLocalId(), paging);
+    public ResponseEntity<?> userBasedRecommendMLT(@RequestParam UserBasedRequest request, @ModelAttribute PagingSearch paging) {
+        var films = filmService.userBasedRecommendMLT(request, paging);
         return ResponseEntity.ok(films);
     }
 
@@ -47,5 +48,11 @@ public class FilmController {
     public ResponseEntity<?> getAllFilms() {
         List<Film> films = filmService.getFilms();
         return ResponseEntity.ok(films);
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity<?> getRandomFilmIds(@RequestParam int size) {
+        List<Integer> filmIds = filmService.randomFilmIds(size);
+        return ResponseEntity.ok(filmIds);
     }
 }

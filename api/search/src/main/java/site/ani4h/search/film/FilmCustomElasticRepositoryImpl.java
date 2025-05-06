@@ -9,6 +9,7 @@ import org.springframework.data.elasticsearch.client.elc.NativeQuery;
 import org.springframework.data.elasticsearch.client.elc.NativeQueryBuilder;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.SearchHits;
+import org.springframework.data.elasticsearch.core.query.FetchSourceFilterBuilder;
 import org.springframework.stereotype.Repository;
 import site.ani4h.search.film.entity.*;
 import site.ani4h.shared.common.PagingSearch;
@@ -51,7 +52,7 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
     }
 
     @Override
-    public SearchResponse moreLikeThisQuery(List<Integer> filmIds,PagingSearch paging) {
+    public SearchResponse moreLikeThisQuery(List<Integer> filmIds, int seed, PagingSearch paging) {
         if(filmIds.isEmpty()){
             return new SearchResponse(List.of(), paging);
         }
@@ -77,9 +78,19 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
         );
 
         Query boolQuery = Query.of(q -> q
-                .bool(b -> b
-                        .must(m -> m.moreLikeThis(mltQuery))
-                        .mustNot(mn -> mn.ids(i -> i.values(likedIds)))
+                .functionScore(fs -> fs
+                        .functions(f -> f
+                                .randomScore(r -> r
+                                        .seed(String.valueOf(seed))
+                                        .field("id")
+                                )
+                        )
+                        .query(q1 -> q1
+                                .bool(b -> b
+                                        .must(m -> m.moreLikeThis(mltQuery))
+                                        .mustNot(mn -> mn.ids(i -> i.values(likedIds)))
+                                )
+                        )
                 )
         );
 
@@ -98,6 +109,39 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
         PagingSearch pagingSearch = getPagingSearch(paging, searchHits);
 
         return new SearchResponse(data, pagingSearch);
+    }
+
+    @Override
+    public List<Integer> randomFilmIds(int size) {
+        Query functionScoreQuery = Query.of(q -> q
+                .functionScore(fs -> fs
+                        .functions(fb -> fb
+                                .randomScore(r -> r
+                                        .seed(String.valueOf(System.currentTimeMillis()))
+                                        .field("id")
+                                )
+                        )
+                        .query(q1 -> q1.matchAll(m -> m))
+                )
+        );
+
+        NativeQuery query = new NativeQueryBuilder()
+                .withQuery(functionScoreQuery)
+                .withPageable(PageRequest.of(0, size))
+                .withSourceFilter(new FetchSourceFilterBuilder()
+                        .withIncludes("id")
+                        .build())
+                .build();
+
+        SearchHits<Film> searchHits = elasticsearchOperations.search(query, Film.class);
+
+        List<Integer> filmIds = searchHits.stream()
+                .map(searchHit -> {
+                    return searchHit.getContent().getId();
+                })
+                .collect(Collectors.toList());
+
+        return filmIds;
     }
 
     private NativeQueryBuilder buildPagingForQuery(PagingSearch paging) {

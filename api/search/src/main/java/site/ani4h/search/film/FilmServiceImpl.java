@@ -76,15 +76,35 @@ public class FilmServiceImpl implements FilmService {
         }
 
         List<Integer> filmIds = new ArrayList<>();
-        filmIds.add(request.getId().getLocalId());
+        filmIds.add(request.getFilmId().getLocalId());
 
-        return filmCustomElasticRepository.moreLikeThisQuery(filmIds, paging);
+        return filmCustomElasticRepository.moreLikeThisQuery(filmIds, request.getSeed(), paging);
     }
 
     @Override
-    public SearchResponse userBasedRecommendMLT(int userId, PagingSearch paging) {
-        List<Integer> filmIds = favoriteGrpcClientService.getFilmIdRecentFavorites(userId, 5);
+    public SearchResponse userBasedRecommendMLT(UserBasedRequest request, PagingSearch paging) {
+        List<Integer> filmIds;
 
-        return filmCustomElasticRepository.moreLikeThisQuery(filmIds, paging);
+        try {
+            filmIds = favoriteGrpcClientService.getFilmIdRecentFavorites(request.getUserId(), 5);
+            if (filmIds == null || filmIds.isEmpty()) {
+                log.warn("User {} has no recent favorites. Fallback to random films.", request.getUserId());
+                filmIds = randomFilmIds(5);
+            }
+        } catch (Exception e) {
+            log.error("Failed to fetch favorites for user {}: {}. Fallback to random films.", request.getUserId(), e.getMessage());
+            filmIds = randomFilmIds(5);
+        }
+
+        return filmCustomElasticRepository.moreLikeThisQuery(filmIds, request.getSeed(), paging);
+    }
+
+    @Override
+    public List<Integer> randomFilmIds(int size) {
+        if(size <= 0) {
+            throw new IllegalArgumentException("Size must be greater than 0");
+        }
+
+        return filmCustomElasticRepository.randomFilmIds(size);
     }
 }
