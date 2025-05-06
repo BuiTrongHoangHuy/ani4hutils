@@ -13,7 +13,6 @@ const EpisodeEdit: React.FC<EpisodeEditProps> = ({
   onCancel
 }) => {
   const [formData, setFormData] = useState<EpisodeUpdate>({
-    id: episode.id,
     title: episode.title,
     episodeNumber: episode.episodeNumber,
     synopsis: episode.synopsis || '',
@@ -21,7 +20,7 @@ const EpisodeEdit: React.FC<EpisodeEditProps> = ({
     state: episode.state,
     videoUrl: episode.videoUrl
   });
-
+  const [dataChanged, setDataChanged] = useState<EpisodeUpdate>({});
   const [videoFile, setVideoFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
@@ -30,6 +29,10 @@ const EpisodeEdit: React.FC<EpisodeEditProps> = ({
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
+      ...prev,
+      [name]: name === 'duration' ? parseInt(value) || 0 : value
+    }));
+    setDataChanged(prev => ({
       ...prev,
       [name]: name === 'duration' ? parseInt(value) || 0 : value
     }));
@@ -95,11 +98,19 @@ const EpisodeEdit: React.FC<EpisodeEditProps> = ({
         updatedVideoUrl = uploadUrl.split('?')[0];
       }
 
-      await episodeService.updateEpisode({
-        ...formData,
-        videoUrl: updatedVideoUrl
-      });
+      console.log(episode.id,{...formData,videoUrl: updatedVideoUrl});
+      console.log("ssssss" ,episode.id,{...dataChanged});
 
+      if (episode.videoUrl !== updatedVideoUrl) {
+        await episodeService.updateEpisode(episode.id, {
+          ...formData,
+          videoUrl: updatedVideoUrl
+        });
+      }else{
+        await episodeService.updateEpisode(episode.id, {
+          ...dataChanged
+        });
+      }
       onEpisodeUpdated();
     } catch (err) {
       console.error('Error updating episode:', err);
