@@ -4,6 +4,7 @@ on:
     branches:
       - deploy/client-ui
       - deploy/ui
+      - live
 jobs:
   Build:
     name: Build
