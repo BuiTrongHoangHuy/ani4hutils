@@ -4,6 +4,7 @@ on:
     branches:
       - deploy/auth-api
       - deploy/api
+      - live
 jobs:
   Build:
     name: Build

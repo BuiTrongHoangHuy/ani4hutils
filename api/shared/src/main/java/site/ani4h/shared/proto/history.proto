@@ -1,0 +1,15 @@
+syntax = "proto3";
+option java_package="site.ani4h.shared.gen";
+message GetListFilmIdRecentHistoryReq {
+  int32 user_id = 1;
+  int32 limit = 2;
+}
+
+message ListFilmIdRecentHistoryRes {
+  repeated int32 film_id = 1;
+}
+
+service History {
+  rpc GetListFilmIdRecentHistory(GetListFilmIdRecentHistoryReq) returns(ListFilmIdRecentHistoryRes) {};
+}
+
