@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { EpisodeCreate } from '../../services/episodeService';
+import episodeService, { EpisodeCreate } from '../../services/episodeService';
 
 interface EpisodeUploadProps {
   filmId: string;
@@ -19,11 +19,14 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
     episodeNumber: nextEpisodeNumber,
     synopsis: '',
     duration: 0,
-    state: 'upcoming',
+    state: 'UPCOMING',
     filmId: filmId
   });
 
   const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState<boolean>(false);
+  const [uploadProgress, setUploadProgress] = useState<number>(0);
+  const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -39,15 +42,80 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
     }
   };
 
+  const uploadVideoToS3 = async (url: string, file: File): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      const xhr = new XMLHttpRequest();
 
+      xhr.upload.addEventListener('progress', (event) => {
+        if (event.lengthComputable) {
+          const progress = Math.round((event.loaded / event.total) * 100);
+          setUploadProgress(progress);
+        }
+      });
+
+      xhr.addEventListener('load', () => {
+        if (xhr.status >= 200 && xhr.status < 300) {
+          resolve();
+        } else {
+          reject(new Error(`Upload failed with status ${xhr.status}`));
+        }
+      });
+
+      xhr.addEventListener('error', () => {
+        reject(new Error('Upload failed due to network error'));
+      });
+
+      xhr.open('PUT', url);
+      xhr.setRequestHeader('Content-Type', file.type);
+      xhr.send(file);
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!videoFile) {
+      setError('Please select a video file to upload');
+      return;
+    }
+
+    setUploading(true);
+    setError(null);
+
+    try {
+      const fileExtension = videoFile.name.split('.').pop() || '';
+
+      const uploadUrlResponse = await episodeService.getVideoUploadUrl(
+        filmId,
+        formData.episodeNumber,
+        fileExtension
+      );
+
+      const uploadUrl = uploadUrlResponse.data.data;
+
+      await uploadVideoToS3(uploadUrl, videoFile);
+
+      const videoUrl = uploadUrl.split('?')[0];
+      await episodeService.createEpisode({
+        ...formData,
+        videoUrl
+      });
+
+      onEpisodeAdded();
+    } catch (err) {
+      console.error('Error uploading episode:', err);
+      setError('Failed to upload episode. Please try again later.');
+      setUploading(false);
+    }
   };
 
   return (
     <div>
-
+      {error && (
+        <div className="alert alert-error mb-4">
+          <span>{error}</span>
+        </div>
+      )}
       
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4 mb-4">
@@ -141,20 +209,32 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
           </label>
         </div>
 
+        {uploading && (
+          <div className="mb-4">
+            <progress
+              className="progress progress-primary w-full"
+              value={uploadProgress}
+              max="100"
+            ></progress>
+            <p className="text-center mt-1">{uploadProgress}% Uploaded</p>
+          </div>
+        )}
         
         <div className="flex justify-end space-x-2">
           <button
             type="button"
             onClick={onCancel}
             className="btn btn-outline"
+            disabled={uploading}
           >
             Cancel
           </button>
           <button
             type="submit"
             className="btn btn-primary"
+            disabled={uploading}
           >
-            Upload
+            {uploading ? 'Uploading...' : 'Upload Episode'}
           </button>
         </div>
       </form>
