@@ -88,22 +88,38 @@ export interface FilmUpdate {
   genreIds?: string[];
   seriesId?: number;
 }
+export interface FilmResponse {
+ data: Film;
+}
 
 const getFilms = (paging: Paging, filter?: FilmFilter): Promise<AxiosResponse<FilmListResponse>> => {
   const params = { ...paging, ...filter };
+  console.log(params);
   return axiosInstance.get("/v1/film");
 };
 
-const getFilmById = (id: string): Promise<AxiosResponse<Film>> => {
+const getFilmById = (id: string): Promise<AxiosResponse<FilmResponse>> => {
   return axiosInstance.get(`/v1/film/${id}`);
 };
 
+const createFilm = (film: FilmCreate): Promise<AxiosResponse<Film>> => {
+  return axiosInstance.post("/v1/film", film);
+};
 
+const updateFilm = (film: FilmUpdate): Promise<AxiosResponse<Film>> => {
+  return axiosInstance.put(`/v1/film/${film.id}`, film);
+};
+
+const deleteFilm = (id: string): Promise<AxiosResponse<void>> => {
+  return axiosInstance.delete(`/v1/film/${id}`);
+};
 
 export const filmService = {
   getFilms,
   getFilmById,
-
+  createFilm,
+  updateFilm,
+  deleteFilm,
 };
 
 export default filmService;
