@@ -7,8 +7,10 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.elasticsearch.repository.config.EnableElasticsearchRepositories;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @SpringBootApplication(exclude = { SecurityAutoConfiguration.class }, scanBasePackages = {"site.ani4h.search", "site.ani4h.shared"})
+@EnableScheduling
 public class ApiApplication {
 
     public static void main(String[] args) { SpringApplication.run(ApiApplication.class, args); }

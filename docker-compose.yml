@@ -28,18 +28,22 @@ services:
       - elasticsearch
 
   logstash:
-    image: docker.elastic.co/logstash/logstash:7.17.28
+    image: docker.elastic.co/logstash/logstash:7.10.2
     container_name: logstash
     volumes:
       - ./logstash/pipeline:/usr/share/logstash/pipeline
+      - C:/logstash/drivers:/usr/share/logstash/drivers
     environment:
       - "LS_JAVA_OPTS=-Xms256m -Xmx256m"
     ports:
-      - "5044:5044"  # Filebeat gửi log đến cổng này
       - "9600:9600"  # API của Logstash
-    depends_on:
-      - elasticsearch
+    networks:
+      - my_bridge_network
 
 volumes:
   es-data:
     driver: local
+
+networks:
+  my_bridge_network:
+    driver: bridge
