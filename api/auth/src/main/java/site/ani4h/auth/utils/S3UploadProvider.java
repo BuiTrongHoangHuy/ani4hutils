@@ -32,6 +32,9 @@ public final class S3UploadProvider implements UploadProvider {
     private String accessKey;
     @Value("${aws.access-secret-key}")
     private String accessSecret;
+
+    @Value("${aws.s3.film-master}")
+    private String filmMaster;
     public S3UploadProvider() {
     }
 
@@ -66,10 +69,14 @@ public final class S3UploadProvider implements UploadProvider {
 
     @Override
     public String uploadFileWithPreSignedUrl(String dst) {
-        try (S3Presigner presigner = S3Presigner.create()) {
+        try (S3Presigner presigner = S3Presigner.builder().region(Region.AP_SOUTHEAST_1)
+                .credentialsProvider(StaticCredentialsProvider.create(
+                        AwsBasicCredentials.create(this.accessKey, this.accessSecret)))
+                .build();
+        ) {
 
             PutObjectRequest objectRequest = PutObjectRequest.builder()
-                    .bucket(this.bucket)
+                    .bucket(this.filmMaster)
                     .key(dst)
                     .build();
 
