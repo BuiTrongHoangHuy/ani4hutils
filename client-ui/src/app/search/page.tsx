@@ -5,8 +5,9 @@ import FilmCard from "@/components/FilmCard";
 import {useSearchParams} from "next/navigation";
 import {useEffect, useRef, useState} from "react";
 import {PagingSearch} from "@/types/search/pagingSearch";
+import { Suspense } from 'react'
 
-export default function SearchPage() {
+function Search() {
     const searchParams = useSearchParams();
     const title = searchParams.get("q") || "";
     const [data, setData] = useState<SearchList[]>([]);
@@ -103,7 +104,8 @@ export default function SearchPage() {
     }, [loader, hasMore]);
 
     return (
-        <div className={"w-screen mt-[64px] pl-20 pr-20 pt-8"}>
+        <Suspense>
+            <div className={"w-screen mt-[64px] pl-20 pr-20 pt-8"}>
             <div className={"flex flex-row w-full h-full space-x-4"}>
                 <div className={"flex flex-col flex-1 h-full space-y-8"}>
                     <div className={"flex flex-col space-y-4"}>
@@ -147,8 +149,18 @@ export default function SearchPage() {
                 </div>
             </div>
         </div>
+        </Suspense>
     );
 }
+
+export default function SearchPage() {
+    return (
+        <Suspense>
+            <Search />
+        </Suspense>
+    )
+}
+
 
 function buildSearchQuery(title: string, paging: PagingSearch): string {
     const params = new URLSearchParams();
