@@ -206,7 +206,7 @@ export default function HistoryPage() {
         <div>
             <div className={"flex flex-col w-full space-y-8 ml-8"}>
                 <p className={"font-bold text-xl text-orange-500"}>History</p>
-                <div className={"flex flex-col gap-8"}>
+                <div className={"flex flex-col space-y-4 pr-10"}>
                     {data.map((film, i) =>
                         <HistoryCard film={film} key={i} />
                     )}

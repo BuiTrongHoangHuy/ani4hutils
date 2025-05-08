@@ -11,7 +11,6 @@ function Search() {
     const searchParams = useSearchParams();
     const title = searchParams.get("q") || "";
     const [data, setData] = useState<SearchList[]>([]);
-    const [canFetch, setCanFetch] = useState(false);
     const [paging, setPaging] = useState<PagingSearch>({
         cursor: "",
         nextCursor: "",
@@ -20,31 +19,33 @@ function Search() {
     });
     const loader = useRef(null);
     const [hasMore, setHasMore] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+
 
     const fetchData = async () => {
+        if(isLoading || !hasMore) return;
+
+        setIsLoading(true);
         try{
-            console.log("Paging: ", paging);
             const res = await fetch(`http://localhost:4003/v1/search?${buildSearchQuery(title, paging)}`)
             const result = await res.json()
             if (result.data) {
                 setData((prev) => [...prev, ...result.data.data]);
                 setPaging({
                     ...paging,
-                    cursor: result.data.paging.cursor,
                     nextCursor: result.data.paging.nextCursor,
                 });
 
                 if(result.data.paging.nextCursor === null) {
                     setHasMore(false);
                 }
-                else {
-                    setHasMore(true);
-                }
             } else {
                 console.error("Error fetching data:", result);
             }
         } catch (error) {
             console.error("Error fetching data:", error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -58,30 +59,20 @@ function Search() {
             });
             setData([]);
             setHasMore(true);
-            setCanFetch(true);
         }
     }, [title]);
 
     useEffect(() => {
-        if(canFetch){
-            console.log("Fetching data: UseEffect CanFetch");
-            fetchData();
-            setCanFetch(false);
-        }
-    }, [canFetch]);
-
-    useEffect(() => {
-        if(paging.cursor !== "" && paging.cursor === paging.nextCursor && paging.nextCursor !== null){
-            console.log("Fetching data: UseEffect Cursor");
-            fetchData();
-        }
+        if(!title) return;
+        console.log("Fetchingggggggggggggg: ", paging);
+        fetchData();
     }, [paging.cursor]);
 
     useEffect(() => {
-        if(!loader.current || !hasMore) return;
+        if(!loader.current || !hasMore || isLoading || data.length === 0) return;
 
         const observer = new IntersectionObserver((entries) => {
-            if(entries[0].isIntersecting){
+            if(entries[0].isIntersecting && !isLoading && hasMore){
                 setPaging((prev) => ({
                     ...prev,
                     cursor: prev.nextCursor,
@@ -101,7 +92,7 @@ function Search() {
             }
         };
 
-    }, [loader, hasMore]);
+    }, [hasMore, isLoading]);
 
     return (
         <Suspense>
