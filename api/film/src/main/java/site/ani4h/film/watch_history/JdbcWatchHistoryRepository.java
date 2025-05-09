@@ -59,10 +59,12 @@ public class JdbcWatchHistoryRepository implements WatchHistoryRepository {
     @Override
     public List<EpisodeWatchHistory> getWatchHistoryByUserId(WatchHistoryRequest request, Paging paging) {
         String sql = """
-                SELECT e.id, e.title, e.episode_number, e.synopsis, e.duration, e.thumbnail, e.view_count, e.film_id,
-                       wh.watched_duration
+                SELECT e.id, e.title, e.episode_number, e.duration, e.view_count,
+                       wh.watched_duration,
+                       f.images AS filmImages, f.synopsis AS filmSynopsis, f.title AS filmTitle
                 FROM episodes e
                 JOIN watch_history wh ON e.id = wh.episode_id
+                LEFT JOIN films f ON e.film_id = f.id
                 WHERE wh.user_id = ?
                 ORDER BY wh.watched_duration DESC
                 LIMIT ? OFFSET ?
@@ -73,18 +75,26 @@ public class JdbcWatchHistoryRepository implements WatchHistoryRepository {
         jdbcTemplate.query(sql, (rs) -> {
             EpisodeWatchHistory episode = new EpisodeWatchHistory();
             episode.setId(rs.getInt("id"));
-            episode.setTitle(rs.getString("title"));
+            episode.setTitle(rs.getString("title")+ " - " + rs.getString("filmTitle"));
             episode.setEpisodeNumber(rs.getInt("episode_number"));
-            episode.setSynopsis(rs.getString("synopsis"));
+            episode.setSynopsis(rs.getString("filmSynopsis"));
             episode.setDuration(rs.getInt("duration"));
 
             episode.setViewCount(rs.getInt("view_count"));
-            episode.setFilmId(rs.getInt("film_id"));
             episode.setWatchedDuration(rs.getInt("watched_duration"));
 
             try {
-                if(rs.getString("thumbnail") != null) {
-                    episode.setThumbnail(objectMapper.readValue(rs.getString("thumbnail"), Image.class));
+                String imageJson = rs.getString("filmImages");
+                if(imageJson != null && !imageJson.isEmpty()){
+                    List<Image> images = objectMapper.readValue(
+                            imageJson,
+                            new com.fasterxml.jackson.core.type.TypeReference<List<Image>>() {
+                            }
+                    );
+                    episode.setThumbnail(images.get(0));
+                }
+                else {
+                    episode.setThumbnail(new Image());
                 }
             }catch (Exception e) {
                 throw new RuntimeException(e);
@@ -99,7 +109,7 @@ public class JdbcWatchHistoryRepository implements WatchHistoryRepository {
     @Override
     public List<Integer> getRecentByUserId(int userId, int limit) {
         String sql = """
-                SELECT e.film_id, MAX(wh.update_at) AS last_watch_time
+                SELECT e.film_id, MAX(wh.updated_at) AS last_watch_time
                 FROM watch_history wh
                 INNER JOIN episodes e ON wh.episode_id = e.id
                 WHERE wh.user_id = ?

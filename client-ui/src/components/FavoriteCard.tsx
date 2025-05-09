@@ -4,7 +4,13 @@ import Link from "next/link";
 import { X} from "lucide-react";
 
 export default function FavoriteCard(
-    {film}: {film: SearchList}
+    {
+        film,
+        onDelete,
+    }: {
+        film: SearchList,
+        onDelete: (filmId: string) => void
+    }
 ){
     return (
         <Link href={`/film/${slug(film)}`}>
@@ -22,7 +28,16 @@ export default function FavoriteCard(
                 <div className={"flex flex-1 flex-col space-y-2 pr-2"}>
                     <div className={"flex flex-row justify-between items-center space-x-2"}>
                         <p className="font-bold line-clamp-1">{film.title}</p>
-                        <X className={"text-white mt-1 hover:scale-110 hover:text-orange-500 flex-shrink-0"} size={22} strokeWidth={3}/>
+                        <X
+                            className="text-white mt-1 hover:scale-110 hover:text-orange-500 flex-shrink-0"
+                            size={22}
+                            strokeWidth={3}
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                onDelete(film.id);
+                            }}
+                        />
                     </div>
                     <p className="line-clamp-2 text-sm opacity-60">{film.synopsis}</p>
                     <p className="line-clamp-1 text-sm">Genres: {film.genres.map(g => g.name).join(', ')}</p>

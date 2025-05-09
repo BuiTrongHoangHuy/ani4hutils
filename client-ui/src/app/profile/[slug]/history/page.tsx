@@ -1,215 +1,98 @@
+'use client'
 import HistoryCard from "@/components/HistoryCard";
+import {useEffect, useRef, useState} from "react";
+import {ListEpisodeHistory} from "@/types/list-episode-history";
+import {HistoryService} from "@/app/profile/[slug]/history/service";
 
 export default function HistoryPage() {
-    const data = [
-        {
-            id: "1",
-            title: "EP01: Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
+    const userId = "3w5rMJ7r2JjRwM"
+    const [data, setData] = useState<ListEpisodeHistory[]>([])
+    const [paging, setPaging] = useState<Paging>({
+        cursor: "",
+        nextCursor: "",
+        page: 1,
+        pageSize: 10,
+    })
+    const loader = useRef(null);
+    const [hasMore, setHasMore] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            if(isLoading || !hasMore) return;
+
+            setIsLoading(true);
+            try{
+                const res = await HistoryService.getWatchedEpisodes(userId, paging);
+                setData(prev => [...prev, ...res.data]);
+                if(res.data.length === 0){
+                    setHasMore(false);
                 }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 2002,
-            views: 1000000,
-            avgStar: 4.5,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "2",
-            title: "EP01: Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "3",
-            title: "EP01: Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "4",
-            title: "EP01: Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "5",
-            title: "EP01: Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "3",
-            title: "EP01: Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "4",
-            title: "EP01: Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "5",
-            title: "EP01: Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "3",
-            title: "EP01: Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "4",
-            title: "EP01: Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-        {
-            id: "5",
-            title: "EP01: Solo Leveling",
-            images: [
-                {
-                    url: "https://cdn.myanimelist.net/images/anime/1448/147351.jpg",
-                    width: 200,
-                    height: 300
-                }
-            ],
-            genres: ["Action", "Adventure"],
-            synopsis: "Sung Jin-Woo, dubbed the weakest hunter of all mankind, grows stronger by the day with the supernatural powers he has gained. However, keeping his skills hidden becomes more difficult as dungeon-related incidents pile up around him.\\n\\nWhen Jin-Woo and a few other low-ranked hunters are the only survivors of a dungeon that turns out to be a bigger challenge than initially expected, he draws attention once again, and hunter guilds take an increased interest in him. Meanwhile, a strange hunter who has been lost for ten years returns with a dire warning about an upcoming catastrophic event.",
-            year: 1999,
-            views: 2000000,
-            avgStar: 4.8,
-            maxEpisodes: 23,
-            numEpisodes: 24
-        },
-    ]
+            }
+            catch (error) {
+                console.error("Error fetching data:", error);
+            }
+            finally {
+                setIsLoading(false);
+            }
+        }
+
+        fetchData();
+    }, [paging])
+
+    useEffect(() => {
+        if(!loader.current || !hasMore || isLoading || data.length === 0) return;
+
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting && !isLoading) {
+                setPaging(prev => ({
+                    ...prev,
+                    page: prev.page + 1,
+                }));
+            }
+        }, {
+            root: null,
+            rootMargin: "100px",
+            threshold: 0,
+        });
+
+        observer.observe(loader.current);
+
+        return () => {
+            if (loader.current) {
+                observer.unobserve(loader.current);
+            }
+        };
+    }, [hasMore, isLoading]);
+
+    const handleDelete = async (episodeId: string) => {
+        try {
+            await HistoryService.deleteHistory(userId, episodeId)
+                .then(res => {
+                    console.log("Delete success: ", res);
+                    setData(prev => prev.filter(item => item.id !== episodeId));
+                })
+                .catch(err => {
+                    console.error("Delete error: ", err);
+                });
+        }
+        catch (error) {
+            console.error("Error deleting episode:", error);
+        }
+    }
 
     return (
         <div>
             <div className={"flex flex-col w-full space-y-8 ml-8"}>
-                <p className={"font-bold text-xl text-orange-500"}>History</p>
-                <div className={"flex flex-col space-y-4 pr-10"}>
-                    {data.map((film, i) =>
-                        <HistoryCard film={film} key={i} />
-                    )}
+                <p className={"font-bold text-2xl text-orange-500"}>History</p>
+                <div className="overflow-y-auto h-[500px] pr-4 mr-10">
+                    <div className={"flex flex-col space-y-4"}>
+                        {data.map((episode, i) =>
+                            <HistoryCard episode={episode} key={i} onDelete={handleDelete} />
+                        )}
+                    </div>
+                    {hasMore && <div ref={loader} style={{ height: "40px" }} />}
+                    {!hasMore && <p>Hết dữ liệu.</p>}
                 </div>
             </div>
         </div>

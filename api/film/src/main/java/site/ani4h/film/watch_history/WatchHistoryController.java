@@ -36,18 +36,12 @@ public class WatchHistoryController {
     @GetMapping
     public ResponseEntity<?> getWatchHistoryByUserId(@ModelAttribute WatchHistoryRequest request, @ModelAttribute Paging paging) {
         List<EpisodeWatchHistory> watchHistory = watchHistoryService.getWatchHistoryByUserId(request, paging);
-        if (watchHistory.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
         return ResponseEntity.ok(watchHistory);
     }
 
     @GetMapping("/recent")
     public ResponseEntity<?> getRecentByUserId(@RequestParam Uid userId, @RequestParam int limit) {
         List<Integer> recentEpisodes = watchHistoryService.getRecentByUserId(userId.getLocalId(), limit);
-        if (recentEpisodes.isEmpty()) {
-            return ResponseEntity.noContent().build();
-        }
         return ResponseEntity.ok(recentEpisodes);
     }
 }
