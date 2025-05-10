@@ -43,6 +43,15 @@ public class EpisodeController {
         return ResponseEntity.ok(ApiResponse.success(episode));
     }
 
+    @GetMapping("/film/{filmId}/episode/{numberEpisode}")
+    public ResponseEntity<?> getEpisodeByEpisodeNumber(@PathVariable Uid filmId , @PathVariable int numberEpisode) {
+        Episode episode = episodeService.getEpisodeByEpisodeNumber( filmId.getLocalId(),numberEpisode);
+        if (episode.getVideoUrl() != null && !episode.getVideoUrl().isEmpty()) {
+            episode.setVideoUrl(cdnVideoUrl + episode.getVideoUrl());
+        }
+        return ResponseEntity.ok(ApiResponse.success(episode));
+    }
+
     @PostMapping("/episode")
     public ResponseEntity<?> createEpisode(@RequestBody EpisodeCreate episodeCreate) {
         Episode episode = new Episode();

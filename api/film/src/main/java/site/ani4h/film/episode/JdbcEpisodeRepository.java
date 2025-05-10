@@ -101,7 +101,11 @@ public class JdbcEpisodeRepository implements EpisodeRepository {
 
     }
 
-
+    @Override
+    public Episode getEpisodeByEpisodeNumber(int filmId,int numberEpisode) {
+        String sql = "SELECT * FROM episodes WHERE film_id = ? AND episode_number = ?";
+        return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Episode.class), filmId, numberEpisode);
+    }
     private void updateFilmEpisodeCount(int filmId) {
         String countSql = "SELECT COUNT(*) FROM episodes WHERE film_id = ?";
         int episodeCount = jdbcTemplate.queryForObject(countSql, Integer.class, filmId);

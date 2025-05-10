@@ -1,7 +1,7 @@
 import {Image} from "@/types/image";
 import {genre} from "@/types/genre";
 
-export interface film {
+export interface Film {
     id: string,
     synopsis: string,
     title: string,

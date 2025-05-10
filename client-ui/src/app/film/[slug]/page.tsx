@@ -1,5 +1,5 @@
 import Image from "next/image";
-import {film} from "@/types/film";
+import {Film} from "@/types/film";
 import {FilmList} from "@/types/filmList";
 import ListFilm from "@/components/ListFilm";
 import Link from "next/link";
@@ -11,8 +11,9 @@ export default async function Page({
     params: Promise<{ slug: string }>
 }) {
     const { slug } = await params
+    //const slug  = "Witch-Watch-K6FSMLZ1tcVCgajSfij"
     const data = await fetch(`${url}/v1/film/${slug.split('-')[slug.split('-').length-1]}`)
-    const filmData : film = (await data.json()).data
+    const filmData : Film = (await data.json()).data
     const filmsData = await fetch(`${url}/v1/film`)
     const films : FilmList[] = (await filmsData.json()).data
     return (

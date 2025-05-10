@@ -5,12 +5,14 @@ import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {OnProgressProps} from "react-player/types/base";
 import {ExpandIcon, PauseIcon, PlayIcon, ShrinkIcon, Volume2, VolumeX, SkipForward, CircleGauge, RotateCcw, RotateCw} from "lucide-react";
 import {formatTime} from "@/utils/format";
+import {Episode} from "@/types/episode";
+import {FilmService} from "@/app/film/[slug]/[id]/service";
 
-export default function Player() {
+export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNumber: number}) {
     const player = useRef<ReactPlayer>(null);
     const playerWrapper = useRef<HTMLDivElement  | null>(null);
     const [levels, setLevels] = useState([]);
-    const [playing, setPlaying] = useState(false);
+    const [playing, setPlaying] = useState(true);
     const [progress, setProgress] = useState(0);
     const [duration, setDuration] = useState(0);
     const [isFullscreen, setIsFullscreen] = useState(false);
@@ -24,6 +26,7 @@ export default function Player() {
     const [volume, setVolume] = useState(1);
     const [previousVolume, setPreviousVolume] = useState(1)
     const [showVolumeSlider, setShowVolumeSlider] = useState(false);
+    const [episode, setEpisode] = useState<Episode>({} as Episode);
     const handleReady = () => {
         const hls = player.current?.getInternalPlayer("hls");
         if (!player.current || !hls ) return
@@ -175,6 +178,15 @@ export default function Player() {
             }
         };
     }, []);
+    useEffect(() => {
+        const getEpisodeDate = async ()=>{
+            const episode = await FilmService.getEpisodeByEpisodeNumber(filmId, episodeNumber)
+            const episodeData : Episode = await episode.data
+            setEpisode(episodeData)
+            console.log(episodeData)
+        }
+        getEpisodeDate()
+    }, [filmId, episodeNumber]);
     return (
         <div className="player-wrapper" ref={playerWrapper}
              onMouseMove={handleMouseMove}
@@ -183,7 +195,7 @@ export default function Player() {
         >
             <ReactPlayer
                 ref={player}
-                url="https://demo.unified-streaming.com/k8s/features/stable/video/tears-of-steel/tears-of-steel.ism/.m3u8"
+                url={episode.videoUrl || ""}
                 playing={playing}
                 muted={muted}
                 volume={volume}
@@ -193,7 +205,7 @@ export default function Player() {
                         forceHLS: true,
                         hlsOptions:{
                             maxBufferLength:30,
-                            maxMaxBufferLength: 180,
+                            maxMaxBufferLength: 60,
                             liveSyncDuration: 15,
                             lowLatencyMode:true,
                         }
@@ -204,7 +216,7 @@ export default function Player() {
                 onReady={handleReady}
                 onProgress={handleProgress}
                 width="100%"
-                height="100%"
+                height="480px"
             />
             <div className={`absolute bottom-0 left-0 right-0 px-4 pb-2 pt-4 flex items-center text-white
             gap-5 justify-between w-full bg-base-100 transition-opacity duration-500

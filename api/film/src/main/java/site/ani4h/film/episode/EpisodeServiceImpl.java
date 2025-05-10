@@ -34,4 +34,9 @@ public class EpisodeServiceImpl implements EpisodeService {
          episodeRepository.updateEpisode(id, episode);
     }
 
+    @Override
+    public Episode getEpisodeByEpisodeNumber(int filmId, int numberEpisode ) {
+        return episodeRepository.getEpisodeByEpisodeNumber(filmId, numberEpisode);
+    }
+
 }
