@@ -4,7 +4,7 @@ const getToken = () => {
 };
 // Create an Axios instance
 const axiosInstance = axios.create({
-    baseURL: "https://api.ani4h.site",
+    baseURL: "http://localhost:4002",
     timeout: 5000,
     headers: {
         "Content-Type": "application/json",
@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
 export default axiosInstance;
 
 export const axiosInstance2 = axios.create({
-    baseURL: "https://api.ani4h.site",
+    baseURL: "http://localhost:4001",
     timeout: 5000,
     headers: {
         "Content-Type": "application/json",
