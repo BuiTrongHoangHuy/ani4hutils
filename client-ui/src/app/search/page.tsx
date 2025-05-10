@@ -21,13 +21,51 @@ function Search() {
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
+    const fetchFirst = async () => {
+        if(!title) return;
 
-    const fetchData = async () => {
-        if(isLoading || !hasMore) return;
+        const newPaging: PagingSearch = {
+            cursor: "",
+            nextCursor: "",
+            page: 1,
+            pageSize: 10,
+        }
 
         setIsLoading(true);
         try{
-            const res = await fetch(`http://localhost:4003/v1/search?${buildSearchQuery(title, paging)}`)
+            const res = await fetch(`http://localhost:4003/v1/search?${buildSearchQuery(title, newPaging)}`)
+            const result = await res.json()
+            if(result.data) {
+                setData(result.data.data);
+                setPaging({
+                    ...paging,
+                    nextCursor: result.data.paging.nextCursor,
+                });
+
+                if(result.data.paging.nextCursor === null) {
+                    setHasMore(false);
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const fetchMore = async () => {
+        if(isLoading || !hasMore) return;
+
+        const newPaging: PagingSearch = {
+            cursor: paging.nextCursor,
+            nextCursor: paging.nextCursor,
+            page: paging.page + 1,
+            pageSize: paging.pageSize,
+        }
+
+        setIsLoading(true);
+        try{
+            const res = await fetch(`http://localhost:4003/v1/search?${buildSearchQuery(title, newPaging)}`)
             const result = await res.json()
             if (result.data) {
                 setData((prev) => [...prev, ...result.data.data]);
@@ -39,8 +77,6 @@ function Search() {
                 if(result.data.paging.nextCursor === null) {
                     setHasMore(false);
                 }
-            } else {
-                console.error("Error fetching data:", result);
             }
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -50,33 +86,19 @@ function Search() {
     }
 
     useEffect(() => {
-        if(title){
-            setPaging({
-                cursor: "",
-                nextCursor: "",
-                page: 1,
-                pageSize: 10,
-            });
-            setData([]);
-            setHasMore(true);
-        }
-    }, [title]);
-
-    useEffect(() => {
         if(!title) return;
-        console.log("Fetchingggggggggggggg: ", paging);
-        fetchData();
-    }, [paging.cursor]);
+        console.log("Title: ", title);
+        setData([]);
+        setHasMore(true);
+        fetchFirst();
+    }, [title]);
 
     useEffect(() => {
         if(!loader.current || !hasMore || isLoading || data.length === 0) return;
 
         const observer = new IntersectionObserver((entries) => {
             if(entries[0].isIntersecting && !isLoading && hasMore){
-                setPaging((prev) => ({
-                    ...prev,
-                    cursor: prev.nextCursor,
-                }));
+                fetchMore();
             }
         }, {
             root: null,
