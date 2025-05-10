@@ -5,12 +5,13 @@ import ProfileSideBar from "@/components/ProfileSideBar";
 export default async function ProfileLayout(
     {
         children,
+        params
     }: Readonly<{
         children: React.ReactNode;
+        params: { slug: string };
     }>
 ) {
-    const id = "abc123"
-
+    const userId = params.slug as string;
 
     return (
         <div className={"w-screen mt-[64px] pl-20 pr-20 pt-8"}>
@@ -29,7 +30,7 @@ export default async function ProfileLayout(
                         <p className={"font-bold text-2xl"}>Bùi Thái Hoàng</p>
                     </div>
 
-                    <ProfileSideBar id={id}/>
+                    <ProfileSideBar id={userId}/>
 
                 </div>
 

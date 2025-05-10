@@ -3,8 +3,12 @@ import {SearchList} from "@/types/search/searchList";
 import FavoriteCard from "@/components/FavoriteCard";
 import {FavoriteService} from "@/app/profile/[slug]/favorite/service";
 import {useEffect, useRef, useState} from "react";
+import {useParams} from "next/navigation";
 
 export default function FavoritePage() {
+    const params = useParams();
+    const userId = params.slug as string;
+
     const [paging, setPaging] = useState<Paging>(
         {
             cursor: "",
@@ -16,7 +20,6 @@ export default function FavoritePage() {
     const [data, setData] = useState<SearchList[]>([]);
     const loader = useRef(null);
     const [hasMore, setHasMore] = useState(true);
-    const userId: string = "3w5rMJ7r2JjRwM"
     const [isLoading, setIsLoading] = useState(false);
 
     const fetchData = async () => {

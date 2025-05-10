@@ -3,9 +3,12 @@ import HistoryCard from "@/components/HistoryCard";
 import {useEffect, useRef, useState} from "react";
 import {ListEpisodeHistory} from "@/types/list-episode-history";
 import {HistoryService} from "@/app/profile/[slug]/history/service";
+import {useParams} from "next/navigation";
 
 export default function HistoryPage() {
-    const userId = "3w5rMJ7r2JjRwM"
+    const params = useParams();
+    const userId = params.slug as string;
+
     const [data, setData] = useState<ListEpisodeHistory[]>([])
     const [paging, setPaging] = useState<Paging>({
         cursor: "",
