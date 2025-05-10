@@ -14,6 +14,7 @@ function Search() {
     const title = searchParams.get("q") || "";
     const [data, setData] = useState<SearchList[]>([]);
     const [proposal, setProposal] = useState<SearchList[]>([]);
+    const [topHot, setTopHot] = useState<SearchList[]>([]);
     const [paging, setPaging] = useState<PagingSearch>({
         cursor: "",
         nextCursor: "",
@@ -105,6 +106,26 @@ function Search() {
             }
         }
 
+        const fetchTopHot = async () => {
+            const newPaging: Paging = {
+                cursor: "",
+                nextCursor: "",
+                page: 1,
+                pageSize: 10,
+            }
+
+            try {
+                const res = await SearchService.getTopHot(newPaging);
+                if(res) {
+                    setTopHot(res.data);
+                }
+            } catch (error) {
+                console.error("Error fetching top hot data:", error);
+            }
+        }
+
+        fetchTopHot();
+
         fetchProposal();
     }, [])
 
@@ -168,7 +189,7 @@ function Search() {
                     </div>
                     <div className={"flex flex-col space-y-4"}>
                         <p className={"text-xl font-bold"}>Top search</p>
-                        {data.map((film, index) => {
+                        {topHot.map((film, index) => {
                             let rankColor = "text-gray-400"; // default
                             if (index === 0) rankColor = "text-orange-500";
                             else if (index === 1) rankColor = "text-orange-400";

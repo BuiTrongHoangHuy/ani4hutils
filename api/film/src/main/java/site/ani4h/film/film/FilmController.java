@@ -25,4 +25,8 @@ public class FilmController {
     public ResponseEntity<?> getFilmById(@PathVariable("id") Uid id) {
         return ResponseEntity.ok(this.filmService.getFilmById(id.getLocalId()));
     }
+    @GetMapping("/top-hot")
+    public ResponseEntity<?> getTopFilmHot(@ModelAttribute Paging paging) {
+        return ResponseEntity.ok(this.filmService.getTopFilmHot(paging));
+    }
 }

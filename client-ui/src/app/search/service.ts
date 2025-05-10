@@ -57,4 +57,14 @@ export const SearchService = {
         });
         return res.json();
     },
+    getTopHot: async (paging: Paging) => {
+        const pagingParams = BuildQueryParams(paging);
+        const res = await fetch(`http://localhost:4002/v1/film/top-hot?${pagingParams}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        });
+        return res.json();
+    }
 }

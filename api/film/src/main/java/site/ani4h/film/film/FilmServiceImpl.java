@@ -34,4 +34,9 @@ public class FilmServiceImpl implements FilmService {
         return filmRepository.getFilmById(id);
     }
 
+    @Override
+    public List<Film> getTopFilmHot(Paging paging) {
+        return filmRepository.getTopFilmHot(paging);
+    }
+
 }

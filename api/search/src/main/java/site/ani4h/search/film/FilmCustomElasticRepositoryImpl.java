@@ -71,7 +71,7 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
                 .collect(Collectors.toList());
 
         MoreLikeThisQuery mltQuery = MoreLikeThisQuery.of(q -> q
-                .fields( "title","genres.name", "synonyms", "jaName")
+                .fields( "title","genres.name")
                 .like(likes)
                 .minTermFreq(1)
                 .minDocFreq(1)

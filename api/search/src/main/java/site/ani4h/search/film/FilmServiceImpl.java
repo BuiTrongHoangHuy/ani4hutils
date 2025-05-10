@@ -88,7 +88,7 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public SearchResponse userFavoriteRecommendMLT(UserBasedRequest request, PagingSearch paging) {
         List<Integer> filmIds;
-        int count = 5;
+        int count = 10;
 
         try {
             filmIds = favoriteGrpcClientService.getFilmIdRecentFavorites(request.getUserId().getLocalId(), count);
@@ -116,7 +116,7 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public SearchResponse userHistoryRecommendMLT(UserBasedRequest request, PagingSearch paging) {
         List<Integer> filmIds;
-        int count = 5;
+        int count = 10;
 
         try {
             filmIds = historyGrpcClientService.getListFilmIdRecentHistory(request.getUserId().getLocalId(), count);
