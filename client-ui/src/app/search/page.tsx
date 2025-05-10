@@ -6,11 +6,14 @@ import {useSearchParams} from "next/navigation";
 import {useEffect, useRef, useState} from "react";
 import {PagingSearch} from "@/types/search/pagingSearch";
 import { Suspense } from 'react'
+import {SearchService} from "@/app/search/service";
 
 function Search() {
+    const userId = "3w5rMJ7r2JjRwM"
     const searchParams = useSearchParams();
     const title = searchParams.get("q") || "";
     const [data, setData] = useState<SearchList[]>([]);
+    const [proposal, setProposal] = useState<SearchList[]>([]);
     const [paging, setPaging] = useState<PagingSearch>({
         cursor: "",
         nextCursor: "",
@@ -33,16 +36,15 @@ function Search() {
 
         setIsLoading(true);
         try{
-            const res = await fetch(`http://localhost:4003/v1/search?${buildSearchQuery(title, newPaging)}`)
-            const result = await res.json()
-            if(result.data) {
-                setData(result.data.data);
+            const res = await SearchService.search(title, newPaging);
+            if(res.data) {
+                setData(res.data.data);
                 setPaging({
                     ...paging,
-                    nextCursor: result.data.paging.nextCursor,
+                    nextCursor: res.data.paging.nextCursor,
                 });
 
-                if(result.data.paging.nextCursor === null) {
+                if(res.data.paging.nextCursor === null) {
                     setHasMore(false);
                 }
             }
@@ -65,16 +67,15 @@ function Search() {
 
         setIsLoading(true);
         try{
-            const res = await fetch(`http://localhost:4003/v1/search?${buildSearchQuery(title, newPaging)}`)
-            const result = await res.json()
-            if (result.data) {
-                setData((prev) => [...prev, ...result.data.data]);
+            const res = await SearchService.search(title, newPaging);
+            if (res.data) {
+                setData((prev) => [...prev, ...res.data.data]);
                 setPaging({
                     ...paging,
-                    nextCursor: result.data.paging.nextCursor,
+                    nextCursor: res.data.paging.nextCursor,
                 });
 
-                if(result.data.paging.nextCursor === null) {
+                if(res.data.paging.nextCursor === null) {
                     setHasMore(false);
                 }
             }
@@ -84,6 +85,28 @@ function Search() {
             setIsLoading(false);
         }
     }
+
+    useEffect(() => {
+        const fetchProposal = async () => {
+            const newPaging: PagingSearch = {
+                cursor: "",
+                nextCursor: "",
+                page: 1,
+                pageSize: 10,
+            }
+
+            try {
+                const res = await SearchService.userFavoriteRecommendation(userId, 1, newPaging);
+                if(res.data) {
+                    setProposal(res.data.data);
+                }
+            } catch (error) {
+                console.error("Error fetching proposal data:", error);
+            }
+        }
+
+        fetchProposal();
+    }, [])
 
     useEffect(() => {
         if(!title) return;
@@ -135,9 +158,9 @@ function Search() {
                 <div className={"flex flex-col w-86 h-full space-y-4"}>
                     <div className={"flex flex-col space-y-4"}>
                         <p className={"text-xl font-bold"}>Proposal for you</p>
-                        <div className={"flex flex-row overflow-x-auto h-45 space-x-2"}>
+                        <div className={"flex flex-row overflow-x-auto h-50 space-x-2"}>
                             {
-                                data.map((film, index) =>
+                                proposal.map((film, index) =>
                                     <FilmCard key={index} film={film} height={32} width={24} fontSize={14}/>
                                 )
                             }

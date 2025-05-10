@@ -88,16 +88,17 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public SearchResponse userFavoriteRecommendMLT(UserBasedRequest request, PagingSearch paging) {
         List<Integer> filmIds;
+        int count = 5;
 
         try {
-            filmIds = favoriteGrpcClientService.getFilmIdRecentFavorites(request.getUserId(), 5);
+            filmIds = favoriteGrpcClientService.getFilmIdRecentFavorites(request.getUserId().getLocalId(), count);
             if (filmIds == null || filmIds.isEmpty()) {
                 log.warn("User {} has no recent favorites. Fallback to random films.", request.getUserId());
-                filmIds = randomFilmIds(5);
+                filmIds = randomFilmIds(count);
             }
         } catch (Exception e) {
             log.error("Failed to fetch favorites for user {}: {}. Fallback to random films.", request.getUserId(), e.getMessage());
-            filmIds = randomFilmIds(5);
+            filmIds = randomFilmIds(count);
         }
 
         return filmCustomElasticRepository.moreLikeThisQuery(filmIds, request.getSeed(), paging);
@@ -115,16 +116,17 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public SearchResponse userHistoryRecommendMLT(UserBasedRequest request, PagingSearch paging) {
         List<Integer> filmIds;
+        int count = 5;
 
         try {
-            filmIds = historyGrpcClientService.getListFilmIdRecentHistory(request.getUserId(), 5);
+            filmIds = historyGrpcClientService.getListFilmIdRecentHistory(request.getUserId().getLocalId(), count);
             if (filmIds == null || filmIds.isEmpty()) {
                 log.warn("User {} has no recent histories. Fallback to random films.", request.getUserId());
-                filmIds = randomFilmIds(5);
+                filmIds = randomFilmIds(count);
             }
         } catch (Exception e) {
             log.error("Failed to fetch histories for user {}: {}. Fallback to random films.", request.getUserId(), e.getMessage());
-            filmIds = randomFilmIds(5);
+            filmIds = randomFilmIds(count);
         }
 
         return filmCustomElasticRepository.moreLikeThisQuery(filmIds, request.getSeed(), paging);
