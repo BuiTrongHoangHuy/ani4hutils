@@ -32,13 +32,13 @@ public class FilmController {
     }
 
     @GetMapping("/user-favorite")
-    public ResponseEntity<?> userFavoriteRecommendMLT(@RequestParam UserBasedRequest request, @ModelAttribute PagingSearch paging) {
+    public ResponseEntity<?> userFavoriteRecommendMLT(@ModelAttribute UserBasedRequest request, @ModelAttribute PagingSearch paging) {
         var films = filmService.userFavoriteRecommendMLT(request, paging);
         return ResponseEntity.ok(films);
     }
 
     @GetMapping("/user-history")
-    public ResponseEntity<?> userHistoryRecommendMLT(@RequestParam UserBasedRequest request, @ModelAttribute PagingSearch paging) {
+    public ResponseEntity<?> userHistoryRecommendMLT(@ModelAttribute UserBasedRequest request, @ModelAttribute PagingSearch paging) {
         var films = filmService.userHistoryRecommendMLT(request, paging);
         return ResponseEntity.ok(films);
     }

@@ -30,4 +30,10 @@ public class UserController {
         var requester = Requester.getRequester(request);
         return ResponseEntity.ok(ApiResponse.success(userService.getUsers(paging)));
     }
+
+    @GetMapping("/get-by-email")
+    public ResponseEntity<?> getUserIdByEmail(@RequestParam String email) {
+        var userId = userService.getUserIdByEmail(email);
+        return ResponseEntity.ok(ApiResponse.success(userId));
+    }
 }

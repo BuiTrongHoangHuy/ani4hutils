@@ -109,4 +109,8 @@ public class AuthService {
                 .refreshToken(refreshToken)
                 .build();
     }
+
+    public Auth findByEmail(String email) {
+        return this.authRepository.findByEmail(email);
+    }
 }

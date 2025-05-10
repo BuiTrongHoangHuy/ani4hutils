@@ -21,6 +21,11 @@ export async function POST(request: NextRequest) {
         maxAge: 24 * 60 * 60,
         sameSite: "strict"
     });
+    (await cookies()).set("email", data.data.email, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60,
+        sameSite: "strict"
+    });
 
     return NextResponse.json(data.data, { status: 201 });
 }

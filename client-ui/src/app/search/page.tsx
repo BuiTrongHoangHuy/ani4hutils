@@ -6,12 +6,15 @@ import {useSearchParams} from "next/navigation";
 import {useEffect, useRef, useState} from "react";
 import {PagingSearch} from "@/types/search/pagingSearch";
 import { Suspense } from 'react'
+import {SearchService} from "@/app/search/service";
 
 function Search() {
+    const userId = "3w5rMJ7r2JjRwM"
     const searchParams = useSearchParams();
     const title = searchParams.get("q") || "";
     const [data, setData] = useState<SearchList[]>([]);
-    const [canFetch, setCanFetch] = useState(false);
+    const [proposal, setProposal] = useState<SearchList[]>([]);
+    const [topHot, setTopHot] = useState<SearchList[]>([]);
     const [paging, setPaging] = useState<PagingSearch>({
         cursor: "",
         nextCursor: "",
@@ -20,72 +23,126 @@ function Search() {
     });
     const loader = useRef(null);
     const [hasMore, setHasMore] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
 
-    const fetchData = async () => {
+    const fetchFirst = async () => {
+        if(!title) return;
+
+        const newPaging: PagingSearch = {
+            cursor: "",
+            nextCursor: "",
+            page: 1,
+            pageSize: 10,
+        }
+
+        setIsLoading(true);
         try{
-            console.log("Paging: ", paging);
-            const res = await fetch(`http://localhost:4003/v1/search?${buildSearchQuery(title, paging)}`)
-            const result = await res.json()
-            if (result.data) {
-                setData((prev) => [...prev, ...result.data.data]);
+            const res = await SearchService.search(title, newPaging);
+            if(res.data) {
+                setData(res.data.data);
                 setPaging({
                     ...paging,
-                    cursor: result.data.paging.cursor,
-                    nextCursor: result.data.paging.nextCursor,
+                    nextCursor: res.data.paging.nextCursor,
                 });
 
-                if(result.data.paging.nextCursor === null) {
+                if(res.data.paging.nextCursor === null) {
                     setHasMore(false);
                 }
-                else {
-                    setHasMore(true);
-                }
-            } else {
-                console.error("Error fetching data:", result);
             }
         } catch (error) {
             console.error("Error fetching data:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const fetchMore = async () => {
+        if(isLoading || !hasMore) return;
+
+        const newPaging: PagingSearch = {
+            cursor: paging.nextCursor,
+            nextCursor: paging.nextCursor,
+            page: paging.page + 1,
+            pageSize: paging.pageSize,
+        }
+
+        setIsLoading(true);
+        try{
+            const res = await SearchService.search(title, newPaging);
+            if (res.data) {
+                setData((prev) => [...prev, ...res.data.data]);
+                setPaging({
+                    ...paging,
+                    nextCursor: res.data.paging.nextCursor,
+                });
+
+                if(res.data.paging.nextCursor === null) {
+                    setHasMore(false);
+                }
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        } finally {
+            setIsLoading(false);
         }
     }
 
     useEffect(() => {
-        if(title){
-            setPaging({
+        const fetchProposal = async () => {
+            const newPaging: PagingSearch = {
                 cursor: "",
                 nextCursor: "",
                 page: 1,
                 pageSize: 10,
-            });
-            setData([]);
-            setHasMore(true);
-            setCanFetch(true);
+            }
+
+            try {
+                const res = await SearchService.userFavoriteRecommendation(userId, 1, newPaging);
+                if(res.data) {
+                    setProposal(res.data.data);
+                }
+            } catch (error) {
+                console.error("Error fetching proposal data:", error);
+            }
         }
+
+        const fetchTopHot = async () => {
+            const newPaging: Paging = {
+                cursor: "",
+                nextCursor: "",
+                page: 1,
+                pageSize: 10,
+            }
+
+            try {
+                const res = await SearchService.getTopHot(newPaging);
+                if(res) {
+                    setTopHot(res.data);
+                }
+            } catch (error) {
+                console.error("Error fetching top hot data:", error);
+            }
+        }
+
+        fetchTopHot();
+
+        fetchProposal();
+    }, [])
+
+    useEffect(() => {
+        if(!title) return;
+        console.log("Title: ", title);
+        setData([]);
+        setHasMore(true);
+        fetchFirst();
     }, [title]);
 
     useEffect(() => {
-        if(canFetch){
-            console.log("Fetching data: UseEffect CanFetch");
-            fetchData();
-            setCanFetch(false);
-        }
-    }, [canFetch]);
-
-    useEffect(() => {
-        if(paging.cursor !== "" && paging.cursor === paging.nextCursor && paging.nextCursor !== null){
-            console.log("Fetching data: UseEffect Cursor");
-            fetchData();
-        }
-    }, [paging.cursor]);
-
-    useEffect(() => {
-        if(!loader.current || !hasMore) return;
+        if(!loader.current || !hasMore || isLoading || data.length === 0) return;
 
         const observer = new IntersectionObserver((entries) => {
-            if(entries[0].isIntersecting){
-                setPaging((prev) => ({
-                    ...prev,
-                    cursor: prev.nextCursor,
-                }));
+            if(entries[0].isIntersecting && !isLoading && hasMore){
+                fetchMore();
             }
         }, {
             root: null,
@@ -101,7 +158,7 @@ function Search() {
             }
         };
 
-    }, [loader, hasMore]);
+    }, [hasMore, isLoading]);
 
     return (
         <Suspense>
@@ -122,9 +179,9 @@ function Search() {
                 <div className={"flex flex-col w-86 h-full space-y-4"}>
                     <div className={"flex flex-col space-y-4"}>
                         <p className={"text-xl font-bold"}>Proposal for you</p>
-                        <div className={"flex flex-row overflow-x-auto h-45 space-x-2"}>
+                        <div className={"flex flex-row overflow-x-auto h-50 space-x-2"}>
                             {
-                                data.map((film, index) =>
+                                proposal.map((film, index) =>
                                     <FilmCard key={index} film={film} height={32} width={24} fontSize={14}/>
                                 )
                             }
@@ -132,7 +189,7 @@ function Search() {
                     </div>
                     <div className={"flex flex-col space-y-4"}>
                         <p className={"text-xl font-bold"}>Top search</p>
-                        {data.map((film, index) => {
+                        {topHot.map((film, index) => {
                             let rankColor = "text-gray-400"; // default
                             if (index === 0) rankColor = "text-orange-500";
                             else if (index === 1) rankColor = "text-orange-400";

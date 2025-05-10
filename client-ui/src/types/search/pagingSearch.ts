@@ -1,5 +1,5 @@
 export interface PagingSearch{
-    cursor?: string,
+    cursor?: string | null,
     nextCursor?: string,
     page: number,
     pageSize: number,

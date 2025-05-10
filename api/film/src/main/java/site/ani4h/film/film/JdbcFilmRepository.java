@@ -93,4 +93,21 @@ public class JdbcFilmRepository implements FilmRepository {
         }, id);
     }
 
+    @Override
+    public List<Film> getTopFilmHot(Paging paging) {
+        String sql = """
+                SELECT f.id, f.title, f.images, f.synopsis, f.avg_star, f.total_star,
+                f.max_episodes, f.num_episodes, f.year, f.season, f.state
+                FROM films f
+                ORDER BY f.avg_star DESC
+                LIMIT ? OFFSET ?
+                """;
+
+        return this.jdbcTemplate.query(
+                sql,
+                new BeanPropertyRowMapper<>(Film.class),
+                paging.getPageSize(),
+                paging.getOffset()
+        );
+    }
 }

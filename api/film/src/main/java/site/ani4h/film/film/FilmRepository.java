@@ -12,4 +12,5 @@ import java.util.List;
 public interface FilmRepository {
     List<FilmList> getFilms(Paging paging, FilmFilter filter);
     Film getFilmById(int id );
+    List<Film> getTopFilmHot(Paging paging);
 }

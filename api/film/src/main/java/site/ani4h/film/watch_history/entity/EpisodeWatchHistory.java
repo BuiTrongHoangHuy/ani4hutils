@@ -16,7 +16,6 @@ public class EpisodeWatchHistory {
     private Image thumbnail;
     private int viewCount;
     private int watchedDuration;
-    private int filmId;
 
     private final static int type = 4;
 

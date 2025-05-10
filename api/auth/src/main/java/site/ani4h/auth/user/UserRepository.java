@@ -1,6 +1,7 @@
 package site.ani4h.auth.user;
 
 import site.ani4h.shared.common.Paging;
+import site.ani4h.shared.common.Uid;
 
 import java.util.List;
 

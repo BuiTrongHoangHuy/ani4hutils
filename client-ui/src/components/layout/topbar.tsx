@@ -4,9 +4,11 @@ import Image from "next/image";
 import React, { FormEvent, useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
 import {useRouter} from "next/navigation";
+import {UserService} from "@/utils/user-service";
 export default function TopBar(className: { className?: string }) {
     const [isLogin, setIsLogin] = useState<boolean>(false)
     const router = useRouter()
+    const [userId, setUserId] = useState("")
 
     useEffect(() => {
         fetch("/api/me", {
@@ -14,6 +16,15 @@ export default function TopBar(className: { className?: string }) {
         }).then(r => {
             if (r.status == 200) {
                 setIsLogin(true)
+                r.json().then(
+                    data => {
+                        UserService.getUserId(data.email).then(
+                            r => {
+                                setUserId(r)
+                            }
+                        )
+                    }
+                )
             }
         })
     }, [])
@@ -44,6 +55,14 @@ export default function TopBar(className: { className?: string }) {
                     toast.success("Login success")
                     setIsLogin(true);
                     (document.getElementById('login_modal') as HTMLDialogElement)?.close();
+                }
+
+                if(formData.get("email")){
+                    UserService.getUserId(formData.get("email") as string).then(
+                        r => {
+                            setUserId(r)
+                        }
+                    )
                 }
             }
         )
@@ -168,10 +187,10 @@ export default function TopBar(className: { className?: string }) {
                                     tabIndex={0}
                                     className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
                                     <li>
-                                        <a className="justify-between">
+                                        <Link href={`/profile/${userId}`} className="justify-between">
                                             Profile
                                             <span className="badge">New</span>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li><a>Settings</a></li>
                                     <li><a onClick={onLogout}>Logout</a></li>

@@ -71,7 +71,7 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
                 .collect(Collectors.toList());
 
         MoreLikeThisQuery mltQuery = MoreLikeThisQuery.of(q -> q
-                .fields("title", "synopsis", "genres", "jaName")
+                .fields( "title","genres.name")
                 .like(likes)
                 .minTermFreq(1)
                 .minDocFreq(1)
@@ -99,6 +99,7 @@ public class FilmCustomElasticRepositoryImpl implements FilmCustomElasticReposit
 
         NativeQuery recommend = queryBuilder.build();
         SearchHits<Film> searchHits = elasticsearchOperations.search(recommend, Film.class);
+        log.info("Search Hits: {}", searchHits.getTotalHits());
 
         List<FilmResponse> data = searchHits.stream()
                 .map(searchHit -> {
