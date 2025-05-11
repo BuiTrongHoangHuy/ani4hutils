@@ -3,7 +3,11 @@ import {Film} from "@/types/film";
 import {FilmList} from "@/types/filmList";
 import ListFilm from "@/components/ListFilm";
 import Link from "next/link";
-import {url} from "@/types/cons";
+import {url2} from "@/types/cons";
+import {SearchService} from "@/app/search/service";
+import {PagingSearch} from "@/types/search/pagingSearch";
+import {cookies} from "next/headers";
+import ButtonFavorite from "@/components/ButtonFavorite";
 
 export default async function Page(
     {
@@ -13,11 +17,21 @@ export default async function Page(
         params: Promise<{ slug: string }>
     }) {
     const { slug } = await params
+    const filmId = slug.split('-')[slug.split('-').length-1]
     //const slug  = "Witch-Watch-K6FSMLZ1tcVCgajSfij"
-    const data = await fetch(`${url}/v1/film/${slug.split('-')[slug.split('-').length-1]}`)
+    const data = await fetch(`${url2}/v1/film/${slug.split('-')[slug.split('-').length-1]}`)
     const filmData : Film = (await data.json()).data
-    const filmsData = await fetch(`${url}/v1/film`)
-    const films : FilmList[] = (await filmsData.json()).data
+    const seed = Math.floor(Math.random() * 1000)
+    const cookieStore = await cookies()
+    const userId = cookieStore.get('userId')?.value || ""
+
+    const paging: PagingSearch = {
+        cursor: "",
+        nextCursor: "",
+        page: 1,
+        pageSize: 10,
+    }
+    const films : FilmList[] = (await SearchService.contentBasedRecommendation(filmId, seed, paging)).data.data
     return (
         <div className={"w-screen mt-[64px] px-20 py-10 space-y-20 "}>
             <div className={"flex justify-between"}>
@@ -34,7 +48,7 @@ export default async function Page(
                     <h1 className={"text-3xl font-bold"}>{filmData?.title}</h1>
                     <div className={"flex space-x-2"}>
                         <Image src={`/images/icons/start.svg`} alt={""} width="16" height="16"/>
-                        <p className={"text-primary"}>{filmData.avgStar || 0}</p>
+                        <p className={"text-primary"}>{filmData?.avgStar || 0}</p>
                         <div className={"divider divider-horizontal"}></div>
                         {filmData.season && <p>{filmData.season}</p>}
                         <p>{filmData.year || new Date(filmData.startDate || Date.now()).getUTCFullYear()}</p>
@@ -52,14 +66,11 @@ export default async function Page(
                     <p className={"font-bold"}>{filmData?.synopsis}</p>
                     <p>Views: {filmData.view || 0}</p>
                     <div className={"flex w-full justify-end space-x-5"}>
-                        <Link href={`/film/${slug}/episode-1`} className={"btn btn-primary text-2xl px-8 py-6"}>
+                        <Link href={`/film/${slug}/episode-1`} className={"btn bg-orange-600 btn-primary text-2xl px-8 py-6"}>
                             <Image src={`/images/icons/play.png`} alt={""} width="16" height="16"/>
                             Transmit
                         </Link>
-                        <div className={"btn bg-gray-500 hover:gray-300 text-2xl px-8 py-6"}>
-                            <Image src={`/images/icons/plus.svg`} alt={""} width="24" height="24"/>
-                            Save
-                        </div>
+                        <ButtonFavorite userId={userId} filmId={filmId}/>
                     </div>
                 </div>
             </div>
