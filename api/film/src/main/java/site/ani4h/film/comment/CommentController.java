@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.ani4h.film.comment.entity.CommentRequest;
 import site.ani4h.film.comment.entity.CommentResponse;
+import site.ani4h.shared.common.Paging;
 import site.ani4h.shared.common.Uid;
 
 import java.util.List;
@@ -38,14 +39,18 @@ public class CommentController {
     }
 
     @GetMapping("/film/{filmId}")
-    public ResponseEntity<List<CommentResponse>> getCommentsByFilmId(@PathVariable Uid filmId) {
-        List<CommentResponse> comments = commentService.getCommentsByFilmId(filmId.getLocalId());
+    public ResponseEntity<List<CommentResponse>> getCommentsByFilmId(
+            @PathVariable Uid filmId,
+            @ModelAttribute Paging paging) {
+        List<CommentResponse> comments = commentService.getCommentsByFilmId(filmId.getLocalId(), paging);
         return ResponseEntity.ok(comments);
     }
 
     @GetMapping("/episode/{episodeId}")
-    public ResponseEntity<List<CommentResponse>> getCommentsByEpisodeId(@PathVariable Uid episodeId) {
-        List<CommentResponse> comments = commentService.getCommentsByEpisodeId(episodeId.getLocalId());
+    public ResponseEntity<List<CommentResponse>> getCommentsByEpisodeId(
+            @PathVariable Uid episodeId,
+            @ModelAttribute Paging paging) {
+        List<CommentResponse> comments = commentService.getCommentsByEpisodeId(episodeId.getLocalId(), paging);
         return ResponseEntity.ok(comments);
     }
 

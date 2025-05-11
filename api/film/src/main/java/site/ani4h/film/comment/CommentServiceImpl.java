@@ -3,6 +3,7 @@ package site.ani4h.film.comment;
 import org.springframework.stereotype.Service;
 import site.ani4h.film.comment.entity.CommentRequest;
 import site.ani4h.film.comment.entity.CommentResponse;
+import site.ani4h.shared.common.Paging;
 import site.ani4h.shared.common.Uid;
 
 import java.util.List;
@@ -31,13 +32,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentResponse> getCommentsByFilmId(int filmId) {
-        return commentRepository.getCommentsByFilmId(filmId);
+    public List<CommentResponse> getCommentsByFilmId(int filmId, Paging paging) {
+        return commentRepository.getCommentsByFilmId(filmId, paging);
     }
 
     @Override
-    public List<CommentResponse> getCommentsByEpisodeId(int episodeId) {
-        return commentRepository.getCommentsByEpisodeId(episodeId);
+    public List<CommentResponse> getCommentsByEpisodeId(int episodeId, Paging paging) {
+        return commentRepository.getCommentsByEpisodeId(episodeId, paging);
     }
 
 }
