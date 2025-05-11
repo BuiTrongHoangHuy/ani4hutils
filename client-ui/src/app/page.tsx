@@ -3,7 +3,6 @@ import ListFilm from "@/components/ListFilm";
 import {FilmList} from "@/types/filmList";
 import {SearchService} from "@/app/search/service";
 import {PagingSearch} from "@/types/search/pagingSearch";
-import {UserService} from "@/utils/user-service";
 import { cookies } from 'next/headers'
 
 
@@ -22,9 +21,7 @@ export default async function Home() {
     }
 
     const cookieStore = await cookies()
-    const email = cookieStore.get('email')?.value || ""
-
-    const userId = await UserService.getUserId(email) || ""
+    const userId = cookieStore.get('userId')?.value || ""
 
     const resFavorite = await SearchService.userFavoriteRecommendation(userId,0, paging)
     const favorites : FilmList[] = (await resFavorite.data.data || [])
@@ -33,7 +30,8 @@ export default async function Home() {
     const histories : FilmList[] = (await resHistory.data.data || [])
 
     const resTopHot = await SearchService.getTopHot(pagingNormal);
-    const topHot : FilmList[] = (await resTopHot.data || [])
+    const topHot: FilmList[] = resTopHot?.data ?? [];
+
 
     return (
         <div className={"w-screen"}>

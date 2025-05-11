@@ -8,6 +8,8 @@ import {SearchService} from "@/app/search/service";
 import {PagingSearch} from "@/types/search/pagingSearch";
 import {cookies} from "next/headers";
 import ButtonFavorite from "@/components/ButtonFavorite";
+import {SearchList} from "@/types/search/searchList";
+import FilmCard from "@/components/FilmCard";
 
 export default async function Page(
     {
@@ -29,9 +31,9 @@ export default async function Page(
         cursor: "",
         nextCursor: "",
         page: 1,
-        pageSize: 10,
+        pageSize: 12,
     }
-    const films : FilmList[] = (await SearchService.contentBasedRecommendation(filmId, seed, paging)).data.data
+    const films : SearchList[] = (await SearchService.contentBasedRecommendation(filmId, seed, paging)).data.data
     return (
         <div className={"w-screen mt-[64px] px-20 py-10 space-y-20 "}>
             <div className={"flex justify-between"}>
@@ -80,7 +82,16 @@ export default async function Page(
                 <Link href={`/${slug}`} className={"btn bg-gray-500 hover:gray-300 p-6 text-xl rounded-md"}>Part 3</Link>
                 <Link href={`/${slug}`} className={"btn bg-gray-500 hover:gray-300 p-6 text-xl rounded-md"}>Part 4</Link>
             </div>
-            <ListFilm title={"Proposal for you"} films={films} className={"px-0!"}></ListFilm>
+            <div className={"flex flex-col space-y-8"}>
+                <p className={"text-2xl font-bold"}>Proposal for you</p>
+                <div className={"grid grid-cols-6 gap-8 grid-flow-row auto-rows-fr"}>
+                    {
+                        films.map((film, i) =>
+                            <FilmCard key={i} film={film} height={64} width={48} fontSize={16}/>
+                        )
+                    }
+                </div>
+            </div>
         </div>
 
     )
