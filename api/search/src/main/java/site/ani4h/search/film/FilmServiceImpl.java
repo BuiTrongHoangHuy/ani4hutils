@@ -7,6 +7,7 @@ import site.ani4h.search.film.entity.*;
 import site.ani4h.search.grpc_client.favorite.FavoriteGrpcClientService;
 import site.ani4h.search.grpc_client.history.HistoryGrpcClientService;
 import site.ani4h.shared.common.PagingSearch;
+import site.ani4h.shared.common.Uid;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -88,12 +89,15 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public SearchResponse userFavoriteRecommendMLT(UserBasedRequest request, PagingSearch paging) {
         List<Integer> filmIds;
-        int count = 10;
+        int count = 1;
 
         try {
-            filmIds = favoriteGrpcClientService.getFilmIdRecentFavorites(request.getUserId().getLocalId(), count);
+            Uid uid = new Uid(request.getUserId());
+            int userId = uid.getLocalId();
+            log.info("Fetching favorites for user {}...", userId);
+
+            filmIds = favoriteGrpcClientService.getFilmIdRecentFavorites(userId, count);
             if (filmIds == null || filmIds.isEmpty()) {
-                log.warn("User {} has no recent favorites. Fallback to random films.", request.getUserId());
                 filmIds = randomFilmIds(count);
             }
         } catch (Exception e) {
@@ -116,10 +120,13 @@ public class FilmServiceImpl implements FilmService {
     @Override
     public SearchResponse userHistoryRecommendMLT(UserBasedRequest request, PagingSearch paging) {
         List<Integer> filmIds;
-        int count = 10;
+        int count = 1;
 
         try {
-            filmIds = historyGrpcClientService.getListFilmIdRecentHistory(request.getUserId().getLocalId(), count);
+            Uid uid = new Uid(request.getUserId());
+            int userId = uid.getLocalId();
+
+            filmIds = historyGrpcClientService.getListFilmIdRecentHistory(userId, count);
             if (filmIds == null || filmIds.isEmpty()) {
                 log.warn("User {} has no recent histories. Fallback to random films.", request.getUserId());
                 filmIds = randomFilmIds(count);

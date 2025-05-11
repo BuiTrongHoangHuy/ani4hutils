@@ -5,11 +5,13 @@ import ListFilm from "@/components/ListFilm";
 import Link from "next/link";
 import {url} from "@/types/cons";
 
-export default async function Page({
-                                       params,
-                                   }: {
-    params: Promise<{ slug: string }>
-}) {
+export default async function Page(
+    {
+       params,
+    }:
+    {
+        params: Promise<{ slug: string }>
+    }) {
     const { slug } = await params
     //const slug  = "Witch-Watch-K6FSMLZ1tcVCgajSfij"
     const data = await fetch(`${url}/v1/film/${slug.split('-')[slug.split('-').length-1]}`)

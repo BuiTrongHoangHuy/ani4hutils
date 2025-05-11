@@ -7,6 +7,6 @@ import site.ani4h.shared.common.Uid;
 @Getter
 @Setter
 public class UserBasedRequest {
-    private Uid userId;
+    private String userId;
     private int seed;
 }

@@ -2,6 +2,8 @@ const baseUrl = "http://localhost:4001/v1/user";
 
 export const UserService = {
     getUserId: async (email: string) => {
+        if (!email) return null;
+
         const res = await fetch(`${baseUrl}/get-by-email?email=${email}`, {
             method: "GET",
             headers: {
@@ -11,7 +13,6 @@ export const UserService = {
 
         const result = await res.json();
         const userId = result.data;
-        localStorage.setItem("userId", userId);
         return userId;
     }
 }
