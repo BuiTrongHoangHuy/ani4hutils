@@ -35,9 +35,14 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
             setSelectedLevel(hls.currentLevel)
            hls.currentLevel = -1;
         }
-        hls.on("hlsLevelSwitched", (event: string, data: { level: number }) => {
+        const onLevelSwitched = (_: string, data: { level: number }) => {
             setSelectedLevel(data.level);
-        });
+        };
+        hls.on("hlsLevelSwitched", onLevelSwitched);
+
+        return () => {
+            hls.off("hlsLevelSwitched", onLevelSwitched);
+        };
         //setDuration(player.current.getDuration());
     };
     const onChangeBitrate = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -176,17 +181,22 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
             if (hideControlsTimeout.current) {
                 clearTimeout(hideControlsTimeout.current);
             }
+            console.log("Unmounted")
         };
     }, []);
     useEffect(() => {
-        const getEpisodeDate = async ()=>{
-            const episode = await FilmService.getEpisodeByEpisodeNumber(filmId, episodeNumber)
-            const episodeData : Episode = await episode.data
-            setEpisode(episodeData)
-            console.log(episodeData)
-        }
-        getEpisodeDate()
+        const getEpisodeDate = async () => {
+            const episode = await FilmService.getEpisodeByEpisodeNumber(filmId, episodeNumber);
+            const episodeData: Episode = await episode.data;
+            setEpisode((prev) => {
+                if (prev?.videoUrl === episodeData.videoUrl) return prev;
+                return episodeData;
+            });
+            setPlaying(true);
+        };
+        getEpisodeDate();
     }, [filmId, episodeNumber]);
+    if (!episode?.videoUrl) return ;
     return (
         <div className="player-wrapper" ref={playerWrapper}
              onMouseMove={handleMouseMove}
@@ -195,7 +205,7 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
         >
             <ReactPlayer
                 ref={player}
-                url={episode.videoUrl || ""}
+                url={episode.videoUrl}
                 playing={playing}
                 muted={muted}
                 volume={volume}
