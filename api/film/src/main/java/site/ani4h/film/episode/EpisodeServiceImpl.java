@@ -1,11 +1,15 @@
 package site.ani4h.film.episode;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import site.ani4h.film.episode.entity.Episode;
+import site.ani4h.film.episode.entity.EpisodeRequest;
 import site.ani4h.film.episode.entity.EpisodeUpdate;
+import site.ani4h.shared.common.Uid;
 
 import java.util.List;
 
+@Slf4j
 @Service
 public class EpisodeServiceImpl implements EpisodeService {
     private final EpisodeRepository episodeRepository;
@@ -35,8 +39,28 @@ public class EpisodeServiceImpl implements EpisodeService {
     }
 
     @Override
-    public Episode getEpisodeByEpisodeNumber(int filmId, int numberEpisode ) {
-        return episodeRepository.getEpisodeByEpisodeNumber(filmId, numberEpisode);
+    public Episode getEpisodeByEpisodeNumber(EpisodeRequest request) {
+
+        int filmId = new Uid(request.getFilmId()).getLocalId();
+        int numberEpisode = request.getNumberEpisode();
+        Episode episode = episodeRepository.getEpisodeByEpisodeNumber( filmId, numberEpisode);
+
+        // try get watched duration
+        try {
+            int userId = new Uid(request.getUserId()).getLocalId();
+
+            int watchedDuration = episodeRepository.getWatchedDuration(userId, episode.getId().getLocalId());
+
+            episode.setWatchedDuration(watchedDuration);
+        } catch (Exception e) {
+            log.error("Get watched duration error", e);
+        }
+
+        if(episode.getWatchedDuration() == null || episode.getWatchedDuration() == 0) {
+            episode.setWatchedDuration(0);
+        }
+
+        return episode;
     }
 
 }
