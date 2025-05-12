@@ -3,6 +3,14 @@ import {FilmService} from "@/app/film/[slug]/[id]/service";
 import {Film} from "@/types/film";
 import {Episode} from "@/types/episode";
 import Link from "next/link";
+import ClientCommentSection from "./ClientCommentSection";
+import FilmCard from "@/components/FilmCard";
+import {SearchList} from "@/types/search/searchList";
+import {SearchService} from "@/app/search/service";
+import {PagingSearch} from "@/types/search/pagingSearch";
+import {FilmList} from "@/types/filmList";
+import {cookies} from "next/headers";
+import FilmListCardSM from "@/app/film/[slug]/[id]/filmListCardSM";
 
 export default async function  Page({
                                   params,
@@ -17,15 +25,28 @@ export default async function  Page({
     const episodes = await FilmService.getEpisodesById(filmId)
     const episodesData:Episode[] = await episodes.data
     const currentEpisode = parseInt(id.split('-')[id.split('-').length-1])
-
-
-    console.log( "film",filmData)
-    console.log( "film",slug.split('-')[slug.split('-').length-1])
-    console.log( "episodes", episodes)
-    console.log(id.split('-')[id.split('-').length-1])
+    const episode = await FilmService.getEpisodeByEpisodeNumber(filmId, currentEpisode)
+    const episodeData : Episode = await episode.data
+    const newPaging: Paging = {
+        cursor: "",
+        nextCursor: "",
+        page: 1,
+        pageSize: 10,
+    }
+    const paging: PagingSearch = {
+        cursor: "",
+        page: 1,
+        pageSize: 8,
+    }
+    const cookieStore = await cookies()
+    const userId = cookieStore.get('userId')?.value || ""
+    const resFavorite = await SearchService.userFavoriteRecommendation(userId,0, paging)
+    const favorites : FilmList[] = (await resFavorite.data.data || [])
+    const topHot = await SearchService.getTopHot(newPaging)
+    const topHotResponse: SearchList[] = await topHot.data
     return (
-        <div className={"w-screen h-screen mt-[64px] px-20 py-10 space-y-20 flex flex-col gap-10"}>
-            <div className={"flex flex-row w-full h-full"}>
+        <div className={"w-full h-full mt-[64px] px-20 py-10 space-y-20 flex flex-col gap-10"}>
+            <div className={"flex flex-row w-full h-full gap-10 min-h-[480px]"}>
                 <div className={"flex-2"}>
                     <PlayerWrapper filmId={filmId} episodeNumber={currentEpisode}></PlayerWrapper>
                 </div>
@@ -34,36 +55,72 @@ export default async function  Page({
                         <div className={"px-4 text-2xl font-bold"}>
                             {filmData?.title}
                         </div>
-                        <div className="collapse collapse-arrow bg-base-100 border-base-300 border">
-                            <input type="checkbox"/>
-                            <div className="collapse-title font-semibold">Playlist</div>
-                            <div className="collapse-content text-sm ">
-                                <div id="grid" className="grid grid-cols-5 gap-4 p-4 mx-auto overflow-y-auto max-h-[400px]">
-                                    {
-                                        episodesData.map((value, index) =>
-                                            <Link key={index} className={`btn btn-ghost w-auto h-16 rounded-sm text-lg
+                        <div>
+                            <div className="collapse collapse-arrow bg-base-100 border-base-300 border">
+                                <input type="checkbox"/>
+                                <div className="collapse-title font-semibold">Playlist</div>
+                                <div className="collapse-content text-sm ">
+                                    <div id="grid" className="grid grid-cols-5 gap-4 p-4 mx-auto overflow-y-auto max-h-[400px]">
+                                        {
+                                            episodesData.map((value, index) =>
+                                                <Link key={index} className={`btn btn-ghost w-auto h-16 rounded-sm text-lg
                                          bg-[#ffffff1a] ${currentEpisode === value.episodeNumber ? 'text-primary' : 'text-white'} `}
-                                                  href={`/film/${slug}/episode-${value.episodeNumber}`}
-                                            >
-                                                {value.episodeNumber}
-                                            </Link>
-                                        )
-                                    }
+                                                      href={`/film/${slug}/episode-${value.episodeNumber}`}
+                                                >
+                                                    {value.episodeNumber}
+                                                </Link>
+                                            )
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div className={"flex flex-row w-full h-full"}>
-                <div className={"flex-1"}>
-                    <div className={"w-full h-full"}>
-                        <div className={"px-4 text-2xl font-bold"}>
-                            {filmData?.title}
+            <div className={"flex flex-row w-full h-full gap-10"}>
+                <div className={"flex-2"}>
+                    <div className={"flex flex-col w-full h-full gap-5"}>
+                        <ClientCommentSection
+                            filmId={filmId}
+                            episodeId={episodeData.id}
+                        />
+
+                        <div className={"flex flex-col"}>
+                            <p className={"px-4 text-2xl font-bold"}>Proposal for you</p>
+                            <div id="grid" className="grid grid-cols-4 gap-4 p-4 mx-auto ">
+                                {
+                                    favorites.map((value, index) =>
+                                        <div key={index}>
+                                            <FilmListCardSM film={value}/>
+                                        </div>
+                                    )
+                                }
+                            </div>
                         </div>
+
                     </div>
                 </div>
+                <div className={"flex-1"}>
+                    <div className={"flex flex-col space-y-4"}>
+                        <p className={"text-xl font-bold"}>Hottest of the day</p>
+                        {topHotResponse.map((film, index) => {
+                            let rankColor = "text-gray-400";
+                            if (index === 0) rankColor = "text-orange-500";
+                            else if (index === 1) rankColor = "text-orange-400";
+                            else if (index === 2) rankColor = "text-orange-300";
+
+                            return (
+                                <div key={index} className="flex flex-row items-center space-x-2">
+                                    <p className={`text-xl font-bold ${rankColor}`}>{index + 1}</p>
+                                    <FilmCard film={film} row={true} height={20} width={16} fontSize={14} />
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+                </div>
+
             </div>
-        </div>
     )
 }
