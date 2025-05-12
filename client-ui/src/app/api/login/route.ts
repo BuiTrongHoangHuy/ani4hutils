@@ -30,7 +30,6 @@ export async function POST(request: NextRequest) {
 
     const userId = await UserService.getUserId(data.data.email);
     (await cookies()).set("userId", userId, {
-        httpOnly: true,
         maxAge: 24 * 60 * 60,
         sameSite: "strict"
     });
