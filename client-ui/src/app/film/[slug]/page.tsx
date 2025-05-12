@@ -1,7 +1,5 @@
 import Image from "next/image";
 import {Film} from "@/types/film";
-import {FilmList} from "@/types/filmList";
-import ListFilm from "@/components/ListFilm";
 import Link from "next/link";
 import {url2} from "@/types/cons";
 import {SearchService} from "@/app/search/service";

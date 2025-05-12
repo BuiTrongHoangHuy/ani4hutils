@@ -59,7 +59,7 @@ public class JdbcWatchHistoryRepository implements WatchHistoryRepository {
     @Override
     public List<EpisodeWatchHistory> getWatchHistoryByUserId(WatchHistoryRequest request, Paging paging) {
         String sql = """
-                SELECT e.id, e.title, e.episode_number, e.duration, e.view_count,
+                SELECT e.id, e.title, e.episode_number, e.duration, e.view_count, e.film_id,
                        wh.watched_duration,
                        f.images AS filmImages, f.synopsis AS filmSynopsis, f.title AS filmTitle
                 FROM episodes e
@@ -68,7 +68,7 @@ public class JdbcWatchHistoryRepository implements WatchHistoryRepository {
                 WHERE wh.user_id = ?
                 ORDER BY wh.watched_duration DESC
                 LIMIT ? OFFSET ?
-                """;
+               \s""";
 
         Map<Integer, EpisodeWatchHistory> episodeMap = new LinkedHashMap<>();
 
@@ -82,7 +82,8 @@ public class JdbcWatchHistoryRepository implements WatchHistoryRepository {
 
             episode.setViewCount(rs.getInt("view_count"));
             episode.setWatchedDuration(rs.getInt("watched_duration"));
-
+            episode.setFilmId(rs.getInt("film_id"));
+            episode.setFilmTitle(rs.getString("filmTitle"));
             try {
                 String imageJson = rs.getString("filmImages");
                 if(imageJson != null && !imageJson.isEmpty()){

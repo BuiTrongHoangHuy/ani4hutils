@@ -9,4 +9,6 @@ export interface ListEpisodeHistory {
     thumbnail: Image;
     viewCount: number;
     watchedDuration: number;
+    filmId: string;
+    filmTitle: string;
 }
