@@ -12,5 +12,5 @@ public interface EpisodeRepository {
     Episode createEpisode(Episode episode);
     void updateEpisode(int id, EpisodeUpdate episode);
     Episode getEpisodeByEpisodeNumber(int filmId,int numberEpisode);
-
+    int getWatchedDuration(int userId, int episodeId);
 }

@@ -1,7 +1,7 @@
 import {PagingSearch} from "@/types/search/pagingSearch";
 import {BuildQueryParams} from "@/utils/build-query-params";
 
-const baseUrl = 'http://localhost:4003/v1/search';
+const baseUrl = 'http://localhost:4002/v1/search';
 
 export const SearchService = {
     search: async (title: string, paging: PagingSearch) => {

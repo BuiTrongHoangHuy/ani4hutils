@@ -25,6 +25,7 @@ public class Episode {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Uid filmId;
+    private Integer watchedDuration;
     
     public static final int type = 13;
     
