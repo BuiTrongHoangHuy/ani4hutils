@@ -4,7 +4,6 @@ import Image from "next/image";
 import React, { FormEvent, useEffect, useState} from "react";
 import {toast, ToastContainer} from "react-toastify";
 import {useRouter} from "next/navigation";
-import {UserService} from "@/utils/user-service";
 export default function TopBar(className: { className?: string }) {
     const [isLogin, setIsLogin] = useState<boolean>(false)
     const router = useRouter()
@@ -16,15 +15,9 @@ export default function TopBar(className: { className?: string }) {
         }).then(r => {
             if (r.status == 200) {
                 setIsLogin(true)
-                r.json().then(
-                    data => {
-                        UserService.getUserId(data.email).then(
-                            r => {
-                                setUserId(r)
-                            }
-                        )
-                    }
-                )
+                r.json().then(data => {
+                    setUserId(data.userId)
+                })
             }
         })
     }, [])
@@ -55,14 +48,6 @@ export default function TopBar(className: { className?: string }) {
                     toast.success("Login success")
                     setIsLogin(true);
                     (document.getElementById('login_modal') as HTMLDialogElement)?.close();
-                }
-
-                if(formData.get("email")){
-                    UserService.getUserId(formData.get("email") as string).then(
-                        r => {
-                            setUserId(r)
-                        }
-                    )
                 }
             }
         )

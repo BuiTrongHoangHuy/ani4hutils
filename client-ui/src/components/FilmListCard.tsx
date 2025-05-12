@@ -5,7 +5,7 @@ import Link from "next/link";
 export default function FilmListCard({film} : {film: FilmList}) {
     return (
         <Link href={`/film/${slug(film)}`}>
-            <div className={"cursor-pointer hover:scale-110 transition-transform duration-300 "}>
+            <div className={"flex flex-col items-center space-y-2 cursor-pointer hover:scale-105 transition-transform duration-300 "}>
                 <div
                     className="w-64 h-80 space-y-3 relative">
                     <Image
@@ -15,7 +15,7 @@ export default function FilmListCard({film} : {film: FilmList}) {
                         alt={film.title}
                     />
                 </div>
-                <p className="line-clamp-1 opacity-50">{film.title}</p>
+                <p className="line-clamp-1 font-medium">{film.title}</p>
             </div>
         </Link>
     )

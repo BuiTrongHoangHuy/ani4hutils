@@ -113,4 +113,11 @@ public class JdbcEpisodeRepository implements EpisodeRepository {
         String updateSql = "UPDATE films SET num_episodes = ? WHERE id = ?";
         jdbcTemplate.update(updateSql, episodeCount, filmId);
     }
+
+    @Override
+    public int getWatchedDuration(int userId, int episodeId) {
+        String sql = "SELECT watched_duration FROM watch_history WHERE user_id = ? AND episode_id = ?";
+        Integer watchedDuration = jdbcTemplate.queryForObject(sql, Integer.class, userId, episodeId);
+        return watchedDuration != null ? watchedDuration : 0;
+    }
 }

@@ -1,6 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import {url} from "@/types/cons";
 import {cookies} from "next/headers";
+import {UserService} from "@/utils/user-service";
 
 export async function POST(request: NextRequest) {
     const body = await request.json();
@@ -22,6 +23,13 @@ export async function POST(request: NextRequest) {
         sameSite: "strict"
     });
     (await cookies()).set("email", data.data.email, {
+        httpOnly: true,
+        maxAge: 24 * 60 * 60,
+        sameSite: "strict"
+    });
+
+    const userId = await UserService.getUserId(data.data.email);
+    (await cookies()).set("userId", userId, {
         httpOnly: true,
         maxAge: 24 * 60 * 60,
         sameSite: "strict"

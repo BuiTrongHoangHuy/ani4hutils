@@ -1,21 +1,20 @@
-package site.ani4h.search.film;
+package site.ani4h.film.search;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
-import site.ani4h.search.film.entity.*;
-import site.ani4h.search.grpc_client.favorite.FavoriteGrpcClientService;
-import site.ani4h.search.grpc_client.history.HistoryGrpcClientService;
+import site.ani4h.film.grpc_client.favorite.FavoriteGrpcClientService;
+import site.ani4h.film.grpc_client.history.HistoryGrpcClientService;
+import site.ani4h.film.search.entity.*;
 import site.ani4h.shared.common.PagingSearch;
 import site.ani4h.shared.common.Uid;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
-public class FilmServiceImpl implements FilmService {
+public class SearchServiceImpl implements FilmService {
     private final FilmRepository filmRepository;
     private final FilmElasticsearchRepository filmElasticsearchRepository;
     private final FilmCustomElasticRepository filmCustomElasticRepository;
@@ -23,7 +22,7 @@ public class FilmServiceImpl implements FilmService {
     private final HistoryGrpcClientService historyGrpcClientService;
 
     @Autowired
-    public FilmServiceImpl(
+    public SearchServiceImpl(
             FilmRepository filmRepository,
             FilmElasticsearchRepository filmElRepository,
             FilmCustomElasticRepository filmCustomElasticRepository,
@@ -58,7 +57,7 @@ public class FilmServiceImpl implements FilmService {
 
     // Search Films
     @Override
-    public SearchResponse searchFilms(SearchRequest request,PagingSearch paging) {
+    public SearchResponse searchFilms(SearchRequest request, PagingSearch paging) {
         if(request == null) {
             throw new IllegalArgumentException("Search request must not be null");
         }

@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import site.ani4h.film.episode.entity.Episode;
 import site.ani4h.film.episode.entity.EpisodeCreate;
+import site.ani4h.film.episode.entity.EpisodeRequest;
 import site.ani4h.film.episode.entity.EpisodeUpdate;
 import site.ani4h.shared.common.ApiResponse;
 import site.ani4h.shared.common.Uid;
@@ -43,9 +44,9 @@ public class EpisodeController {
         return ResponseEntity.ok(ApiResponse.success(episode));
     }
 
-    @GetMapping("/film/{filmId}/episode/{numberEpisode}")
-    public ResponseEntity<?> getEpisodeByEpisodeNumber(@PathVariable Uid filmId , @PathVariable int numberEpisode) {
-        Episode episode = episodeService.getEpisodeByEpisodeNumber( filmId.getLocalId(),numberEpisode);
+    @GetMapping("/episode")
+    public ResponseEntity<?> getEpisodeByEpisodeNumber(@ModelAttribute EpisodeRequest request) {
+        Episode episode = episodeService.getEpisodeByEpisodeNumber(request);
         if (episode.getVideoUrl() != null && !episode.getVideoUrl().isEmpty()) {
             episode.setVideoUrl(cdnVideoUrl + episode.getVideoUrl());
         }
