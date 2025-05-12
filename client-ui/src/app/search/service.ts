@@ -1,5 +1,6 @@
 import {PagingSearch} from "@/types/search/pagingSearch";
 import {BuildQueryParams} from "@/utils/build-query-params";
+import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 
 const baseUrl = 'http://localhost:4002/v1/search';
 
@@ -9,31 +10,12 @@ export const SearchService = {
             return { data: [] };
         }
 
-        const userId = getCookie('userId');
-        console.log("sdkjfhjkds sdhgfjdsf hsdjkfhdsk hsdjkfjdksf dsjfhjdsf "+userId);
-
-
         const params = BuildQueryParams(paging);
-        try{
-            const res = await fetch(`${baseUrl}?title=${title}&${params}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+        const url = `${baseUrl}?title=${title}&${params}`;
 
-            if (!res.ok) {
-                console.warn(`Server responded with status: ${res.status}`);
-                return { data: [] };
-            }
-
-            const json = await res.json();
-            return json || { data: [] };
-        }
-        catch (error) {
-            console.error('Fetch failed (server có thể chưa bật?):', error);
-            return { data: [] };
-        }
+        return await fetchWithCredentials(url, {
+            method: 'GET',
+        });
     },
     filter: async (data: any, paging: PagingSearch) => {
         const pagingParams = BuildQueryParams(paging);
@@ -149,17 +131,4 @@ export const SearchService = {
             return { data: [] };
         }
     }
-}
-
-
-function getCookie(name: string): string | null {
-    const cookieString = document.cookie;
-    const cookies = cookieString.split('; ');
-
-    for (const cookie of cookies) {
-        const [key, value] = cookie.split('=');
-        if (key === name) return decodeURIComponent(value);
-    }
-
-    return null;
 }
