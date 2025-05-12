@@ -9,6 +9,10 @@ export const SearchService = {
             return { data: [] };
         }
 
+        const userId = getCookie('userId');
+        console.log("sdkjfhjkds sdhgfjdsf hsdjkfhdsk hsdjkfjdksf dsjfhjdsf "+userId);
+
+
         const params = BuildQueryParams(paging);
         try{
             const res = await fetch(`${baseUrl}?title=${title}&${params}`, {
@@ -145,4 +149,17 @@ export const SearchService = {
             return { data: [] };
         }
     }
+}
+
+
+function getCookie(name: string): string | null {
+    const cookieString = document.cookie;
+    const cookies = cookieString.split('; ');
+
+    for (const cookie of cookies) {
+        const [key, value] = cookie.split('=');
+        if (key === name) return decodeURIComponent(value);
+    }
+
+    return null;
 }
