@@ -20,38 +20,55 @@ export default function HistoryPage() {
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            if(isLoading || !hasMore) return;
+    const fetchFirstData = async () => {
+        setIsLoading(true);
+        try {
+            const res = await HistoryService.getWatchedEpisodes(userId, paging);
+            setData(res.data);
+            if (res.data.length === 0) {
+                setHasMore(false);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
 
-            setIsLoading(true);
-            try{
-                const res = await HistoryService.getWatchedEpisodes(userId, paging);
-                setData(prev => [...prev, ...res.data]);
-                if(res.data.length === 0){
-                    setHasMore(false);
-                }
-            }
-            catch (error) {
-                console.error("Error fetching data:", error);
-            }
-            finally {
-                setIsLoading(false);
+    const fetchMore = async () => {
+        if(isLoading || !hasMore) return;
+        const newPaging = {
+            ...paging,
+            page: paging.page + 1,
+        }
+        setPaging(newPaging);
+
+        setIsLoading(true);
+        try{
+            const res = await HistoryService.getWatchedEpisodes(userId, newPaging);
+            setData(prev => [...prev, ...res.data]);
+            if(res.data.length === 0){
+                setHasMore(false);
             }
         }
+        catch (error) {
+            console.error("Error fetching data:", error);
+        }
+        finally {
+            setIsLoading(false);
+        }
+    }
 
-        fetchData();
-    }, [paging])
+    useEffect(() => {
+        fetchFirstData();
+    }, []);
 
     useEffect(() => {
         if(!loader.current || !hasMore || isLoading || data.length === 0) return;
 
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting && !isLoading) {
-                setPaging(prev => ({
-                    ...prev,
-                    page: prev.page + 1,
-                }));
+                fetchMore();
             }
         }, {
             root: null,
