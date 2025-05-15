@@ -1,5 +1,6 @@
 import {PagingSearch} from "@/types/search/pagingSearch";
 import {BuildQueryParams} from "@/utils/build-query-params";
+import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 
 const baseUrl = 'http://localhost:4002/v1/search';
 
@@ -10,139 +11,41 @@ export const SearchService = {
         }
 
         const params = BuildQueryParams(paging);
-        try{
-            const res = await fetch(`${baseUrl}?title=${title}&${params}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
+        const url = `${baseUrl}?title=${title}&${params}`;
 
-            if (!res.ok) {
-                console.warn(`Server responded with status: ${res.status}`);
-                return { data: [] };
-            }
-
-            const json = await res.json();
-            return json || { data: [] };
-        }
-        catch (error) {
-            console.error('Fetch failed (server có thể chưa bật?):', error);
-            return { data: [] };
-        }
+        return await fetchWithCredentials(url, {
+            method: 'GET',
+        });
     },
     filter: async (data: any, paging: PagingSearch) => {
         const pagingParams = BuildQueryParams(paging);
         const dataParams = BuildQueryParams(data);
-        try {
-            const res = await fetch(`${baseUrl}?${pagingParams}&${dataParams}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (!res.ok) {
-                console.warn(`Server responded with status: ${res.status}`);
-                return { data: [] };
-            }
-
-            const json = await res.json();
-            return json || { data: [] };
-        }
-        catch (error) {
-            console.error('Fetch failed (server có thể chưa bật?):', error);
-            return { data: [] };
-        }
+        return await fetchWithCredentials(`${baseUrl}?${pagingParams}&${dataParams}`, {
+            method: 'GET',
+        });
     },
     contentBasedRecommendation: async (filmId: string, seed: number, paging: PagingSearch) => {
         const pagingParams = BuildQueryParams(paging);
-        try {
-            const res = await fetch(`${baseUrl}/content-based?filmId=${filmId}&seed=${seed}&${pagingParams}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (!res.ok) {
-                console.warn(`Server responded with status: ${res.status}`);
-                return { data: [] };
-            }
-            const json = await res.json();
-            return json || { data: [] };
-        }
-        catch (error) {
-            console.error('Fetch failed (server có thể chưa bật?):', error);
-            return { data: [] };
-        }
-
+        return await fetchWithCredentials(`${baseUrl}/content-based?filmId=${filmId}&seed=${seed}&${pagingParams}`, {
+            method: 'GET',
+        });
     },
     userFavoriteRecommendation: async (userId: string, seed: number, paging: PagingSearch) => {
         const pagingParams = BuildQueryParams(paging);
-        try {
-            const res = await fetch(`${baseUrl}/user-favorite?userId=${userId}&seed=${seed}&${pagingParams}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (!res.ok) {
-                console.warn(`Server responded with status: ${res.status}`);
-                return { data: [] };
-            }
-
-            const json = await res.json();
-            return json || { data: [] };
-        }
-        catch (error) {
-            console.error('Fetch failed (server có thể chưa bật?):', error);
-            return { data: [] };
-        }
+        return await fetchWithCredentials(`${baseUrl}/user-favorite?userId=${userId}&seed=${seed}&${pagingParams}`, {
+            method: 'GET',
+        });
     },
     userHistoryRecommendation: async (userId: string, seed: number, paging: PagingSearch) => {
         const pagingParams = BuildQueryParams(paging);
-        try{
-            const res = await fetch(`${baseUrl}/user-history?userId=${userId}&seed=${seed}&${pagingParams}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-            if (!res.ok) {
-                console.warn(`Server responded with status: ${res.status}`);
-                return { data: [] };
-            }
-
-            const json = await res.json();
-            return json || { data: [] };
-        }
-        catch (error) {
-            console.error('Fetch failed (server có thể chưa bật?):', error);
-            return { data: [] };
-        }
+        return await fetchWithCredentials(`${baseUrl}/user-history?userId=${userId}&seed=${seed}&${pagingParams}`, {
+            method: 'GET',
+        });
     },
     getTopHot: async (paging: Paging) => {
         const pagingParams = BuildQueryParams(paging);
-        try {
-            const res = await fetch(`http://localhost:4002/v1/film/top-hot?${pagingParams}`, {
-                method: 'GET',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (!res.ok) {
-                console.warn(`Server responded with status: ${res.status}`);
-                return { data: [] };
-            }
-
-            const json = await res.json();
-            return json || { data: [] };
-        } catch (error) {
-            console.error('Fetch failed (server có thể chưa bật?):', error);
-            return { data: [] };
-        }
+        return await fetchWithCredentials(`http://localhost:4002/v1/film/top-hot?${pagingParams}`, {
+            method: 'GET',
+        });
     }
 }

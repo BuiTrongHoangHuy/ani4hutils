@@ -22,14 +22,37 @@ export default function FavoritePage() {
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
 
-    const fetchData = async () => {
+    const fetchFirstData = async () => {
+
+        setIsLoading(true);
+        try {
+            const res = await FavoriteService.getFavorites(userId, paging);
+            setData(res.data);
+            if (res.data.length === 0) {
+                setHasMore(false);
+            }
+        } catch (error) {
+            console.error("Error fetching data:", error);
+        } finally {
+            setIsLoading(false);
+        }
+    }
+
+    const fetchMore = async () => {
         console.log("Loding + Hasmore: ", isLoading, hasMore);
         if (isLoading || !hasMore) return;
+
+        const newPaging = {
+            ...paging,
+            page: paging.page + 1,
+        }
+
+        setPaging(newPaging);
 
         setIsLoading(true);
         try {
             console.log("Fetchingggggggggggggg: ", paging);
-            const res = await FavoriteService.getFavorites(userId, paging);
+            const res = await FavoriteService.getFavorites(userId, newPaging);
             setData(prev => [...prev, ...res.data]);
             if (res.data.length === 0) {
                 setHasMore(false);
@@ -42,8 +65,8 @@ export default function FavoritePage() {
     }
 
     useEffect(() => {
-        fetchData()
-    }, [paging]);
+        fetchFirstData();
+    }, []);
 
     useEffect(() => {
         if (!loader.current || !hasMore || isLoading || data.length === 0) return;
@@ -51,10 +74,7 @@ export default function FavoritePage() {
         console.log("Observeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee: ", paging);
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting && !isLoading) {
-                setPaging(prev => ({
-                    ...prev,
-                    page: prev.page + 1,
-                }));
+                fetchMore();
             }
         }, {
             root: null,
