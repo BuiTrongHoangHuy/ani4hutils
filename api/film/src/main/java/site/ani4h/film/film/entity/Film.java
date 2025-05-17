@@ -30,9 +30,11 @@ public class Film {
     private FilmState state;
     private AgeRating ageRating;
     private List<Genre> genres;
+    private List<FilmCharacter> characters;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Uid seriesId;
+    private Integer view;
     public static final int type = 3;
     public void setState(String state) {
         this.state = FilmState.fromString(state);
