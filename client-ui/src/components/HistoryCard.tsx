@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { X} from "lucide-react";
 import {ListEpisodeHistory} from "@/types/list-episode-history";
+import Link from "next/link";
 
 export default function HistoryCard(
     {
@@ -13,7 +14,7 @@ export default function HistoryCard(
     }
 ){
     return (
-        <div
+        <Link  href={`/film/${slug(episode)}/episode-${episode.episodeNumber}}`}
             className={"flex flex-row w-full cursor-pointer hover:scale-102 duration-200 space-x-4 rounded-md"}
             style={{background: "#FFFFFF1A"}}>
             <div className=" w-45 h-30 relative">
@@ -46,6 +47,9 @@ export default function HistoryCard(
                 <p className="font-normal ">Views: {episode.viewCount}</p>
                 <p className="font-normal opacity-50 line-clamp-2">{episode.synopsis}</p>
             </div>
-        </div>
+        </Link>
     )
+}
+function slug(episode : ListEpisodeHistory): string {
+    return episode.filmTitle.toLowerCase().split(" ").join("-")+'-'+episode.filmId
 }

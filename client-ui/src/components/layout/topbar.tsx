@@ -23,7 +23,10 @@ export default function TopBar(className: { className?: string }) {
     }, [])
     const onLogout = async (e: React.MouseEvent<HTMLAnchorElement> ) => {
         e.preventDefault();
-        fetch("/api/logout").then(
+        fetch("/api/logout",
+            {
+                method: "POST"
+            }).then(
             () =>{
                 setIsLogin(false)
             }

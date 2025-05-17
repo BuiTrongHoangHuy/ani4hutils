@@ -168,3 +168,25 @@ CREATE TABLE `user_ratings`
 
 
 
+
+
+DROP TABLE IF EXISTS `comments`;
+CREATE TABLE `comments`
+(
+    `id`         int NOT NULL AUTO_INCREMENT,
+    `user_id`    int NOT NULL,
+    `film_id`    int NOT NULL,
+    `episode_id` int DEFAULT NULL,
+    `content`    text NOT NULL,
+    `status`     INT DEFAULT 1,
+    `created_at` datetime DEFAULT CURRENT_TIMESTAMP,
+    `updated_at` datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`id`),
+    KEY `user_id` (`user_id`) USING BTREE,
+    KEY `film_id` (`film_id`) USING BTREE,
+    KEY `episode_id` (`episode_id`) USING BTREE
+) ENGINE = InnoDB
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_unicode_ci;
+
+

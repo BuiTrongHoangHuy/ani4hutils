@@ -29,7 +29,7 @@ public class Image implements Serializable {
             @JsonProperty("width") Integer width,
             @JsonProperty("height") Integer height,
             @JsonProperty("extension") String extension,
-            @JsonProperty("cloudName") String cloudName) {
+            @JsonProperty("cloud_name") String cloudName) {
         this.id = id;
         this.url = url;
         this.width = width;
