@@ -1,7 +1,7 @@
 'use client'
 
 import ReactPlayer from "react-player";
-import {ChangeEvent, useEffect, useRef, useState} from "react";
+import {ChangeEvent, useEffect, useRef, useState, KeyboardEvent} from "react";
 import {OnProgressProps} from "react-player/types/base";
 import {ExpandIcon, PauseIcon, PlayIcon, ShrinkIcon, Volume2, VolumeX, SkipForward, CircleGauge, RotateCcw, RotateCw} from "lucide-react";
 import {formatTime} from "@/utils/format";
@@ -176,14 +176,50 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
         setPlayedTime(newTime);
         setProgress(newTime / duration);
     }
+
+
     useEffect(() => {
+        const handleKeyDown = (e: globalThis.KeyboardEvent) => {
+            if (
+                document.activeElement instanceof HTMLInputElement ||
+                document.activeElement instanceof HTMLSelectElement ||
+                document.activeElement instanceof HTMLTextAreaElement
+            ) {
+                return;
+            }
+
+            setShowControls(true);
+            if (hideControlsTimeout.current) {
+                clearTimeout(hideControlsTimeout.current);
+            }
+            hideControlsTimeout.current = setTimeout(() => {
+                setShowControls(false);
+            }, 3000);
+
+            switch (e.key) {
+                case 'ArrowRight':
+                    fastForward5Seconds();
+                    break;
+                case 'ArrowLeft':
+                    rewind5Seconds();
+                    break;
+                case 'f':
+                case 'F':
+                    toggleFullscreen();
+                    break;
+                default:
+                    break;
+            }
+        };
+        window.addEventListener('keydown', handleKeyDown);
+
         return () => {
             if (hideControlsTimeout.current) {
                 clearTimeout(hideControlsTimeout.current);
             }
-            console.log("Unmounted")
+            window.removeEventListener('keydown', handleKeyDown);
         };
-    }, []);
+    }, [fastForward5Seconds, rewind5Seconds, toggleFullscreen]);
     useEffect(() => {
         const getEpisodeDate = async () => {
             const episode = await FilmService.getEpisodeByEpisodeNumber(filmId, episodeNumber);
@@ -229,8 +265,8 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
                 height="480px"
             />
             <div className={`absolute bottom-0 left-0 right-0 px-4 pb-2 pt-4 flex items-center text-white
-            gap-5 justify-between w-full bg-base-100 transition-opacity duration-500
-            ${showControls || !playing ? "opacity-70":"opacity-0 pointer-events-none"}
+            gap-5 justify-between w-full bg-base-100 transition-all duration-500 ease-in-out
+            ${showControls || !playing ? "opacity-70 transform translate-y-0":"opacity-0 transform translate-y-2 pointer-events-none"}
             `}
                 onClick={handleControlsClick}
             >
