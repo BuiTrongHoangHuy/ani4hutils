@@ -31,6 +31,7 @@ public class Film {
     private AgeRating ageRating;
     private List<Genre> genres;
     private List<FilmCharacter> characters;
+    private List<Producer> producers;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Uid seriesId;
