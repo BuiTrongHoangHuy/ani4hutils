@@ -180,6 +180,45 @@ export default async function Page(
                         </div>
                     </div>
 
+                    <div className="collapse collapse-arrow bg-base-100 border-base-300 border">
+                        <input type="checkbox"/>
+                        <div className="collapse-title font-bold text-gray-400 px-0">Studios</div>
+                        <div className="collapse-content text-sm ">
+                            <div className="gap-4 mx-auto overflow-y-auto max-h-[400px]">
+                                {
+                                    filmData.studios && filmData.studios.length > 0 && (
+                                        <div className="mt-4">
+                                            <div className="grid grid-cols-3 gap-4">
+                                                {filmData.studios.map((studio, index) => (
+                                                    <div key={index} className="bg-base-200 p-3 rounded-md">
+                                                        <div className="flex items-center gap-3">
+                                                            {(
+                                                                <div className="relative w-[50px] h-[50px]">
+                                                                    <Image
+                                                                        className="rounded-full object-cover"
+                                                                        fill={true}
+                                                                        src={studio?.image?.url || "https://placehold.co/300x400/png?text=ani4h.site"}
+                                                                        alt={studio.name}
+                                                                    />
+                                                                </div>
+                                                            )}
+                                                            <div>
+                                                                <p className="font-bold">{studio.name}</p>
+                                                                {studio.description && (
+                                                                    <p className="text-sm text-gray-400">{studio.description}</p>
+                                                                )}
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             {/*<div className={"flex space-x-4"}>
