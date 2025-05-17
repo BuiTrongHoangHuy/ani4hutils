@@ -1,6 +1,7 @@
 import {Image} from "@/types/image";
 import {genre} from "@/types/genre";
 import {Character} from "@/types/character";
+import {Producer} from "@/types/producer";
 
 export interface Film {
     id: string,
@@ -16,6 +17,7 @@ export interface Film {
     },
     genres: genre[],
     characters?: Character[],
+    producers?: Producer[],
     view?: number,
     year?: number,
     season?: string,

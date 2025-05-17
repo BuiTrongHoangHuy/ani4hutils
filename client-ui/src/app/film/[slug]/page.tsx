@@ -92,12 +92,12 @@ export default async function Page(
                                                 {filmData.characters.map((character, index) => (
                                                     <div key={index} className="bg-base-200 p-3 rounded-md">
                                                         <div className="flex items-center gap-3">
-                                                            {character.image && (
+                                                            {(
                                                                 <div className="relative w-[50px] h-[50px]">
                                                                     <Image
                                                                         className="rounded-full object-cover"
                                                                         fill={true}
-                                                                        src={character.image.url}
+                                                                        src={character?.image?.url||"https://placehold.co/300x400/png?text=ani4h.site"}
                                                                         alt={character.name}
                                                                     />
                                                                 </div>
@@ -113,12 +113,12 @@ export default async function Page(
                                                                 <p className="text-sm text-gray-400 mb-1">Voiced by:</p>
                                                                 {character.actors.map((actor, idx) => (
                                                                     <div key={idx} className="flex items-center gap-2 mb-1">
-                                                                        {actor.image && (
+                                                                        { (
                                                                             <div className="relative w-[30px] h-[30px]">
                                                                                 <Image
                                                                                     className="rounded-full object-cover"
                                                                                     fill={true}
-                                                                                    src={actor.image.url}
+                                                                                    src={actor?.image?.url || "https://placehold.co/300x400/png?text=ani4h.site"}
                                                                                     alt={actor.name}
                                                                                 />
                                                                             </div>
@@ -131,6 +131,45 @@ export default async function Page(
                                                                 ))}
                                                             </div>
                                                         )}
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="collapse collapse-arrow bg-base-100 border-base-300 border">
+                        <input type="checkbox"/>
+                        <div className="collapse-title font-bold text-gray-400 px-0">Producers</div>
+                        <div className="collapse-content text-sm ">
+                            <div className="gap-4 mx-auto overflow-y-auto max-h-[400px]">
+                                {
+                                    filmData.producers && filmData.producers.length > 0 && (
+                                        <div className="mt-4">
+                                            <div className="grid grid-cols-3 gap-4">
+                                                {filmData.producers.map((producer, index) => (
+                                                    <div key={index} className="bg-base-200 p-3 rounded-md">
+                                                        <div className="flex items-center gap-3">
+                                                            {(
+                                                                <div className="relative w-[50px] h-[50px]">
+                                                                    <Image
+                                                                        className="rounded-full object-cover"
+                                                                        fill={true}
+                                                                        src={producer?.image?.url || "https://placehold.co/300x400/png?text=ani4h.site"}
+                                                                        alt={producer.name}
+                                                                    />
+                                                                </div>
+                                                            )}
+                                                            <div>
+                                                                <p className="font-bold">{producer.name}</p>
+                                                                {producer.description && (
+                                                                    <p className="text-sm text-gray-400">{producer.description}</p>
+                                                                )}
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 ))}
                                             </div>
