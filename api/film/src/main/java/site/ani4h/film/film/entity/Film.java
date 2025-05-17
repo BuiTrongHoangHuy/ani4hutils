@@ -32,6 +32,7 @@ public class Film {
     private List<Genre> genres;
     private List<FilmCharacter> characters;
     private List<Producer> producers;
+    private List<Studio> studios;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Uid seriesId;

@@ -62,7 +62,8 @@ public class JdbcFilmRepository implements FilmRepository {
             SELECT film.*, g.id as genre_id, g.name as genre_name, long_name, short_name,
                    fc.id as character_id, fc.name as character_name, fc.role as character_role, fc.image as character_image,
                    a.id as actor_id, a.name as actor_name, a.language as actor_language, a.image as actor_image,
-                   p.id as producer_id, p.name as producer_name, p.image as producer_image, p.description as producer_description
+                   p.id as producer_id, p.name as producer_name, p.image as producer_image, p.description as producer_description,
+                   s.id as studio_id, s.name as studio_name, s.image as studio_image, s.description as studio_description
             FROM films film
             LEFT JOIN ani4h.age_ratings age_rating ON film.age_rating_id = age_rating.id
             LEFT JOIN film_genres fg ON film.id = fg.film_id
@@ -73,6 +74,8 @@ public class JdbcFilmRepository implements FilmRepository {
             LEFT JOIN actors a ON fca.actor_id = a.id
             LEFT JOIN film_producers fp ON film.id = fp.film_id
             LEFT JOIN producers p ON fp.producer_id = p.id
+            LEFT JOIN film_studios fs ON film.id = fs.film_id
+            LEFT JOIN studios s ON fs.studio_id = s.id
             WHERE film.id = ?
             """;
 
@@ -82,6 +85,7 @@ public class JdbcFilmRepository implements FilmRepository {
             Map<Integer, FilmCharacter> characterMap = new HashMap<>();
             Map<Integer, Actor> actorMap = new HashMap<>();
             Map<Integer, Producer> producerMap = new HashMap<>();
+            Map<Integer, Studio> studioMap = new HashMap<>();
 
             while (rs.next()) {
                 int filmId = rs.getInt("id");
@@ -96,6 +100,7 @@ public class JdbcFilmRepository implements FilmRepository {
                     result.setGenres(new ArrayList<Genre>());
                     result.setCharacters(new ArrayList<FilmCharacter>());
                     result.setProducers(new ArrayList<Producer>());
+                    result.setStudios(new ArrayList<Studio>());
                     filmMap.put(filmId, result);
                 } else {
                     result = filmMap.get(filmId);
@@ -197,6 +202,31 @@ public class JdbcFilmRepository implements FilmRepository {
                         }
                         producerMap.put(producerId, producer);
                         result.getProducers().add(producer);
+                    }
+                }
+
+                int studioId = rs.getInt("studio_id");
+                if (studioId != 0) {
+                    if (!studioMap.containsKey(studioId)) {
+                        Studio studio = new Studio();
+                        studio.setId(studioId);
+                        studio.setName(rs.getString("studio_name"));
+                        studio.setDescription(rs.getString("studio_description"));
+                        String studioImageJson = rs.getString("studio_image");
+                        if (studioImageJson != null && !studioImageJson.isEmpty()) {
+                            try {
+                                Image image = objectMapper.readValue(
+                                        studioImageJson,
+                                        new TypeReference<Image>() {}
+                                );
+                                studio.setImage(image);
+                            }
+                            catch (Exception e) {
+                                throw new RuntimeException("Failed to parse studio image JSON", e);
+                            }
+                        }
+                        studioMap.put(studioId, studio);
+                        result.getStudios().add(studio);
                     }
                 }
             }
