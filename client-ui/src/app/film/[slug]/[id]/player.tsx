@@ -189,7 +189,7 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
             const episode = await FilmService.getEpisodeByEpisodeNumber(filmId, episodeNumber);
             const episodeData: Episode = await episode.data;
             setEpisode((prev) => {
-                if (prev?.videoUrl === episodeData.videoUrl) return prev;
+                if (prev?.videoUrl === episodeData?.videoUrl) return prev;
                 return episodeData;
             });
             setPlaying(true);

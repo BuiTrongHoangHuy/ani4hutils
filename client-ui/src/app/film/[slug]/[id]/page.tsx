@@ -11,6 +11,8 @@ import {PagingSearch} from "@/types/search/pagingSearch";
 import {FilmList} from "@/types/filmList";
 import {cookies} from "next/headers";
 import FilmListCardSM from "@/app/film/[slug]/[id]/filmListCardSM";
+import Image from "next/image";
+import React from "react";
 
 export default async function  Page({
                                   params,
@@ -81,9 +83,43 @@ export default async function  Page({
             <div className={"flex flex-row w-full h-full gap-10"}>
                 <div className={"flex-2"}>
                     <div className={"flex flex-col w-full h-full gap-5"}>
+                        { filmData && (
+                            <div className="px-4 mb-8 bg-base-200 rounded-md p-4">
+                                <div className="flex gap-4">
+                                    <div className="relative w-[100px] h-[150px]">
+                                        <Image
+                                            className="rounded-md object-cover"
+                                            fill={true}
+                                            src={filmData?.images?.[0]?.url || "https://placehold.co/300x400/png?text=ani4h.site"}
+                                            alt={filmData?.title}
+                                        />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h2 className="text-2xl font-bold mb-2">{filmData.title}</h2>
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <span className="text-primary">{filmData.avgStar || 0} ★</span>
+                                            <span>•</span>
+                                            <span>{filmData.year || new Date(filmData.startDate || Date.now()).getUTCFullYear()}</span>
+                                            <span>•</span>
+                                            <span>{filmData.numEpisodes}/{filmData.maxEpisodes} episodes</span>
+                                        </div>
+                                        <div className="mb-2">
+                                            <span className="font-semibold">Genres: </span>
+                                            {filmData.genres && filmData.genres.map((genre, i) => (
+                                                <span key={i} className="mr-2">{genre.name}</span>
+                                            ))}
+                                        </div>
+                                        <p className="text-sm line-clamp-3">{filmData.synopsis}</p>
+                                        {filmData.view !== undefined && (
+                                            <p className="text-sm mt-2">Views: {filmData.view}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            </div>
+                        )}
                         <ClientCommentSection
                             filmId={filmId}
-                            episodeId={episodeData.id}
+                            episodeId={episodeData?.id}
                         />
 
                         <div className={"flex flex-col"}>

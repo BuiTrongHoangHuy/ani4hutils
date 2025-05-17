@@ -1,5 +1,6 @@
 import {Image} from "@/types/image";
 import {genre} from "@/types/genre";
+import {Character} from "@/types/character";
 
 export interface Film {
     id: string,
@@ -14,11 +15,11 @@ export interface Film {
         name: string,
     },
     genres: genre[],
+    characters?: Character[],
     view?: number,
-    year: number,
-    season: string,
+    year?: number,
+    season?: string,
     startDate? : Date,
     endDate? : Date
     images?: Image[]
 }
-
