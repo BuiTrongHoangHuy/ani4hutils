@@ -1,5 +1,6 @@
 import { Rating, RatingRequest } from "@/types/rating";
 import { url2 } from "@/types/cons";
+import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 
 const baseUrl = `${url2}/v1/rating`;
 
@@ -11,28 +12,21 @@ export const RatingService = {
 
     getRatingByUserIdAndFilmId: async (userId: string, filmId: string): Promise<RatingResponse | null> => {
         try {
-            const response = await fetch(`${baseUrl}/user/${userId}/film/${filmId}`, {
+            const response = await fetchWithCredentials(`${baseUrl}/user/${userId}/film/${filmId}`, {
                 method: "GET",
-                headers: {
-                    "Content-Type": "application/json"
-                },
             });
-            
+
             if (response.status === 404) {
                 return null;
             }
-            
-            if (!response.ok) {
-                throw new Error(`Error fetching rating: ${response.statusText}`);
-            }
-            
-            return response.json();
+
+            return response;
         } catch (error) {
             console.error("Error fetching rating:", error);
             return null;
         }
     },
-    
+
     /**
      * Add or update a rating
      * @param rating The rating request
@@ -40,15 +34,12 @@ export const RatingService = {
      */
     upsertRating: async (rating: RatingRequest): Promise<boolean> => {
         try {
-            const response = await fetch(`${baseUrl}`, {
+            const response = await fetchWithCredentials(`${baseUrl}`, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
                 body: JSON.stringify(rating)
             });
-            
-            return response.ok;
+
+            return response && response.status !== undefined && response.status < 400;
         } catch (error) {
             console.error("Error upserting rating:", error);
             return false;

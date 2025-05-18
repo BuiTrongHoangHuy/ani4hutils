@@ -1,4 +1,5 @@
 import { Comment, CommentRequest } from "@/types/comment";
+import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 
 const baseUrl = "http://localhost:4002/v1/comments";
 
@@ -19,13 +20,9 @@ export const CommentService = {
 
         const url = `${baseUrl}/film/${filmId}${params.toString() ? `?${params.toString()}` : ''}`;
 
-        const response = await fetch(url, {
+        return await fetchWithCredentials(url, {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
         });
-        return response.json();
     },
 
     getCommentsByEpisodeId: async (episodeId: string, paging?: PagingParams): Promise<CommentResponse> => {
@@ -35,41 +32,28 @@ export const CommentService = {
 
         const url = `${baseUrl}/episode/${episodeId}${params.toString() ? `?${params.toString()}` : ''}`;
 
-        const response = await fetch(url, {
+        return await fetchWithCredentials(url, {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
         });
-        return response.json();
     },
 
     addComment: async (comment: CommentRequest): Promise<void> => {
-        await fetch(`${baseUrl}`, {
+        await fetchWithCredentials(`${baseUrl}`, {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
             body: JSON.stringify(comment)
         });
     },
 
     updateComment: async (commentId: number, comment: CommentRequest): Promise<void> => {
-        await fetch(`${baseUrl}/${commentId}`, {
+        await fetchWithCredentials(`${baseUrl}/${commentId}`, {
             method: "PUT",
-            headers: {
-                "Content-Type": "application/json"
-            },
             body: JSON.stringify(comment)
         });
     },
 
     deleteComment: async (commentId: number): Promise<void> => {
-        await fetch(`${baseUrl}/${commentId}`, {
+        await fetchWithCredentials(`${baseUrl}/${commentId}`, {
             method: "DELETE",
-            headers: {
-                "Content-Type": "application/json"
-            },
         });
     }
 };
