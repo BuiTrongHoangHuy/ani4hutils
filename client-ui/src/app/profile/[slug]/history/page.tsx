@@ -4,6 +4,7 @@ import {useEffect, useRef, useState} from "react";
 import {ListEpisodeHistory} from "@/types/list-episode-history";
 import {HistoryService} from "@/app/profile/[slug]/history/service";
 import {useParams} from "next/navigation";
+import {Paging} from "@/types/paging";
 
 export default function HistoryPage() {
     const params = useParams();

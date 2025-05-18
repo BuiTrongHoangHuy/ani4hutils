@@ -1,7 +1,7 @@
 'use client'
 
 import ReactPlayer from "react-player";
-import {ChangeEvent, useEffect, useRef, useState, KeyboardEvent} from "react";
+import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {OnProgressProps} from "react-player/types/base";
 import {ExpandIcon, PauseIcon, PlayIcon, ShrinkIcon, Volume2, VolumeX, SkipForward, CircleGauge, RotateCcw, RotateCw} from "lucide-react";
 import {formatTime} from "@/utils/format";

@@ -4,6 +4,7 @@ import FavoriteCard from "@/components/FavoriteCard";
 import {FavoriteService} from "@/app/profile/[slug]/favorite/service";
 import {useEffect, useRef, useState} from "react";
 import {useParams} from "next/navigation";
+import {Paging} from "@/types/paging";
 
 export default function FavoritePage() {
     const params = useParams();

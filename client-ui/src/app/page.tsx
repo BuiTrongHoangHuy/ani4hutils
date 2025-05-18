@@ -3,6 +3,7 @@ import ListFilm from "@/components/ListFilm";
 import {FilmList} from "@/types/filmList";
 import {SearchService} from "@/app/search/service";
 import {PagingSearch} from "@/types/search/pagingSearch";
+import {Paging} from "@/types/paging"
 import { cookies } from 'next/headers'
 
 

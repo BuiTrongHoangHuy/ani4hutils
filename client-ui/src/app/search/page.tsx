@@ -7,6 +7,7 @@ import {useEffect, useRef, useState} from "react";
 import {PagingSearch} from "@/types/search/pagingSearch";
 import { Suspense } from 'react'
 import {SearchService} from "@/app/search/service";
+import {Paging} from "@/types/paging";
 
 function Search() {
     const userId = "3w5rMJ7r2JjRwM"
@@ -219,6 +220,7 @@ export default function SearchPage() {
 }
 
 
+/*
 function buildSearchQuery(title: string, paging: PagingSearch): string {
     const params = new URLSearchParams();
     params.append("title", title);
@@ -231,4 +233,4 @@ function buildSearchQuery(title: string, paging: PagingSearch): string {
     params.append("page", paging.page.toString());
     params.append("pageSize", paging.pageSize.toString());
     return params.toString();
-}
+}*/

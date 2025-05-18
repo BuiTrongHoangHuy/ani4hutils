@@ -1,6 +1,7 @@
 import {PagingSearch} from "@/types/search/pagingSearch";
 import {BuildQueryParams} from "@/utils/build-query-params";
 import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
+import {Paging} from "@/types/paging";
 
 const baseUrl = 'http://localhost:4002/v1/search';
 
@@ -17,13 +18,13 @@ export const SearchService = {
             method: 'GET',
         });
     },
-    filter: async (data: any, paging: PagingSearch) => {
+    /*filter: async (data: any, paging: PagingSearch) => {
         const pagingParams = BuildQueryParams(paging);
         const dataParams = BuildQueryParams(data);
         return await fetchWithCredentials(`${baseUrl}?${pagingParams}&${dataParams}`, {
             method: 'GET',
         });
-    },
+    },*/
     contentBasedRecommendation: async (filmId: string, seed: number, paging: PagingSearch) => {
         const pagingParams = BuildQueryParams(paging);
         return await fetchWithCredentials(`${baseUrl}/content-based?filmId=${filmId}&seed=${seed}&${pagingParams}`, {
