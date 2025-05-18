@@ -1,10 +1,14 @@
 package site.ani4h.film.rating;
 
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import site.ani4h.film.rating.entity.RatingRequest;
+import site.ani4h.film.rating.entity.RatingResponse;
 
-import java.util.List;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 @Repository
 public class JdbcRatingRepository implements RatingRepository {
@@ -23,7 +27,6 @@ public class JdbcRatingRepository implements RatingRepository {
                 request.getUserId().getLocalId(),
                 request.getRating()
         );
-        // Update the average rating after inserting a new rating
         updateAverageRating(request.getFilmId().getLocalId());
     }
 
@@ -36,7 +39,6 @@ public class JdbcRatingRepository implements RatingRepository {
                 request.getFilmId().getLocalId(),
                 request.getUserId().getLocalId()
         );
-        // Update the average rating after updating the individual rating
         updateAverageRating(request.getFilmId().getLocalId());
     }
 
@@ -55,5 +57,29 @@ public class JdbcRatingRepository implements RatingRepository {
     public void updateAverageRating(int filmId) {
         String sql = "UPDATE films SET avg_star = (SELECT AVG(rating) FROM user_ratings WHERE film_id = ?) WHERE id = ?";
         jdbcTemplate.update(sql, filmId, filmId);
+    }
+
+    @Override
+    public RatingResponse getRatingByUserIdAndFilmId(int userId, int filmId) {
+        String sql = "SELECT * FROM user_ratings WHERE user_id = ? AND film_id = ?";
+        try {
+            return jdbcTemplate.queryForObject(sql, new Object[]{userId, filmId}, new RatingRowMapper());
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
+    }
+
+    private static class RatingRowMapper implements RowMapper<RatingResponse> {
+        @Override
+        public RatingResponse mapRow(ResultSet rs, int rowNum) throws SQLException {
+            RatingResponse rating = new RatingResponse();
+            rating.setId(rs.getInt("id"));
+            rating.setUserId(rs.getInt("user_id"));
+            rating.setFilmId(rs.getInt("film_id"));
+            rating.setRating(rs.getInt("rating"));
+            rating.setCreatedAt(rs.getTimestamp("created_at").toLocalDateTime());
+            rating.setUpdatedAt(rs.getTimestamp("updated_at").toLocalDateTime());
+            return rating;
+        }
     }
 }
