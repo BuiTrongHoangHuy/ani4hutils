@@ -178,7 +178,7 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
     }
 
 
-    useEffect(() => {
+    /*useEffect(() => {
         const handleKeyDown = (e: globalThis.KeyboardEvent) => {
             if (
                 document.activeElement instanceof HTMLInputElement ||
@@ -219,7 +219,8 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
             }
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [fastForward5Seconds, rewind5Seconds, toggleFullscreen]);
+    }, [fastForward5Seconds, rewind5Seconds, toggleFullscreen]);*/
+
     useEffect(() => {
         const getEpisodeDate = async () => {
             const episode = await FilmService.getEpisodeByEpisodeNumber(filmId, episodeNumber);
@@ -232,6 +233,7 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
         };
         getEpisodeDate();
     }, [filmId, episodeNumber]);
+
     if (!episode?.videoUrl) return ;
     return (
         <div className="player-wrapper" ref={playerWrapper}
