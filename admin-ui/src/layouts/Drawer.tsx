@@ -15,9 +15,7 @@ export default function Drawer() {
                     <div className="flex-none">
                         <a href={"/"} className="btn btn-ghost text-xl">Ani4h</a>
                     </div>
-                    <li><Link to ="/">Dashboard</Link></li>
                     <li><Link to="/film">Films</Link></li>
-                    <li><Link to="/">Users</Link></li>
                 </ul>
             </div>
         </div>

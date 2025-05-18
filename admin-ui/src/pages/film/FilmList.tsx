@@ -51,7 +51,6 @@ function FilmList () {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold">Film Management</h1>
-          {!loading && <p className="text-gray-600">Total films: 100</p>}
         </div>
         <Link to="/film/create" className="btn btn-primary">
           Add New Film
