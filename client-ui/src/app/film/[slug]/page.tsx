@@ -8,6 +8,7 @@ import {cookies} from "next/headers";
 import ButtonFavorite from "@/components/ButtonFavorite";
 import {SearchList} from "@/types/search/searchList";
 import FilmCard from "@/components/FilmCard";
+import ClientRatingComponent from "./ClientRatingComponent";
 
 export default async function Page(
     {
@@ -59,6 +60,7 @@ export default async function Page(
                         <div className={"divider divider-horizontal"}></div>
                         <p>Full {filmData.maxEpisodes} episodes</p>
                     </div>
+                    <ClientRatingComponent userId={userId} filmId={filmId} className="mt-2" />
                     <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
                         <p className="font-semibold">Genres:</p>
                         {filmData.genres.map((g, i) => (
