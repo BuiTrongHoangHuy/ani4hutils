@@ -10,7 +10,7 @@ import {SearchService} from "@/app/search/service";
 import {Paging} from "@/types/paging";
 
 function Search() {
-    const userId = "3w5rMJ7r2JjRwM"
+    const [userId, setUserId] = useState("");
     const searchParams = useSearchParams();
     const title = searchParams.get("q") || "";
     const [data, setData] = useState<SearchList[]>([]);
@@ -25,6 +25,22 @@ function Search() {
     const loader = useRef(null);
     const [hasMore, setHasMore] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+
+    useEffect(() => {
+        fetch("/api/me", {
+            method: "GET"
+        }).then(response => {
+            if (response.status === 200) {
+                response.json().then(data => {
+                    if (data.userId) {
+                        setUserId(data.userId);
+                    }
+                });
+            }
+        }).catch(error => {
+            console.error("Error fetching user ID:", error);
+        });
+    }, []);
 
     const fetchFirst = async () => {
         if(!title) return;
@@ -89,24 +105,6 @@ function Search() {
     }
 
     useEffect(() => {
-        const fetchProposal = async () => {
-            const newPaging: PagingSearch = {
-                cursor: "",
-                nextCursor: "",
-                page: 1,
-                pageSize: 10,
-            }
-
-            try {
-                const res = await SearchService.userFavoriteRecommendation(userId, 1, newPaging);
-                if(res.data) {
-                    setProposal(res.data.data);
-                }
-            } catch (error) {
-                console.error("Error fetching proposal data:", error);
-            }
-        }
-
         const fetchTopHot = async () => {
             const newPaging: Paging = {
                 cursor: "",
@@ -126,9 +124,32 @@ function Search() {
         }
 
         fetchTopHot();
+    }, [])
+
+    useEffect(() => {
+        const fetchProposal = async () => {
+            // Only fetch proposals if userId is available
+            if (!userId) return;
+
+            const newPaging: PagingSearch = {
+                cursor: "",
+                nextCursor: "",
+                page: 1,
+                pageSize: 10,
+            }
+
+            try {
+                const res = await SearchService.userFavoriteRecommendation(userId, 1, newPaging);
+                if(res.data) {
+                    setProposal(res.data.data);
+                }
+            } catch (error) {
+                console.error("Error fetching proposal data:", error);
+            }
+        }
 
         fetchProposal();
-    }, [])
+    }, [userId])
 
     useEffect(() => {
         if(!title) return;
