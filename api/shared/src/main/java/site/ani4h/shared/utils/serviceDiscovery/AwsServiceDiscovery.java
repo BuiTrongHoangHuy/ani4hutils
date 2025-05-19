@@ -16,8 +16,8 @@ import java.util.*;
 @Component
 public class AwsServiceDiscovery implements ServiceDiscovery {
     private ServiceDiscoveryClient client;
-    @Value("${aws.servicediscovery.namespace}")
-    private String namespace;
+
+    private final String namespace = "ani4h";
     @Value("${aws.access-key-id}")
     private String accessKey;
     @Value("${aws.access-secret-key}")
