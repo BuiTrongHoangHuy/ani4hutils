@@ -1,7 +1,7 @@
 import { Comment, CommentRequest } from "@/types/comment";
 import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 
-const baseUrl = "http://localhost:4002/v1/comments";
+const baseUrl = "https://api.ani4h.com/v1/comments";
 
 export interface CommentResponse {
     data: Comment[];

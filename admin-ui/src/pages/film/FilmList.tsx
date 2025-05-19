@@ -148,7 +148,7 @@ function FilmList () {
                       <td>
                         {film.images ? (
                           <img
-                            src={film.images[0].url}
+                            src={film.images[0]?.url||"https://placehold.co/300x400/png?text=ani4h.site"}
                             alt={film.title}
                             className="w-16 h-auto rounded"
                           />

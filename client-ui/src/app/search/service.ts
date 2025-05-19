@@ -3,7 +3,7 @@ import {BuildQueryParams} from "@/utils/build-query-params";
 import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 import {Paging} from "@/types/paging";
 
-const baseUrl = 'http://localhost:4002/v1/search';
+const baseUrl = 'https://api.ani4h.com/v1/search';
 
 export const SearchService = {
     search: async (title: string, paging: PagingSearch) => {
@@ -45,7 +45,7 @@ export const SearchService = {
     },
     getTopHot: async (paging: Paging) => {
         const pagingParams = BuildQueryParams(paging);
-        return await fetchWithCredentials(`http://localhost:4002/v1/film/top-hot?${pagingParams}`, {
+        return await fetchWithCredentials(`${baseUrl}/v1/film/top-hot?${pagingParams}`, {
             method: 'GET',
         });
     }
