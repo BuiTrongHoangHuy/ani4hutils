@@ -1,8 +1,8 @@
 import {BuildQueryParams} from "@/utils/build-query-params";
 import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 
-const baseUrl ="https://api.ani4h.com/v1/film"
-const baseUrlEpisode = "https://api.ani4h.com/v1/episode"
+const baseUrl ="https://api.ani4h.site/v1/film"
+const baseUrlEpisode = "https://api.ani4h.site/v1/episode"
 export const FilmService = {
     getById: async (id: string) => {
         return await fetchWithCredentials(`${baseUrl}/${id}`, {

@@ -1,4 +1,4 @@
-const baseUrl = "https://api.ani4h.com/v1/user";
+const baseUrl = "https://api.ani4h.site/v1/user";
 
 export const UserService = {
     getUserId: async (email: string) => {

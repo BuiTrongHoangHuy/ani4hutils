@@ -3,7 +3,7 @@ import {BuildQueryParams} from "@/utils/build-query-params";
 import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 import {Paging} from "@/types/paging";
 
-const baseUrl = 'https://api.ani4h.com/v1/search';
+const baseUrl = 'https://api.ani4h.site/v1/search';
 
 export const SearchService = {
     search: async (title: string, paging: PagingSearch) => {
