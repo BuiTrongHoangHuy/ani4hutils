@@ -27,7 +27,8 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
   const [uploading, setUploading] = useState<boolean>(false);
   const [uploadProgress, setUploadProgress] = useState<number>(0);
   const [error, setError] = useState<string | null>(null);
-
+  const [videoUrlInput, setVideoUrlInput] = useState('');
+  const [useDirectLink, setUseDirectLink] = useState(false);
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
@@ -74,28 +75,36 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!videoFile) {
-      setError('Please select a video file to upload');
+    if (!useDirectLink && !videoFile) {
+      setError('Please select a video file to upload or use a direct link');
       return;
     }
 
+    if (useDirectLink && !videoUrlInput.trim()) {
+      setError('Please provide a valid video URL.');
+      return;
+    }
     setUploading(true);
     setError(null);
 
     try {
-      const fileExtension = videoFile.name.split('.').pop() || '';
+      let videoUrl: string;
+      if (useDirectLink) {
+        videoUrl = videoUrlInput.trim();
+      } else {
+        const fileExtension = videoFile!.name.split('.').pop() || '';
+        const uploadUrlResponse = await episodeService.getVideoUploadUrl(
+            filmId,
+            formData.episodeNumber,
+            fileExtension
+        );
 
-      const uploadUrlResponse = await episodeService.getVideoUploadUrl(
-        filmId,
-        formData.episodeNumber,
-        fileExtension
-      );
+        const uploadUrl = uploadUrlResponse.data.data;
 
-      const uploadUrl = uploadUrlResponse.data.data;
-
-      await uploadVideoToS3(uploadUrl, videoFile);
-
-      const videoUrl = uploadUrl.split('?')[0];
+        await uploadVideoToS3(uploadUrl, videoFile!);
+        videoUrl = uploadUrl.split('?')[0];
+      }
+      console.log("ádasdasdkjhasdkashkj",videoUrl);
       await episodeService.createEpisode({
         ...formData,
         videoUrl
@@ -105,6 +114,8 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
     } catch (err) {
       console.error('Error uploading episode:', err);
       setError('Failed to upload episode. Please try again later.');
+      setUploading(false);
+    } finally {
       setUploading(false);
     }
   };
@@ -116,7 +127,7 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
           <span>{error}</span>
         </div>
       )}
-      
+
       <form onSubmit={handleSubmit}>
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="form-control">
@@ -133,7 +144,7 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
               min="1"
             />
           </div>
-          
+
           <div className="form-control">
             <label className="label">
               <span className="label-text">Title</span>
@@ -148,7 +159,7 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
             />
           </div>
         </div>
-        
+
         <div className="form-control mb-4 grid grid-cols-1 w-full">
           <label className="label">
             <span className="label-text">Synopsis</span>
@@ -160,7 +171,7 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
             className="textarea textarea-bordered h-24 w-full"
           />
         </div>
-        
+
         <div className="grid grid-cols-2 gap-4 mb-4">
           <div className="form-control">
             <label className="label">
@@ -175,7 +186,7 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
               min="0"
             />
           </div>
-          
+
           <div className="form-control">
             <label className="label">
               <span className="label-text">State</span>
@@ -192,24 +203,52 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
             </select>
           </div>
         </div>
-        
-        <div className="form-control mb-6">
-          <label className="label">
-            <span className="label-text">Video File</span>
-          </label>
-          <input
-            type="file"
-            accept="video/*"
-            onChange={handleFileChange}
-            className="file-input file-input-bordered w-full"
-            required
-          />
-          <label className="label">
-            <span className="label-text-alt">Supported formats: MP4, WebM, etc.</span>
+
+        <div className="form-control mb-4">
+          <label className="label cursor-pointer">
+            <span className="label-text">Use direct video URL</span>
+            <input
+                type="checkbox"
+                className="toggle toggle-primary"
+                checked={useDirectLink}
+                onChange={() => setUseDirectLink(!useDirectLink)}
+            />
           </label>
         </div>
 
-        {uploading && (
+        {useDirectLink ? (
+            <div className="form-control mb-6">
+              <label className="label">
+                <span className="label-text">Video URL</span>
+              </label>
+              <input
+                  type="url"
+                  value={videoUrlInput}
+                  onChange={(e) => setVideoUrlInput(e.target.value)}
+                  className="input input-bordered"
+                  placeholder="https://example.com/video.mp4"
+                  required
+              />
+            </div>
+        ) : (
+            <div className="form-control mb-6">
+              <label className="label">
+                <span className="label-text">Video File</span>
+              </label>
+              <input
+                  type="file"
+                  accept="video/*"
+                  onChange={handleFileChange}
+                  className="file-input file-input-bordered w-full"
+                  required={!useDirectLink}
+              />
+              <label className="label">
+                <span className="label-text-alt">Supported formats: MP4, WebM, etc.</span>
+              </label>
+            </div>
+        )}
+
+        {uploading && !useDirectLink && (
           <div className="mb-4">
             <progress
               className="progress progress-primary w-full"
@@ -219,7 +258,7 @@ const EpisodeUpload: React.FC<EpisodeUploadProps> = ({
             <p className="text-center mt-1">{uploadProgress}% Uploaded</p>
           </div>
         )}
-        
+
         <div className="flex justify-end space-x-2">
           <button
             type="button"

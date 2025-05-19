@@ -15,7 +15,6 @@ export const fetchWithCredentials = async (url: string, options: RequestInit = {
         }
 
         const json = await res.json();
-        console.log("dfhsbjfdsjfdsjjfjdj -----------------"+json.toStr);
         return json || { data: [] };
     } catch (error) {
         console.error('Fetch failed:', error);

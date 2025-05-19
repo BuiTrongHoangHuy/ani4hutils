@@ -8,6 +8,8 @@ import {cookies} from "next/headers";
 import ButtonFavorite from "@/components/ButtonFavorite";
 import {SearchList} from "@/types/search/searchList";
 import FilmCard from "@/components/FilmCard";
+import ClientRatingComponent from "./ClientRatingComponent";
+import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 
 export default async function Page(
     {
@@ -19,8 +21,10 @@ export default async function Page(
     const { slug } = await params
     const filmId = slug.split('-')[slug.split('-').length-1]
     //const slug  = "Witch-Watch-K6FSMLZ1tcVCgajSfij"
-    const data = await fetch(`${url2}/v1/film/${slug.split('-')[slug.split('-').length-1]}`)
-    const filmData : Film = (await data.json()).data
+    const data = await fetchWithCredentials(`${url2}/v1/film/${filmId}`, {
+        method: "GET"
+    })
+    const filmData : Film = data.data
     const seed = Math.floor(Math.random() * 1000)
     const cookieStore = await cookies()
     const userId = cookieStore.get('userId')?.value || ""
@@ -59,12 +63,13 @@ export default async function Page(
                         <div className={"divider divider-horizontal"}></div>
                         <p>Full {filmData.maxEpisodes} episodes</p>
                     </div>
+                    <ClientRatingComponent userId={userId} filmId={filmId} className="mt-2" />
                     <div className="flex flex-wrap items-center gap-2 text-sm text-gray-400">
                         <p className="font-semibold">Genres:</p>
                         {filmData.genres.map((g, i) => (
                             <Link
                                 key={i}
-                                href={`/film?genre=${g.id}`}
+                                href={``}
                                 className="px-2 py-1 bg-primary text-primary-content rounded hover:bg-primary/50 text-xs"
                             >
                                 {g.name}

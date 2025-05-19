@@ -6,16 +6,15 @@ function FilmList () {
   const [films, setFilms] = useState<Film[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [inputTitle, setInputTitle] = useState<string>('');
+  const [inputYear, setInputYear] = useState<string>('');
 
   const [paging, setPaging] = useState<Paging>({
-    page: 0,
+    page: 1,
     size: 10
   });
 
   const [filter, setFilter] = useState<FilmFilter>({
-    title: '',
-    year: undefined,
-    state: undefined
   });
 
   useEffect(() => {
@@ -23,7 +22,7 @@ function FilmList () {
       setLoading(true);
       try {
         const response = await filmService.getFilms(paging, filter);
-        setFilms(response.data.data);
+        setFilms(response.data.data.data);
         setError(null);
       } catch (err) {
         setError('Failed to fetch films. Please try again later.');
@@ -42,7 +41,7 @@ function FilmList () {
       ...prev,
       [name]: value === '' ? undefined : name === 'year' ? parseInt(value) : value
     }));
-    setPaging(prev => ({ ...prev, page: 0 }));
+    setPaging(prev => ({ ...prev, page: 1 }));
   };
 
 
@@ -52,7 +51,6 @@ function FilmList () {
       <div className="flex justify-between items-center mb-6">
         <div>
           <h1 className="text-2xl font-bold">Film Management</h1>
-          {!loading && <p className="text-gray-600">Total films: 100</p>}
         </div>
         <Link to="/film/create" className="btn btn-primary">
           Add New Film
@@ -67,8 +65,14 @@ function FilmList () {
             <input
               type="text"
               name="title"
-              value={filter.title || ''}
-              onChange={handleFilterChange}
+              value={inputTitle || ''}
+              onChange={(e) => setInputTitle(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setFilter((prev) => ({ ...prev, title: inputTitle || undefined }));
+                  setPaging((prev) => ({ ...prev, page: 1 }));
+                }
+              }}
               className="input input-bordered w-full"
               placeholder="Search by title"
             />
@@ -78,8 +82,14 @@ function FilmList () {
             <input
               type="number"
               name="year"
-              value={filter.year || ''}
-              onChange={handleFilterChange}
+              value={inputYear || ''}
+              onChange={(e) => setInputYear(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  setFilter((prev) => ({ ...prev, year: inputYear || undefined }));
+                  setPaging((prev) => ({ ...prev, page: 1 }));
+                }
+              }}
               className="input input-bordered w-full"
               placeholder="Filter by year"
             />
@@ -93,9 +103,9 @@ function FilmList () {
               className="select select-bordered w-full"
             >
               <option value="">All States</option>
-              <option value="FINISHED">FINISHED</option>
-              <option value="UPCOMING">UPCOMING</option>
-              <option value="ON_AIR">ON AIR</option>
+              <option value="finished">FINISHED</option>
+              <option value="upcoming">UPCOMING</option>
+              <option value="on_air">ON AIR</option>
             </select>
           </div>
         </div>
@@ -138,7 +148,7 @@ function FilmList () {
                       <td>
                         {film.images ? (
                           <img
-                            src={film.images[0].url}
+                            src={film.images[0]?.url||"https://placehold.co/300x400/png?text=ani4h.site"}
                             alt={film.title}
                             className="w-16 h-auto rounded"
                           />

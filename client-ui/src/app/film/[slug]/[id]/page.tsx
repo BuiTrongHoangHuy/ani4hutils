@@ -8,6 +8,7 @@ import FilmCard from "@/components/FilmCard";
 import {SearchList} from "@/types/search/searchList";
 import {SearchService} from "@/app/search/service";
 import {PagingSearch} from "@/types/search/pagingSearch";
+import {Paging} from "@/types/paging";
 import {FilmList} from "@/types/filmList";
 import {cookies} from "next/headers";
 import FilmListCardSM from "@/app/film/[slug]/[id]/filmListCardSM";

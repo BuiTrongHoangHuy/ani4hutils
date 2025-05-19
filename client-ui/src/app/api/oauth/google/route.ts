@@ -12,7 +12,7 @@ export async function POST(request: NextRequest) {
         duplex: 'half',
     };
 
-    const loginRes = await fetch('http://localhost:4000/v1/auth/google-oauth', options);
+    const loginRes = await fetch('https://api.ani4h.com/v1/auth/google-oauth', options);
     const data = (await loginRes.json());
     console.log(data);
     (await cookies()).set("accessToken", data.data.accessToken, {

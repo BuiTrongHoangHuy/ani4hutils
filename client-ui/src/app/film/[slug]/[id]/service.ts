@@ -1,26 +1,19 @@
 import {BuildQueryParams} from "@/utils/build-query-params";
+import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 
-const baseUrl ="http://localhost:4002/v1/film"
-const baseUrlEpisode = "http://localhost:4002/v1/episode"
+const baseUrl ="https://api.ani4h.com/v1/film"
+const baseUrlEpisode = "https://api.ani4h.com/v1/episode"
 export const FilmService = {
     getById: async (id: string) => {
-        const response = await fetch(`${baseUrl}/${id}`,{
+        return await fetchWithCredentials(`${baseUrl}/${id}`, {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
         })
-        return response.json()
     },
 
     getEpisodesById: async (id: string) => {
-        const response = await fetch(`${baseUrl}/${id}/episodes`,{
+        return await fetchWithCredentials(`${baseUrl}/${id}/episodes`, {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
         })
-        return response.json()
     },
 
     getEpisodeByEpisodeNumber: async (id: string, numberEpisode: number) => {
@@ -31,13 +24,9 @@ export const FilmService = {
             numberEpisode: numberEpisode,
         }
         const params = BuildQueryParams(request)
-        const response = await fetch(`${baseUrlEpisode}?${params}`,{
+        return await fetchWithCredentials(`${baseUrlEpisode}?${params}`, {
             method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            },
         })
-        return response.json()
     }
 
 }

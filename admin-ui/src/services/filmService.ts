@@ -39,7 +39,7 @@ export interface FilmFilter {
   title?: string;
   genreId?: string;
   ageRatingId?: string;
-  year?: number;
+  year?: string;
   state?: string;
 }
 
@@ -49,7 +49,13 @@ export interface Paging {
 }
 
 export interface FilmListResponse {
-  data: Film[];
+  data:{
+    data: Film[];
+    paging:{
+      page: number;
+      pageSize: number;
+    }
+  }
 }
 
 export interface FilmCreate {
@@ -91,11 +97,20 @@ export interface FilmUpdate {
 export interface FilmResponse {
  data: Film;
 }
-
+const BuildQueryParams = (params: Record<string, any>): string => {
+  const queryParams = new URLSearchParams();
+  Object.entries(params).forEach(([key, value]) => {
+    if (value !== undefined && value !== null && value !== '') {
+      queryParams.append(key, String(value));
+    }
+  });
+  return queryParams.toString();
+};
 const getFilms = (paging: Paging, filter?: FilmFilter): Promise<AxiosResponse<FilmListResponse>> => {
   const params = { ...paging, ...filter };
   console.log(params);
-  return axiosInstance.get("/v1/film");
+  const params2 = BuildQueryParams(params);
+  return axiosInstance.get(`/v1/search?${params2}`);
 };
 
 const getFilmById = (id: string): Promise<AxiosResponse<FilmResponse>> => {

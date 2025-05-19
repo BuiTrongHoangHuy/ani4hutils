@@ -1,5 +1,6 @@
 import {BuildQueryParams} from "@/utils/build-query-params";
 import {fetchWithCredentials} from "@/utils/fetch-with-credentials";
+import {Paging} from "@/types/paging";
 
 const baseUrl = "http://localhost:4002/v1/favorite";
 

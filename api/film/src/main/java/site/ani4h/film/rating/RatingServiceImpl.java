@@ -2,6 +2,7 @@ package site.ani4h.film.rating;
 
 import org.springframework.stereotype.Service;
 import site.ani4h.film.rating.entity.RatingRequest;
+import site.ani4h.film.rating.entity.RatingResponse;
 
 @Service
 public class RatingServiceImpl implements RatingService {
@@ -18,5 +19,10 @@ public class RatingServiceImpl implements RatingService {
         } else {
             ratingRepository.saveRating(request);
         }
+    }
+
+    @Override
+    public RatingResponse getRatingByUserIdAndFilmId(int userId, int filmId) {
+        return ratingRepository.getRatingByUserIdAndFilmId(userId, filmId);
     }
 }

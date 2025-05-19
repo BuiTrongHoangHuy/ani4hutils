@@ -3,4 +3,5 @@ export interface PagingSearch{
     nextCursor?: string,
     page: number,
     pageSize: number,
+    [key: string]: string | number | undefined | null;
 }

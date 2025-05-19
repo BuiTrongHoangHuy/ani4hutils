@@ -1,7 +1,7 @@
 'use client'
 
 import ReactPlayer from "react-player";
-import {ChangeEvent, useEffect, useRef, useState, KeyboardEvent} from "react";
+import {ChangeEvent, useEffect, useRef, useState} from "react";
 import {OnProgressProps} from "react-player/types/base";
 import {ExpandIcon, PauseIcon, PlayIcon, ShrinkIcon, Volume2, VolumeX, SkipForward, CircleGauge, RotateCcw, RotateCw} from "lucide-react";
 import {formatTime} from "@/utils/format";
@@ -178,7 +178,7 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
     }
 
 
-    useEffect(() => {
+    /*useEffect(() => {
         const handleKeyDown = (e: globalThis.KeyboardEvent) => {
             if (
                 document.activeElement instanceof HTMLInputElement ||
@@ -219,7 +219,8 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
             }
             window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [fastForward5Seconds, rewind5Seconds, toggleFullscreen]);
+    }, [fastForward5Seconds, rewind5Seconds, toggleFullscreen]);*/
+
     useEffect(() => {
         const getEpisodeDate = async () => {
             const episode = await FilmService.getEpisodeByEpisodeNumber(filmId, episodeNumber);
@@ -232,6 +233,7 @@ export default function Player({filmId ,episodeNumber}:{filmId: string,episodeNu
         };
         getEpisodeDate();
     }, [filmId, episodeNumber]);
+
     if (!episode?.videoUrl) return ;
     return (
         <div className="player-wrapper" ref={playerWrapper}

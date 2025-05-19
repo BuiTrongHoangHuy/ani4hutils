@@ -68,8 +68,6 @@ public class JdbcEpisodeRepository implements EpisodeRepository {
 
     @Override
     public void updateEpisode(int id, EpisodeUpdate episode) {
-        /*String sql = "UPDATE episodes SET title = ?, episode_number = ?, synopsis = ?, duration = ?, " +
-                "thumbnail = ?, video_url = ?, air_date = ?, state = ? WHERE id = ?";*/
         String sql = """
                 UPDATE `episodes`
                 SET title = COALESCE(?,title),
