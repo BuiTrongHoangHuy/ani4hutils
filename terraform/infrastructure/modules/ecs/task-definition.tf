@@ -8,7 +8,7 @@ module "ecs_container_definition" {
   requires_compatibilities = ["EC2"]
   network_mode  = "bridge"
   cpu = 512
-  memory = 200
+  memory = 600
   service_connect_configuration = {
 
     enabled   = true
@@ -32,7 +32,7 @@ module "ecs_container_definition" {
       name      = "sidecar"
       image     = "686255971544.dkr.ecr.ap-southeast-1.amazonaws.com/sidecar:latest"
       essential = false
-      memory    = 40
+      # memory    = 40
       mount_points = [
         {
           sourceVolume  = "config"
@@ -43,7 +43,6 @@ module "ecs_container_definition" {
     (each.value) = {
       name      = each.value
       image     = "public.ecr.aws/v2r1j0e6/ani4h-api-${each.value}"
-      memory    = 100
       essential = true
       port_mappings = [
         {
@@ -55,10 +54,7 @@ module "ecs_container_definition" {
         { name = "SPRING_CONFIG_LOCATION", value = "/config/" },
         { name = "JAVA_TOOL_OPTIONS", value = "-Djava.io.tmpdir=/config" }
       ]
-      linux_parameters = {
-        maxSwap   = 300
-        swappiness = 60
-      }
+
       mount_points = [
         {
           sourceVolume  = "config"

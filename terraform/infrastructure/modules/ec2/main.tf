@@ -88,3 +88,19 @@ resource "aws_instance" "api" {
 }
 
 
+resource "aws_instance" "api2" {
+  tags = {
+    Name = "server2"
+  }
+  key_name = aws_key_pair.key.key_name
+  availability_zone = var.az
+  user_data = templatefile("${path.module}/run.sh",{
+    ecs_cluster=var.ecs_cluster
+  })
+  associate_public_ip_address = true
+  ami = "ami-0a5fa1b3c2f9851fc"
+  iam_instance_profile = aws_iam_instance_profile.ec2_instance_role_profile.name
+  instance_type = "t2.micro"
+  vpc_security_group_ids = [var.sg.vm]
+  subnet_id = var.vpc.public_subnets[0]
+}
