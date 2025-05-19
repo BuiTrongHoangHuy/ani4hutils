@@ -4,7 +4,7 @@ import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 import {Paging} from "@/types/paging";
 
 const baseUrl = 'https://api.ani4h.site/v1/search';
-const baseUrl2 = 'https://api.ani4h.site/v1/';
+const baseUrl2 = 'https://api.ani4h.site';
 
 
 export const SearchService = {
