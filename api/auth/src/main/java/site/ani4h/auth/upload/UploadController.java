@@ -13,7 +13,7 @@ import site.ani4h.shared.common.Uid;
 
 @RestController
 @RequestMapping("/v1/upload")
-public class UploadController {
+public class  UploadController {
 
     private final UploadService uploadService;
     public UploadController(UploadService uploadService) {
