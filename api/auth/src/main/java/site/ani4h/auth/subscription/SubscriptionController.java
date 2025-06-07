@@ -35,7 +35,7 @@ public class SubscriptionController {
         return subscriptionService.getSubscriptionById(id);
     }
 
-    @GetMapping("/subscription/")
+    @GetMapping("/subscription")
     public List<Subscription> getSubscriptions() {
         return subscriptionService.getSubscriptions();
     }
