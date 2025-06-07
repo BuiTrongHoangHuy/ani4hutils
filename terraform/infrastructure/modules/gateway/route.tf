@@ -145,3 +145,22 @@ resource "aws_apigatewayv2_route" "subscription_p" {
   route_key = "ANY /subscription/{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
 }
+
+
+resource "aws_apigatewayv2_route" "watch_p" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /watch-history/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.film.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["admin","user"]
+  authorization_type = "JWT"
+}
+
+resource "aws_apigatewayv2_route" "history" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /watch-history"
+  target    = "integrations/${aws_apigatewayv2_integration.film.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["admin","user"]
+  authorization_type = "JWT"
+}
