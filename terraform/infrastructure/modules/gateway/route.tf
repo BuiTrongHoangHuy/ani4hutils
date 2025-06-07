@@ -56,3 +56,79 @@ resource "aws_apigatewayv2_route" "genre_p" {
   route_key = "ANY /genre/{proxy+}"
   target    = "integrations/${aws_apigatewayv2_integration.film.id}"
 }
+
+
+resource "aws_apigatewayv2_route" "upload" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /upload/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["admin"]
+  authorization_type = "JWT"
+}
+
+
+resource "aws_apigatewayv2_route" "search_p" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /search/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.film.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["admin","user"]
+  authorization_type = "JWT"
+}
+
+resource "aws_apigatewayv2_route" "search" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /search"
+  target    = "integrations/${aws_apigatewayv2_integration.film.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["admin","user"]
+  authorization_type = "JWT"
+}
+
+resource "aws_apigatewayv2_route" "favorite_p" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /favorite/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.film.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["admin","user"]
+  authorization_type = "JWT"
+}
+
+resource "aws_apigatewayv2_route" "favorite" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /favorite"
+  target    = "integrations/${aws_apigatewayv2_integration.film.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["admin","user"]
+  authorization_type = "JWT"
+}
+
+
+resource "aws_apigatewayv2_route" "episode_create" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "POST /episode"
+  target    = "integrations/${aws_apigatewayv2_integration.film.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["admin"]
+  authorization_type = "JWT"
+}
+
+
+resource "aws_apigatewayv2_route" "episode" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "GET /episode"
+  target    = "integrations/${aws_apigatewayv2_integration.film.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["user","admin"]
+  authorization_type = "JWT"
+}
+
+resource "aws_apigatewayv2_route" "episode_p" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "GET /episode/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.film.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["user","admin"]
+  authorization_type = "JWT"
+}
