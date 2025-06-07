@@ -132,3 +132,16 @@ resource "aws_apigatewayv2_route" "episode_p" {
   authorization_scopes = ["user","admin"]
   authorization_type = "JWT"
 }
+
+
+resource "aws_apigatewayv2_route" "subscription" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /subscription"
+  target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
+}
+
+resource "aws_apigatewayv2_route" "subscription_p" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /subscription/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
+}
