@@ -9,10 +9,13 @@ import site.ani4h.shared.common.Uid;
 @Setter
 public class SubscriptionRequest {
     private Uid id;
+    private Uid userId;
     private String name;
     private float price;
     private String quality;
     private String resolution;
     private int maxSimultaneousStreams;
     private int status;
+
+    public SubscriptionRequest() {}
 }

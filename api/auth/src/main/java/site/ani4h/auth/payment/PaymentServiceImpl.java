@@ -1,10 +1,13 @@
 package site.ani4h.auth.payment;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import site.ani4h.auth.payment.entity.PaymentRequest;
 import site.ani4h.auth.payment.entity.PaymentResponse;
+import site.ani4h.auth.payment.entity.VNPayResponse;
+import site.ani4h.auth.subscription.SubscriptionRepository;
+import site.ani4h.auth.subscription.entity.SubscriptionRequest;
+import site.ani4h.shared.common.Uid;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -15,7 +18,11 @@ import java.util.*;
 @Slf4j
 @Service
 public class PaymentServiceImpl implements PaymentService {
+    private final SubscriptionRepository repository;
 
+    public PaymentServiceImpl(SubscriptionRepository repository) {
+        this.repository = repository;
+    }
     @Override
     public PaymentResponse createPayment(PaymentRequest request) {
 
@@ -89,5 +96,35 @@ public class PaymentServiceImpl implements PaymentService {
         PaymentResponse response = new PaymentResponse();
         response.setUrlPayment(paymentUrl);
         return response;
+    }
+
+    @Override
+    public void verifyPayment(Map<String, String> allParams) {
+        log.info("Payment verification started with params: {}", allParams);
+
+        String vnp_SecureHash = allParams.get("vnp_SecureHash");
+        allParams.remove("vnp_SecureHash");
+        allParams.remove("vnp_SecureHashType");
+
+        String signValue = VNPayConfig.hashAllFields(allParams);
+
+
+        if (vnp_SecureHash.equals(signValue)) {
+            log.info("Payment verification successful.");
+            if ("00".equals(allParams.get("vnp_TransactionStatus"))) {
+                SubscriptionRequest request = new SubscriptionRequest();
+                request.setName("Vip");
+                request.setPrice(100000);
+                request.setQuality("Fair");
+                request.setResolution("1080p");
+                request.setMaxSimultaneousStreams(2);
+                request.setUserId(new Uid(allParams.get("vnp_OrderInfo")));
+                repository.createSubscription(request);
+            } else {
+                log.error("Payment failed.");
+            }
+        } else {
+            log.error("Payment verification failed. Secure hash mismatch.");
+        }
     }
 }
