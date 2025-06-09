@@ -13,5 +13,5 @@ public interface SubscriptionService {
     void updateSubscription(SubscriptionRequest request);
     void deleteSubscription(Uid id);
     List<Subscription> getSubscriptions();
-    Subscription getUserSubscription(int id);
+    List<Subscription> getUserSubscription(int id);
 }

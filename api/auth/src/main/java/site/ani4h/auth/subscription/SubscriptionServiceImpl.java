@@ -45,7 +45,7 @@ public class SubscriptionServiceImpl implements SubscriptionService {
     }
 
     @Override
-    public Subscription getUserSubscription(int id) {
+    public List<Subscription> getUserSubscription(int id) {
         return repository.getUserSubscription(id);
     }
 }

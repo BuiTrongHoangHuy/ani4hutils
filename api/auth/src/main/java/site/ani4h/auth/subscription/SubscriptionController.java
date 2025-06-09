@@ -43,7 +43,7 @@ public class SubscriptionController {
 
 
     @GetMapping("user/{id}/subscription")
-    public Subscription getUserSubscriptions(@PathVariable() Uid id) {
+    public List<Subscription> getUserSubscriptions(@PathVariable() Uid id) {
         return subscriptionService.getUserSubscription(id.getLocalId());
     }
 
