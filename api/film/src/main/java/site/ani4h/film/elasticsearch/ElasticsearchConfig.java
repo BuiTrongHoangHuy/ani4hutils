@@ -40,7 +40,7 @@ public class ElasticsearchConfig {
         HostnameVerifier hostnameVerifier = (hostname, session) -> true;
 
         RestClient restClient = RestClient.builder(
-                new HttpHost("vpc-ani4h-opensearch-gjlrsug2qvkgvxpoc3e6dczp6q.ap-southeast-1.es.amazonaws.com", 443, "https"))
+                new HttpHost("localhost", 9200, "https"))
                 .setHttpClientConfigCallback(httpClientBuilder -> {
                     try {
                         return httpClientBuilder

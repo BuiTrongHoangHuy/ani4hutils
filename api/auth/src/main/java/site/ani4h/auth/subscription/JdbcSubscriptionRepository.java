@@ -99,12 +99,12 @@ public class JdbcSubscriptionRepository implements SubscriptionRepository {
     }
 
     @Override
-    public Subscription getUserSubscription(int id) {
+    public List<Subscription> getUserSubscription(int id) {
         String sql = """
             select s.* from subscriptions s
             join user_subscriptions us on us.subscription_id = s.id
             where us.user_id = ?;
             """;
-        return jdbcTemplate.queryForObject(sql, new Object[]{id}, new BeanPropertyRowMapper<>(Subscription.class));
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Subscription.class), id);
     }
 }

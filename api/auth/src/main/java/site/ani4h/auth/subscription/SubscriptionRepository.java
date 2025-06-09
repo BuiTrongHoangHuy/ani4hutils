@@ -12,5 +12,5 @@ public interface SubscriptionRepository {
     void updateSubscription(SubscriptionRequest subscription);
     void deleteSubscription(int id);
     List<Subscription> getSubscriptions();
-    Subscription getUserSubscription(int id);
+    List<Subscription> getUserSubscription(int id);
 }
