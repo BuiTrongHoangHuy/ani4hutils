@@ -164,3 +164,35 @@ resource "aws_apigatewayv2_route" "history" {
   authorization_scopes = ["admin","user"]
   authorization_type = "JWT"
 }
+
+resource "aws_apigatewayv2_route" "comment_p" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /comments/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.film.id}"
+  authorizer_id = aws_apigatewayv2_authorizer.authorizer.id
+  authorization_scopes = ["admin","user"]
+  authorization_type = "JWT"
+}
+
+resource "aws_apigatewayv2_route" "payment" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /payment"
+  target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
+}
+
+resource "aws_apigatewayv2_route" "payment_p" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /payment/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
+}
+
+resource "aws_apigatewayv2_route" "rating" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /rating"
+  target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
+}
+resource "aws_apigatewayv2_route" "rating_p" {
+  api_id    = aws_apigatewayv2_api.rest_gateway.id
+  route_key = "ANY /rating/{proxy+}"
+  target    = "integrations/${aws_apigatewayv2_integration.auth.id}"
+}
