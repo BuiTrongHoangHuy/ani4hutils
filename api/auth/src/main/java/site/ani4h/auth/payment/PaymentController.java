@@ -1,15 +1,16 @@
 package site.ani4h.auth.payment;
 
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import site.ani4h.auth.payment.entity.PaymentRequest;
 import site.ani4h.auth.payment.entity.PaymentResponse;
+import site.ani4h.auth.payment.entity.VNPayResponse;
 
+import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/v1")
 public class PaymentController {
@@ -25,5 +26,14 @@ public class PaymentController {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(payment);
+    }
+
+    @PostMapping("/payment/verify")
+    public void verifyPayment(@RequestParam Map<String, String> allParams) {
+        log.info("Payment URL: {}", allParams);
+
+
+        paymentService.verifyPayment(allParams);
+
     }
 }
