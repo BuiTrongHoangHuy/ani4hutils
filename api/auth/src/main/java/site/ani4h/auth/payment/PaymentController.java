@@ -28,7 +28,7 @@ public class PaymentController {
         return ResponseEntity.ok(payment);
     }
 
-    @PostMapping("/payment/verify")
+    @GetMapping("/payment/verify")
     public void verifyPayment(@RequestParam Map<String, String> allParams) {
         log.info("Payment URL: {}", allParams);
 
