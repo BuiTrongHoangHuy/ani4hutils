@@ -113,7 +113,7 @@ public class PaymentServiceImpl implements PaymentService {
             log.info("Payment verification successful.");
             if ("00".equals(allParams.get("vnp_TransactionStatus"))) {
                 SubscriptionRequest request = new SubscriptionRequest();
-                request.setName("Vip");
+                request.setName("Premium");
                 request.setPrice(100000);
                 request.setQuality("Fair");
                 request.setResolution("1080p");

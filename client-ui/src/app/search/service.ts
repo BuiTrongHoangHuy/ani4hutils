@@ -1,7 +1,7 @@
 import {PagingSearch} from "@/types/search/pagingSearch";
 import {BuildQueryParams} from "@/utils/build-query-params";
-import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
 import {Paging} from "@/types/paging";
+import {fetchWithInterceptor} from "@/utils/fetchWithInterceptor";
 
 const baseUrl = 'https://api.ani4h.site/v1/search';
 const baseUrl2 = 'https://api.ani4h.site';
@@ -16,9 +16,11 @@ export const SearchService = {
         const params = BuildQueryParams(paging);
         const url = `${baseUrl}?title=${title}&${params}`;
 
-        return await fetchWithCredentials(url, {
+        const res= await fetchWithInterceptor(url, {
             method: 'GET',
+            credentials: 'include',
         });
+        return res.json();
     },
     /*filter: async (data: any, paging: PagingSearch) => {
         const pagingParams = BuildQueryParams(paging);
@@ -29,26 +31,27 @@ export const SearchService = {
     },*/
     contentBasedRecommendation: async (filmId: string, seed: number, paging: PagingSearch) => {
         const pagingParams = BuildQueryParams(paging);
-        return await fetchWithCredentials(`${baseUrl}/content-based?filmId=${filmId}&seed=${seed}&${pagingParams}`, {
+        return await (await fetchWithInterceptor(`${baseUrl}/content-based?filmId=${filmId}&seed=${seed}&${pagingParams}`, {
             method: 'GET',
-        });
+            credentials: 'include',
+        })).json();
     },
     userFavoriteRecommendation: async (userId: string, seed: number, paging: PagingSearch) => {
         const pagingParams = BuildQueryParams(paging);
-        return await fetchWithCredentials(`${baseUrl}/user-favorite?userId=${userId}&seed=${seed}&${pagingParams}`, {
+        return await (await fetchWithInterceptor(`${baseUrl}/user-favorite?userId=${userId}&seed=${seed}&${pagingParams}`, {
             method: 'GET',
-        });
+        })).json();
     },
     userHistoryRecommendation: async (userId: string, seed: number, paging: PagingSearch) => {
         const pagingParams = BuildQueryParams(paging);
-        return await fetchWithCredentials(`${baseUrl}/user-history?userId=${userId}&seed=${seed}&${pagingParams}`, {
+        return await (await fetchWithInterceptor(`${baseUrl}/user-history?userId=${userId}&seed=${seed}&${pagingParams}`, {
             method: 'GET',
-        });
+        })).json();
     },
     getTopHot: async (paging: Paging) => {
         const pagingParams = BuildQueryParams(paging);
-        return await fetchWithCredentials(`${baseUrl2}/v1/film/top-hot?${pagingParams}`, {
+        return await (await fetchWithInterceptor(`${baseUrl2}/v1/film/top-hot?${pagingParams}`, {
             method: 'GET',
-        });
+        })).json();
     }
 }

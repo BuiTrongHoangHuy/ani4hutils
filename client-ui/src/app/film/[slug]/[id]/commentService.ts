@@ -1,5 +1,5 @@
 import { Comment, CommentRequest } from "@/types/comment";
-import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
+import {fetchWithInterceptor} from "@/utils/fetchWithInterceptor";
 
 const baseUrl = "https://api.ani4h.site/v1/comments";
 
@@ -20,9 +20,9 @@ export const CommentService = {
 
         const url = `${baseUrl}/film/${filmId}${params.toString() ? `?${params.toString()}` : ''}`;
 
-        return await fetchWithCredentials(url, {
+        return await (await fetchWithInterceptor(url, {
             method: "GET",
-        });
+        })).json();
     },
 
     getCommentsByEpisodeId: async (episodeId: string, paging?: PagingParams): Promise<CommentResponse> => {
@@ -32,28 +32,29 @@ export const CommentService = {
 
         const url = `${baseUrl}/episode/${episodeId}${params.toString() ? `?${params.toString()}` : ''}`;
 
-        return await fetchWithCredentials(url, {
+        return await (await fetchWithInterceptor(url, {
             method: "GET",
-        });
+            credentials: 'include',
+        })).json();
     },
 
     addComment: async (comment: CommentRequest): Promise<void> => {
-        await fetchWithCredentials(`${baseUrl}`, {
+        await (await fetchWithInterceptor(`${baseUrl}`, {
             method: "POST",
             body: JSON.stringify(comment)
-        });
+        })).json();
     },
 
     updateComment: async (commentId: number, comment: CommentRequest): Promise<void> => {
-        await fetchWithCredentials(`${baseUrl}/${commentId}`, {
+        await (await fetchWithInterceptor(`${baseUrl}/${commentId}`, {
             method: "PUT",
             body: JSON.stringify(comment)
-        });
+        })).json();
     },
 
     deleteComment: async (commentId: number): Promise<void> => {
-        await fetchWithCredentials(`${baseUrl}/${commentId}`, {
+        await (await fetchWithInterceptor(`${baseUrl}/${commentId}`, {
             method: "DELETE",
-        });
+        })).json();
     }
 };

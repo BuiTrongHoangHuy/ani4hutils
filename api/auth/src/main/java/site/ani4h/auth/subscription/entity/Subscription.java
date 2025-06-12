@@ -5,6 +5,8 @@ import lombok.Getter;
 import lombok.Setter;
 import site.ani4h.shared.common.Uid;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 public class Subscription {
@@ -15,7 +17,8 @@ public class Subscription {
     private String resolution;
     private int maxSimultaneousStreams;
     private int status;
-
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
     @JsonIgnore
     private static int type = 8;
 
