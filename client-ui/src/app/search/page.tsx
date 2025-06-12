@@ -130,7 +130,7 @@ function Search() {
     useEffect(() => {
         const fetchProposal = async () => {
             // Only fetch proposals if userId is available
-            if (!userId) return;
+           // if (!userId) return;
 
             const newPaging: PagingSearch = {
                 cursor: "",
@@ -141,8 +141,9 @@ function Search() {
 
             try {
                 const res = await SearchService.userFavoriteRecommendation(userId, 1, newPaging);
+                const favorites = res?.data?.data || []
                 if(res.data) {
-                    setProposal(res.data.data);
+                    setProposal(favorites);
                 }
             } catch (error) {
                 console.error("Error fetching proposal data:", error);
@@ -203,16 +204,16 @@ function Search() {
                     <div className={"flex flex-col space-y-4"}>
                         <p className={"text-xl font-bold"}>Proposal for you</p>
                         <div className={"flex flex-row overflow-x-auto h-50 space-x-2"}>
-                            {/*{
-                                proposal.map((film, index) =>
+                            {
+                                proposal && proposal.map((film, index) =>
                                     <FilmCard key={index} film={film} height={32} width={24} fontSize={14}/>
                                 )
-                            }*/}
+                            }
                         </div>
                     </div>
                     <div className={"flex flex-col space-y-4"}>
                         <p className={"text-xl font-bold"}>Top search</p>
-                       {/* {topHot.map((film, index) => {
+                        {topHot && topHot.map((film, index) => {
                             let rankColor = "text-gray-400"; // default
                             if (index === 0) rankColor = "text-orange-500";
                             else if (index === 1) rankColor = "text-orange-400";
@@ -224,7 +225,7 @@ function Search() {
                                     <FilmCard film={film} row={true} height={20} width={16} fontSize={14} />
                                 </div>
                             );
-                        })}*/}
+                        })}
                     </div>
                 </div>
             </div>

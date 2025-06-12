@@ -18,7 +18,6 @@ export const SearchService = {
 
         const res= await fetchWithInterceptor(url, {
             method: 'GET',
-            credentials: 'include',
         });
         return res.json();
     },
@@ -33,7 +32,6 @@ export const SearchService = {
         const pagingParams = BuildQueryParams(paging);
         return await (await fetchWithInterceptor(`${baseUrl}/content-based?filmId=${filmId}&seed=${seed}&${pagingParams}`, {
             method: 'GET',
-            credentials: 'include',
         })).json();
     },
     userFavoriteRecommendation: async (userId: string, seed: number, paging: PagingSearch) => {

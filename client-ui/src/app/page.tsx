@@ -5,6 +5,7 @@ import {SearchService} from "@/app/search/service";
 import {PagingSearch} from "@/types/search/pagingSearch";
 import {Paging} from "@/types/paging"
 import { cookies } from 'next/headers'
+import {createServerFetch} from "@/utils/interceptorServer";
 
 
 export default async function Home() {
@@ -22,12 +23,14 @@ export default async function Home() {
     }
     const cookieStore = await cookies()
     const userId = cookieStore.get('userId')?.value || ""
-
+    const accessToken = cookieStore.get('accessToken')?.value || ""
+    createServerFetch(accessToken);
     const resFavorite = await SearchService.userFavoriteRecommendation(userId,0, paging)
-    const favorites : FilmList[] = (await resFavorite.data.data || [])
+    console.log(resFavorite)
+    const favorites : FilmList[] = resFavorite?.data?.data || []
 
     const resHistory = await SearchService.userHistoryRecommendation(userId,0, paging)
-    const histories : FilmList[] = (await resHistory.data.data || [])
+    const histories : FilmList[] = resHistory?.data?.data || []
 
     const resTopHot = await SearchService.getTopHot(pagingNormal);
     const topHot: FilmList[] = resTopHot?.data ?? [];

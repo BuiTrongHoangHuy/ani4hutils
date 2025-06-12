@@ -28,8 +28,10 @@ export default function FavoritePage() {
         setIsLoading(true);
         try {
             const res = await FavoriteService.getFavorites(userId, paging);
-            setData(res.data);
-            if (res.data.length === 0) {
+            const favoriteData = res.data || [];
+            console.log("Favorites: ", favoriteData);
+            setData(favoriteData);
+            if (favoriteData=== 0) {
                 setHasMore(false);
             }
         } catch (error) {
@@ -52,10 +54,10 @@ export default function FavoritePage() {
 
         setIsLoading(true);
         try {
-            console.log("Fetchingggggggggggggg: ", paging);
             const res = await FavoriteService.getFavorites(userId, newPaging);
-            setData(prev => [...prev, ...res.data]);
-            if (res.data.length === 0) {
+            const favoriteData = res.data || [];
+            setData(prev => [...prev, ...favoriteData]);
+            if ( favoriteData.length === 0) {
                 setHasMore(false);
             }
         } catch (error) {
@@ -112,7 +114,7 @@ export default function FavoritePage() {
             <p className={"font-bold text-2xl text-orange-500"}>Favorite</p>
             <div className="overflow-y-auto h-[500px] pr-4">
                 <div className={"grid grid-cols-2 gap-4"}>
-                    {data.map((film, i) =>
+                    {data && data.map((film, i) =>
                         <FavoriteCard film={film} key={i} onDelete={handleDelete}/>
                     )}
                 </div>

@@ -1,6 +1,8 @@
 package site.ani4h.auth.payment;
 
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +10,7 @@ import site.ani4h.auth.payment.entity.PaymentRequest;
 import site.ani4h.auth.payment.entity.PaymentResponse;
 import site.ani4h.auth.payment.entity.VNPayResponse;
 
+import java.io.IOException;
 import java.util.Map;
 
 @Slf4j
@@ -29,11 +32,15 @@ public class PaymentController {
     }
 
     @GetMapping("/payment/verify")
-    public void verifyPayment(@RequestParam Map<String, String> allParams) {
-        log.info("Payment URL: {}", allParams);
+    public void verifyPayment(@RequestParam Map<String, String> allParams, HttpServletResponse response) throws IOException {
+        try{
+            paymentService.verifyPayment(allParams);
+            response.sendRedirect("https://www.ani4h.site");
+        }catch(Exception e){
+            log.error("Error verifying payment: {}", e.getMessage());
+            response.sendRedirect("https://www.ani4h.site");
 
-
-        paymentService.verifyPayment(allParams);
+        }
 
     }
 }
