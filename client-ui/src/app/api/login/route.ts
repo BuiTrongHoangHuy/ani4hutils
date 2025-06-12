@@ -1,7 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import {url} from "@/types/cons";
 import {cookies} from "next/headers";
-import {UserService} from "@/utils/user-service";
 import {createServerFetch} from "@/utils/interceptorServer";
 import {fetchWithInterceptor} from "@/utils/fetchWithInterceptor";
 

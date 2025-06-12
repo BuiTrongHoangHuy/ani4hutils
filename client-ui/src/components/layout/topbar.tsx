@@ -29,6 +29,8 @@ export default function TopBar(className: { className?: string }) {
             }).then(
             () =>{
                 setIsLogin(false)
+                sessionStorage.removeItem("accessToken");
+                router.push("/")
             }
         )
     }
@@ -50,7 +52,7 @@ export default function TopBar(className: { className?: string }) {
                 } else {
                     toast.success("Login success")
                     r.json().then(data => {
-                        sessionStorage.setItem("accessToken", data.accessToken)
+                        sessionStorage.setItem("accessToken", data.accessToken);
                     })
                     setIsLogin(true);
                     (document.getElementById('login_modal') as HTMLDialogElement)?.close();
