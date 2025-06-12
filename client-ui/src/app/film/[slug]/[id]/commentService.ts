@@ -34,7 +34,6 @@ export const CommentService = {
 
         return await (await fetchWithInterceptor(url, {
             method: "GET",
-            credentials: 'include',
         })).json();
     },
 
