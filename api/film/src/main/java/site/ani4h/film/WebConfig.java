@@ -28,8 +28,7 @@ public class WebConfig implements WebMvcConfigurer {
                                 "https://admin.ani4h.site",
                                 "https://www.ani4h.site"
                         )
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowCredentials(true);
+                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
             }
         };
     }

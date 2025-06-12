@@ -10,6 +10,7 @@ import {SearchList} from "@/types/search/searchList";
 import FilmCard from "@/components/FilmCard";
 import ClientRatingComponent from "./ClientRatingComponent";
 import {fetchWithInterceptor} from "@/utils/fetchWithInterceptor";
+import {createServerFetch} from "@/utils/interceptorServer";
 
 export default async function Page(
     {
@@ -20,7 +21,6 @@ export default async function Page(
     }) {
     const { slug } = await params
     const filmId = slug.split('-')[slug.split('-').length-1]
-    //const slug  = "Witch-Watch-K6FSMLZ1tcVCgajSfij"
     const data = await (await fetchWithInterceptor(`${url2}/v1/film/${filmId}`, {
         method: "GET"
     })).json();
@@ -28,6 +28,8 @@ export default async function Page(
     const seed = Math.floor(Math.random() * 1000)
     const cookieStore = await cookies()
     const userId = cookieStore.get('userId')?.value || ""
+    const accessToken = cookieStore.get('accessToken')?.value || ""
+    createServerFetch(accessToken);
 
     const paging: PagingSearch = {
         cursor: "",
@@ -35,7 +37,8 @@ export default async function Page(
         page: 1,
         pageSize: 12,
     }
-    const films : SearchList[] = (await (await SearchService.contentBasedRecommendation(filmId, seed, paging)).json()).data || []
+    const resContentBase= await SearchService.contentBasedRecommendation(filmId, seed, paging) || []
+    const films : SearchList[] = resContentBase.data.data || []
     return (
         <div className={"w-screen mt-16 px-20 py-10 space-y-20 "}>
             <div className={"flex justify-between"}>
