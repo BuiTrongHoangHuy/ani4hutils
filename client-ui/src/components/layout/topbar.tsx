@@ -185,7 +185,7 @@ export default function TopBar(className: { className?: string }) {
                                             <span className="badge">New</span>
                                         </Link>
                                     </li>
-                                    <li><a>Settings</a></li>
+                                    <li><Link href={`/plan`}>Plan</Link></li>
                                     <li><a onClick={onLogout}>Logout</a></li>
                                 </ul>
                             </div>

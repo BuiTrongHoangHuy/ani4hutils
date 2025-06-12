@@ -45,3 +45,16 @@ export const createPayment = async (request: PaymentRequest): Promise<PaymentRes
         });
     return response.json();
 };
+
+export const getPaymentStatus = async (userId: string): Promise<{data:[{
+        id: string,
+        name: string,
+        price: string,
+        quality: string,
+    }]}> => {
+    const response = await fetchWithInterceptor(`${baseUrl}/user/${userId}/subscription`,
+        {
+            method: 'GET',
+        });
+    return response.json();
+};

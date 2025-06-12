@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { SubscriptionPlan, createPayment, getSubscriptionPlans } from './service';
+import {SubscriptionPlan, createPayment, getSubscriptionPlans, getPaymentStatus} from './service';
 import { useRouter } from 'next/navigation';
 
 export default function PlanPage() {
@@ -10,6 +10,7 @@ export default function PlanPage() {
     const router = useRouter();
     const [isLogin, setIsLogin] = useState<boolean>(false)
     const [userId, setUserId] = useState<string>('');
+    const [hasSubscription, setHasSubscription] = useState<boolean>(false);
     useEffect(() => {
         const fetchPlans = async () => {
             try {
@@ -26,8 +27,12 @@ export default function PlanPage() {
         }).then(r => {
             if (r.status == 200) {
                 setIsLogin(true)
-                r.json().then(data => {
+                r.json().then(async data => {
                     setUserId(data.userId)
+                    const subscriptionPlans = await getPaymentStatus(data.userId);
+                    if(subscriptionPlans.data.length > 0) {
+                        setHasSubscription(true);
+                    }
                 })
             }else{
                 router.push('/');
@@ -63,6 +68,24 @@ export default function PlanPage() {
         );
     }
 
+    if(hasSubscription) {
+        return (
+            <div className="w-screen mt-[64px] pl-20 pr-20 pt-8">
+                <div className="bg-base-100 py-12 px-4 sm:px-6 lg:px-8">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="text-center">
+                            <h2 className="text-3xl font-extrabold text-white sm:text-4xl">
+                                You already have a subscription
+                            </h2>
+                            <p className="mt-4 text-lg text-white">
+                                Thank you for being a valued subscriber!
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
     return (
         <div className={"w-screen mt-[64px] pl-20 pr-20 pt-8"}>
         <div className=" bg-base-100 py-12 px-4 sm:px-6 lg:px-8">
