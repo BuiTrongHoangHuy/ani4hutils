@@ -90,9 +90,11 @@ export default function CommentSection({ filmId, episodeId }: CommentSectionProp
 
             if (episodeId) {
                 const refreshedComments = await CommentService.getCommentsByEpisodeId(episodeId, paging);
+                console.log("refreshedComments:", refreshedComments);
                 setComments(refreshedComments.data);
             } else {
                 const refreshedComments = await CommentService.getCommentsByFilmId(filmId, paging);
+                console.log("refreshedComments:", refreshedComments);
                 setComments(refreshedComments.data);
             }
         } catch (error) {
@@ -133,7 +135,7 @@ export default function CommentSection({ filmId, episodeId }: CommentSectionProp
                     <div className="text-center py-4">Loading comments...</div>
                 ) : (
                     <>
-                        {comments.map((comment) => (
+                        {comments && comments.map((comment) => (
                             <div key={comment.id} className="p-4 bg-base-200 rounded-md">
                                 <div className="flex justify-between items-start">
                                     <div className="font-semibold">{comment.displayName}</div>
@@ -157,7 +159,7 @@ export default function CommentSection({ filmId, episodeId }: CommentSectionProp
                             <button 
                                 className="btn btn-sm btn-outline" 
                                 onClick={() => setCurrentPage(prev => prev + 1)}
-                                disabled={comments.length < pageSize || loading}
+                                disabled={comments && comments.length < pageSize || loading}
                             >
                                 Next
                             </button>

@@ -1,19 +1,19 @@
 import {BuildQueryParams} from "@/utils/build-query-params";
-import { fetchWithCredentials } from "@/utils/fetch-with-credentials";
+import {fetchWithInterceptor} from "@/utils/fetchWithInterceptor";
 
 const baseUrl ="https://api.ani4h.site/v1/film"
 const baseUrlEpisode = "https://api.ani4h.site/v1/episode"
 export const FilmService = {
     getById: async (id: string) => {
-        return await fetchWithCredentials(`${baseUrl}/${id}`, {
+        return await (await fetchWithInterceptor(`${baseUrl}/${id}`, {
             method: "GET",
-        })
+        })).json();
     },
 
     getEpisodesById: async (id: string) => {
-        return await fetchWithCredentials(`${baseUrl}/${id}/episodes`, {
+        return await (await fetchWithInterceptor(`${baseUrl}/${id}/episodes`, {
             method: "GET",
-        })
+        })).json()
     },
 
     getEpisodeByEpisodeNumber: async (id: string, numberEpisode: number) => {
@@ -24,9 +24,9 @@ export const FilmService = {
             numberEpisode: numberEpisode,
         }
         const params = BuildQueryParams(request)
-        return await fetchWithCredentials(`${baseUrlEpisode}?${params}`, {
+        return await (await fetchWithInterceptor(`${baseUrlEpisode}?${params}`, {
             method: "GET",
-        })
+        })).json();
     }
 
 }
