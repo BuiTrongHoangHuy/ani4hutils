@@ -5,6 +5,7 @@ import TopBar from "@/components/layout/topbar";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import {ClientInterceptorWrapper} from "@/utils/ClientInterceptorWrapper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
           className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
       <div className="">
+          <ClientInterceptorWrapper />
           <header className="absolute top-0 z-50 w-full">
               <TopBar/>
           </header>

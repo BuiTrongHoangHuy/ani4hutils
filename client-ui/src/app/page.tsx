@@ -20,7 +20,6 @@ export default async function Home() {
         page: 1,
         pageSize: 25,
     }
-
     const cookieStore = await cookies()
     const userId = cookieStore.get('userId')?.value || ""
 

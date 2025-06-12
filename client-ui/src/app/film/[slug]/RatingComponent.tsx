@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { RatingService } from "./ratingService";
 import { RatingRequest } from "@/types/rating";
 import { Star } from "lucide-react";
+import {setupClientInterceptors} from "@/utils/interceptorClient";
 
 interface RatingComponentProps {
     userId: string;
@@ -26,6 +27,7 @@ export default function RatingComponent({ userId, filmId, className = "" }: Rati
 
             try {
                 setLoading(true);
+                setupClientInterceptors()
                 const userRating = await RatingService.getRatingByUserIdAndFilmId(userId, filmId);
                 if (userRating) {
                     setRating(userRating.data.rating);
