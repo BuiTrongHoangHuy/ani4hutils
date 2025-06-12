@@ -25,8 +25,10 @@ export default function HistoryPage() {
         setIsLoading(true);
         try {
             const res = await HistoryService.getWatchedEpisodes(userId, paging);
-            setData(res.data);
-            if (res.data.length === 0) {
+            const historyData = res.data || [];
+            console.log("History: ", historyData);
+            setData(historyData);
+            if (historyData.length === 0) {
                 setHasMore(false);
             }
         } catch (error) {
@@ -47,8 +49,10 @@ export default function HistoryPage() {
         setIsLoading(true);
         try{
             const res = await HistoryService.getWatchedEpisodes(userId, newPaging);
-            setData(prev => [...prev, ...res.data]);
-            if(res.data.length === 0){
+            const historyData = res.data || [];
+
+            setData(prev => [...prev, ...historyData]);
+            if(historyData.length === 0){
                 setHasMore(false);
             }
         }

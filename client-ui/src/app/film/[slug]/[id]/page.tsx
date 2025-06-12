@@ -14,6 +14,7 @@ import {cookies} from "next/headers";
 import FilmListCardSM from "@/app/film/[slug]/[id]/filmListCardSM";
 import Image from "next/image";
 import React from "react";
+import {createServerFetch} from "@/utils/interceptorServer";
 
 export default async function  Page({
                                   params,
@@ -22,6 +23,9 @@ export default async function  Page({
 }) {
     const { id } = await params
     const {slug} = await params
+    const cookieStore = await cookies()
+    const accessToken = cookieStore.get('accessToken')?.value || ""
+    createServerFetch(accessToken);
     const filmId = slug.split('-')[slug.split('-').length-1]
     const data = await FilmService.getById(filmId)
     const filmData : Film = await data.data
@@ -41,7 +45,6 @@ export default async function  Page({
         page: 1,
         pageSize: 8,
     }
-    const cookieStore = await cookies()
     const userId = cookieStore.get('userId')?.value || ""
     const resFavorite = await SearchService.userFavoriteRecommendation(userId,0, paging)
     const favorites : FilmList[] = (await resFavorite.data.data || [])
@@ -127,7 +130,7 @@ export default async function  Page({
                             <p className={"px-4 text-2xl font-bold"}>Proposal for you</p>
                             <div id="grid" className="grid grid-cols-4 gap-4 p-4 mx-auto ">
                                 {
-                                    favorites.map((value, index) =>
+                                    favorites && favorites.map((value, index) =>
                                         <div key={index}>
                                             <FilmListCardSM film={value}/>
                                         </div>
@@ -141,7 +144,7 @@ export default async function  Page({
                 <div className={"flex-1"}>
                     <div className={"flex flex-col space-y-4"}>
                         <p className={"text-xl font-bold"}>Hottest of the day</p>
-                        {topHotResponse.map((film, index) => {
+                        {topHotResponse && topHotResponse.map((film, index) => {
                             let rankColor = "text-gray-400";
                             if (index === 0) rankColor = "text-orange-500";
                             else if (index === 1) rankColor = "text-orange-400";

@@ -29,6 +29,8 @@ export default function TopBar(className: { className?: string }) {
             }).then(
             () =>{
                 setIsLogin(false)
+                sessionStorage.removeItem("accessToken");
+                router.push("/")
             }
         )
     }
@@ -49,6 +51,9 @@ export default function TopBar(className: { className?: string }) {
                     toast.error("Invalid credentials")
                 } else {
                     toast.success("Login success")
+                    r.json().then(data => {
+                        sessionStorage.setItem("accessToken", data.accessToken);
+                    })
                     setIsLogin(true);
                     (document.getElementById('login_modal') as HTMLDialogElement)?.close();
                 }
@@ -180,7 +185,7 @@ export default function TopBar(className: { className?: string }) {
                                             <span className="badge">New</span>
                                         </Link>
                                     </li>
-                                    <li><a>Settings</a></li>
+                                    <li><Link href={`/plan`}>Plan</Link></li>
                                     <li><a onClick={onLogout}>Logout</a></li>
                                 </ul>
                             </div>
