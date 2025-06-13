@@ -4,7 +4,7 @@ A multi-language utility project for film-related services.
 
 ## Structure
 
-- `api/film`: Java Spring Boot API (Elasticsearch, SQL)
+- `api`: Java Spring Boot API (Elasticsearch, SQL)
 - `client-ui`: Next.js frontend (TypeScript)
 - `admin-ui`: React admin dashboard (TypeScript)
 
