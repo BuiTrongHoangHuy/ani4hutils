@@ -1,20 +1,18 @@
 # ani4hutils
 
-A multi-language utility project for film-related services, featuring Java Spring Boot (API), Go, and a React frontend.
+A multi-language utility project for film-related services.
 
-## Features
+## Structure
 
-- Film API with Elasticsearch integration (Spring Boot)
-- SQL database support
-- Go modules for backend utilities
-- React frontend (TypeScript/JavaScript)
+- `api/film`: Java Spring Boot API (Elasticsearch, SQL)
+- `client-ui`: Next.js frontend (TypeScript)
+- `admin-ui`: React admin dashboard (TypeScript)
 
 ## Tech Stack
+
 - Java, Spring Boot, Gradle
-- Go, go.mod
-- SQL
-- TypeScript, JavaScript, React, npm
-- Elasticsearch
+- SQL, Elasticsearch
+- TypeScript, Next.js, React, npm
 
 
 ## License
